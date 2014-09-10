@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{03D6AA07-CD32-42B0-AC43-BD41D485B04F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EpiCoil</RootNamespace>
+    <AssemblyName>Library</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Epicor.Mfg.BO.Part">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.Part.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.Receipt">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.Receipt.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.SysConfig, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.SysConfig.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.UD15">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UD15.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.UD34">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UD34.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.UD39">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UD39.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.BO.UserFile, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UserFile.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.Common.BOExceptions, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Common.BOExceptions.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.Core.Session">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.IPart">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IPart.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.IReceipt">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IReceipt.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.IUD15">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IUD15.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.IUD34">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IUD34.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.IUD39">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IUD39.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.interop.access.dao, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extentions\ObjectHelper.cs" />
+    <Compile Include="Frameworks\ComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Frameworks\DBConnection.cs" />
+    <Compile Include="Frameworks\IRepository.cs" />
+    <Compile Include="Frameworks\LogManager.cs" />
+    <Compile Include="Frameworks\Repository.cs" />
+    <Compile Include="Models\Common\BaseEntity.cs" />
+    <Compile Include="Models\Common\BussinessTypeModel.cs" />
+    <Compile Include="Models\Common\CategoryGroupModel.cs" />
+    <Compile Include="Models\Common\ClassMasterModel.cs" />
+    <Compile Include="Models\Common\CoatingModel.cs" />
+    <Compile Include="Models\Common\CommodityModel.cs" />
+    <Compile Include="Models\Common\CurrenciesModel.cs" />
+    <Compile Include="Models\Common\CustomerModel.cs" />
+    <Compile Include="Models\Common\MakerModel.cs" />
+    <Compile Include="Models\Common\MillModel.cs" />
+    <Compile Include="Models\Common\PackingStyleModel.cs" />
+    <Compile Include="Models\Common\POLineModel.cs" />
+    <Compile Include="Models\Common\PortModel.cs" />
+    <Compile Include="Models\Common\SpecModel.cs" />
+    <Compile Include="Models\Common\SupplierModel.cs" />
+    <Compile Include="Models\Common\WharehouseModel.cs" />
+    <Compile Include="Models\Common\ItemMenuModel.cs" />
+    <Compile Include="Models\Common\MenuModel.cs" />
+    <Compile Include="Models\Common\SessionInfo.cs" />
+    <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />
+    <Compile Include="Models\StoreInPlan\ImexCheckModel.cs" />
+    <Compile Include="Models\StoreInPlan\MappingLookupModel.cs" />
+    <Compile Include="Models\StoreInPlan\StoreInPlanDetail.cs" />
+    <Compile Include="Models\StoreInPlan\StoreInPlanDialogModel.cs" />
+    <Compile Include="Models\StoreInPlan\StoreInPlanHead.cs" />
+    <Compile Include="Models\StoreIn\NewPartModel.cs" />
+    <Compile Include="Models\StoreIn\ReceiptDetailModel.cs" />
+    <Compile Include="Models\StoreIn\RecieptHeadModel.cs" />
+    <Compile Include="Models\StoreIn\StoreInDetail.cs" />
+    <Compile Include="Models\StoreIn\StoreInHead.cs" />
+    <Compile Include="Models\StoreIn\StoreInHeadBalance.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Common\Interface\IBussinessTypeRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICategoryGroupRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICoatingRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICommodity.cs" />
+    <Compile Include="Repositories\Common\Interface\ICurrenciesRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICustomerRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IImportPortRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IMainRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IMakerRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IMillRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IPackingStyle.cs" />
+    <Compile Include="Repositories\Common\Interface\IPORepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ISpecRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ISupplierRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IWharehouseRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\BussinessTypeRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\CategoryGroupRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\CoatingRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\Commodity.cs" />
+    <Compile Include="Repositories\Common\Repository\CurrenciesRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\CustomerRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\ImportPortRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\MainRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\MakerRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\MillRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\PackingStyle.cs" />
+    <Compile Include="Repositories\Common\Repository\PORepo.cs" />
+    <Compile Include="Repositories\Common\Repository\SpecRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\SupplierRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\WharehouseRepo.cs" />
+    <Compile Include="Repositories\StoreInPlan\Interface\ILookupRepo.cs" />
+    <Compile Include="Repositories\StoreInPlan\Interface\IStoreInPlanRepo.cs" />
+    <Compile Include="Repositories\StoreInPlan\Repository\LookupRepo.cs" />
+    <Compile Include="Repositories\StoreInPlan\Repository\StoreInPlanRepo.cs" />
+    <Compile Include="Repositories\StoreIn\Interface\IStoreInRepo.cs" />
+    <Compile Include="Repositories\StoreIn\Repository\StoreInRepo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Enums\" />
+    <Folder Include="Models\Planning\" />
+    <Folder Include="Repositories\Planning\Interface\" />
+    <Folder Include="Repositories\Planning\Repository\" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Frameworks\ComboBox.resx">
+      <DependentUpon>ComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

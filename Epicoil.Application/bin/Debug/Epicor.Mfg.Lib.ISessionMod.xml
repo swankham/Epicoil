@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.ISessionMod</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.ISessionMod">
+            <summary>
+            Modifies session state
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GetCountryGroupCode(System.String,System.String@,System.String@)">
+            <summary>
+            Get a company's Country Group Code and Country Code.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GetLicense(System.String,System.Int32@,System.Int32@,System.Decimal@,System.Nullable{System.DateTime}@,System.Int32@)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GetModuleAccess(System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@)">
+            <summary>
+            Return the module access for the current company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GracefulShutdown">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetCompany(System.String,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@)">
+            <summary>
+            Set the session's current company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetDateFormat(System.String)">
+            <summary>
+            Set the date format for the session
+            </summary>
+            <param name="dateFormat">Date format</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetLanguage(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetPlant(System.String,System.String@)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetSuspend(System.Boolean)">
+            <summary>
+            Set whether the session can be suspended
+            </summary>
+            <param name="suspend">Whether this session can be suspended</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetUser(System.String,System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetEmployee(System.String)">
+            <summary>
+            Set the current employee ID for the session
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.SetWorkstation(System.String,System.String@)">
+            <summary>
+            Set the current workstation ID for the session
+            </summary>
+            <param name="newWorkstationID">New workstation ID</param>
+            <param name="workstationDescription">Workstation's description</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.Handshake(System.String)">
+            <summary>
+            </summary>
+            <param name="clientVersion"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.Sync(System.String,System.String,System.Int32,System.Boolean,System.String@,System.Boolean@)">
+            <summary>
+            Synchronize the client and server copies of the session state
+            </summary>
+            <param name="clientDateFormat"></param>
+            <param name="clientComputerName"></param>
+            <param name="clientTerminalID"></param>
+            <param name="designMode"></param>
+            <param name="uid"></param>
+            <param name="replicatedDatabase">Whether this is a replicated (read-only) database</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GetLanguage">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.InMobileConnect">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.IsValidSession(System.String,System.String)">
+            <summary>
+            Returns whether this is a replicated (read-only) database
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ISessionMod.GetCustomVersion">
+            <summary>
+            Returns the custom version string defined by a third-party
+            </summary>
+            <remarks>This string may be blank</remarks>
+        </member>
+    </members>
+</doc>

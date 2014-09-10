@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.SessionMod</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.SessionMod">
+            <summary>
+            Summary description for SessionMod.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.SessionModImpl">
+            <summary>
+            Modifies session state
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GetCountryGroupCode(System.String,System.String@,System.String@)">
+            <summary>
+            Get a company's Country Group Code and Country Code.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GetLicense(System.String,System.Int32@,System.Int32@,System.Decimal@,System.Nullable{System.DateTime}@,System.Int32@)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GetModuleAccess(System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@,System.Boolean@)">
+            <summary>
+            Return the module access for the current company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GracefulShutdown">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetCompany(System.String,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@,System.String@)">
+            <summary>
+            Set the session's current company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetDateFormat(System.String)">
+            <summary>
+            Set the date format for the session
+            </summary>
+            <param name="dateFormat">Date format</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetLanguage(System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetPlant(System.String,System.String@)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetSuspend(System.Boolean)">
+            <summary>
+            Set whether the session can be suspended
+            </summary>
+            <param name="suspend">Whether this session can be suspended</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetUser(System.String,System.String)">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetEmployee(System.String)">
+            <summary>
+            Set the current employee ID for the session
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.SetWorkstation(System.String,System.String@)">
+            <summary>
+            Set the current workstation ID for the session
+            </summary>
+            <param name="newWorkstationID">New workstation ID</param>
+            <param name="workstationDescription">Workstation's description</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.Handshake(System.String)">
+            <summary>
+            </summary>
+            <param name="clientVersion"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.Sync(System.String,System.String,System.Int32,System.Boolean,System.String@,System.Boolean@)">
+            <summary>
+            Synchronize the client and server copies of the session state
+            </summary>
+            <param name="clientDateFormat"></param>
+            <param name="clientComputerName"></param>
+            <param name="clientTerminalID"></param>
+            <param name="designMode"></param>
+            <param name="uid"></param>
+            <param name="replicatedDatabase">Whether this is a replicated (read-only) database</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GetLanguage">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.InMobileConnect">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.IsValidSession(System.String,System.String)">
+            <summary>
+            Returns whether this is a replicated (read-only) database
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.SessionModImpl.GetCustomVersion">
+            <summary>
+            Returns the custom version string defined by a third-party
+            </summary>
+            <remarks>This string may be blank</remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.SessionModImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.SessionMod.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

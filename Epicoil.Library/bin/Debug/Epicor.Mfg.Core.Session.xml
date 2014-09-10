@@ -1,0 +1,960 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Core.Session</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Core.Session">
+            <summary>
+            Maintains session state data.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.OnSessionChanged(Epicor.Mfg.Core.Session.SessionChangedItem)">
+            <summary>
+            Raises up the SessionChanged event
+            </summary>
+            <param name="SessionChangedItem">the SessionChangedItem that describes the event</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.#ctor(System.String,System.String)">
+            <summary>
+            Overload of constructor.  AppServer URL is obtained from mfgsys file.  Default license type is used.
+            </summary>
+            <param name="userID">User ID.</param>
+            <param name="password">User password.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.#ctor(System.String,System.String,Epicor.Mfg.Core.Session.LicenseType)">
+            <summary>
+            Overload of constructor.  AppServer URL is obtained from the mfgsys file.
+            </summary>
+            <param name="userID">User ID.</param>
+            <param name="password">User password.</param>
+            <param name="licenseType">License type.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Overload of constructor.  License type of default is used.
+            </summary>
+            <param name="userID">User ID.</param>
+            <param name="password">User password.</param>
+            <param name="asUrl">AppServer URL.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.#ctor(System.String,System.String,System.String,Epicor.Mfg.Core.Session.LicenseType)">
+            <summary>
+            Default Constructor.
+            </summary>
+            <param name="userID">User ID.</param>
+            <param name="password">User password.</param>
+            <param name="asUrl">AppServer URL</param>
+            <param name="licenseType">License Type.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.ParseProductEnum(Epicor.Mfg.Core.Session.Product)">
+            <summary>
+            Parses Session.Product enumuration into code
+            </summary>
+            <param name="productEnum">Session.Product enumuration</param>
+            <returns>Product Code</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.ParseEditionEnum(Epicor.Mfg.Core.Session.Edition)">
+            <summary>
+            Parses Session.Edition enumuration into code
+            </summary>
+            <param name="editionEnum">Session.Edition enumuration</param>
+            <returns>Edition Code</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.GetLanguageID">
+            <summary>
+            Return LanguageID without setting any session parameters or changing Thread Culture
+            </summary>
+            <returns>Language ID</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.RefreshLanguageInfo">
+            <summary>
+            Refresh Language Info, such as version and description
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.VersionNumber">
+            <summary>
+            Client version number.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.VersionDate">
+            <summary>
+            Client version date.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.GetCreateLanguageCulture(System.String,System.String,System.String)">
+            <summary>
+            Creates and returns culture. If exists, returns existing culture
+            </summary>
+            <param name="cultureName">Culture to be created</param>
+            <param name="languageID">associated language id</param>
+            <param name="languageDescription">associated language description</param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.CreateCulture(System.String,System.String,System.String)">
+            <summary>
+            Creates a culstom Epicor culture
+            </summary>
+            <param name="cultureName">Name</param>
+            <param name="languageID">Language ID</param>
+            <param name="languageDesc">Language Description</param>
+            <returns>Culture Info or null</returns>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.UOMGlobalID">
+            <summary>
+            Represents the key to UOMInfoList for the global UOM information.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.ModuleLicensed(Epicor.Mfg.Core.Session.Module)">
+            <summary>
+            Checks to see if a given module is licensed.
+            </summary>
+            <param name="module">Module to check.</param>
+            <returns>True if licensed, otherwise false.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.SetUser(System.String,System.String)">
+            <summary>
+            Changes the user ID.
+            </summary>
+            <param name="userID">User ID.</param>
+            <param name="password">User password.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.ChangePassword(System.String,System.String,System.String)">
+            <summary>
+            </summary>
+            <param name="uid"></param>
+            <param name="currentPassword"></param>
+            <param name="newPassword"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.RefreshLicense">
+            <summary>
+            If a program updates the license data, this method must be called to refresh the
+            cached version on the client
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.GetTerminalID">
+            <summary>
+            Get the terminal ID
+            </summary>
+            <returns>terminal ID</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.IsValidSession(System.String,System.String)">
+            <summary>
+            Returns whether a session ID/user ID combination is valid
+            </summary>
+            <param name="sessionID"></param>
+            <param name="userID"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.setUserDefaults(System.String)">
+            <summary>
+            Set the user dependent session variables when the current user changes
+            </summary>
+            <param name="userID">New user ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.setLanguage(System.String,System.Boolean)">
+            <summary>
+            Set language. If lnguage passed is Null then set to default as per user/other settings
+            </summary>
+            <param name="newLanguageID">New language ID</param>
+            <param name="setCurrentThreadCulture">Should we set current thread Culture and UICulture. There are few cases when we dont want to do so immediately</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.GetCurrencyInfo(System.Data.DataSet,System.String)">
+            <summary>
+            Retrieves currency information for the currenty company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.GetUOMInfo(System.Data.DataSet,System.Int32)">
+            <summary>
+            Retrieves formatting information for the UOMs for the current company.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.Add(System.String,System.Object)">
+            <summary>
+            Adds an element with the specified key and value into the session data collection.
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.Remove(System.String)">
+            <summary>
+            Removes the element with the specified key from the session data collection.
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.ContainsKey(System.String)">
+            <summary>
+            Determines if the session data collection contains a specific key.
+            </summary>
+            <param name="key">The key to locate.</param>
+            <returns>True if the key exists, otherwise false.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.CompareTo(System.Object)">
+            <summary>
+            Compares one session object to another.
+            </summary>
+            <param name="obj">Session object to compare against.</param>
+            <returns>zero if objects are the same, otherwise one.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.OnSessionClosing">
+            <summary>
+            Fires the SessionClosing event.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.Clone(Epicor.Mfg.Core.Session.LicenseType)">
+            <summary>
+            Creates a new session based on the settings of this session
+            </summary>
+            <param name="licenseType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.Dispose">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.RestoreConnection">
+            <summary>
+            Used for serialization
+            </summary>
+        </member>
+        <member name="E:Epicor.Mfg.Core.Session.SessionChanged">
+            <summary>
+            Event that is fired whenever core session properties change (i.e. Company ID)
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.AppServer">
+            <summary>
+            The AppServer this session is connected to.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CompanyID">
+            <summary>
+            Company ID for this session.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CompanyName">
+            <summary>
+            Company name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.PlantID">
+            <summary>
+            Plant ID
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.PlantName">
+            <summary>
+            Plant name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.WorkstationID">
+            <summary>
+            Workstation ID.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.WorkstationDescription">
+            <summary>
+            Workstation description.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UserID">
+            <summary>
+            User ID.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UserName">
+            <summary>
+            User name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.EmployeeID">
+            <summary>
+            Employee ID.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.ProductID">
+            <summary>
+            Product ID.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.EditionID">
+            <summary>
+            Edition ID.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.ProductCode">
+            <summary>
+            Product code. 'EP' for Epicor.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.EditionCode">
+            <summary>
+            Edition code. 'EX' for Express, 'ST' for Standard, 'EN' for Enterprise.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.ProductName">
+            <summary>
+            Product name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.EditionName">
+            <summary>
+            Edition name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CountryGroupCode">
+            <summary>
+            Country Group Name
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CountryCode">
+            <summary>
+            Country Name
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.LanguageID">
+            <summary>
+            Get/Set current Language
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.LanguageDescription">
+            <summary>
+            Returns the description of currently set language
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.LanguageVersion">
+            <summary>
+            The version of the translation db for the language the user is currently using.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.MobileConnect">
+            <summary>
+            Are we running in Mobile Connect mode.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.Client">
+            <summary>
+            Client type. Valid options are MES, Handheld or default.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.License">
+            <summary>
+            License type.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.GlobalSecurityManager">
+            <summary>
+            Is the user a global security manager.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.SystemReplicated">
+            <summary>
+            Indicates that this system is a replica (read-only) of another
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.MaxUsers">
+            <summary>
+            Maximum users.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.MaxDCUsers">
+            <summary>
+            Maximum data collection users.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.SerialNum">
+            <summary>
+            Serial number.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.EvalExpires">
+            <summary>
+            Expiration date.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.VersionString">
+            <summary>
+            Client version number formatted in the format of nn.nn.nnn
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.VersionStringCustom">
+            <summary>
+            Custom version string
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.ConnectionPool">
+            <summary>
+            Business layer connection pool.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.DesignMode">
+            <summary>
+            Are we in design mode.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanTranslate">
+            <summary>
+            Can the user do language translation.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanPersonalize">
+            <summary>
+            Can the user personalize applications.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanCustomize">
+            <summary>
+            Can the user customize applications.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanTheme">
+            <summary>
+            Can the user manage themes.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrentThemeFile">
+            <summary>
+            Returns the currently used Theme File Name
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanChangeQSearch">
+            <summary>
+            Can the user change quick searches.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanMaintainEnterpriseSearch">
+            <summary>
+            Gets a value indicating whether this user can maintain Field Specific Enterprise Search.
+            </summary>
+            <value><c>true</c> if this user can maintain Field Specific Enterprise Search.</value>
+            <remarks>
+            The Field Specific Enterprise Search is Enterprise Search when called from a specific control on a form. It
+            is opened with the default hot key of Ctrl+Shift+S when on a control that allows the normal searching.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanSuspend">
+            <summary>
+            Whether this session can be suspended
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.SecurityManager">
+            <summary>
+            Is the user a security manager.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.DashboardDeveloper">
+            <summary>
+            Gets the Dashboard Developer flag
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanEditCompAnnotations">
+            <summary>
+            Can the user edit Company Annotations in help.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanEditUserAnnotations">
+            <summary>
+            Can the user edit User Annotations in help.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanUseEnterpriseSearch">
+            <summary>
+            Is the user allowed to use Enterprise Search.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanUseEpicorEverywhere">
+            <summary>
+            Indicates if the user has access to Epicor Everywhere.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UserEmail">
+            <summary>
+            User's default email address.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.SessionID">
+            <summary>
+            GUID string that uniquely identifies this object.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.FormatCultureName">
+            <summary>
+            The culture set for formatting. Sets the CurrentCulture of the current thread.
+            The default value is taken from user settings.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.LanguageCultureName">
+            <summary>
+            The culture set for language UI resources. Sets the CurrentUICulture of the current thread.
+            The default value is taken from language record.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyCodes">
+            <summary>
+            List of the Base and Reporting currencies for the current company.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfoList">
+            <summary>
+            Contains decimal precision information for the currencies for the current company.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UOMInfoList">
+            <summary>
+            Contains decimal precision information for the UOM codes for the current company.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanCreateSolutions">
+            <summary>
+            Is the user allowed to Create Solution cab files
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CanInstallSolutions">
+            <summary>
+            Is the user allowed to Install Solution cab files
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.Item(System.String)">
+            <summary>
+            Indexer for the session data collection.
+            </summary>
+        </member>
+        <member name="E:Epicor.Mfg.Core.Session.SessionClosing">
+            <summary>
+            Occurs when the session is closing.
+            </summary>
+        </member>
+        <member name="E:Epicor.Mfg.Core.Session.Disposed">
+            <summary>
+            Occurs when the session is disposed.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.Product">
+            <summary>
+            The valid products.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Product.Epicor">
+            <summary>The Epicor product.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.Edition">
+            <summary>
+            The editions of the product.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Edition.Express">
+            <summary>The express version of the product.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Edition.Standard">
+            <summary>The standard version of the product.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Edition.Enterprise">
+            <summary>The enterprise version of the product.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.ClientType">
+            <summary>
+            The client types.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.ClientType.Default">
+            <summary>The default client type. This is used for the smart client.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.ClientType.Mes">
+            <summary>Manufacturing Execution System.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.ClientType.Handheld">
+            <summary>Handhelds such as smart phones.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.SessionChangedItem">
+            <summary>
+            The part of the session that has changed.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.Company">
+            <summary>The company has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.Plant">
+            <summary>The plant has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.User">
+            <summary>The user has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.Language">
+            <summary>The language has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.License">
+            <summary>The license has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.Favorites">
+            <summary>The menu favorites has changed.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.SessionChangedItem.MenuTab">
+            <summary>The menu tab has changed.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.SessionChangedHandler">
+            <summary>
+            Delegate called when session has been changed
+            </summary>
+            <param name="sender">The session that raised this event</param>
+            <param name="e">Describes session parameter change</param>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.CurrencyInfo">
+            <summary>
+            Contains decimal precision information about a currency.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.CurrencyInfo.#ctor(System.String,System.String,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new CurrencyInfo structure.
+            </summary>
+            <param name="currencyCode">Currency code.</param>
+            <param name="currencySymbol">Currency symbol.</param>
+            <param name="decimalsGeneral">Decimal precision for general types.</param>
+            <param name="decimalsPrice">Decimal precision for price types.</param>
+            <param name="decimalsCost">Decimal precision for cost types.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.CurrencyInfo.Copy">
+            <summary>
+            Returns an copy of the CurrencyInfo struct.
+            </summary>
+            <returns>A new CurrencyInfo struct with the same values as the original.</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfo.CurrencyCode">
+            <summary>
+            Currency code for this currency.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfo.CurrencySymbol">
+            <summary>
+            Currency symbol for this currency.  Normally this will be the three letter ISO code.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfo.DecimalsGeneral">
+            <summary>
+            Number of decimal places for general pricing.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfo.DecimalsPrice">
+            <summary>
+            Number of decimal places for selling pricing.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.CurrencyInfo.DecimalsCost">
+            <summary>
+            Number of decimal places for purchase pricing.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.UOMInfo">
+            <summary>
+            A structure to hold UOM information related to decimal formatting.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Core.Session.UOMInfo.#ctor(System.String,System.Int32)">
+            <summary>
+            Default constructor for the UOMInfo structure.
+            </summary>
+            <param name="uomCode">The UOMCode.</param>
+            <param name="numberOfDec">Number of decimals to use for display purposes.</param>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UOMInfo.UOMCode">
+            <summary>
+            The UOMCode this UOMInfo holds.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Core.Session.UOMInfo.NumberOfDecimals">
+            <summary>
+            The number of decimals to use for display purposes for this UOMCode.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.LicenseType">
+            <summary>
+            The valid license types.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.Module">
+            <summary>
+            List of Module Codes
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AP">
+            <summary>Accounts Payable</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AM">
+            <summary>Advanced Material Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AR">
+            <summary>Accounts Receivable</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AV">
+            <summary>Document Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.BM">
+            <summary>Engineering</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CM">
+            <summary>Multi-Currency Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CR">
+            <summary>Customer Relationship Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CC">
+            <summary>Customer Connect - Store Front</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AIM">
+            <summary>Advanced Inventory Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.FA">
+            <summary>Asset Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.DE">
+            <summary>MES Data Collection</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EQ">
+            <summary>Estimate/Quote Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.ES">
+            <summary>Scheduling</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.ED">
+            <summary>EDI Vantage 8.0X</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.FS">
+            <summary>Field Service Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.GL">
+            <summary>General Ledger</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.IM">
+            <summary>Inventory Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.JC">
+            <summary>Job Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MS">
+            <summary>Multi-Site Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MR">
+            <summary>Material Requirement Planning</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.OM">
+            <summary>Order Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PC">
+            <summary>Configurator</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PM">
+            <summary>Purchasing Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PR">
+            <summary>Payroll</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.QA">
+            <summary>Quality Assurance</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.RQ">
+            <summary>Supplier Relationship Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SR">
+            <summary>Shipping/Receiving</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SV">
+            <summary>Executive Dashboard</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EB">
+            <summary>Business Intelligence</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AS">
+            <summary>Pack Out Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.XS">
+            <summary>ExpressShip</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PJ">
+            <summary>Project Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PS">
+            <summary>Advanced Planning and Scheduling</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AC">
+            <summary>Advanced Cost Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MW">
+            <summary>Multiple Warehouse</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PU">
+            <summary>Advanced Purchasing Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MD">
+            <summary>Multiple Division</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CP">
+            <summary>Consolidated Purchasing</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MP">
+            <summary>Multi-Site Publish</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.HD">
+            <summary>Case Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MJ">
+            <summary>Multi-Level Job</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PD">
+            <summary>Advanced Production</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MQ">
+            <summary>Multi-Level Quote</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SE">
+            <summary>Single-Level Engineering</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.ME">
+            <summary>Multi-Level Engineering</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PZ">
+            <summary>Productization</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.VZ">
+            <summary>Verticalization Creator</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.HH">
+            <summary>Handheld</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SS">
+            <summary>EDI/Demand Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PH">
+            <summary>Purchase Contracts</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.LP">
+            <summary>Auto/Label Print Control</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.BP">
+            <summary>Business Process Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PY">
+            <summary>Consolidated Payment</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.GJ">
+            <summary>Multi-Site G/L Journals</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CD">
+            <summary>Credit Card Processing</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.RP">
+            <summary>Rebates Promotions and Royalties</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.WB">
+            <summary>Epicor Everywhere™ Framework</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SP">
+            <summary>Attachments for SharePoint®</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.RS">
+            <summary>Replication Server</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.IC">
+            <summary>Isolated Company (SaaS)</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MB">
+            <summary>Multiple Books</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SI">
+            <summary>Supplier Managed Inventory</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CI">
+            <summary>Customer Managed Inventory</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.LC">
+            <summary>Landed Cost/Container Tracking</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.WE">
+            <summary>RoHS/WEEE Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.TC">
+            <summary>Tax Connect</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EES">
+            <summary>Enterprise Search</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MM">
+            <summary>Maintenance Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EQA">
+            <summary>Enhanced Quality Assurance</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PB">
+            <summary>Project Billing</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.TM">
+            <summary>Time Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EM">
+            <summary>Expense Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.AA">
+            <summary>Advanced Allocations</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PI">
+            <summary>Payment Instruments</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SY">
+            <summary>Surveys</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SRM">
+            <summary>SLS - Residential Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SCS">
+            <summary>SLS - Community Services</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SOC">
+            <summary>SLS - Online Claiming for Residential Management</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SCI">
+            <summary>SLS - iCare Integration</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SCC">
+            <summary>SLS - Clinical Care</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SAF">
+            <summary>SLS - Forms Designer</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SOE">
+            <summary>SLS - Outbound EDI Interface</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.SDK">
+            <summary>ICE SDK</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.TCS">
+            <summary>Epicor Tax Connect ST</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.TCU">
+            <summary>Epicor Tax Connect UT</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.MFS">
+            <summary>Mobile Field Service</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.DRV">
+            <summary>Deferred Revenue</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.CRL">
+            <summary>Contract Renewal</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.PYC">
+            <summary>Petty Cash</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.GU">
+            <summary>Global Users</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Core.Session.Module.EDU">
+            <summary>Education Module</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Core.Session.DisposedEventHandler">
+            <summary>
+            The event handler for the <see cref="E:Epicor.Mfg.Core.Session.Disposed"/> event.
+            </summary>
+        </member>
+    </members>
+</doc>

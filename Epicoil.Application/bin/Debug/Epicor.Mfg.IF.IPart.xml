@@ -1,0 +1,1597 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IPart</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.PartDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartDimDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartLangDescDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPlantDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictionDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictSubstDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAuditDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOPartDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspVendDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartSubsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartBinInfoDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPCDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartWhseDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartUOMDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.EntityGLCDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.TaxExemptDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartDimRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartLangDescRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPlantRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictionRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictSubstRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAuditRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOPartRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspVendRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartSubsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartBinInfoRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPCRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartWhseRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartUOMRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.EntityGLCRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.TaxExemptRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartDimRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartLangDescRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPlantRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictionRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRestrictSubstRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartAuditRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartCOPartRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspPlanAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartRevInspVendRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartSubsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartBinInfoRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartPCRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartWhseRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.PartUOMRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.EntityGLCRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartDataSet.TaxExemptRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GlbPartDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GlbPartDataSet.GlbPartDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GlbPartDataSet.GlbPartRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GlbPartDataSet.GlbPartRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IPart">
+             <summary>
+             Part Master file. This file is the Parent to the PartSubs, PartWhse, and PartBin files.
+             Do not allow delete of Part record if it has existing PartBin records, if it is referenced in the OrderDtl,
+             JobDtl, or the PartTran file.
+            
+             </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPart(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartAttch(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartCOO(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartDim(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartLangDesc(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartPlant(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRestriction(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRestrictSubst(Epicor.Mfg.BO.PartDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRev(Epicor.Mfg.BO.PartDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRevAttch(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartAudit(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String,System.Nullable{System.DateTime})">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartCOPart(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRevInspPlan(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRevInspPlanAttch(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartRevInspVend(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartSubs(Epicor.Mfg.BO.PartDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartBinInfo(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartPC(Epicor.Mfg.BO.PartDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewPartWhse(Epicor.Mfg.BO.PartDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewEntityGLC(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetNewTaxExempt(Epicor.Mfg.BO.PartDataSet,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.DeleteByID(System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetByID(System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetRows(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.Update(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.UpdateExt(Epicor.Mfg.BO.UpdExtPartDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetPartGlobalFields(System.String,System.Boolean)">
+            <summary>
+            To return the list of fields that are maintained by the "Master/Owner" of global record.
+            The client can use this list to disable these fields on the UI.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetCodeDescList(System.String,System.String)">
+            <summary>
+            To return the CodeDescriptionList values of a given table.field.
+            </summary>
+            <param name="tableName"></param>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ConstructExampleString(System.String,System.String,System.String@)">
+            <summary>
+            TO BE CALLED ON CHANGE OF ttSerialMask.Mask
+            </summary>
+            <param name="ipMask">SerialMask.Mask</param>
+            <param name="ipPart">Part.PartNum</param>
+            <param name="opExampleStr">SerialMask.Example</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.OnChangeSNLastUsedSeq(System.String,System.String)">
+            <param name="ipGenSeqStr">SerialMask.GenerateSeqString</param>
+            <param name="ipLastUsedSeq">SerialMask.SNLastUsedSeq</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.FindPartAndGetRowID(System.String,System.String@,System.String@,System.String@,System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.FindFirstPart(System.String,System.Int32,System.String@,System.String@,System.String@,System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetPartFromRowID(System.String,System.String,System.String@,System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetCustNumFromRowID(System.String,System.String,System.String@,System.Int32@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetMfgPartFromRowID(System.String,System.String,System.String@,System.Int32@,System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.AllowDimensionMaintenance">
+            <summary>
+            This method exists soley for the purpose of allowing security for
+            dimension maintenance to be defined
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.AllowInventoryInfo">
+            <summary>
+            This method exists soley for the purpose of allowing security for
+            inventory information to be defined
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.AllowLotMaintenance">
+            <summary>
+            This method exists soley for the purpose of allowing security for
+            lot maintenance to be defined
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.AllowPurchasingInfo">
+            <summary>
+            This method exists soley for the purpose of allowing security for
+            purchasing information to be defined
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.AllowViewLotCosts">
+            <summary>
+            This method exists soley for the purpose of allowing security for
+            viewing part lot costs to be defined
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangeMRPWarning(System.String,System.String,System.Boolean,System.String@)">
+            <summary>
+            When the ProcessMRP flag for a Part/Plant is changed from Yes to No all related unfirm jobs will be deleted
+            when the record is committed to the database.
+            You can use this method to provide a warning to the user of this fact and provide a confirmation dialog. This is
+            intended to be called upon value change of the ProcessMRP field.
+            If there are existing unfirm Jobs for the given Part/PlantThis warningMsg will contain a translated text message
+            which can be used to display in your message dialog. Otherwise it returns blanks and there is no need to provide a
+            dialog.
+            </summary>
+            <param name="partNum">Part number of the PartPlant record that is being updated.</param>
+            <param name="plant">Plant ID of the PartPlant record that is being updated .</param>
+            <param name="processMRP">New value of the PartPlant.ProcessMRP field.</param>
+            <param name="warningMsg">Contains warning message text if jobs will be deleted by changing the ProcessMRP value.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartBinInfoKBCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the KBCode field of PartBinInfo is being changed to a new value.
+            It will validate the new KBCode field.
+            If it is valid the dataset will be updated with the new KBCode and related KBActionCode.
+            </summary>
+            <param name="newKBCode">The new Kan Ban Type code field value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the NewKBCode will be returned in the dataset, along with a refreshed KBActionCode field. IMPORTANT, the PartWhse record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartBuyToOrder(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Buy To Order field of Part is being changed to a new value.
+            </summary>
+            <param name="ipBuyToOrder">The new part Buy To Order value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartCommodityCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Part.CommodityCode field is being changed to a new value.
+            It will validate the new value, passed in with newCommodityCode
+            If it is valid the dataset will be updated with the new value and related values will be refreshed.
+            </summary>
+            <param name="newCommodityCode">The new commodity code.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. IMPORTANT, the Part record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartGlobalPart(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to call when changing the global part flag on a part.
+            Assigns the GlbFlag base on the new value.
+            </summary>
+            <param name="proposedGlobalPart">The proposed global part value </param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartNum(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to call when changing the Part Number.
+            Validates this is a "Add", PartNumber does not already exist, sets defaults for UOMClass, UOM
+            </summary>
+            <param name="proposedPartNum">The proposed product code value </param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartPlantBuyToOrder(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Buy To Order field of PartPlant is being changed to a new value.
+            </summary>
+            <param name="ipBuyToOrder">The new part Buy To Order value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartPlantSourceType(System.String,System.String@,System.String@,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the SourceType field of PartPlant or the TypeCode of Part is being changed
+            to a new value and the user selected to update the PartPlant records with the change.
+            It will check to see if a configuration exists for the part. If a configuration
+            exists it will return a warning message in ruleMessage that should be displayed to the user as a warning.
+            If the configuration is not marked as single-level configuration then a message will be returned in
+            singleLevelConfMsg which should be displayed to the user asking if they want to continue. If they answer Yes
+            to continue then the method DeleteMultiLevelRules should be called.
+            </summary>
+            <param name="newSourceType">The new SourceType value.</param>
+            <param name="ruleMessage"> If this message isn't returned as null then it should be displayed to the user.</param>
+            <param name="singleLevelConfMsg"> If this message isn't returned as null then it should be displayed to the user.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. IMPORTANT, the PartPlant record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartPlantUrgentVendorID(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the VendorID field of PartPlant is being changed to a new value.
+            It will validate the new VendorID field.
+            If it is valid the dataset will be updated with the new value and related values will be refreshed.
+            </summary>
+            <param name="newVendorId">The new Vendor ID value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. IMPORTANT, the PartPlant record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartPlantVendorID(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the VendorID field of PartPlant is being changed to a new value.
+            It will validate the new VendorID field.
+            If it is valid the dataset will be updated with the new value and related values will be refreshed.
+            </summary>
+            <param name="newVendorId">The new Vendor ID value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. IMPORTANT, the PartPlant record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartProdCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to call when changing the product group code on a part.
+            Validates the code and defaults the part tax category code based
+            on the product group.
+            </summary>
+            <param name="proposedProdCode">The proposed product code value </param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartRestrictionManual(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when Manual field of PartRestriction is being changed to a new value.
+            </summary>
+            <param name="checkManual">Manual value</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartRestrictionType(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This methods assigns associated fields when PartRestriction.RestrictionTypeID changes.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">Part dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartRestrictSubstance(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This methods assigns associated fields when PartRestrictSubst.SubstanceID changes.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">Part dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartRevApproved(System.Boolean,System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This method checks that a valid password was provided when required before
+            changing the PartRev.Approved flag
+            </summary>
+            <param name="ipApproved">The proposed PartRev.Approved value </param>
+            <param name="ipValidPassword">Did the user supply a valid password to run this functionality?
+            The value for this parameter should come from running the ValidatePassword method
+            in the UserFile BO.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartSNBaseDataType(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <param name="ipSNBaseDataType">Part.SNBaseDataType</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartSNMaskPrefixSuffix(System.String,System.String,Epicor.Mfg.BO.PartDataSet)">
+            <param name="ipSNMaskPrefix">Part.SNMaskPrefix</param>
+            <param name="ipSNMaskSuffix">Part.SNMaskSuffix</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartSubsPartNum(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to call when changing the Part Number for an Alternate Part
+            </summary>
+            <param name="proposedPartNum">The proposed PartNum </param>
+            <param name="ds">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartTrackDimension(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Track Dimension field of Part is being changed to a new value.
+            It cannot be turned On if Part.TypeCode is Sales Kit (K).
+            </summary>
+            <param name="trackDimension">The new part Track Dimension value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the TypeCode will be returned in the dataset. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartTrackLots(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Track Lots field of Part is being changed to a new value.
+            It cannot be turned On if Part.TypeCode is Sales Kit (K).
+            </summary>
+            <param name="trackLots">The new part Track Lots value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the TypeCode will be returned in the dataset. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartTrackSerialNum(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Track Serial Numbers field of Part is being changed to a new value.
+            It cannot be turned On if Part.TypeCode is Sales Kit (K).
+            </summary>
+            <param name="trackSerialNum">The new part Track Serial Numbers value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the TypeCode will be returned in the dataset. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartTypeCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the Type field of Part is being changed to a new value.
+            It can be turned to Sales Kit if any of Track Lots, Dimension or Serial Numbers are ON.
+            </summary>
+            <param name="typeCode">The new part Type Code field value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the TypeCode will be returned in the dataset. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartUOMConvOverride(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+             <summary>
+            
+             </summary>
+             <param name="ipConvOverrride">The new ConvOverrride field value.</param>
+             <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part Dataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePartWhseKBCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the KBCode field of PartWhse is being changed to a new value.
+            It will validate the new KBCode field.
+            If it is valid the dataset will be updated with the new KBCode and related KBActionCode.
+            </summary>
+            <param name="newKBCode">The new Kan Ban Type code field value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. If valid, the NewKBCode will be returned in the dataset, along with a refreshed KBActionCode field. IMPORTANT, the PartWhse record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePlantSNBaseDataType(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <param name="ipSNBaseDataType">Part.SNBaseDataType</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangePlantSNMaskPrefixSuffix(System.String,System.String,Epicor.Mfg.BO.PartDataSet)">
+            <param name="ipSNMaskPrefix">Part.SNMaskPrefix</param>
+            <param name="ipSNMaskSuffix">Part.SNMaskSuffix</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangeQtyBearing(System.Boolean,Epicor.Mfg.BO.PartDataSet)">
+            <param name="newQtyBearing">The new QtyBearing value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangeSNMask(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <param name="ipSNMask">Part.SNMask</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangeUOMClassID(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the UOM Class ID is modified
+            </summary>
+            <param name="uomClassID">proposed UOMClassId.</param>
+            <param name="ds">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChangeUOMCode(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the UOM code is modified
+            </summary>
+            <param name="uomCode">proposed uomCode.</param>
+            <param name="ds">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ChanginPartRestrictSubs(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This methods to validate duplicated substances on the part.
+            </summary>
+            <param name="pSubstanceID">Substance ID</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">Part dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.CheckAltMethodForDelete(System.String,System.String,System.String,System.String@)">
+            <summary>
+            This method should be called before allowing delete a revision. This method
+            will determine if the revision being deleted has alternate methods. If it
+            does, the user will be prompted with a message indicating this revision
+            has alternate methods and if they want to delete those records as well. If
+            the user answers yes, the delete can procede. If they answer no, the delete
+            should be canceled. This method will return a string that contains the text
+            of the message to ask the user.
+            </summary>
+            <param name="ipPartNum">The current Part Number</param>
+            <param name="ipRevisionNum">The current Revision Number</param>
+            <param name="ipAltMethod">The current Alt Method</param>
+            <param name="opMessage">The message to be displayed to the user if alt methods exist.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.CheckConfigForDelete(System.String,System.String,System.Boolean,System.String@)">
+            <summary>
+            This method should be called before allowing delete a part or revision. This method
+            will determine if the part/revision being deleted has an existing configuration. If it
+            does, the user will be prompted with a message indicating this part/revision
+            has an existing configuration and if they want to delete those records as well. If
+            the user answers yes, the delete can procede. If they answer no, the delete
+            should be canceled. This method will return a string that contains the text
+            of the message to ask the user.
+            </summary>
+            <param name="ipPartNum">The current Part Number</param>
+            <param name="ipRevisionNum">The current Revision Number</param>
+            <param name="ipForRevision">True if deleting revision record</param>
+            <param name="opMessage">The message to be displayed to the user if configuration exist.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.CheckCOOPercents(System.String)">
+            <summary>
+            CheckCOOPercents
+            </summary>
+            <param name="cPartNum">The Part Number</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.CheckDuplicateCOO(System.String,System.Int32)">
+            <summary>
+            Check Duplicate COO - called only when the coo is changed or a partcoo is being added
+            </summary>
+            <param name="ipPart">The Part Number</param>
+            <param name="ipOrigCountry">proposed origin country</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.CheckPartChanges(Epicor.Mfg.BO.PartDataSet,System.String@,System.String@)">
+            <summary>
+            Checks to see if certain fields changed on the part record. If they did,
+            a question is presented to the user asking if these changes should carry over
+            to the PartPlant records. Changes to Part serial format fields builds a separate message.
+            This method returns the text of the message
+            to ask. When adding a part it is not necessary to call this method because the
+            default (current) PartPlant record already uses the Part fields to default from.
+            The user can answer yes or no, but processing doesn't stop based on the answer.
+            The answers should be stored in the dataset in field Part.UpdatePartPlant and Part.UpdateSNPartPlant.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+            <param name="cPartChangedMsgText">The message text </param>
+            <param name="cPartSNChangedMsgText">The message for change of part serial format changes text </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.DeleteMRPJobs(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Deletes MRP Jobs.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.DeleteMultiLevelRules(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Used when the SourceType field of PartPlant is being changed to SalesKit and
+            a multi-level configuration exists for the part. This method is called after
+            displaying the message returned from ChangePartPlantSourceType. This method
+            will unapprove the revision and configuration, set the single-level configuration
+            flag to true on the configuration, and then delete any existing lower level rules
+            that may have been created for the configuration.
+            </summary>
+            <param name="newSourceType">The new SourceType value.</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset. IMPORTANT, the PartPlant record must be sent as modified otherwise you will received error that record cannot be found.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.DuplicatePart(System.String,System.String,System.String)">
+            <summary>
+            To create a new part by duplicating from another.
+            </summary>
+            <returns type="Epicor.Mfg.BO.PartDataSet">The Part Data Set</returns>
+            <param name="sourcePartNum">Existing part number that will be duplicated.</param>
+            <param name="targetPartNum">New part number that will be created.</param>
+            <param name="targetPartDescription">Description that will be used for the new part.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetGlbPartList(System.String)">
+            <summary>
+            This method returns the GlbPart dataset based on a delimited list of
+            GlbPartNum values passed in.
+            If GlbPart.PartNum = chr(9) that means the record has been skipped and should be shown
+            at the bottom of the browser. (GlbPart only)
+            </summary>
+            <param name="glbPartNumList">Delimited list of GlbPartNum values </param>
+            <returns type="Epicor.Mfg.BO.GlbPartDataSet">The GlbPart data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetListByWarehouseBin(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Gets a part list depending on the warehouse/bin conditions.
+            </summary>
+            <param name="partWhereClause">The where clause the filters the part records.</param>
+            <param name="warehouseCode">Search records for this warehouse code only.</param>
+            <param name="binType">Search records for this specific bin type.</param>
+            <param name="zoneID">Get parts for this zone.</param>
+            <param name="fromBinNum">From bin range.</param>
+            <param name="toBinNum">To bin range.</param>
+            <param name="excludeNonNettable">Exclude non-nettable bins.</param>
+            <returns type="Epicor.Mfg.BO.PartListDataSet">Result dataset.</returns>
+            <param name="pageSize">Page size.</param>
+            <param name="absolutePage">Absolute page.</param>
+            <param name="morePages">More pages.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetListFilterPlants(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Filter parts by plant. Call normal GetList method.
+            </summary>
+            <param name="whereClause">Whereclause.</param>
+            <returns type="Epicor.Mfg.BO.PartListDataSet">The PartList data set</returns>
+            <param name="pageSize">Page size.</param>
+            <param name="absolutePage">Absolute page.</param>
+            <param name="morePages">More pages.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetListFromSelectedKeys(Epicor.Mfg.BO.PartListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This methods will return all of the Part recordsthat meet the selection criteria.
+            This method will try to mirror the functionality of the base GetList method but
+            since we are populating a temp table we need our own public method.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.PartListDataSet">The dataset with pupolated key values</param>
+            <param name="pageSize">The page size, used only for UI adaptor </param>
+            <param name="absolutePage">The absolute page, used only for the UI adaptor </param>
+            <param name="morePages">More pages?, used only for the UI adaptor </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetPartForLink(System.String)">
+            <summary>
+            This returns the Part dataset for linking.
+            </summary>
+            <param name="partNum">Global PartNum field on the GlbPart record to link </param>
+            <returns type="Epicor.Mfg.BO.PartDataSet">The Part data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetPartWhereUsed(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            To return a PartWhereUsed dataset for a given part number
+            </summary>
+            <param name="whereUsedPartNum">Part number which you want the where used dataset for.</param>
+            <returns type="Epicor.Mfg.BO.PartWhereUsedDataSet">The PartWhereUsed data set</returns>
+            <param name="pageSize">pageSize</param>
+            <param name="absolutePage">absolutePage</param>
+            <param name="morePages">morePages</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GetPartXRefInfo(System.String@,System.String,System.String,System.String@,System.String@,System.Boolean@)">
+            <summary>
+            This method defaults PartAdvisor fields when the PartNum field changes
+            </summary>
+            <param name="partNum"> Proposed PartNumber change</param>
+            <param name="sysRowID"> RowID of the selected record. Skips find part logic if this has a value. </param>
+            <param name="rowType"> RowType of the selected record. Only used with sysRowID. </param>
+            <param name="serialWarning">Warning message if the InvTransfer line contains serial numbers</param>
+            <param name="questionString">If the part is being changed to something different than what was on the order, ask if the user wants to continue </param>
+            <param name="multipleMatch"> Multiple matches were found by FindPart </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.GlbPartsExist(System.Boolean@)">
+            <summary>
+            This method checks if GlbPart records exist or not. Can be used
+            to determine if the option to link/unlink parts is available.
+            </summary>
+            <param name="glbPartsExist">Yes - they do exist; No - they do not exist</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.HasIntrastat(System.Boolean@)">
+            <summary>
+            To determine if the Current company is using Intrastat
+            The following fields on the part table are controlled by this method
+            part.CommodityCode
+            part.ISOrigCountry
+            part.ISSuppUnitsFactor
+            </summary>
+            <param name="hasIntrastat">The current company has intrastat</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.IsRunOutOnHand(System.String,System.Boolean@)">
+            <summary>
+            This method receives a part and returns a flag if the part is a run out part with on hand quantity.
+            </summary>
+            <param name="partNum">The PartNum</param>
+            <param name="isRunOutOnHand">The flag indicating if it is a run out part with on hand qty</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.LinkGlbPart(System.String,System.String,Epicor.Mfg.BO.GlbPartDataSet,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This method performs the actual logic behind linking a Part. It is run after
+            the PreLinkGlbPart method which determines the Part Number to link to.
+            If the Part Number is for a Part that already exists, the GlbPart information is
+            translated and then copied to the PartDataSet as an update.
+            If the Part Number is for a new Part, the GlbPart information is translated and then
+            copied to the PartDataSet as an Add. Until the update method is run on Part record
+            the Link process is not completed.
+            </summary>
+            <param name="glbCompany">Global Company field on the GlbPart record to link </param>
+            <param name="glbPartNum">Global PartNum field on the GlbPart record to link </param>
+            <param name="ds" type="Epicor.Mfg.BO.GlbPartDataSet">The GlbPart data set</param>
+            <param name="ds1" type="Epicor.Mfg.BO.PartDataSet">The Part data set</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.OnChangePESUNAT(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            This method should be called after SUNAT fieds has been changed.
+            </summary>
+            <param name="codeType"> User code type </param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.OnChangePlant(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Run after Plant changing.
+            </summary>
+            <param name="plantCode"> Code of Plant which is changed to </param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The Part data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.partCOOAfterGetRows">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.PreLinkGlbPart(System.String,System.String,Epicor.Mfg.BO.GlbPartDataSet,System.String@)">
+            <summary>
+            Linking a GlbPart record ties a global record to a new or existing Vendor record so
+            that any changes made to the GlbPart record in another company are automatically copied
+            to any linked Parts.
+            This method performs the pre link logic to check of okay to link or get the new partnum
+            to create/link to. Will be run before LinkGlbPart which actually creates/updates a
+            Part record and will send the modified record back for update. When the Link "button" is
+            originally selected, the LinkPartNum will be defaulted to the GlbPartNum field. It will then
+            check to see if this part number is available for Use. If available for use the system will return a
+            question asking the user if they want to use this number. If the answer is no, then the user
+            either needs to select an existing Part Number to link to or enter a brand new number. You will
+            run this method until the user answer is yes. Then the LinkGlbPart method is called.
+            </summary>
+            <param name="glbCompany"> Global Company field on the GlbPart record to link </param>
+            <param name="glbPartNum"> Global VendorNum field on the GlbPart record to link </param>
+            <param name="ds" type="Epicor.Mfg.BO.GlbPartDataSet">The GlbPart data set</param>
+            <param name="vMessage"> Returns a message the user needs to respond yes or no to. If the
+            user answers no, then they need to update the LinkPartNum field and then run this method
+            again to test the new PartNum they want to link to </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.PromptForPassword(System.Boolean@)">
+            <summary>
+            This method checks the BMSyst record to see if a password should prompted for and then
+            validated by the ValidatePassword method in UserFile BO. Run this before ApproveAll,
+            CheckECORevApproved, CheckIn, CheckInAll, and CheckOut.
+            </summary>
+            <param name="opPromptForPassword">Logical value stating whether the UI should prompt to
+            validate for a password. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.RenamePartRev(System.String,System.String,System.String,System.String)">
+            <summary>
+            To rename a part revision for Vista Non BOM customers.
+            </summary>
+            <param name="sourcePartNum">Existing part number.</param>
+            <param name="sourcePartRevNum">Existing part revision number that will be renamed.</param>
+            <param name="targetPartRevNum">New part revision number for the existing part revision.</param>
+            <param name="targetPartRevDescription">New description for the existing part revision.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.SetMRPRecalcFlag(System.String,System.String)">
+            <summary>
+            This method is used to enable the MRPRecalcFlag on PartPlant. This
+            field determines whether the part is picked up in MRP Net Change mode or not.
+            </summary>
+            <param name="partNum">Part to update MRP flag for </param>
+            <param name="plant">Plant to update MRP flag for, blank for all plants of part</param>
+            <returns type="Epicor.Mfg.BO.PartDataSet">Part Dataset </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.SetNextGeneratedLotNum(Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Set the Next Generated Lot Number.
+            </summary>
+            <param name="ds">The Part Dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.SkipGlbPart(System.String,System.String,Epicor.Mfg.BO.GlbPartDataSet)">
+            <summary>
+            This method performs the logic behind the skip option for GlbPart
+            Skip sets the Skipped flag to true.
+            If the PartNum field is not blank will error out
+            </summary>
+            <param name="glbCompany"> Global Company field on the GlbPart record to skip </param>
+            <param name="glbPartNum"> Global PartNum field on the GlbPart record to skip </param>
+            <param name="ds" type="Epicor.Mfg.BO.GlbPartDataSet">The GlbPart data set</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.UnlinkGlbPart(System.String,System.String,Epicor.Mfg.BO.GlbPartDataSet)">
+            <summary>
+            This method performs the logic behind the unlink option for GlbPart
+            Unlink - clears the PartNum field in GlbPart. Returns the Part DataSet
+            </summary>
+            <param name="glbCompany"> Global Company field on the GlbPart record to unlink </param>
+            <param name="glbPartNum"> Global CustNum field on the GlbPart record to unlink </param>
+            <param name="ds" type="Epicor.Mfg.BO.GlbPartDataSet">The GlbPart data set</param>
+            <returns type="Epicor.Mfg.BO.PartDataSet">The Part data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ValidateInspection(System.String,System.String,System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to validate the Inspection control fields. (EQM)
+            </summary>
+            <param name="ipProposedInspPlan">The new proposed InspPlanPartNum value</param>
+            <param name="ipProposedSpecId">The new proposed SpecID value</param>
+            <param name="iptable">table name</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ValidateInspVendor(System.String,Epicor.Mfg.BO.PartDataSet)">
+            <summary>
+            Method to validate the Inspection control fields. (EQM)
+            </summary>
+            <param name="ipProposedVendor">The new proposed Vendor value</param>
+            <param name="ds" type="Epicor.Mfg.BO.PartDataSet">The PartDataset.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ValidateUOMConvChange(System.String,System.String,System.String)">
+            <summary>
+            Method to validate the changing of UOM Class when performing UOM conversion
+            </summary>
+            <param name="ipPartNum">Part number.</param>
+            <param name="ipConvUOMClassID">The new proposed UOM Class to convert to.</param>
+            <param name="ipConvUOMIUM">The new proposed UOM IUM to convert to.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.ValidateUOMConvTrans(System.String,System.String,System.String)">
+            <summary>
+            Method to validate there are no open transactions when changing UOM Class
+            </summary>
+            <param name="ipPartNum">Part number.</param>
+            <param name="ipConvUOMClassID">The new proposed UOM Class to convert to.</param>
+            <param name="ipConvUOMIUM">The new proposed UOM IUM to convert to.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.PartExists(System.String)">
+            <summary>
+            A public method to test if a given part number already exists in the part table.
+            Return True if it exists else returns False.
+            </summary>
+            <param name="partNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.PartIsActive(System.String)">
+            <summary>
+            A public method to test if a given part number already is active in the part table.
+            Return True if it exists else returns False.
+            </summary>
+            <param name="partNumber"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IPart.PartIsSalesKit(System.String,System.Boolean@,System.Boolean@)">
+            <summary>
+            Returns true if the given PartNumber is defined as a Sales Kit
+            on the current plant (PartPlant.SourceType = "K")
+            </summary>
+            <param name="partNumber"></param>
+            <param name="isSalesKit"></param>
+            <param name="isPhantom"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartListDataSet.PartListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartListDataSet.PartListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartListDataSet.PartListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartRefDesWhereUsedDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartWhereUsedDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartRefDesWhereUsedRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartWhereUsedRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartRefDesWhereUsedRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PartWhereUsedDataSet.PartWhereUsedRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartDimDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartLangDescDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPlantDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictionDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictSubstDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAuditDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOPartDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanAttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspVendDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartSubsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartBinInfoDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPCDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartWhseDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartUOMDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.EntityGLCDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.TaxExemptDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartDimRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartLangDescRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPlantRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictionRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictSubstRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAuditRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOPartRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanAttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspVendRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartSubsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartBinInfoRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPCRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartWhseRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartUOMRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.EntityGLCRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.TaxExemptRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartDimRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartLangDescRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPlantRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictionRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRestrictSubstRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartAuditRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartCOPartRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspPlanAttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartRevInspVendRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartSubsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartBinInfoRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartPCRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartWhseRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.PartUOMRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.EntityGLCRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtPartDataSet.TaxExemptRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>
