@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 
 namespace Epicoil.Library.Repositories.Planning
@@ -11,6 +12,13 @@ namespace Epicoil.Library.Repositories.Planning
     {
         IEnumerable<DieModel> GetDieAll(string plant);
 
-        DiePatternModel GetPattern(string patternID);
+        DieModel GetByID(string plant, string dieID);
+
+        DiePatternModel GetDiePattern(string patternID);
+
+        IEnumerable<DieModel> Save(DieModel data, SessionInfo epiSession);
+
+        string MaxID();
     }
+
 }
