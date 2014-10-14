@@ -1299,6 +1299,7 @@
             this.butWorkOrder.TabIndex = 0;
             this.butWorkOrder.Text = "Work Order No.";
             this.butWorkOrder.UseVisualStyleBackColor = true;
+            this.butWorkOrder.Click += new System.EventHandler(this.butWorkOrder_Click);
             // 
             // toolStrip2
             // 
