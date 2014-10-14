@@ -285,6 +285,15 @@ namespace Epicoil.Appl.Presentations.Planning
         }
         #endregion
 
+        private void butWorkOrder_Click(object sender, EventArgs e)
+        {
+            using (CoilBackRuleDialog frm = new CoilBackRuleDialog())
+            {
+                frm.ShowDialog();
+                txtWorkOrderNum.Text = frm.Code;
+            }
+        }
+
         #region Method
         #endregion
     }

@@ -358,7 +358,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(1362, 673);
+            this.splitContainer1.Size = new System.Drawing.Size(1020, 673);
             this.splitContainer1.SplitterDistance = 189;
             this.splitContainer1.TabIndex = 38;
             // 
@@ -369,7 +369,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1362, 189);
+            this.panel1.Size = new System.Drawing.Size(1020, 189);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -386,7 +386,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1360, 187);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1018, 187);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel2
@@ -415,7 +415,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(537, 181);
+            this.panel2.Size = new System.Drawing.Size(401, 181);
             this.panel2.TabIndex = 0;
             // 
             // cmbArivePort
@@ -638,9 +638,9 @@
             this.panel3.Controls.Add(this.label5);
             this.panel3.Controls.Add(this.label4);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(546, 3);
+            this.panel3.Location = new System.Drawing.Point(410, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(539, 181);
+            this.panel3.Size = new System.Drawing.Size(402, 181);
             this.panel3.TabIndex = 1;
             // 
             // txtCustomerName
@@ -786,9 +786,9 @@
             this.panel4.Controls.Add(this.txtIMEXRemark);
             this.panel4.Controls.Add(this.label15);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(1091, 3);
+            this.panel4.Location = new System.Drawing.Point(818, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(266, 181);
+            this.panel4.Size = new System.Drawing.Size(197, 181);
             this.panel4.TabIndex = 2;
             this.panel4.Visible = false;
             // 
@@ -809,7 +809,7 @@
             this.txtIMEXRemark.Location = new System.Drawing.Point(0, 30);
             this.txtIMEXRemark.Multiline = true;
             this.txtIMEXRemark.Name = "txtIMEXRemark";
-            this.txtIMEXRemark.Size = new System.Drawing.Size(266, 151);
+            this.txtIMEXRemark.Size = new System.Drawing.Size(197, 151);
             this.txtIMEXRemark.TabIndex = 1;
             // 
             // label15
@@ -829,7 +829,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1362, 458);
+            this.tabControl1.Size = new System.Drawing.Size(1020, 458);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
@@ -840,7 +840,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1354, 432);
+            this.tabPage1.Size = new System.Drawing.Size(1012, 432);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Import";
             // 
@@ -857,8 +857,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer2.Size = new System.Drawing.Size(1348, 388);
-            this.splitContainer2.SplitterDistance = 653;
+            this.splitContainer2.Size = new System.Drawing.Size(1006, 388);
+            this.splitContainer2.SplitterDistance = 487;
             this.splitContainer2.TabIndex = 1;
             // 
             // dgvList
@@ -910,7 +910,7 @@
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(653, 388);
+            this.dgvList.Size = new System.Drawing.Size(487, 388);
             this.dgvList.TabIndex = 16;
             this.dgvList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellClick);
             // 
@@ -1048,7 +1048,7 @@
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(691, 388);
+            this.dataGridView1.Size = new System.Drawing.Size(515, 388);
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
@@ -1170,7 +1170,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 3);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1348, 38);
+            this.panel5.Size = new System.Drawing.Size(1006, 38);
             this.panel5.TabIndex = 0;
             // 
             // txtReceiptWeight
@@ -1583,7 +1583,7 @@
             // 
             this.statusStrip1.Location = new System.Drawing.Point(0, 458);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1362, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1020, 22);
             this.statusStrip1.TabIndex = 15;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1608,7 +1608,7 @@
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(1362, 34);
+            this.toolStrip2.Size = new System.Drawing.Size(1020, 34);
             this.toolStrip2.TabIndex = 36;
             this.toolStrip2.Text = "Tool Bar";
             // 
@@ -1724,7 +1724,7 @@
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.ShowItemToolTips = true;
-            this.menuStrip1.Size = new System.Drawing.Size(1362, 23);
+            this.menuStrip1.Size = new System.Drawing.Size(1020, 23);
             this.menuStrip1.TabIndex = 37;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -1893,7 +1893,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(1362, 730);
+            this.ClientSize = new System.Drawing.Size(1020, 730);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.menuStrip1);

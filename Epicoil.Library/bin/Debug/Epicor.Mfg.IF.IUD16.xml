@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IUD16</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16DataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16AttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16Row">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16AttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16RowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16DataSet.UD16AttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IUD16">
+            <summary> User Defined Table16
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetNewUD16(Epicor.Mfg.BO.UD16DataSet,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetNewUD16Attch(Epicor.Mfg.BO.UD16DataSet,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.DeleteByID(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetByID(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetRows(System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.Update(Epicor.Mfg.BO.UD16DataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.UpdateExt(Epicor.Mfg.BO.UpdExtUD16DataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IUD16.GetaNewUD16(Epicor.Mfg.BO.UD16DataSet)">
+            <summary>
+            Get new for UD16.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.UD16DataSet">User Defined Table16 Data set</param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16ListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16ListDataSet.UD16ListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16ListDataSet.UD16ListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UD16ListDataSet.UD16ListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16DataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16AttchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16Row">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16AttchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16RowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtUD16DataSet.UD16AttchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>
