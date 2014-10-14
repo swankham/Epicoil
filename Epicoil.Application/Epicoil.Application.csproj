@@ -113,6 +113,12 @@
     <Compile Include="Presentations\Common\CoatingDialog.Designer.cs">
       <DependentUpon>CoatingDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Common\CoilBackRuleDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Common\CoilBackRuleDialog.Designer.cs">
+      <DependentUpon>CoilBackRuleDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Common\CommodityDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +155,12 @@
     <Compile Include="Presentations\Common\POLineDialog.Designer.cs">
       <DependentUpon>POLineDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Common\SaleSectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Common\SaleSectionDialog.Designer.cs">
+      <DependentUpon>SaleSectionDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Common\SpecDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +184,10 @@
     </Compile>
     <Compile Include="Presentations\Planning\DieMaster.Designer.cs">
       <DependentUpon>DieMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\Planning\DiePatternMaster.cs" />
+    <Compile Include="Presentations\Planning\DiePatternMaster.Designer.cs">
+      <DependentUpon>DiePatternMaster.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentations\Planning\WorkEntry.cs">
       <SubType>Form</SubType>
@@ -267,6 +283,9 @@
     <EmbeddedResource Include="Presentations\Common\CoatingDialog.resx">
       <DependentUpon>CoatingDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Common\CoilBackRuleDialog.resx">
+      <DependentUpon>CoilBackRuleDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Common\CommodityDialog.resx">
       <DependentUpon>CommodityDialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -296,6 +315,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\DieMaster.resx">
       <DependentUpon>DieMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\DiePatternMaster.resx">
+      <DependentUpon>DiePatternMaster.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\WorkEntry.resx">
       <DependentUpon>WorkEntry.cs</DependentUpon>

@@ -126,6 +126,7 @@
     <Compile Include="Models\Common\CategoryGroupModel.cs" />
     <Compile Include="Models\Common\ClassMasterModel.cs" />
     <Compile Include="Models\Common\CoatingModel.cs" />
+    <Compile Include="Models\Common\CoilBackRuleModel.cs" />
     <Compile Include="Models\Common\CommodityModel.cs" />
     <Compile Include="Models\Common\CurrenciesModel.cs" />
     <Compile Include="Models\Common\CustomerModel.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Models\Common\POLineModel.cs" />
     <Compile Include="Models\Common\PortModel.cs" />
     <Compile Include="Models\Common\ResourceModel.cs" />
+    <Compile Include="Models\Common\SaleSectionModel.cs" />
     <Compile Include="Models\Common\SpecModel.cs" />
     <Compile Include="Models\Common\SupplierModel.cs" />
     <Compile Include="Models\Common\UserCodeModel.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Repositories\Common\Interface\IBussinessTypeRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICategoryGroupRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICoatingRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICoilBackRuleRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICommodity.cs" />
     <Compile Include="Repositories\Common\Interface\ICurrenciesRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICustomerRepo.cs" />
@@ -175,6 +178,7 @@
     <Compile Include="Repositories\Common\Interface\IPackingStyle.cs" />
     <Compile Include="Repositories\Common\Interface\IPORepo.cs" />
     <Compile Include="Repositories\Common\Interface\IResourceRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ISaleSectionRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISpecRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISupplierRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IUserCodeRepo.cs" />
@@ -182,6 +186,7 @@
     <Compile Include="Repositories\Common\Repository\BussinessTypeRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CategoryGroupRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CoatingRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\CoilBackRuleRepo.cs" />
     <Compile Include="Repositories\Common\Repository\Commodity.cs" />
     <Compile Include="Repositories\Common\Repository\CurrenciesRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CustomerRepo.cs" />
@@ -192,6 +197,7 @@
     <Compile Include="Repositories\Common\Repository\PackingStyle.cs" />
     <Compile Include="Repositories\Common\Repository\PORepo.cs" />
     <Compile Include="Repositories\Common\Repository\ResourceRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\SaleSectionRepo.cs" />
     <Compile Include="Repositories\Common\Repository\SpecRepo.cs" />
     <Compile Include="Repositories\Common\Repository\SupplierRepo.cs" />
     <Compile Include="Repositories\Common\Repository\UserCodeRepo.cs" />
