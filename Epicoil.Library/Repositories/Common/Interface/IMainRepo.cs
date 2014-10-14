@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Epicoil.Library.Models;
 
-namespace EpiCoil.Repositories
+namespace Epicoil.Repositories
 {
     public interface IMainRepo
     {

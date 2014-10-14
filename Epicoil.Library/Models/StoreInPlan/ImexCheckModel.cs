@@ -5,8 +5,6 @@ namespace Epicoil.Library.Models.StoreInPlan
 {
     public class ImexCheckModel : StoreInPlanHead
     {
-        //public string UserGroup { get; set; }
-
         public string UpdatedBy { get; set; }
 
         public DateTime LastUpdateDate { get; set; }

@@ -5,8 +5,6 @@ using System.Configuration;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using Epicoil.Appl.Base;
-using System.Collections.Generic;
 
 namespace Epicoil.Appl
 {
@@ -77,7 +75,8 @@ namespace Epicoil.Appl
                 Type formtype = asm.GetType(formname);
                 Form f = (Form)Activator.CreateInstance(formtype, new object[] { epiSession, null }) as Form;
                 f.Show();
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Form path not valid.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;

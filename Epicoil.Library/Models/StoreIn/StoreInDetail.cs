@@ -36,6 +36,8 @@ namespace Epicoil.Library.Models.StoreIn
             this.PONum = (int)row["PONum"].GetInt();
             this.VendorNum = (int)row["VendorNum"].GetInt();
             this.StoreInNum = (string)row["StoreInNum"].GetString();
+            this.NGStatus = (int)row["NGFlag"].GetInt();
+            this.NGRemark = (string)row["NGRemark"].GetString();
         }
     }
 }

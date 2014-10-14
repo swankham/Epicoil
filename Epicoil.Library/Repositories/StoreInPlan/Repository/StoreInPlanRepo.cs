@@ -37,6 +37,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
+                                            WHERE stph.OpenStatus = 1
                                           ORDER BY stph.StoreInPlanId DESC");
 
             return Repository.Instance.GetMany<StoreInPlanDialogModel>(sql);
@@ -61,7 +62,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInFlag = {0} AND stph.ImexConfirm = 1 AND stph.TransactionType = '2'
+                                          WHERE stph.StoreInFlag = {0} AND stph.ImexConfirm = 1 AND stph.TransactionType = '2' AND stph.OpenStatus = 1
 										  GROUP BY stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType, busi.Character01
 		                                        , stph.SupplierCode, ven.Name, ISNULL(stph.CurrencyCode,'THB')
@@ -95,7 +96,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInFlag = 0 AND stph.ImexConfirm = 1 AND stph.TransactionType IN ('0','1')
+                                          WHERE stph.StoreInFlag = 0 AND stph.ImexConfirm = 1 AND stph.TransactionType IN ('0','1') AND stph.OpenStatus = 1
 										  GROUP BY stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType, busi.Character01
 		                                        , stph.SupplierCode, ven.Name, ISNULL(stph.CurrencyCode,'THB')
@@ -127,7 +128,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-	                                      WHERE stph.TransactionType = 0 and stph.StoreInFlag = 0
+	                                      WHERE stph.TransactionType = 0 and stph.StoreInFlag = 0 AND stph.OpenStatus = 1
                                           ORDER BY stph.StoreInPlanId, stph.LastUpdateDate DESC");
 
             return Repository.Instance.GetMany<ImexCheckModel>(sql);
@@ -164,9 +165,10 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInPlanNum = N'{0}' ", Id);
+                                          WHERE stph.StoreInPlanNum = N'{0}' AND stph.OpenStatus = 1", Id);
 
             result = Repository.Instance.GetOne<StoreInPlanHead>(sql);
+
             if (result != null)
             {
                 result.CurrenciesList = this._repoCurr.GetAll();
@@ -192,6 +194,8 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             {
                 query = GetAll(model.ImportFlag, model.TransactionType);
             }
+
+            query = query.Where(p => p.InvoiceDate >= model.InvoiceDateFrom && p.InvoiceDate <= model.InvoiceDateTo);
 
             if (!string.IsNullOrEmpty(model.StoreInPlanNum)) { query = query.Where(p => p.StoreInPlanNum.Contains(model.StoreInPlanNum)); }
             if (!string.IsNullOrEmpty(model.InvoiceNum)) { query = query.Where(p => p.InvoiceNum.Contains(model.InvoiceNum)); }
@@ -718,6 +722,21 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             decimal num = new decimal(0);
             string sql = string.Format(@"SELECT * FROM ud15 WHERE Key1 = N'{0}'", MCSSNo);
             return Repository.Instance.GetOne<decimal>(sql, "Number06");
+        }
+
+        public bool CheckStoreInFlagExist(int StoreInPlanId)
+        {
+            string sql = string.Format(@"SELECT COUNT(*) AS CNT FROM ucc_ic_StoreInPlanDtl
+                                            WHERE StoreInPlanId = {0} and StoreInFlag = 1", StoreInPlanId);
+
+            return (Repository.Instance.GetOne<int>(sql, "CNT") == 0) ? false : true;
+        }
+
+        public bool CloseStoreInPlan(int storeInPlanId)
+        {
+            string sql = string.Format(@"UPDATE ucc_ic_StoreInPlanHead SET OpenStatus = 0 WHERE StoreInPlanId = {0}", storeInPlanId);
+            Repository.Instance.ExecuteWithTransaction(sql, "Close StoreInPlan");
+            return true;
         }
     }
 }

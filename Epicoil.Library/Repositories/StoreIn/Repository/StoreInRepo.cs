@@ -21,21 +21,21 @@ namespace Epicoil.Library.Repositories.StoreIn
             this._repoWhs = new WharehouseRepo();
         }
 
-        private enum Month
-        {
-            A,
-            B,
-            C,
-            D,
-            E,
-            F,
-            G,
-            H,
-            I,
-            J,
-            K,
-            L
-        }
+        //private enum Month
+        //{
+        //    A,
+        //    B,
+        //    C,
+        //    D,
+        //    E,
+        //    F,
+        //    G,
+        //    H,
+        //    I,
+        //    J,
+        //    K,
+        //    L
+        //}
 
         public int GenerateId(string PlantID)
         {
@@ -66,7 +66,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 --LEFT JOIN ucc_ic_StoreInHead stin ON(stph.StoreInPlanId = stin.StoreInPlanId)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInPlanId = {0} ", Id);
+                                          WHERE stph.StoreInPlanId = {0} AND stph.OpenStatus = 1", Id);
 
             return Repository.Instance.GetOne<StoreInHead>(sql);
         }
@@ -79,7 +79,7 @@ namespace Epicoil.Library.Repositories.StoreIn
             {
                 Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
                 Part myPart = new Part(currSession.ConnectionPool);
-
+                
                 PartDataSet dsPart = new PartDataSet();
                 myPart.GetNewPart(dsPart);
 
@@ -211,7 +211,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 
         public string GetSerialByFormat(int StartId)
         {
-            return (DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM")) - 1) + StartId.ToString("00000"));
+            return (DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM"))) + StartId.ToString("00000"));
         }
 
         public int RunningPart()
@@ -373,7 +373,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 
                 Repository.Instance.ExecuteWithTransaction(sql, "Insert StoreIn Line");
                 UpdateStoreInPlanDetail(item.LineID);
-                UpdatePORelBeforeReceipt(item.PONum, item.POLine);
+                //UpdatePORelBeforeReceipt(item.PONum, item.POLine);
                 this.UpdateStoreInFlag(item.StoreInPlanId);
             }
             msg = "";
@@ -406,6 +406,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                             , max(dtl.Category) as Category, max(dtl.CoatingCode) as CoatingCode, max(dtl.StoreInFlag) as StoreInFlag
                                             , max(cmdt.Character01) as CommodityName, max(spec.Character01) as SpecName, max(coat.Character01) as CoatingName
                                             , 0 as TransactionID, 0 as TransactionLineID
+                                            , 0 as NGFlag, '' as NGRemark
                                         FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                         LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                         LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -429,6 +430,45 @@ namespace Epicoil.Library.Repositories.StoreIn
             return Repository.Instance.GetMany<StoreInDetail>(sql);
         }
 
+        public IEnumerable<StoreInDetail> GetDetailByStoreIn(int storeInId)
+        {
+            string sql = string.Format(@"SELECT dtl.StoreInPlanId, max(dtl.LineId) as LineId,ISNULL(poh.PONum, 0) as PONum, ISNULL(poh.ShortChar10,'N/A') as PONumber, ISNULL(pod.POLine,dtl.SeqId) as POLine, ISNULL(poh.ShortChar02, max(dtl.SContract)) as SaleContract
+	                                        , 0 as WeightBalnce, 0 as RemainingWeight, ISNULL(pod.ShortChar01,dtl.CommodityCode) as CommodityCode, ISNULL(pod.ShortChar02,dtl.SpecCode) as SpecCode
+	                                        , ISNULL(pod.Number01,dtl.Thick) as Thick, ISNULL(pod.Number02, dtl.Width) as Width, ISNULL(pod.Number03, dtl.Length) as Length, max(dtl.ArticleNo) as ArticleNo
+	                                        , sum(dtl.Quantity) as Quantity, sum(dtl.Weight) as Weight,max(dtl.Place) as Place, dtl.Note, GETDATE() as ReceiptDate
+	                                        , 0 as TaxPaid, max(dtl.PackingNo) as PackingNumber, pod.Number05 as DutyRate,pod.XOrderQty as OpenBalance
+                                            , null as StoreInId, '' as StockNo , '' as Location, poh.VendorNum, '' as StoreInNum
+                                            , pod.Character02, pod.Character03, eusr.Name as EndUserName, actusr.Name as ActlEndUserName
+                                            , pod.ShortChar04 as BussinessType, busi.Character01 as BussinessTypeName, max(dtl.SeqId) as SeqId
+                                            , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, pod.PartNum
+                                            , max(dtl.Category) as Category, max(dtl.CoatingCode) as CoatingCode, max(dtl.StoreInFlag) as StoreInFlag
+                                            , max(cmdt.Character01) as CommodityName, max(spec.Character01) as SpecName, max(coat.Character01) as CoatingName
+                                            , sth.TransactionID, 0 as TransactionLineID
+                                            , 0 as NGFlag, '' as NGRemark
+                                        FROM ucc_ic_StoreInHead sth
+										LEFT JOIN ucc_ic_StoreInDetail std ON(sth.TransactionID = std.TransactionID)
+										LEFT JOIN ucc_ic_StoreInPlanDtl dtl ON(std.StoreInPlanLineId = dtl.LineId)
+                                        LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
+                                        LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
+										LEFT JOIN Customer eusr ON(pod.Character02 = eusr.CustID)
+										LEFT JOIN Customer actusr ON(pod.Character03 = actusr.CustID)
+                                        LEFT JOIN UD25 busi ON(pod.ShortChar04 = busi.Key1)
+                                        LEFT JOIN UD29 cmdt ON(ISNULL(pod.ShortChar01,dtl.CommodityCode) = cmdt.Key1)
+	                                    LEFT JOIN UD30 spec ON(ISNULL(pod.ShortChar02,dtl.SpecCode) = spec.Key2 and pod.Character01 = spec.Key1)
+	                                    LEFT JOIN UD31 coat ON(dtl.CoatingCode = coat.Key1)
+                                        WHERE sth.StoreInId = {0}
+                                        GROUP BY dtl.StoreInPlanId, sth.TransactionID
+                                            , poh.PONum, poh.ShortChar10, pod.POLine, poh.ShortChar02
+	                                        , pod.ShortChar01, pod.ShortChar02, eusr.Name, actusr.Name
+	                                        , pod.Number01, pod.Number02, pod.Number03, poh.VendorNum
+                                            , pod.Number18, pod.DocUnitCost, pod.PartNum
+	                                        , dtl.Note, pod.Character02, pod.Character03, pod.ShortChar04, busi.Character01
+                                            , dtl.CommodityCode, dtl.SpecCode, dtl.Thick, dtl.Width, dtl.Length, ISNULL(pod.POLine,dtl.SeqId)
+	                                        , pod.Number05,pod.XOrderQty", storeInId);
+
+            return Repository.Instance.GetMany<StoreInDetail>(sql);
+        }
+
         public IEnumerable<StoreInDetail> GetDetailArticle(int storeInPlantId, string PONum, int POLine)
         {
             IEnumerable<StoreInDetail> result;
@@ -444,6 +484,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                                 , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, dtl.Category, dtl.SContract, dtl.CoatingCode, dtl.StoreInFlag
                                                 , cmdt.Character01 as CommodityName, spec.Character01 as SpecName, coat.Character01 as CoatingName
                                                 , sti.TransactionID, sti.TransactionLineID
+                                                , sti.NGFlag, sti.NGRemark
                                             FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                             LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                             LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -482,6 +523,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                                 , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, dtl.Category, dtl.SContract, dtl.CoatingCode, dtl.StoreInFlag
                                                 , cmdt.Character01 as CommodityName, spec.Character01 as SpecName, coat.Character01 as CoatingName
                                                 , sti.TransactionID, sti.TransactionLineID
+                                                , sti.NGFlag, sti.NGRemark
                                             FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                             LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                             LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -501,7 +543,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 
         /// <summary>
         /// Get line detail for...
-        /// - UpdateStoreInPlanDetail() in Exteranl
+        /// - UpdateStoreInPlanDetail() in External
         /// - GetNewPart() in Epicor.
         /// </summary>
         /// <param name="LineId"></param>
@@ -520,6 +562,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                                 , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, dtl.Category, dtl.SContract, dtl.CoatingCode, dtl.StoreInFlag
                                                 , cmdt.Character01 as CommodityName, spec.Character01 as SpecName, coat.Character01 as CoatingName
                                                 , sti.TransactionID, sti.TransactionLineID
+                                                , sti.NGFlag, sti.NGRemark
                                             FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                             LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                             LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -603,7 +646,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                         dr["OurUnitCost"] = 1;
                         //dr["VendorQty"] = result.Weight;
                         dr["ReceivedComplete"] = false;
-                        dr["DocUnitCost"] = 20;
+                        dr["DocUnitCost"] = 20;  //ถ้าเป็น PO Sample จะเป็น 0 (Else result.UnitPrice)
                         dr["POTransValue"] = 20;
                         dr["ExtTransValue"] = 20;
                         dr["InputOurQty"] = result.Weight;
@@ -722,7 +765,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                            WHERE stin.StoreInId = {0} AND stin.Plant = N'{1}'", storeInID, Plant);
+                                            WHERE stin.StoreInId = {0} AND stin.Plant = N'{1}' AND stph.OpenStatus = 1", storeInID, Plant);
 
             return Repository.Instance.GetOne<StoreInHead>(sql);
         }
@@ -819,7 +862,8 @@ namespace Epicoil.Library.Repositories.StoreIn
 
         public IEnumerable<StoreInHeadBalance> GetStoreInBalanceAll(string Plant, int StoreInPlanId)
         {
-            string sql = string.Format(@"SELECT stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
+            string sql = string.Format(@"--Section First get Store In Plan list was Store In.
+                                        SELECT stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType as BussinessType, busi.Character01 as BussinessTypeName
 		                                        , stph.SupplierCode, ven.Name as SupplierName, ISNULL(stph.CurrencyCode,'THB') as CurrencyCode
 		                                        , stph.MakerCode, maker.Character01 as MakerName
@@ -836,10 +880,11 @@ namespace Epicoil.Library.Repositories.StoreIn
 	                                            LEFT JOIN UD19 maker ON(stph.MakerCode = maker.Key1)
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
-                                                LEFT JOIN ucc_ic_StoreInHead stin ON(stph.StoreInPlanId = stin.StoreInPlanId)
+                                                INNER JOIN ucc_ic_StoreInHead stin ON(stph.StoreInPlanId = stin.StoreInPlanId)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.Plant = '{0}' AND stph.StoreInPlanId = {1}
+                                          WHERE stph.Plant = '{0}' AND stph.StoreInPlanId = {1} AND stph.OpenStatus = 1
                                         UNION ALL
+                                        --Section second get Store In Plan list are not Store In.
                                         SELECT stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType as BussinessType, busi.Character01 as BussinessTypeName
 		                                        , stph.SupplierCode, ven.Name as SupplierName, ISNULL(stph.CurrencyCode,'THB') as CurrencyCode
@@ -858,7 +903,7 @@ namespace Epicoil.Library.Repositories.StoreIn
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.Plant = '{0}' AND stph.StoreInPlanId = {1} AND stph.StoreInFlag = 0", Plant, StoreInPlanId);
+                                          WHERE stph.Plant = '{0}' AND stph.StoreInPlanId = {1} AND stph.StoreInFlag = 0 AND stph.OpenStatus = 1", Plant, StoreInPlanId);
 
             return Repository.Instance.GetMany<StoreInHeadBalance>(sql);
         }
@@ -875,6 +920,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                                                 , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, dtl.Category, dtl.SContract, ISNULL(pod.ShortChar03, dtl.CoatingCode) as CoatingCode, pod.PartNum, dtl.StoreInFlag
                                                                 , cmdt.Character01 as CommodityName, spec.Character01 as SpecName, coat.Character01 as CoatingName
 												                , sti.TransactionID, sti.TransactionLineID, sti.StoreInId, 0 as VendorNum, '' as StoreInNum
+                                                                , sti.NGFlag, sti.NGRemark
                                                             FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                                             LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                                             LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -897,6 +943,7 @@ namespace Epicoil.Library.Repositories.StoreIn
                                                                 , pod.Number18 as Amount, pod.DocUnitCost as UnitPrice, dtl.Category, dtl.SContract, ISNULL(pod.ShortChar03, dtl.CoatingCode) as CoatingCode, pod.PartNum, 0 as StoreInFlag
                                                                 , cmdt.Character01 as CommodityName, spec.Character01 as SpecName, coat.Character01 as CoatingName
 												                , 0 as TransactionID, 0 as TransactionLineID, 0 as StoreInId, 0 as VendorNum, '' as StoreInNum
+                                                                , 0 as NGFlag, '' as NGRemark
                                                             FROM dbo.ucc_ic_StoreInPlanDtl dtl
                                                             LEFT OUTER JOIN POHeader poh ON(dtl.PONum = poh.PONum)
                                                             LEFT OUTER JOIN PODetail pod ON(poh.PONum = pod.PONum and dtl.POLine = pod.POLine)
@@ -922,14 +969,63 @@ namespace Epicoil.Library.Repositories.StoreIn
             string subSql = "";
             if (rows == 0)
             {
-                subSql = string.Format(@"UPDATE ucc_ic_StoreInPlanHead SET StoreInFlag = 1 WHERE StoreInPlanId = {0}" + Environment.NewLine, storeInPlanId);
+                subSql = string.Format(@"UPDATE ucc_ic_StoreInPlanHead SET StoreInFlag = 1, OpenStatus = 0 WHERE StoreInPlanId = {0}" + Environment.NewLine, storeInPlanId);
             }
             else
             {
                 subSql = string.Format(@"UPDATE ucc_ic_StoreInPlanHead SET StoreInFlag = 0 WHERE StoreInPlanId = {0}" + Environment.NewLine, storeInPlanId);
             }
-
+           
             Repository.Instance.ExecuteWithTransaction(subSql, "Update acknowledgement");
+        }
+
+        public bool UpdatePOReleaseQty(Session epiSession, string poNum, out string msgError)
+        {
+            msgError = "";
+            bool result = false;
+
+            if (epiSession.IsValidSession(epiSession.SessionID, epiSession.UserID))
+            {
+                try
+                {
+                    PO myPO = new PO(epiSession.ConnectionPool);
+
+                    bool morePages = false;
+                    PODataSet dsPO = new PODataSet();
+                    dsPO = myPO.GetRows("PONum = " + poNum, "", "", "", "", "", "", "", "", 0, 1, out morePages);
+
+                    DataRow drPO = dsPO.Tables["POHeader"].Select().Single();
+                    string cal = drPO["ShortChar06"].ToString();
+
+                    DataTable POLine = dsPO.Tables["PODetail"];
+                    int i = 0;
+
+                    foreach (DataRow list in dsPO.Tables["PORel"].Rows)
+                    {
+                        var item = POLine.Rows[i].ItemArray.ToArray();
+                        decimal qty = 0;
+
+                        if (cal == "1" || cal == "3" || cal == "4") { qty = Convert.ToDecimal(item[67].ToString()); }       //67=Number11, 
+                        else if (cal == "2") { qty = Convert.ToDecimal(item[76].ToString()); }      //76=Number20
+
+                        list.BeginEdit();
+                        list["XRelQty"] = qty;
+                        list["RelQty"] = qty;
+                        list["BaseQty"] = qty;
+                        list.EndEdit();
+                        i++;
+                    }
+
+                    myPO.Update(dsPO);
+                    result = true;
+                    epiSession.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    msgError = "Error : " + ex;                
+                }
+            }
+            return result;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Epicoil.Library.Models.StoreIn
         {
             get
             {
-                if (Possession == 2) return "ITAKU"; else return "JISHAZAI";
+                if (Possession == 2) return "ITAKU"; else if (Possession == 0) return "JISHAZAI"; else return "";
             }
         }
 

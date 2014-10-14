@@ -1,5 +1,6 @@
 ﻿using Epicoil.Library.Frameworks;
 using Epicoil.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,9 +10,16 @@ namespace Epicoil.Library.Repositories
     {
         public IEnumerable<BussinessTypeModel> GetAll()
         {
-            string sql = string.Format(@"select * from UD25 order by key1 asc");
+            try
+            {
+                string sql = string.Format(@"select * from UD25 order by key1 asc");
 
-            return Repository.Instance.GetMany<BussinessTypeModel>(sql);
+                return Repository.Instance.GetMany<BussinessTypeModel>(sql);
+            }
+            catch (Exception x)
+            {
+                return null;
+            }
         }
 
         public IEnumerable<BussinessTypeModel> GetByFilter(BussinessTypeModel model)
@@ -26,8 +34,15 @@ namespace Epicoil.Library.Repositories
 
         public BussinessTypeModel GetByID(string code)
         {
-            string sql = string.Format(@"Select * from UD25 where Key1 = N'{0}'", code);
-            return Repository.Instance.GetOne<BussinessTypeModel>(sql);
+            try
+            {
+                string sql = string.Format(@"Select * from UD25 where Key1 = N'{0}'", code);
+                return Repository.Instance.GetOne<BussinessTypeModel>(sql);
+            }catch(Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 }

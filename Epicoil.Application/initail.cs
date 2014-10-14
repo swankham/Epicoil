@@ -1,27 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Drawing;
-
+using System.Windows.Forms;
 
 namespace Epicoil.Appl
 {
-    static class initail
+    internal static class initail
     {
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            Application.EnableVisualStyles();
+            Application.EnableVisualStyles();            
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainMPI());
         }
 
-        static void ApplyTheme(Form f)
+        private static void ApplyTheme(Form f)
         {
-            f.Font = new Font("Microsoft Sans Serif", 8.25f); f.BackColor = Color.FromArgb(190, 208, 232);
+            f.Font = new Font("Microsoft Sans Serif", 8.25f);
+            //f.ForeColor = Color.White;
+            f.BackColor = Color.FromArgb(222, 235, 250);            
         }
 
         public static void UseTheme(Form form)
@@ -29,5 +26,4 @@ namespace Epicoil.Appl
             ApplyTheme(form);
         }
     }
-
 }

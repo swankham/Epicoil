@@ -2,7 +2,7 @@
 using Epicoil.Library.Models;
 using System.Collections.Generic;
 
-namespace EpiCoil.Repositories
+namespace Epicoil.Repositories
 {
     public class MainRepo : IMainRepo
     {
@@ -14,7 +14,7 @@ namespace EpiCoil.Repositories
 
         public IEnumerable<ItemMenuModel> GetAllItem(int ParentID)
         {
-            string sql = string.Format(@"SELECT * FROM epc_menus WHERE ParentMenuID = {0} AND MenuLevel = 4 ORDER BY Sequence ASC", ParentID);
+            string sql = string.Format(@"SELECT * FROM epc_menus WHERE ParentMenuID = {0} AND Enabled = 1 AND MenuLevel = 4 ORDER BY Sequence ASC", ParentID);
             return Repository.Instance.GetMany<ItemMenuModel>(sql);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Epicoil.Library.Frameworks;
 using Epicoil.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,9 +10,9 @@ namespace Epicoil.Library.Repositories
     {
         public IEnumerable<MakerModel> GetAll()
         {
-            string sql = string.Format(@"select * from UD19 order by key1 asc");
-
-            return Repository.Instance.GetMany<MakerModel>(sql);
+                string sql = string.Format(@"select * from UD19 order by key1 asc");
+                var resut = Repository.Instance.GetMany<MakerModel>(sql);
+                return resut;
         }
 
         public IEnumerable<MakerModel> GetByFilter(MakerModel model)

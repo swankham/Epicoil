@@ -31,6 +31,8 @@ namespace Epicoil.Library.Repositories.StoreIn
 
         IEnumerable<StoreInDetail> GetDetail(int storeInPlantId);
 
+        IEnumerable<StoreInDetail> GetDetailByStoreIn(int storeInId);
+
         IEnumerable<StoreInDetail> GetDetailArticle(int storeInPlantId, string PONum, int POLine);
 
         IEnumerable<StoreInDetail> GetDetailArticleITAKU(int LineID);
@@ -60,5 +62,7 @@ namespace Epicoil.Library.Repositories.StoreIn
         IEnumerable<StoreInDetail> GetDetailArticle(int storeInPlantId, decimal TransactionID);
 
         void UpdateStoreInFlag(int storeInPlanId);
+
+        bool UpdatePOReleaseQty(Epicor.Mfg.Core.Session epiSession, string poNum, out string msgError);
     }
 }

@@ -47,6 +47,15 @@
     <Reference Include="Epicor.Mfg.Core.Session">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.Session.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Office.Tools, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -80,189 +89,252 @@
     <Compile Include="MainMPI.Designer.cs">
       <DependentUpon>MainMPI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Billing\BillingIssue.cs">
+    <Compile Include="Presentations\Billing\BillingIssue.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Billing\BillingIssue.Designer.cs">
+    <Compile Include="Presentations\Billing\BillingIssue.Designer.cs">
       <DependentUpon>BillingIssue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\BussinessTypeDialog.cs">
+    <Compile Include="Presentations\Common\BussinessTypeDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\BussinessTypeDialog.Designer.cs">
+    <Compile Include="Presentations\Common\BussinessTypeDialog.Designer.cs">
       <DependentUpon>BussinessTypeDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\CategoryGroupDialog.cs">
+    <Compile Include="Presentations\Common\CategoryGroupDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\CategoryGroupDialog.Designer.cs">
+    <Compile Include="Presentations\Common\CategoryGroupDialog.Designer.cs">
       <DependentUpon>CategoryGroupDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\CoatingDialog.cs">
+    <Compile Include="Presentations\Common\CoatingDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\CoatingDialog.Designer.cs">
+    <Compile Include="Presentations\Common\CoatingDialog.Designer.cs">
       <DependentUpon>CoatingDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\CommodityDialog.cs">
+    <Compile Include="Presentations\Common\CommodityDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\CommodityDialog.Designer.cs">
+    <Compile Include="Presentations\Common\CommodityDialog.Designer.cs">
       <DependentUpon>CommodityDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\CustomerDailog.cs">
+    <Compile Include="Presentations\Common\CustomerDailog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\CustomerDailog.Designer.cs">
+    <Compile Include="Presentations\Common\CustomerDailog.Designer.cs">
       <DependentUpon>CustomerDailog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\MakerDialog.cs">
+    <Compile Include="Presentations\Common\MakerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\MakerDialog.Designer.cs">
+    <Compile Include="Presentations\Common\MakerDialog.Designer.cs">
       <DependentUpon>MakerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\MillDialog.cs">
+    <Compile Include="Presentations\Common\MillDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\MillDialog.Designer.cs">
+    <Compile Include="Presentations\Common\MillDialog.Designer.cs">
       <DependentUpon>MillDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\PackingStyleDialog.cs">
+    <Compile Include="Presentations\Common\PackingStyleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\PackingStyleDialog.Designer.cs">
+    <Compile Include="Presentations\Common\PackingStyleDialog.Designer.cs">
       <DependentUpon>PackingStyleDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\POLineDialog.cs">
+    <Compile Include="Presentations\Common\POLineDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\POLineDialog.Designer.cs">
+    <Compile Include="Presentations\Common\POLineDialog.Designer.cs">
       <DependentUpon>POLineDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\SpecDialog.cs">
+    <Compile Include="Presentations\Common\SpecDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\SpecDialog.Designer.cs">
+    <Compile Include="Presentations\Common\SpecDialog.Designer.cs">
       <DependentUpon>SpecDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Common\SupplierDialog.cs">
+    <Compile Include="Presentations\Common\SupplierDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Common\SupplierDialog.Designer.cs">
+    <Compile Include="Presentations\Common\SupplierDialog.Designer.cs">
       <DependentUpon>SupplierDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Login.cs">
+    <Compile Include="Presentations\Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\Login.Designer.cs">
+    <Compile Include="Presentations\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\ImexConfirmCheckList.cs">
+    <Compile Include="Presentations\Planning\DieMaster.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\ImexConfirmCheckList.Designer.cs">
+    <Compile Include="Presentations\Planning\DieMaster.Designer.cs">
+      <DependentUpon>DieMaster.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\Planning\WorkEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\WorkEntry.Designer.cs">
+      <DependentUpon>WorkEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\Progression.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Progression.Designer.cs">
+      <DependentUpon>Progression.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\StoreInPlan\ImexConfirmCheckList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\StoreInPlan\ImexConfirmCheckList.Designer.cs">
       <DependentUpon>ImexConfirmCheckList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingCustomerDialog.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingCustomerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingCustomerDialog.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingCustomerDialog.Designer.cs">
       <DependentUpon>MappingCustomerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingMakerDialog.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingMakerDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingMakerDialog.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingMakerDialog.Designer.cs">
       <DependentUpon>MappingMakerDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingSpecDialog.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingSpecDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\MappingSpecDialog.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\MappingSpecDialog.Designer.cs">
       <DependentUpon>MappingSpecDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\ReceiveArticleDialog.cs">
+    <Compile Include="Presentations\StoreInPlan\ReceiveArticleDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\ReceiveArticleDialog.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\ReceiveArticleDialog.Designer.cs">
       <DependentUpon>ReceiveArticleDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\StoreInPlan.cs">
+    <Compile Include="Presentations\StoreInPlan\StoreInPlan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\StoreInPlan.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\StoreInPlan.Designer.cs">
       <DependentUpon>StoreInPlan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\StoreInPlanDialog.cs">
+    <Compile Include="Presentations\StoreInPlan\StoreInPlanDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Presentation\StoreInPlan\StoreInPlanDialog.Designer.cs">
+    <Compile Include="Presentations\StoreInPlan\StoreInPlanDialog.Designer.cs">
       <DependentUpon>StoreInPlanDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\StoreIn\StoreIn.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\StoreIn\StoreIn.Designer.cs">
+      <DependentUpon>StoreIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\StoreIn\StoreInBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\StoreIn\StoreInBalance.designer.cs">
+      <DependentUpon>StoreInBalance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\TQA\MCSSDashborad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\TQA\MCSSDashborad.designer.cs">
+      <DependentUpon>MCSSDashborad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\TQA\McssMaster.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\TQA\McssMaster.designer.cs">
+      <DependentUpon>McssMaster.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainMPI.resx">
       <DependentUpon>MainMPI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Billing\BillingIssue.resx">
+    <EmbeddedResource Include="Presentations\Billing\BillingIssue.resx">
       <DependentUpon>BillingIssue.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\BussinessTypeDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\BussinessTypeDialog.resx">
       <DependentUpon>BussinessTypeDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\CategoryGroupDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\CategoryGroupDialog.resx">
       <DependentUpon>CategoryGroupDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\CoatingDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\CoatingDialog.resx">
       <DependentUpon>CoatingDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\CommodityDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\CommodityDialog.resx">
       <DependentUpon>CommodityDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\CustomerDailog.resx">
+    <EmbeddedResource Include="Presentations\Common\CustomerDailog.resx">
       <DependentUpon>CustomerDailog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\MakerDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\MakerDialog.resx">
       <DependentUpon>MakerDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\MillDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\MillDialog.resx">
       <DependentUpon>MillDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\PackingStyleDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\PackingStyleDialog.resx">
       <DependentUpon>PackingStyleDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\POLineDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\POLineDialog.resx">
       <DependentUpon>POLineDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\SpecDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\SpecDialog.resx">
       <DependentUpon>SpecDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Common\SupplierDialog.resx">
+    <EmbeddedResource Include="Presentations\Common\SupplierDialog.resx">
       <DependentUpon>SupplierDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\Login.resx">
+    <EmbeddedResource Include="Presentations\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\ImexConfirmCheckList.resx">
+    <EmbeddedResource Include="Presentations\Planning\DieMaster.resx">
+      <DependentUpon>DieMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\WorkEntry.resx">
+      <DependentUpon>WorkEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Progression.resx">
+      <DependentUpon>Progression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\StoreInPlan\ImexConfirmCheckList.resx">
       <DependentUpon>ImexConfirmCheckList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\MappingCustomerDialog.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\MappingCustomerDialog.resx">
       <DependentUpon>MappingCustomerDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\MappingMakerDialog.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\MappingMakerDialog.resx">
       <DependentUpon>MappingMakerDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\MappingSpecDialog.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\MappingSpecDialog.resx">
       <DependentUpon>MappingSpecDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\ReceiveArticleDialog.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\ReceiveArticleDialog.resx">
       <DependentUpon>ReceiveArticleDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\StoreInPlan.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\StoreInPlan.resx">
       <DependentUpon>StoreInPlan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Presentation\StoreInPlan\StoreInPlanDialog.resx">
+    <EmbeddedResource Include="Presentations\StoreInPlan\StoreInPlanDialog.resx">
       <DependentUpon>StoreInPlanDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\StoreIn\StoreIn.resx">
+      <DependentUpon>StoreIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\StoreIn\StoreInBalance.resx">
+      <DependentUpon>StoreInBalance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\TQA\MCSSDashborad.resx">
+      <DependentUpon>MCSSDashborad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\TQA\McssMaster.resx">
+      <DependentUpon>McssMaster.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -291,6 +363,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="epicor.ico" />
+    <None Include="Resources\cal1.png" />
+    <None Include="Resources\cal.png" />
+    <None Include="Resources\logo.png" />
+    <None Include="Resources\billing.png" />
+    <None Include="Resources\EPICOIL.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epicoil.Library\Epicoil.Library.csproj">
@@ -299,38 +376,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Presentation\Planning\" />
-    <Folder Include="Presentation\StockCount\" />
-    <Folder Include="Presentation\StoreIn\" />
+    <Folder Include="Presentations\StockCount\" />
   </ItemGroup>
   <ItemGroup>
-    <COMReference Include="Microsoft.Office.Core">
-      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
-      <VersionMajor>2</VersionMajor>
-      <VersionMinor>7</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Access.Dao">
-      <Guid>{4AC9E1DA-5BAD-4AC7-86E3-24F4CDCECA28}</Guid>
-      <VersionMajor>12</VersionMajor>
-      <VersionMinor>0</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
-    <COMReference Include="Microsoft.Office.Interop.Excel">
-      <Guid>{00020813-0000-0000-C000-000000000046}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>8</VersionMinor>
-      <Lcid>0</Lcid>
-      <WrapperTool>primary</WrapperTool>
-      <Isolated>False</Isolated>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </COMReference>
     <COMReference Include="VBIDE">
       <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
       <VersionMajor>5</VersionMajor>

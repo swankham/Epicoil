@@ -36,22 +36,21 @@
             this.ribbonTab1 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel1 = new System.Windows.Forms.RibbonPanel();
             this.ributLogOff = new System.Windows.Forms.RibbonButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.trvMenu = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.listView = new System.Windows.Forms.ListView();
             this.ribbonTab2 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel3 = new System.Windows.Forms.RibbonPanel();
             this.rbnbutLargeIcon = new System.Windows.Forms.RibbonButton();
-            this.rbnbutDetails = new System.Windows.Forms.RibbonButton();
             this.rbnbutSmallIcon = new System.Windows.Forms.RibbonButton();
             this.rbnbutList = new System.Windows.Forms.RibbonButton();
             this.rbnbutTile = new System.Windows.Forms.RibbonButton();
-            this.ribbon1 = new System.Windows.Forms.Ribbon();
             this.ribbonTab3 = new System.Windows.Forms.RibbonTab();
             this.ribbonPanel2 = new System.Windows.Forms.RibbonPanel();
             this.about = new System.Windows.Forms.RibbonButton();
             this.ribbonButton1 = new System.Windows.Forms.RibbonButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.trvMenu = new System.Windows.Forms.TreeView();
+            this.listView = new System.Windows.Forms.ListView();
+            this.ribbon1 = new System.Windows.Forms.Ribbon();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -78,35 +77,6 @@
             this.ributLogOff.ToolTip = "Store In Plan";
             this.ributLogOff.Click += new System.EventHandler(this.ributLogOff_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 132);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.trvMenu);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.listView);
-            this.splitContainer1.Size = new System.Drawing.Size(1122, 455);
-            this.splitContainer1.SplitterDistance = 234;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // trvMenu
-            // 
-            this.trvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.trvMenu.ImageIndex = 1;
-            this.trvMenu.ImageList = this.imageList1;
-            this.trvMenu.Location = new System.Drawing.Point(0, 0);
-            this.trvMenu.Name = "trvMenu";
-            this.trvMenu.SelectedImageIndex = 0;
-            this.trvMenu.Size = new System.Drawing.Size(234, 455);
-            this.trvMenu.TabIndex = 0;
-            this.trvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvMenu_NodeMouseClick);
-            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -114,22 +84,6 @@
             this.imageList1.Images.SetKeyName(0, "open16.png");
             this.imageList1.Images.SetKeyName(1, "folder_closed.png");
             this.imageList1.Images.SetKeyName(2, "application.png");
-            // 
-            // listView
-            // 
-            this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
-            this.listView.LargeImageList = this.imageList1;
-            this.listView.Location = new System.Drawing.Point(0, 0);
-            this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(884, 455);
-            this.listView.SmallImageList = this.imageList1;
-            this.listView.TabIndex = 0;
-            this.listView.UseCompatibleStateImageBehavior = false;
-            this.listView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // ribbonTab2
             // 
@@ -139,7 +93,6 @@
             // ribbonPanel3
             // 
             this.ribbonPanel3.Items.Add(this.rbnbutLargeIcon);
-            this.ribbonPanel3.Items.Add(this.rbnbutDetails);
             this.ribbonPanel3.Items.Add(this.rbnbutSmallIcon);
             this.ribbonPanel3.Items.Add(this.rbnbutList);
             this.ribbonPanel3.Items.Add(this.rbnbutTile);
@@ -150,33 +103,103 @@
             this.rbnbutLargeIcon.Image = global::Epicoil.Appl.Properties.Resources.view_large;
             this.rbnbutLargeIcon.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutLargeIcon.SmallImage")));
             this.rbnbutLargeIcon.Text = "LargeIcon";
-            // 
-            // rbnbutDetails
-            // 
-            this.rbnbutDetails.Image = global::Epicoil.Appl.Properties.Resources.view_details;
-            this.rbnbutDetails.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutDetails.SmallImage")));
-            this.rbnbutDetails.Text = "Details";
+            this.rbnbutLargeIcon.Click += new System.EventHandler(this.rbnbutLargeIcon_Click);
             // 
             // rbnbutSmallIcon
             // 
             this.rbnbutSmallIcon.Image = global::Epicoil.Appl.Properties.Resources.view_small;
             this.rbnbutSmallIcon.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutSmallIcon.SmallImage")));
             this.rbnbutSmallIcon.Text = "SmallIcon";
+            this.rbnbutSmallIcon.Click += new System.EventHandler(this.rbnbutSmallIcon_Click);
             // 
             // rbnbutList
             // 
             this.rbnbutList.Image = global::Epicoil.Appl.Properties.Resources._1410297591_text_list_bullets;
             this.rbnbutList.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutList.SmallImage")));
             this.rbnbutList.Text = "List";
+            this.rbnbutList.Click += new System.EventHandler(this.rbnbutList_Click);
             // 
             // rbnbutTile
             // 
             this.rbnbutTile.Image = global::Epicoil.Appl.Properties.Resources.view_detailed;
             this.rbnbutTile.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutTile.SmallImage")));
             this.rbnbutTile.Text = "Tile";
+            this.rbnbutTile.Click += new System.EventHandler(this.rbnbutTile_Click);
+            // 
+            // ribbonTab3
+            // 
+            this.ribbonTab3.Panels.Add(this.ribbonPanel2);
+            this.ribbonTab3.Text = "HELP";
+            // 
+            // ribbonPanel2
+            // 
+            this.ribbonPanel2.Items.Add(this.about);
+            this.ribbonPanel2.Text = "";
+            // 
+            // about
+            // 
+            this.about.Image = global::Epicoil.Appl.Properties.Resources.addons32;
+            this.about.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large;
+            this.about.SmallImage = global::Epicoil.Appl.Properties.Resources.addons32;
+            this.about.Text = "About";
+            // 
+            // ribbonButton1
+            // 
+            this.ribbonButton1.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.Image")));
+            this.ribbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
+            this.ribbonButton1.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.SmallImage")));
+            this.ribbonButton1.Text = "ribbonButton1";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 93);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.trvMenu);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listView);
+            this.splitContainer1.Size = new System.Drawing.Size(1122, 494);
+            this.splitContainer1.SplitterDistance = 234;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // trvMenu
+            // 
+            this.trvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.trvMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.trvMenu.ImageIndex = 1;
+            this.trvMenu.ImageList = this.imageList1;
+            this.trvMenu.Location = new System.Drawing.Point(0, 0);
+            this.trvMenu.Name = "trvMenu";
+            this.trvMenu.SelectedImageIndex = 0;
+            this.trvMenu.Size = new System.Drawing.Size(234, 494);
+            this.trvMenu.TabIndex = 0;
+            this.trvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvMenu_NodeMouseClick);
+            // 
+            // listView
+            // 
+            this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.listView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+            this.listView.LargeImageList = this.imageList1;
+            this.listView.Location = new System.Drawing.Point(0, 0);
+            this.listView.Name = "listView";
+            this.listView.Size = new System.Drawing.Size(884, 494);
+            this.listView.SmallImageList = this.imageList1;
+            this.listView.TabIndex = 0;
+            this.listView.UseCompatibleStateImageBehavior = false;
+            this.listView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listView_MouseDoubleClick);
             // 
             // ribbon1
             // 
+            this.ribbon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
             this.ribbon1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ribbon1.Location = new System.Drawing.Point(0, 0);
             this.ribbon1.Minimized = false;
@@ -203,41 +226,19 @@
             this.ribbon1.QuickAcessToolbar.TextAlignment = System.Windows.Forms.RibbonItem.RibbonItemTextAlignment.Center;
             this.ribbon1.QuickAcessToolbar.Visible = false;
             this.ribbon1.RibbonTabFont = new System.Drawing.Font("Trebuchet MS", 10F);
-            this.ribbon1.Size = new System.Drawing.Size(1122, 132);
+            this.ribbon1.Size = new System.Drawing.Size(1122, 93);
             this.ribbon1.TabIndex = 0;
             this.ribbon1.Tabs.Add(this.ribbonTab1);
             this.ribbon1.Tabs.Add(this.ribbonTab2);
             this.ribbon1.Tabs.Add(this.ribbonTab3);
-            this.ribbon1.TabsMargin = new System.Windows.Forms.Padding(12, 26, 20, 0);
+            this.ribbon1.TabsMargin = new System.Windows.Forms.Padding(12, 1, 20, 0);
             this.ribbon1.Text = "ribbon1";
             this.ribbon1.ThemeColor = System.Windows.Forms.RibbonTheme.Black;
             // 
-            // ribbonTab3
-            // 
-            this.ribbonTab3.Panels.Add(this.ribbonPanel2);
-            this.ribbonTab3.Text = "HELP";
-            // 
-            // ribbonPanel2
-            // 
-            this.ribbonPanel2.Items.Add(this.about);
-            this.ribbonPanel2.Text = "";
-            // 
-            // about
-            // 
-            this.about.Image = global::Epicoil.Appl.Properties.Resources.addons32;
-            this.about.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Large;
-            this.about.SmallImage = global::Epicoil.Appl.Properties.Resources.addons32;
-            this.about.Text = "About";
-            // 
-            // ribbonButton1
-            // 
-            this.ribbonButton1.Image = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.Image")));
-            this.ribbonButton1.MaxSizeMode = System.Windows.Forms.RibbonElementSizeMode.Compact;
-            this.ribbonButton1.SmallImage = ((System.Drawing.Image)(resources.GetObject("ribbonButton1.SmallImage")));
-            this.ribbonButton1.Text = "ribbonButton1";
-            // 
             // MainMPI
             // 
+            this.BackgroundImage = global::Epicoil.Appl.Properties.Resources._1400687324_folder_open;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1122, 587);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.ribbon1);
@@ -271,7 +272,6 @@
         private System.Windows.Forms.RibbonPanel ribbonPanel3;
         private System.Windows.Forms.RibbonButton ribbonButton1;
         private System.Windows.Forms.RibbonButton rbnbutLargeIcon;
-        private System.Windows.Forms.RibbonButton rbnbutDetails;
         private System.Windows.Forms.RibbonButton rbnbutSmallIcon;
         private System.Windows.Forms.RibbonButton rbnbutList;
         private System.Windows.Forms.RibbonButton rbnbutTile;

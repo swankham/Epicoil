@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
@@ -12,6 +8,11 @@ namespace Epicoil.Library.Models.StoreInPlan
         public int PONum { get; set; }
 
         public string PONumber { get; set; }
+
+        //Used by Store In Balance.
+        public DateTime InvoiceDateFrom { get; set; }
+
+        public DateTime InvoiceDateTo { get; set; }
 
         public override void DataBind(DataRow row)
         {

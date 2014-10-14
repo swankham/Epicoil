@@ -50,8 +50,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Models\Common\BussinessTypeModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Common\Repository\BussinessTypeRepoTests.cs" />
+    <Compile Include="Repositories\Common\Repository\MakerRepoTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epicoil.Library\Epicoil.Library.csproj">

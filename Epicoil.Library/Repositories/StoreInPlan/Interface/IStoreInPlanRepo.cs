@@ -39,6 +39,8 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 
         bool CheckInvoiceExisting(string Invoice);
 
+        bool CheckStoreInFlagExist(int StoreInPlanId);
+
         bool CheckArticleExisting(string Article, int LineID = 0);
 
         IEnumerable<StoreInPlanDetail> GetDetail(int storeInPlantId);
@@ -58,5 +60,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
         IEnumerable<ExternalFileModel> GetFileDetail(string FileName, string Sheet);
 
         decimal GetMCSSAllowance(string MCSSNo);
+
+        bool CloseStoreInPlan(int storeInPlanId);
     }
 }

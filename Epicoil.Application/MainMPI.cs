@@ -1,8 +1,6 @@
-﻿using EpiCoil.Repositories;
+﻿using Epicoil.Repositories;
 using System;
-using System.Reflection;
 using System.Windows.Forms;
-using Epicoil.Library.Models;
 
 namespace Epicoil.Appl
 {
@@ -29,14 +27,13 @@ namespace Epicoil.Appl
                 else
                 {
                     return;
-                }                
+                }
             }
             else
             {
                 this.Text = epiSession.PlantName;
                 return;
             }
-            //trvMenu.Nodes.Clear();
             AddMenu();
             trvMenu.ExpandAll();
         }
@@ -67,7 +64,7 @@ namespace Epicoil.Appl
         {
             Login frm = new Login();
             frm.ShowDialog();
-            
+
             if (epiSession != null)
             {
                 this.Text = epiSession.PlantName;
@@ -80,7 +77,7 @@ namespace Epicoil.Appl
         {
             listView.Clear();
             var item = _repo.GetAllItem(parentID);
-            listView.View = View.SmallIcon;
+            listView.View = View.List;
             int n = 0;
             foreach (var i in item)
             {
@@ -105,7 +102,31 @@ namespace Epicoil.Appl
                 string from = lvItem.Name;
                 ShowForm(from);
             }
+        }
 
+        private void rbnbutLargeIcon_Click(object sender, EventArgs e)
+        {
+            listView.View = View.LargeIcon;
+        }
+
+        private void rbnbutDetails_Click(object sender, EventArgs e)
+        {
+            listView.View = View.Details;
+        }
+
+        private void rbnbutSmallIcon_Click(object sender, EventArgs e)
+        {
+            listView.View = View.SmallIcon;
+        }
+
+        private void rbnbutList_Click(object sender, EventArgs e)
+        {
+            listView.View = View.List;
+        }
+
+        private void rbnbutTile_Click(object sender, EventArgs e)
+        {
+            listView.View = View.Tile;
         }
     }
 }
