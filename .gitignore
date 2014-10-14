@@ -27,3 +27,5 @@
 *.i*86
 *.x86_64
 *.hex
+Epicoil.Application/Presentations/Common/SaleSectionDialog.resx
+Epicoil.Application/obj/Debug/Epicoil.Appl.Presentations.SaleSectionDialog.resources
