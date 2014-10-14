@@ -168,5 +168,16 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
         }
+
+        private void btnPattern_Click(object sender, EventArgs e)
+        {
+            using (DiePatternMaster frm = new DiePatternMaster())
+            {
+                frm.ShowDialog();
+                txtPattern.Text = frm.PatternPara.ToString(); 
+                txtStrokePcs.Text =frm.StorePerPcsPara.ToString();
+                txtPatternRemark.Text = frm.RemarkPara.ToString();
+            }
+        }
     }
 }

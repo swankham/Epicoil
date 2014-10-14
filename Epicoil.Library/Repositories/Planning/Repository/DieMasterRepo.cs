@@ -77,5 +77,23 @@ namespace Epicoil.Library.Repositories.Planning
 
             return Repository.Instance.GetOne<string>(sql, "Key1");
         }
+
+
+        public IEnumerable<DiePatternModel> GetPatternAll()
+        {
+            string sql = string.Format(@"SELECT * FROM UD36 ORDER BY Key1 ASC");
+
+            return Repository.Instance.GetMany<DiePatternModel>(sql);
+        }
+
+
+        public IEnumerable<DiePatternModel> GetByFilter(DiePatternModel Filter)
+        {
+            IEnumerable<DiePatternModel> query = this.GetPatternAll();
+
+            if (!string.IsNullOrEmpty(Filter.PatternID)) query = query.Where(p => p.PatternID.ToString().ToUpper().Contains(Filter.PatternID.ToString().ToUpper()));
+         
+            return query;
+        }
     }
 }

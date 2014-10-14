@@ -37,7 +37,7 @@
             this.txtStrokePcs = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPattern = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnPattern = new System.Windows.Forms.Button();
             this.txtDieName = new System.Windows.Forms.TextBox();
             this.txtDieCode = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -94,7 +94,7 @@
             this.groupBox1.Controls.Add(this.txtStrokePcs);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtPattern);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btnPattern);
             this.groupBox1.Controls.Add(this.txtDieName);
             this.groupBox1.Controls.Add(this.txtDieCode);
             this.groupBox1.Controls.Add(this.label2);
@@ -143,14 +143,15 @@
             this.txtPattern.TextChanged += new System.EventHandler(this.txtPattern_TextChanged);
             this.txtPattern.Leave += new System.EventHandler(this.txtPattern_Leave);
             // 
-            // button2
+            // btnPattern
             // 
-            this.button2.Location = new System.Drawing.Point(6, 62);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(70, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "Pattern";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnPattern.Location = new System.Drawing.Point(6, 62);
+            this.btnPattern.Name = "btnPattern";
+            this.btnPattern.Size = new System.Drawing.Size(70, 23);
+            this.btnPattern.TabIndex = 4;
+            this.btnPattern.Text = "Pattern";
+            this.btnPattern.UseVisualStyleBackColor = true;
+            this.btnPattern.Click += new System.EventHandler(this.btnPattern_Click);
             // 
             // txtDieName
             // 
@@ -470,7 +471,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox txtPattern;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnPattern;
         private System.Windows.Forms.TextBox txtDieName;
         private System.Windows.Forms.TextBox txtDieCode;
         private System.Windows.Forms.Label label2;
