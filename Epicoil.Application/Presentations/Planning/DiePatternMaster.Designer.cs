@@ -1,6 +1,6 @@
-﻿namespace Epicoil.Appl.Presentations
+﻿namespace Epicoil.Appl.Presentations.Planning
 {
-    partial class CoatingDialog
+    partial class DiePatternMaster
     {
         /// <summary>
         /// Required designer variable.
@@ -30,17 +30,17 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtCoating = new System.Windows.Forms.TextBox();
+            this.txtPattern = new System.Windows.Forms.TextBox();
             this.butSearch = new System.Windows.Forms.Button();
             this.dgvList = new System.Windows.Forms.DataGridView();
-            this.coating = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.abbr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.frontplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.backplate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Pattern = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StorkePerPcs = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OP = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Block = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Remark = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,54 +63,36 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvList);
-            this.splitContainer1.Size = new System.Drawing.Size(483, 287);
-            this.splitContainer1.SplitterDistance = 59;
-            this.splitContainer1.TabIndex = 2;
+            this.splitContainer1.Size = new System.Drawing.Size(632, 450);
+            this.splitContainer1.SplitterDistance = 43;
+            this.splitContainer1.TabIndex = 3;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.txtName);
-            this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.txtCoating);
+            this.panel2.Controls.Add(this.txtPattern);
             this.panel2.Controls.Add(this.butSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(133, 0);
+            this.panel2.Location = new System.Drawing.Point(282, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(350, 59);
+            this.panel2.Size = new System.Drawing.Size(350, 43);
             this.panel2.TabIndex = 0;
-            // 
-            // txtName
-            // 
-            this.txtName.Location = new System.Drawing.Point(110, 33);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(137, 20);
-            this.txtName.TabIndex = 4;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(63, 36);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Name :";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(55, 12);
+            this.label1.Location = new System.Drawing.Point(57, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Coating :";
+            this.label1.Text = "Pattern :";
             // 
-            // txtCoating
+            // txtPattern
             // 
-            this.txtCoating.Location = new System.Drawing.Point(110, 9);
-            this.txtCoating.Name = "txtCoating";
-            this.txtCoating.Size = new System.Drawing.Size(137, 20);
-            this.txtCoating.TabIndex = 1;
+            this.txtPattern.Location = new System.Drawing.Point(110, 9);
+            this.txtPattern.Name = "txtPattern";
+            this.txtPattern.Size = new System.Drawing.Size(137, 20);
+            this.txtPattern.TabIndex = 1;
             // 
             // butSearch
             // 
@@ -136,11 +118,13 @@
             this.dgvList.ColumnHeadersHeight = 25;
             this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.coating,
-            this.name,
-            this.abbr,
-            this.frontplate,
-            this.backplate});
+            this.Pattern,
+            this.StorkePerPcs,
+            this.FR,
+            this.DR,
+            this.OP,
+            this.Block,
+            this.Remark});
             this.dgvList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvList.GridColor = System.Drawing.SystemColors.ActiveCaption;
             this.dgvList.Location = new System.Drawing.Point(0, 0);
@@ -149,60 +133,60 @@
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(483, 224);
+            this.dgvList.Size = new System.Drawing.Size(632, 403);
             this.dgvList.TabIndex = 15;
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
-            // coating
+            // Pattern
             // 
-            this.coating.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.coating.HeaderText = "Coating";
-            this.coating.Name = "coating";
-            this.coating.ReadOnly = true;
-            this.coating.Width = 68;
+            this.Pattern.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.Pattern.HeaderText = "Pattern";
+            this.Pattern.Name = "Pattern";
+            this.Pattern.ReadOnly = true;
+            this.Pattern.Width = 66;
             // 
-            // name
+            // StorkePerPcs
             // 
-            this.name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.name.HeaderText = "Name";
-            this.name.Name = "name";
-            this.name.ReadOnly = true;
-            this.name.Width = 60;
+            this.StorkePerPcs.HeaderText = "Storke/Pcs";
+            this.StorkePerPcs.Name = "StorkePerPcs";
+            this.StorkePerPcs.ReadOnly = true;
             // 
-            // abbr
+            // FR
             // 
-            this.abbr.HeaderText = "Abbr";
-            this.abbr.Name = "abbr";
-            this.abbr.ReadOnly = true;
+            this.FR.HeaderText = "FR";
+            this.FR.Name = "FR";
+            this.FR.ReadOnly = true;
             // 
-            // frontplate
+            // DR
             // 
-            this.frontplate.HeaderText = "Front Plate";
-            this.frontplate.Name = "frontplate";
-            this.frontplate.ReadOnly = true;
+            this.DR.HeaderText = "DR";
+            this.DR.Name = "DR";
+            this.DR.ReadOnly = true;
             // 
-            // backplate
+            // OP
             // 
-            this.backplate.HeaderText = "Back Plate";
-            this.backplate.Name = "backplate";
-            this.backplate.ReadOnly = true;
+            this.OP.HeaderText = "OP";
+            this.OP.Name = "OP";
             // 
-            // CoatingDialog
+            // Block
+            // 
+            this.Block.HeaderText = "Block";
+            this.Block.Name = "Block";
+            // 
+            // Remark
+            // 
+            this.Remark.HeaderText = "Remark";
+            this.Remark.Name = "Remark";
+            // 
+            // DiePatternMaster
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(483, 287);
+            this.ClientSize = new System.Drawing.Size(632, 450);
             this.Controls.Add(this.splitContainer1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "CoatingDialog";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Coating Dialog";
-            this.Load += new System.EventHandler(this.CoatingDialog_Load);
+            this.Name = "DiePatternMaster";
+            this.Text = "DiePatternMaster";
+            this.Load += new System.EventHandler(this.DiePatternMaster_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -219,15 +203,16 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtCoating;
+        private System.Windows.Forms.TextBox txtPattern;
         private System.Windows.Forms.Button butSearch;
         private System.Windows.Forms.DataGridView dgvList;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coating;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn abbr;
-        private System.Windows.Forms.DataGridViewTextBoxColumn frontplate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn backplate;
-        private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Pattern;
+        private System.Windows.Forms.DataGridViewTextBoxColumn StorkePerPcs;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DR;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Block;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Remark;
+
     }
 }

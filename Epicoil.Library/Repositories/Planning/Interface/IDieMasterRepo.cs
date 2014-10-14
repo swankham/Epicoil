@@ -12,6 +12,10 @@ namespace Epicoil.Library.Repositories.Planning
     {
         IEnumerable<DieModel> GetDieAll(string plant);
 
+        IEnumerable<DiePatternModel> GetPatternAll();
+
+        IEnumerable<DiePatternModel> GetByFilter(DiePatternModel Filter);
+
         DieModel GetByID(string plant, string dieID);
 
         DiePatternModel GetDiePattern(string patternID);
