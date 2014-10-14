@@ -159,3 +159,7 @@ D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicoil.Application.exe.conf
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csproj.ResolveComReference.cache
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
+D:\SourceTree\EPIC\Epicoil.Application\bin\Debug\Epicoil.Application.exe.config
+D:\SourceTree\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csproj.ResolveComReference.cache
+D:\SourceTree\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
+D:\SourceTree\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
