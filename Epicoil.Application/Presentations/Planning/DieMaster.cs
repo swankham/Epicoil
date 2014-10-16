@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Collections.Generic;
 using Epicoil.Appl;
 using Epicoil.Library.Frameworks;
 using Epicoil.Library.Models;
@@ -27,20 +28,15 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void DieMaster_Load(object sender, EventArgs e)
         {
-            InitailContent();
-        }
-
-        private void InitailContent()
-        {
-            SetGrid();
-        }
-
-        private void SetGrid()
-        {
             var result = _repo.GetDieAll(epiSession.PlantID);
+            SetGrid(result);
+        }
+
+        private void SetGrid(IEnumerable<DieModel> data)
+        {           
             dataGridView1.Rows.Clear();
             int i = 0;
-            foreach (var p in result)
+            foreach (var p in data)
             {
                 dataGridView1.Rows.Add(p.DieCode, p.DieName);
                 if (i % 2 == 1)
@@ -49,11 +45,6 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
                 i++;
             }
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void dataGridView1_CellClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
@@ -75,6 +66,13 @@ namespace Epicoil.Appl.Presentations.Planning
             txtPatternRemark.DataBindings.Clear();
             txtStrokePcs.DataBindings.Clear();
             txtDieRemark.DataBindings.Clear();
+            txtDieCode.Clear();
+            txtDieName.Clear();
+            txtPattern.Clear();
+            txtPatternRemark.Clear();
+            txtStrokePcs.Clear();
+            txtDieRemark.Clear();
+            
         }
 
         private void SetHeaderContent(DieModel  model)
@@ -126,11 +124,12 @@ namespace Epicoil.Appl.Presentations.Planning
             if (err == false)
             {
                 var result = _repo.Save(DieHeader, epiSession);
-                SetGrid();
+                SetGrid(result);
+                ClearHeaderContent();
             }
             else
             {
-                MessageBox.Show("sss");
+                MessageBox.Show("Please insert data before SAVE !!!","Die Master Warning");
             }
         }
 
@@ -151,11 +150,6 @@ namespace Epicoil.Appl.Presentations.Planning
             DieHeader.DieCode = "DIE" + dieCode.ToString("0000");
             SetHeaderContent(DieHeader);
             
-        }
-
-        private void txtPattern_TextChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void txtPattern_Leave(object sender, EventArgs e)
@@ -185,5 +179,131 @@ namespace Epicoil.Appl.Presentations.Planning
                 SetHeaderContent(DieHeader);
             }
         }
+
+        private void tlbRefresh_Click(object sender, EventArgs e)
+        {
+            DieMaster_Load(sender, e);
+            ClearHeaderContent();
+        }
+
+        private void tlbClear_Click(object sender, EventArgs e)
+        {
+            ClearHeaderContent();
+        }
+
+        private void tblDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count >= 1)
+            {
+                int iRow = dataGridView1.CurrentRow.Index;
+                _repo.DeleteLine(this.dataGridView1.Rows[iRow].Cells[0].Value.ToString().Trim());
+                DieMaster_Load(sender, e);
+                ClearHeaderContent();
+                
+            }
+        }
+
+        private void btnDieSearch_Click(object sender, EventArgs e)
+        {
+            DieModel model = new DieModel();
+            model.DieCode  = txtDieSearch.Text;
+            model.PlantID = epiSession.PlantID;
+            var result = _repo.GetByFilterDie(model);
+            SetGrid(result);
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string dieID = "";
+            int dieCode = 1;
+            dieID = _repo.MaxID();
+            dieID = dieID.Substring(3, 4);
+            int ignoreMe;
+            bool successfullyParsed = int.TryParse(dieID, out ignoreMe);
+            if (successfullyParsed)
+            {
+                dieCode = Convert.ToInt32(dieID) + 1;
+            }
+
+            DieHeader = new DieModel();
+            DieHeader.DieCode = "DIE" + dieCode.ToString("0000");
+            SetHeaderContent(DieHeader);
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bool err = false;
+            DieModel model = new DieModel();
+            if (txtDieCode.Text.Trim() == "")
+            {
+                err = true;
+            }
+            else
+            {
+                model.DieCode = txtDieCode.Text.Trim();
+            }
+
+            if (txtDieName.Text.Trim() == "")
+            {
+                err = true;
+            }
+            else
+            {
+                model.DieName = txtDieName.Text.Trim();
+            }
+
+            if (txtPattern.Text.Trim() == "")
+            {
+                err = true;
+            }
+            else
+            {
+                model.PatternID = txtPattern.Text.Trim();
+            }
+
+            model.DieRemark = txtDieRemark.Text.Trim();
+
+            if (err == false)
+            {
+                var result = _repo.Save(DieHeader, epiSession);
+                SetGrid(result);
+                ClearHeaderContent();
+            }
+            else
+            {
+                MessageBox.Show("Please insert data before SAVE !!!", "Die Master Warning");
+            }
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.Rows.Count >= 1)
+            {
+                int iRow = dataGridView1.CurrentRow.Index;
+                _repo.DeleteLine(this.dataGridView1.Rows[iRow].Cells[0].Value.ToString().Trim());
+                DieMaster_Load(sender, e);
+                ClearHeaderContent();
+
+            }
+        }
+
+        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ClearHeaderContent();
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DieMaster_Load(sender, e);
+            ClearHeaderContent();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+       
+
     }
 }

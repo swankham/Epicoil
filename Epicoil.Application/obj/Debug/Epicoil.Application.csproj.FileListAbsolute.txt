@@ -341,3 +341,5 @@ D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.BO.SysConfig.xml
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.IF.ISysConfig.xml
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.DiePatternMaster.resources
+D:\SourceTree\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.CoilBackRuleDialog.resources
+D:\SourceTree\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.DiePatternMaster.resources
