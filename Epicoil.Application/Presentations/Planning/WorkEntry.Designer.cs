@@ -33,6 +33,27 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvMaterial = new System.Windows.Forms.DataGridView();
+            this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.article = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.spec = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coating = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thick = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usingweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.remainWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LengthM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qtyPack = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SelectCB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.matCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descriptioin = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtMCSSNo = new System.Windows.Forms.TextBox();
@@ -137,27 +158,6 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.tbutCancelWorkOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tlbClear = new System.Windows.Forms.ToolStripButton();
-            this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.article = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.spec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coating = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.thick = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usingweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remainWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LengthM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qtyPack = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SelectCB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.matCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descriptioin = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -274,6 +274,155 @@
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMaterial.Size = new System.Drawing.Size(821, 186);
             this.dgvMaterial.TabIndex = 17;
+            // 
+            // MCSSNum
+            // 
+            this.MCSSNum.HeaderText = "MCSS No.";
+            this.MCSSNum.Name = "MCSSNum";
+            this.MCSSNum.Width = 81;
+            // 
+            // article
+            // 
+            this.article.HeaderText = "Serial No.";
+            this.article.Name = "article";
+            this.article.ReadOnly = true;
+            this.article.Width = 77;
+            // 
+            // spec
+            // 
+            this.spec.HeaderText = "Spec";
+            this.spec.Name = "spec";
+            this.spec.ReadOnly = true;
+            this.spec.Width = 56;
+            // 
+            // coating
+            // 
+            this.coating.HeaderText = "Coating";
+            this.coating.Name = "coating";
+            this.coating.ReadOnly = true;
+            this.coating.Width = 67;
+            // 
+            // thick
+            // 
+            this.thick.HeaderText = "Thick";
+            this.thick.Name = "thick";
+            this.thick.ReadOnly = true;
+            this.thick.Width = 58;
+            // 
+            // width
+            // 
+            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.width.HeaderText = "Width";
+            this.width.Name = "width";
+            this.width.ReadOnly = true;
+            this.width.Width = 59;
+            // 
+            // length
+            // 
+            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.length.HeaderText = "Length";
+            this.length.Name = "length";
+            this.length.ReadOnly = true;
+            this.length.Width = 64;
+            // 
+            // weight
+            // 
+            this.weight.HeaderText = "Weight";
+            this.weight.Name = "weight";
+            this.weight.ReadOnly = true;
+            this.weight.Width = 65;
+            // 
+            // usingweight
+            // 
+            this.usingweight.HeaderText = "Using Weight";
+            this.usingweight.Name = "usingweight";
+            this.usingweight.ReadOnly = true;
+            this.usingweight.Width = 95;
+            // 
+            // remainWeight
+            // 
+            this.remainWeight.HeaderText = "Remain Weight";
+            this.remainWeight.Name = "remainWeight";
+            this.remainWeight.ReadOnly = true;
+            this.remainWeight.Width = 104;
+            // 
+            // LengthM
+            // 
+            this.LengthM.HeaderText = "Length(M)";
+            this.LengthM.Name = "LengthM";
+            this.LengthM.ReadOnly = true;
+            this.LengthM.Width = 79;
+            // 
+            // quantity
+            // 
+            this.quantity.HeaderText = "Quantity(Pcs)";
+            this.quantity.Name = "quantity";
+            this.quantity.ReadOnly = true;
+            this.quantity.Width = 94;
+            // 
+            // RemQuantity
+            // 
+            this.RemQuantity.HeaderText = "Remain Quantity";
+            this.RemQuantity.Name = "RemQuantity";
+            this.RemQuantity.ReadOnly = true;
+            this.RemQuantity.Width = 109;
+            // 
+            // qtyPack
+            // 
+            this.qtyPack.HeaderText = "Quantity/Pack";
+            this.qtyPack.Name = "qtyPack";
+            this.qtyPack.ReadOnly = true;
+            // 
+            // SelectCB
+            // 
+            this.SelectCB.HeaderText = "Select C/B";
+            this.SelectCB.Name = "SelectCB";
+            this.SelectCB.ReadOnly = true;
+            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.SelectCB.Width = 83;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 61;
+            // 
+            // note
+            // 
+            this.note.HeaderText = "Note";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.Width = 54;
+            // 
+            // matCode
+            // 
+            this.matCode.HeaderText = "Materail Code";
+            this.matCode.Name = "matCode";
+            this.matCode.ReadOnly = true;
+            this.matCode.Width = 96;
+            // 
+            // descriptioin
+            // 
+            this.descriptioin.HeaderText = "Descriptioin";
+            this.descriptioin.Name = "descriptioin";
+            this.descriptioin.ReadOnly = true;
+            this.descriptioin.Width = 86;
+            // 
+            // bt
+            // 
+            this.bt.HeaderText = "BT";
+            this.bt.Name = "bt";
+            this.bt.ReadOnly = true;
+            this.bt.Width = 45;
+            // 
+            // productstatus
+            // 
+            this.productstatus.HeaderText = "Product Status";
+            this.productstatus.Name = "productstatus";
+            this.productstatus.ReadOnly = true;
+            this.productstatus.Width = 101;
             // 
             // panel1
             // 
@@ -1310,155 +1459,6 @@
             this.tlbClear.Size = new System.Drawing.Size(23, 27);
             this.tlbClear.Text = "Clear";
             this.tlbClear.Click += new System.EventHandler(this.tlbClear_Click);
-            // 
-            // MCSSNum
-            // 
-            this.MCSSNum.HeaderText = "MCSS No.";
-            this.MCSSNum.Name = "MCSSNum";
-            this.MCSSNum.Width = 81;
-            // 
-            // article
-            // 
-            this.article.HeaderText = "Serial No.";
-            this.article.Name = "article";
-            this.article.ReadOnly = true;
-            this.article.Width = 77;
-            // 
-            // spec
-            // 
-            this.spec.HeaderText = "Spec";
-            this.spec.Name = "spec";
-            this.spec.ReadOnly = true;
-            this.spec.Width = 56;
-            // 
-            // coating
-            // 
-            this.coating.HeaderText = "Coating";
-            this.coating.Name = "coating";
-            this.coating.ReadOnly = true;
-            this.coating.Width = 67;
-            // 
-            // thick
-            // 
-            this.thick.HeaderText = "Thick";
-            this.thick.Name = "thick";
-            this.thick.ReadOnly = true;
-            this.thick.Width = 58;
-            // 
-            // width
-            // 
-            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.width.HeaderText = "Width";
-            this.width.Name = "width";
-            this.width.ReadOnly = true;
-            this.width.Width = 59;
-            // 
-            // length
-            // 
-            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.length.HeaderText = "Length";
-            this.length.Name = "length";
-            this.length.ReadOnly = true;
-            this.length.Width = 64;
-            // 
-            // weight
-            // 
-            this.weight.HeaderText = "Weight";
-            this.weight.Name = "weight";
-            this.weight.ReadOnly = true;
-            this.weight.Width = 65;
-            // 
-            // usingweight
-            // 
-            this.usingweight.HeaderText = "Using Weight";
-            this.usingweight.Name = "usingweight";
-            this.usingweight.ReadOnly = true;
-            this.usingweight.Width = 95;
-            // 
-            // remainWeight
-            // 
-            this.remainWeight.HeaderText = "Remain Weight";
-            this.remainWeight.Name = "remainWeight";
-            this.remainWeight.ReadOnly = true;
-            this.remainWeight.Width = 104;
-            // 
-            // LengthM
-            // 
-            this.LengthM.HeaderText = "Length(M)";
-            this.LengthM.Name = "LengthM";
-            this.LengthM.ReadOnly = true;
-            this.LengthM.Width = 79;
-            // 
-            // quantity
-            // 
-            this.quantity.HeaderText = "Quantity(Pcs)";
-            this.quantity.Name = "quantity";
-            this.quantity.ReadOnly = true;
-            this.quantity.Width = 94;
-            // 
-            // RemQuantity
-            // 
-            this.RemQuantity.HeaderText = "Remain Quantity";
-            this.RemQuantity.Name = "RemQuantity";
-            this.RemQuantity.ReadOnly = true;
-            this.RemQuantity.Width = 109;
-            // 
-            // qtyPack
-            // 
-            this.qtyPack.HeaderText = "Quantity/Pack";
-            this.qtyPack.Name = "qtyPack";
-            this.qtyPack.ReadOnly = true;
-            // 
-            // SelectCB
-            // 
-            this.SelectCB.HeaderText = "Select C/B";
-            this.SelectCB.Name = "SelectCB";
-            this.SelectCB.ReadOnly = true;
-            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.SelectCB.Width = 83;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.Width = 61;
-            // 
-            // note
-            // 
-            this.note.HeaderText = "Note";
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
-            this.note.Width = 54;
-            // 
-            // matCode
-            // 
-            this.matCode.HeaderText = "Materail Code";
-            this.matCode.Name = "matCode";
-            this.matCode.ReadOnly = true;
-            this.matCode.Width = 96;
-            // 
-            // descriptioin
-            // 
-            this.descriptioin.HeaderText = "Descriptioin";
-            this.descriptioin.Name = "descriptioin";
-            this.descriptioin.ReadOnly = true;
-            this.descriptioin.Width = 86;
-            // 
-            // bt
-            // 
-            this.bt.HeaderText = "BT";
-            this.bt.Name = "bt";
-            this.bt.ReadOnly = true;
-            this.bt.Width = 45;
-            // 
-            // productstatus
-            // 
-            this.productstatus.HeaderText = "Product Status";
-            this.productstatus.Name = "productstatus";
-            this.productstatus.ReadOnly = true;
-            this.productstatus.Width = 101;
             // 
             // WorkEntry
             // 
