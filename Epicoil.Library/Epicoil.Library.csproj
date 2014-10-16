@@ -203,7 +203,9 @@
     <Compile Include="Repositories\Common\Repository\UserCodeRepo.cs" />
     <Compile Include="Repositories\Common\Repository\WharehouseRepo.cs" />
     <Compile Include="Repositories\Planning\Interface\IDieMasterRepo.cs" />
+    <Compile Include="Repositories\Planning\Interface\IWorkEntryRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\DieMasterRepo.cs" />
+    <Compile Include="Repositories\Planning\Repository\WorkEntryRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Interface\ILookupRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Interface\IStoreInPlanRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Repository\LookupRepo.cs" />
