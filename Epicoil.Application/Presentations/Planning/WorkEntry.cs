@@ -171,10 +171,6 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbProcessLine.Items.Clear();
             cmbOrderType.Items.Clear();
             cmbPossession.Items.Clear();
-            //cmbProcessStep.Items.Clear();
-            HeaderContent.ResourceList = _repoRes.GetAll(epiSession.PlantID);
-            HeaderContent.OrderTypeList = _repoUcd.GetAll("OrderType");
-            HeaderContent.PossessionList = _repoUcd.GetAll("Pocessed");
 
             //CheckBox
             chkLVTrim.DataBindings.Clear();
@@ -219,20 +215,16 @@ namespace Epicoil.Appl.Presentations.Planning
         #region Evnet
         private void WorkEntrySlitter_Load(object sender, EventArgs e)
         {
-            HeaderContent.FormState = 0;
-            HeaderContent.SimulateFlag = false;
+            HeaderContent.Load();
             SetFormState();
         }
 
         private void tbutNewWork_Click(object sender, EventArgs e)
         {
-            
-            HeaderContent.FormState = 1;
+            HeaderContent.New(epiSession.PlantID);
+            HeaderContent.PIC = epiSession.UserID;
+            HeaderContent.PICName = epiSession.UserName;
             SetFormState();
-
-            HeaderContent.IssueDate = DateTime.Now;
-            HeaderContent.DueDate = DateTime.Now;
-
             SetHeadContent(HeaderContent);
             cmbProcessStep.SelectedIndex = 0;
         }
@@ -240,7 +232,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutSave_Click(object sender, EventArgs e)
         {
             //Save Complated.
-            HeaderContent.FormState = 2;
+            HeaderContent.Save();
             SetFormState();
         }
 
@@ -259,13 +251,14 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
             //Simulated Complate.
+            HeaderContent.SimulateFlag = true;
             SetFormState();
         }
 
         private void tlbClear_Click(object sender, EventArgs e)
         {
             //Simulated Complate.            
-            HeaderContent.FormState = 0;
+            HeaderContent.Load();
             SetFormState();
             ClearHeaderContent();
         }
