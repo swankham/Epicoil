@@ -35,3 +35,4 @@ Epicoil.Application/bin/
 Epicoil.Application/bin/Debug/
 Epicoil.Application/obj/
 Epicoil.Application/obj/Debug/
+Epicoil.Application/bin/Debug/Epicoil.Application.exe
