@@ -110,5 +110,26 @@ namespace Epicoil.Library.Repositories.Planning
 
             return query;
         }
+
+
+        public void DeleteLine(string dieID)
+        {
+            string sql = "";
+            sql += string.Format(@"DELETE FROM UD107 WHERE Key1 = '{0}'" + Environment.NewLine, dieID);
+
+            Repository.Instance.ExecuteWithTransaction(sql, "Die Master");
+        }
+
+
+        public IEnumerable<DieModel> GetByFilterDie(DieModel Filter)
+        {
+            IEnumerable<DieModel> query = this.GetDieAll(Filter.PlantID);
+
+            if (!string.IsNullOrEmpty(Filter.DieCode)) query = query.Where(p => p.DieCode.ToString().ToUpper().Contains(Filter.DieCode.ToString().ToUpper()));
+
+            return query;
+        }
+
+      
     }
 }
