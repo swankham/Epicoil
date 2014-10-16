@@ -376,158 +376,85 @@ namespace Epicoil.Library.Repositories.TQA
         {
             try
             {
-                if (model.InsertState == true)
-                {
-                    Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
-                    UD15 myUD15 = new UD15(currSession.ConnectionPool);
+                Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
+                UD15 myUD15 = new UD15(currSession.ConnectionPool);
+                UD15DataSet dsUD15 = new UD15DataSet();
 
-                    UD15DataSet dsUD15 = new UD15DataSet();
+                string whereClause = string.Format(@"UD15.Key1 ='{0}' AND UD15.Key5 = '{1}'", model.McssNum, epiSession.PlantID);
+                bool morePages = false;
+                bool dataExisting = false;
+
+                try
+                {
+                    UD15DataSet ds = myUD15.GetByID(model.McssNum, "", "", "", epiSession.PlantID);
+                    dataExisting = true;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "Record not found.") dataExisting = false;
+                }
+
+                if (dataExisting)
+                {
+                    dsUD15 = myUD15.GetRows(whereClause, "", 0, 1, out morePages);
+                }
+                else
+                {
                     myUD15.GetaNewUD15(dsUD15);
-
-                    DataRow drUD15 = dsUD15.Tables[0].Rows[0];
-                    drUD15.BeginEdit();
-                    drUD15["Key1"] = "1";
-                    //drUD15["Key2"] = "1";
-                    drUD15["ShortChar08"] = model.MCSSID;
-                    drUD15["ShortChar20"] = epiSession.UserID;
-                    drUD15["Key5"] = epiSession.PlantID;
-                    drUD15["Character01"] = String.IsNullOrEmpty(model.BussinessTypeName) ? "" : model.BussinessTypeName;
-                    drUD15["Character02"] = "";
-                    drUD15["Character03"] = string.IsNullOrEmpty(model.Name) ? "" : model.Name;
-                    drUD15["Character04"] = string.IsNullOrEmpty(model.TISINo) ? "" : model.TISINo;
-                    drUD15["Character05"] = string.IsNullOrEmpty(model.LicenseNo) ? "" : model.LicenseNo;
-                    drUD15["Character06"] = "";
-                    drUD15["Character07"] = model.OillingVal.GetDecimal();
-                    drUD15["Character08"] = string.IsNullOrEmpty(model.BusinessRoute) ? "" : model.BusinessRoute;
-                    drUD15["Character09"] = string.IsNullOrEmpty(model.BusinessRemark) ? "" : model.BusinessRemark;
-                    drUD15["Character10"] = string.IsNullOrEmpty(model.Remark) ? "" : model.Remark;
-                    drUD15["Number01"] = model.Thick.GetDecimal();
-                    drUD15["Number02"] = model.Width.GetDecimal();
-                    drUD15["Number03"] = model.Length.GetDecimal();
-                    drUD15["Number04"] = model.CoatingWeight1.GetDecimal();
-                    drUD15["Number05"] = model.CoatingWeight2.GetDecimal();
-                    drUD15["Number06"] = model.POAllowance.GetDecimal();
-                    drUD15["Number07"] = model.QuantityPerMonth.GetDecimal();
-                    drUD15["Number08"] = model.StandardRef.GetInt();
-                    drUD15["Number09"] = model.ThicknessTolerance.GetInt();
-                    drUD15["Number10"] = model.Pocession.GetInt();
-                    drUD15["Number11"] = model.WidthStandard.GetInt();
-                    drUD15["Number12"] = model.Oilling.GetInt();
-                    drUD15["Number15"] = model.QuantityPerPlant.GetDecimal();
-                    drUD15["Number17"] = model.ThicknessTolerValPos.GetDecimal();
-                    drUD15["Number18"] = model.ThicknessTolerValNeg.GetDecimal();
-                    drUD15["Number19"] = model.WidthStdPos.GetDecimal();
-                    drUD15["Number20"] = model.WidthStdNeg.GetDecimal();
-                    drUD15["Date01"] = DateTime.Now.ToLongDateString();
-                    drUD15["CheckBox01"] = Convert.ToInt32(model.TISIFlag);
-                    drUD15["ShortChar01"] = string.IsNullOrEmpty(model.MakerCode) ? "" : model.MakerCode;
-                    drUD15["ShortChar02"] = string.IsNullOrEmpty(model.MillCode) ? "" : model.MillCode;
-                    drUD15["ShortChar03"] = string.IsNullOrEmpty(model.SupplierCode) ? "" : model.SupplierCode;
-                    drUD15["ShortChar04"] = string.IsNullOrEmpty(model.CustID) ? "" : model.CustID;
-                    drUD15["ShortChar05"] = string.IsNullOrEmpty(model.CategoryGroupHead1) ? "" : model.CategoryGroupHead1;
-                    drUD15["ShortChar06"] = string.IsNullOrEmpty(model.CommodityCode) ? "" : model.CommodityCode;
-                    drUD15["ShortChar07"] = string.IsNullOrEmpty(model.CustomerTypeRemark) ? "" : model.CustomerTypeRemark;
-                    drUD15["ShortChar09"] = string.IsNullOrEmpty(model.Coating1) ? "" : model.Coating1;
-                    drUD15["ShortChar10"] = string.IsNullOrEmpty(model.CustomerType.ToString()) ? "" : model.CustomerType.ToString();
-                    drUD15["ShortChar11"] = string.IsNullOrEmpty(model.MatSpec1) ? "" : model.MatSpec1;
-                    drUD15["ShortChar13"] = string.IsNullOrEmpty(model.BussinessType) ? "" : model.BussinessType;
-                    drUD15["ShortChar14"] = string.IsNullOrEmpty(model.StandardRefRemark) ? "" : model.StandardRefRemark;
-                    drUD15["ShortChar15"] = string.IsNullOrEmpty(model.Number) ? "" : model.Number;
-                    drUD15.EndEdit();
-                    myUD15.Update(dsUD15);
-                    currSession.Dispose();
                 }
-                else if (model.InsertState == false)
-                {
-                    string sql = string.Format(@"UPDATE UD15
-                                                   SET Company = N'{0}'  --<Company, nvarchar(8),>
-                                                      ,Key1 = N'{1}'  --<Key1, nvarchar(50),>
-                                                      ,Character01 = N'{2}'  --<Character01, nvarchar(max),>
-                                                      ,Character02 = N'{3}'  --<Character02, nvarchar(max),>
-                                                      ,Character03 = N'{4}'  --<Character03, nvarchar(max),>
-                                                      ,Character04 = N'{5}'  --<Character04, nvarchar(max),>
-                                                      ,Character05 = N'{6}'  --<Character05, nvarchar(max),>
-                                                      ,Character07 = N'{7}'  --<Character07, nvarchar(max),>
-                                                      ,Character08 = N'{8}'  --<Character08, nvarchar(max),>
-                                                      ,Character09 = N'{9}'  --<Character09, nvarchar(max),>
-                                                      ,Character10 = N'{10}'  --<Character10, nvarchar(max),>
-                                                      ,Number01 = {11}  --<Number01, decimal(20,9),>
-                                                      ,Number02 = {12}  --<Number02, decimal(20,9),>
-                                                      ,Number03 = {13}  --<Number03, decimal(20,9),>
-                                                      ,Number04 = {14}  --<Number04, decimal(20,9),>
-                                                      ,Number05 = {15}  --<Number05, decimal(20,9),>
-                                                      ,Number06 = {16}  --<Number06, decimal(20,9),>
-                                                      ,Number07 = {17}  --<Number07, decimal(20,9),>
-                                                      ,Number08 = {18}  --<Number08, decimal(20,9),>
-                                                      ,Number09 = {19}  --<Number09, decimal(20,9),>
-                                                      ,Number10 = {20}  --<Number10, decimal(20,9),>
-                                                      ,Number11 = {21}  --<Number11, decimal(20,9),>
-                                                      ,Number12 = {22}  --<Number12, decimal(20,9),>
-                                                      ,Number15 = {23}  --<Number15, decimal(20,9),>
-                                                      ,Number17 = {24}  --<Number17, decimal(20,9),>
-                                                      ,Number18 = {25}  --<Number18, decimal(20,9),>
-                                                      ,Number19 = {26}  --<Number19, decimal(20,9),>
-                                                      ,Number20 = {27}  --<Number20, decimal(20,9),>
-                                                      ,CheckBox01 = {28}  --<CheckBox01, tinyint,>
-                                                      ,ShortChar01 = N'{29}'  --<ShortChar01, nvarchar(50),>
-                                                      ,ShortChar02 = N'{30}'  --<ShortChar02, nvarchar(50),>
-                                                      ,ShortChar03 = N'{31}'  --<ShortChar03, nvarchar(50),>
-                                                      ,ShortChar04 = N'{32}'  --<ShortChar04, nvarchar(50),>
-                                                      ,ShortChar05 = N'{33}'  --<ShortChar05, nvarchar(50),>
-                                                      ,ShortChar06 = N'{34}'  --<ShortChar06, nvarchar(50),>
-                                                      ,ShortChar07 = N'{35}'  --<ShortChar07, nvarchar(50),>
-                                                      ,ShortChar09 = N'{36}'  --<ShortChar09, nvarchar(50),>
-                                                      ,ShortChar10 = N'{37}'  --<ShortChar10, nvarchar(50),>
-                                                      ,ShortChar11 = N'{38}'  --<ShortChar11, nvarchar(50),>
-                                                      ,ShortChar13 = N'{39}'  --<ShortChar13, nvarchar(50),>
-                                                      ,ShortChar14 = N'{40}'  --<ShortChar14, nvarchar(50),>
-                                                      ,ShortChar15 = N'{41}'  --<ShortChar15, nvarchar(50),>
-                                                 WHERE Key1 = N'{1}'" + Environment.NewLine,
-                                                      epiSession.CompanyID
-                                                      , model.McssNum
-                                                      , String.IsNullOrEmpty(model.BussinessTypeName) ? "" : model.BussinessTypeName
-                                                      , ""
-                                                      , string.IsNullOrEmpty(model.Name) ? "" : model.Name
-                                                      , string.IsNullOrEmpty(model.TISINo) ? "" : model.TISINo
-                                                      , string.IsNullOrEmpty(model.LicenseNo) ? "" : model.LicenseNo
-                                                      , model.OillingVal.GetDecimal()
-                                                      , string.IsNullOrEmpty(model.BusinessRoute) ? "" : model.BusinessRoute
-                                                      , string.IsNullOrEmpty(model.BusinessRemark) ? "" : model.BusinessRemark
-                                                      , string.IsNullOrEmpty(model.Remark) ? "" : model.Remark
-                                                      , model.Thick.GetDecimal()
-                                                      , model.Width.GetDecimal()
-                                                      , model.Length.GetDecimal()
-                                                      , model.CoatingWeight1.GetDecimal()
-                                                      , model.CoatingWeight2.GetDecimal()           //15
-                                                      , model.POAllowance.GetDecimal()
-                                                      , model.QuantityPerMonth.GetDecimal()
-                                                      , model.StandardRef.GetInt()
-                                                      , model.ThicknessTolerance.GetInt()
-                                                      , model.Pocession.GetInt()
-                                                      , model.WidthStandard.GetInt()
-                                                      , model.Oilling.GetInt()
-                                                      , model.QuantityPerPlant.GetDecimal()
-                                                      , model.ThicknessTolerValPos.GetDecimal()
-                                                      , model.ThicknessTolerValNeg.GetDecimal()
-                                                      , model.WidthStdPos.GetDecimal()
-                                                      , model.WidthStdNeg.GetDecimal()
-                                                      , Convert.ToInt32(model.TISIFlag)
-                                                      , string.IsNullOrEmpty(model.MakerCode) ? "" : model.MakerCode
-                                                      , string.IsNullOrEmpty(model.MillCode) ? "" : model.MillCode          //30
-                                                      , string.IsNullOrEmpty(model.SupplierCode) ? "" : model.SupplierCode
-                                                      , string.IsNullOrEmpty(model.CustID) ? "" : model.CustID
-                                                      , string.IsNullOrEmpty(model.CategoryGroupHead1) ? "" : model.CategoryGroupHead1
-                                                      , string.IsNullOrEmpty(model.CommodityCode) ? "" : model.CommodityCode
-                                                      , string.IsNullOrEmpty(model.CustomerTypeRemark) ? "" : model.CustomerTypeRemark
-                                                      , string.IsNullOrEmpty(model.Coating1) ? "" : model.Coating1
-                                                      , string.IsNullOrEmpty(model.CustomerType.ToString()) ? "" : model.CustomerType.ToString()
-                                                      , string.IsNullOrEmpty(model.MatSpec1) ? "" : model.MatSpec1
-                                                      , string.IsNullOrEmpty(model.BussinessType) ? "" : model.BussinessType
-                                                      , string.IsNullOrEmpty(model.StandardRefRemark) ? "" : model.StandardRefRemark
-                                                      , string.IsNullOrEmpty(model.Number) ? "" : model.Number);
 
-                    Repository.Instance.ExecuteWithTransaction(sql, "Update MCSS UD15");
-                }
+                DataRow drUD15 = dsUD15.Tables[0].Rows[0];
+                drUD15.BeginEdit();
+                drUD15["Key1"] = string.IsNullOrEmpty(model.McssNum) ? "1" : model.McssNum;
+                //drUD15["Key2"] = "1";
+                drUD15["ShortChar08"] = model.MCSSID;
+                drUD15["ShortChar20"] = epiSession.UserID;
+                drUD15["Key5"] = epiSession.PlantID;
+                drUD15["Character01"] = String.IsNullOrEmpty(model.BussinessTypeName) ? "" : model.BussinessTypeName;
+                drUD15["Character02"] = "";
+                drUD15["Character03"] = string.IsNullOrEmpty(model.Name) ? "" : model.Name;
+                drUD15["Character04"] = string.IsNullOrEmpty(model.TISINo) ? "" : model.TISINo;
+                drUD15["Character05"] = string.IsNullOrEmpty(model.LicenseNo) ? "" : model.LicenseNo;
+                drUD15["Character06"] = "";
+                drUD15["Character07"] = model.OillingVal.GetDecimal();
+                drUD15["Character08"] = string.IsNullOrEmpty(model.BusinessRoute) ? "" : model.BusinessRoute;
+                drUD15["Character09"] = string.IsNullOrEmpty(model.BusinessRemark) ? "" : model.BusinessRemark;
+                drUD15["Character10"] = string.IsNullOrEmpty(model.Remark) ? "" : model.Remark;
+                drUD15["Number01"] = model.Thick.GetDecimal();
+                drUD15["Number02"] = model.Width.GetDecimal();
+                drUD15["Number03"] = model.Length.GetDecimal();
+                drUD15["Number04"] = model.CoatingWeight1.GetDecimal();
+                drUD15["Number05"] = model.CoatingWeight2.GetDecimal();
+                drUD15["Number06"] = model.POAllowance.GetDecimal();
+                drUD15["Number07"] = model.QuantityPerMonth.GetDecimal();
+                drUD15["Number08"] = model.StandardRef.GetInt();
+                drUD15["Number09"] = model.ThicknessTolerance.GetInt();
+                drUD15["Number10"] = model.Pocession.GetInt();
+                drUD15["Number11"] = model.WidthStandard.GetInt();
+                drUD15["Number12"] = model.Oilling.GetInt();
+                drUD15["Number15"] = model.QuantityPerPlant.GetDecimal();
+                drUD15["Number17"] = model.ThicknessTolerValPos.GetDecimal();
+                drUD15["Number18"] = model.ThicknessTolerValNeg.GetDecimal();
+                drUD15["Number19"] = model.WidthStdPos.GetDecimal();
+                drUD15["Number20"] = model.WidthStdNeg.GetDecimal();
+                drUD15["Date01"] = DateTime.Now.ToLongDateString();
+                drUD15["CheckBox01"] = Convert.ToInt32(model.TISIFlag);
+                drUD15["ShortChar01"] = string.IsNullOrEmpty(model.MakerCode) ? "" : model.MakerCode;
+                drUD15["ShortChar02"] = string.IsNullOrEmpty(model.MillCode) ? "" : model.MillCode;
+                drUD15["ShortChar03"] = string.IsNullOrEmpty(model.SupplierCode) ? "" : model.SupplierCode;
+                drUD15["ShortChar04"] = string.IsNullOrEmpty(model.CustID) ? "" : model.CustID;
+                drUD15["ShortChar05"] = string.IsNullOrEmpty(model.CategoryGroupHead1) ? "" : model.CategoryGroupHead1;
+                drUD15["ShortChar06"] = string.IsNullOrEmpty(model.CommodityCode) ? "" : model.CommodityCode;
+                drUD15["ShortChar07"] = string.IsNullOrEmpty(model.CustomerTypeRemark) ? "" : model.CustomerTypeRemark;
+                drUD15["ShortChar09"] = string.IsNullOrEmpty(model.Coating1) ? "" : model.Coating1;
+                drUD15["ShortChar10"] = string.IsNullOrEmpty(model.CustomerType.ToString()) ? "" : model.CustomerType.ToString();
+                drUD15["ShortChar11"] = string.IsNullOrEmpty(model.MatSpec1) ? "" : model.MatSpec1;
+                drUD15["ShortChar13"] = string.IsNullOrEmpty(model.BussinessType) ? "" : model.BussinessType;
+                drUD15["ShortChar14"] = string.IsNullOrEmpty(model.StandardRefRemark) ? "" : model.StandardRefRemark;
+                drUD15["ShortChar15"] = string.IsNullOrEmpty(model.Number) ? "" : model.Number;
+                drUD15.EndEdit();
+                myUD15.Update(dsUD15);
+                currSession.Dispose();
 
                 IsSucces = true;
                 msgError = "";
@@ -543,223 +470,106 @@ namespace Epicoil.Library.Repositories.TQA
         {
             try
             {
-                if (model.InsertState == true)
-                {
-                    Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
-                    UD34 myUD34 = new UD34(currSession.ConnectionPool);
+                Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
+                UD34 myUD34 = new UD34(currSession.ConnectionPool);
 
-                    UD34DataSet dsUD34 = new UD34DataSet();
+                UD34DataSet dsUD34 = new UD34DataSet();
+
+                string whereClause = string.Format(@"UD34.Key1 ='{0}' AND UD34.Key5 = '{1}'", model.McssNum, epiSession.PlantID);
+                bool morePages = false;
+                bool dataExisting = false;
+
+                try
+                {
+                    UD34DataSet ds = myUD34.GetByID(model.McssNum, "", "", "", epiSession.PlantID);
+                    dataExisting = true;
+                }
+                catch (Exception ex)
+                {
+                    if (ex.Message == "Record not found.") dataExisting = false;
+                }
+
+                if (dataExisting)
+                {
+                    dsUD34 = myUD34.GetRows(whereClause, "", 0, 1, out morePages);
+                }
+                else
+                {
                     myUD34.GetaNewUD34(dsUD34);
-
-                    DataRow drUD34 = dsUD34.Tables[0].Rows[0];
-                    drUD34.BeginEdit();
-                    drUD34["Key1"] = model.McssNum;
-                    drUD34["ShortChar08"] = model.MCSSID;
-                    //drUD34["Key4"] = epiSession.UserID;
-                    drUD34["Key5"] = epiSession.PlantID;
-                    drUD34["Character01"] = String.IsNullOrEmpty(model.IDCoil.ToString()) ? "" : model.IDCoil.ToString();
-                    drUD34["Character02"] = String.IsNullOrEmpty(model.BaseMaterial) ? "" : model.BaseMaterial;
-                    drUD34["Character03"] = String.IsNullOrEmpty(model.CenterWaveRemark) ? "" : model.CenterWaveRemark;
-                    drUD34["Character04"] = String.IsNullOrEmpty(model.EdgeWaveRemark) ? "" : model.EdgeWaveRemark;
-                    drUD34["Character05"] = String.IsNullOrEmpty(model.OtherRemark) ? "" : model.OtherRemark;
-                    drUD34["Character06"] = String.IsNullOrEmpty(model.ODCoil.ToString()) ? "" : model.ODCoil.ToString(); ;
-                    drUD34["Character07"] = String.IsNullOrEmpty(model.ChemPersentRemark) ? "" : model.ChemPersentRemark; ;
-                    drUD34["Character08"] = String.IsNullOrEmpty(model.CategoryGroup3) ? "" : model.CategoryGroup3;
-                    drUD34["Character09"] = String.IsNullOrEmpty(model.CategoryGroup2) ? "" : model.CategoryGroup2;
-                    drUD34["Character10"] = String.IsNullOrEmpty(model.CategoryGroup1) ? "" : model.CategoryGroup1;
-                    drUD34["Number01"] = model.ChemPersent.GetInt();
-                    drUD34["Number02"] = model.Yield.GetInt();
-                    drUD34["Number03"] = model.Tensile.GetInt();
-                    drUD34["Number04"] = model.Elongation.GetInt();
-                    drUD34["Number06"] = model.CoreLoss.GetInt();
-                    drUD34["Number07"] = model.Magnatic.GetInt();
-                    drUD34["Number08"] = model.Oriented.GetInt();
-                    drUD34["Number12"] = model.EdgeWave.GetDecimal();
-                    drUD34["Number13"] = model.WeightPerCoilMin.GetDecimal();
-                    drUD34["Number14"] = model.WeightPerCoilMax.GetDecimal();
-                    drUD34["Number15"] = model.PackingStyle.GetInt();
-                    drUD34["Number16"] = model.CenterWave.GetInt();
-                    drUD34["Number17"] = model.Stainless.GetInt();
-                    drUD34["Number18"] = model.DistGI.GetInt();
-                    drUD34["Number19"] = model.DistHR.GetInt();
-                    drUD34["Number20"] = model.DistCR.GetInt();
-                    drUD34["CheckBox01"] = Convert.ToInt32(model.Welding);
-                    drUD34["CheckBox02"] = Convert.ToInt32(model.Painting);
-                    drUD34["CheckBox03"] = Convert.ToInt32(model.Degreasing);
-                    drUD34["CheckBox04"] = Convert.ToInt32(model.Blanking);
-                    drUD34["CheckBox05"] = Convert.ToInt32(model.ProcessOther);
-                    drUD34["CheckBox06"] = Convert.ToInt32(model.Commercial);
-                    drUD34["CheckBox07"] = Convert.ToInt32(model.Drawing);
-                    drUD34["CheckBox08"] = Convert.ToInt32(model.DeepDrawing);
-                    drUD34["CheckBox09"] = Convert.ToInt32(model.ExtraDeep);
-                    drUD34["CheckBox10"] = Convert.ToInt32(model.Folding);
-                    drUD34["CheckBox11"] = Convert.ToInt32(model.FormingOther);
-                    drUD34["CheckBox12"] = Convert.ToInt32(model.RoHS);
-                    drUD34["CheckBox13"] = Convert.ToInt32(model.PFOS);
-                    drUD34["CheckBox14"] = Convert.ToInt32(model.SOC);
-                    drUD34["CheckBox15"] = Convert.ToInt32(model.ELV);
-                    drUD34["CheckBox16"] = Convert.ToInt32(model.REACH);
-                    drUD34["CheckBox17"] = Convert.ToInt32(model.Other);
-                    drUD34["ShortChar01"] = string.IsNullOrEmpty(model.DistCRRemark) ? "" : model.DistCRRemark;
-                    drUD34["ShortChar02"] = string.IsNullOrEmpty(model.DistHRRemark) ? "" : model.DistHRRemark;
-                    drUD34["ShortChar03"] = string.IsNullOrEmpty(model.DistGIRemark) ? "" : model.DistGIRemark;
-                    drUD34["ShortChar04"] = string.IsNullOrEmpty(model.StainlessRemark) ? "" : model.StainlessRemark;
-                    drUD34["ShortChar05"] = string.IsNullOrEmpty(model.Hardness.GetString()) ? "" : model.Hardness.GetString(); //ChemPersentRemark
-                    drUD34["ShortChar06"] = string.IsNullOrEmpty(model.YieldRemark) ? "" : model.YieldRemark;
-                    drUD34["ShortChar07"] = string.IsNullOrEmpty(model.TensileRemark) ? "" : model.TensileRemark;
-                    drUD34["ShortChar08"] = string.IsNullOrEmpty(model.ElongationRemark) ? "" : model.ElongationRemark;
-                    drUD34["ShortChar09"] = string.IsNullOrEmpty(model.HardnessRemark) ? "" : model.HardnessRemark;
-                    drUD34["ShortChar10"] = string.IsNullOrEmpty(model.CoreLossRemark) ? "" : model.CoreLossRemark;
-                    drUD34["ShortChar11"] = string.IsNullOrEmpty(model.MagnaticRemark) ? "" : model.MagnaticRemark;
-                    drUD34["ShortChar12"] = string.IsNullOrEmpty(model.ProcessOtherRemark) ? "" : model.ProcessOtherRemark;
-                    drUD34["ShortChar13"] = string.IsNullOrEmpty(model.FormingOtherRemark) ? "" : model.FormingOtherRemark;
-                    drUD34["ShortChar14"] = string.IsNullOrEmpty(model.PartName) ? "" : model.PartName;
-                    drUD34["ShortChar15"] = string.IsNullOrEmpty(model.ProductName) ? "" : model.ProductName;
-                    drUD34["ShortChar16"] = string.IsNullOrEmpty(model.CusProcessRemark) ? "" : model.CusProcessRemark;
-                    drUD34["ShortChar17"] = string.IsNullOrEmpty(model.EndUser1) ? "" : model.EndUser1;
-                    drUD34["ShortChar18"] = string.IsNullOrEmpty(model.EndUser2) ? "" : model.EndUser2;
-                    drUD34["ShortChar19"] = string.IsNullOrEmpty(model.EndUser3) ? "" : model.EndUser3;
-                    drUD34["ShortChar20"] = string.IsNullOrEmpty(model.EndUser4) ? "" : model.EndUser4;
-                    drUD34.EndEdit();
-                    myUD34.Update(dsUD34);
-                    currSession.Dispose();
                 }
-                else if (model.InsertState == false)
-                {
-                    string sql = string.Format(@"UPDATE UD34
-                                                   SET Company = N'{0}'
-                                                      ,Character01 = N'{2}'
-                                                      ,Character02 = N'{3}'
-                                                      ,Character03 = N'{4}'
-                                                      ,Character04 = N'{64}'
-                                                      ,Character05 = N'{5}'
-                                                      ,Character06 = N'{6}'
-                                                      ,Character07 = N'{7}'
-                                                      ,Character08 = N'{8}'
-                                                      ,Character09 = N'{9}'
-                                                      ,Character10 = N'{10}'
-                                                      ,Number01 = {11}
-                                                      ,Number02 = {12}
-                                                      ,Number03 = {13}
-                                                      ,Number04 = {14}
-                                                      ,Number06 = {15}
-                                                      ,Number07 = {16}
-                                                      ,Number08 = {17}
-                                                      ,Number12 = {63}
-                                                      ,Number13 = {18}
-                                                      ,Number14 = {19}
-                                                      ,Number15 = {20}
-                                                      ,Number16 = {21}
-                                                      ,Number17 = {22}
-                                                      ,Number18 = {23}
-                                                      ,Number19 = {24}
-                                                      ,Number20 = {25}
-                                                      ,CheckBox01 = {26}
-                                                      ,CheckBox02 = {27}
-                                                      ,CheckBox03 = {28}
-                                                      ,CheckBox04 = {29}
-                                                      ,CheckBox05 = {30}
-                                                      ,CheckBox06 = {31}
-                                                      ,CheckBox07 = {32}
-                                                      ,CheckBox08 = {33}
-                                                      ,CheckBox09 = {34}
-                                                      ,CheckBox10 = {35}
-                                                      ,CheckBox11 = {36}
-                                                      ,CheckBox12 = {37}
-                                                      ,CheckBox13 = {38}
-                                                      ,CheckBox14 = {39}
-                                                      ,CheckBox15 = {40}
-                                                      ,CheckBox16 = {41}
-                                                      ,CheckBox17 = {42}
-                                                      ,ShortChar01 = N'{43}'
-                                                      ,ShortChar02 = N'{44}'
-                                                      ,ShortChar03 = N'{45}'
-                                                      ,ShortChar04 = N'{46}'
-                                                      ,ShortChar05 = N'{47}'
-                                                      ,ShortChar06 = N'{48}'
-                                                      ,ShortChar07 = N'{49}'
-                                                      ,ShortChar08 = N'{50}'
-                                                      ,ShortChar09 = N'{51}'
-                                                      ,ShortChar10 = N'{52}'
-                                                      ,ShortChar11 = N'{53}'
-                                                      ,ShortChar12 = N'{54}'
-                                                      ,ShortChar13 = N'{55}'
-                                                      ,ShortChar14 = N'{56}'
-                                                      ,ShortChar15 = N'{57}'
-                                                      ,ShortChar16 = N'{58}'
-                                                      ,ShortChar17 = N'{59}'
-                                                      ,ShortChar18 = N'{60}'
-                                                      ,ShortChar19 = N'{61}'
-                                                      ,ShortChar20 = N'{62}'
-                                                 WHERE Key1 = N'{1}'" + Environment.NewLine,
-                                                      epiSession.CompanyID
-                                                      , model.McssNum
-                                                      , String.IsNullOrEmpty(model.IDCoil.ToString()) ? "" : model.IDCoil.ToString()
-                                                      , String.IsNullOrEmpty(model.BaseMaterial) ? "" : model.BaseMaterial
-                                                      , String.IsNullOrEmpty(model.CenterWaveRemark) ? "" : model.CenterWaveRemark
-                                                      , String.IsNullOrEmpty(model.OtherRemark) ? "" : model.OtherRemark
-                                                      , String.IsNullOrEmpty(model.ODCoil.ToString()) ? "" : model.ODCoil.ToString()
-                                                      , String.IsNullOrEmpty(model.ChemPersentRemark) ? "" : model.ChemPersentRemark
-                                                      , String.IsNullOrEmpty(model.CategoryGroup3) ? "" : model.CategoryGroup3
-                                                      , String.IsNullOrEmpty(model.CategoryGroup2) ? "" : model.CategoryGroup2
-                                                      , String.IsNullOrEmpty(model.CategoryGroup1) ? "" : model.CategoryGroup1          //10
-                                                      , model.ChemPersent.GetInt()
-                                                      , model.Yield.GetInt()
-                                                      , model.Tensile.GetInt()
-                                                      , model.Elongation.GetInt()
-                                                      , model.CoreLoss.GetInt()          //15
-                                                      , model.Magnatic.GetInt()
-                                                      , model.Oriented.GetInt()
-                                                      , model.WeightPerCoilMin.GetDecimal()
-                                                      , model.WeightPerCoilMax.GetDecimal()
-                                                      , model.PackingStyle.GetInt()            //20
-                                                      , model.CenterWave.GetInt()
-                                                      , model.Stainless.GetInt()
-                                                      , model.DistGI.GetInt()
-                                                      , model.DistHR.GetInt()
-                                                      , model.DistCR.GetInt()            //25
-                                                      , Convert.ToInt32(model.Welding)
-                                                      , Convert.ToInt32(model.Painting)
-                                                      , Convert.ToInt32(model.Degreasing)
-                                                      , Convert.ToInt32(model.Blanking)
-                                                      , Convert.ToInt32(model.ProcessOther)              //30
-                                                      , Convert.ToInt32(model.Commercial)
-                                                      , Convert.ToInt32(model.Drawing)
-                                                      , Convert.ToInt32(model.DeepDrawing)
-                                                      , Convert.ToInt32(model.ExtraDeep)
-                                                      , Convert.ToInt32(model.Folding)                   //35
-                                                      , Convert.ToInt32(model.FormingOther)
-                                                      , Convert.ToInt32(model.RoHS)
-                                                      , Convert.ToInt32(model.PFOS)
-                                                      , Convert.ToInt32(model.SOC)
-                                                      , Convert.ToInt32(model.ELV)                      //40
-                                                      , Convert.ToInt32(model.REACH)
-                                                      , Convert.ToInt32(model.Other)
-                                                      , string.IsNullOrEmpty(model.DistCRRemark) ? "" : model.DistCRRemark
-                                                      , string.IsNullOrEmpty(model.DistHRRemark) ? "" : model.DistHRRemark
-                                                      , string.IsNullOrEmpty(model.DistGIRemark) ? "" : model.DistGIRemark            //45
-                                                      , string.IsNullOrEmpty(model.StainlessRemark) ? "" : model.StainlessRemark
-                                                      , string.IsNullOrEmpty(model.Hardness.GetString()) ? "" : model.Hardness.GetString()
-                                                      , string.IsNullOrEmpty(model.YieldRemark) ? "" : model.YieldRemark
-                                                      , string.IsNullOrEmpty(model.TensileRemark) ? "" : model.TensileRemark
-                                                      , string.IsNullOrEmpty(model.ElongationRemark) ? "" : model.ElongationRemark            //50
-                                                      , string.IsNullOrEmpty(model.HardnessRemark) ? "" : model.HardnessRemark
-                                                      , string.IsNullOrEmpty(model.CoreLossRemark) ? "" : model.CoreLossRemark
-                                                      , string.IsNullOrEmpty(model.MagnaticRemark) ? "" : model.MagnaticRemark
-                                                      , string.IsNullOrEmpty(model.ProcessOtherRemark) ? "" : model.ProcessOtherRemark
-                                                      , string.IsNullOrEmpty(model.FormingOtherRemark) ? "" : model.FormingOtherRemark            //55
-                                                      , string.IsNullOrEmpty(model.PartName) ? "" : model.PartName
-                                                      , string.IsNullOrEmpty(model.ProductName) ? "" : model.ProductName
-                                                      , string.IsNullOrEmpty(model.CusProcessRemark) ? "" : model.CusProcessRemark
-                                                      , string.IsNullOrEmpty(model.EndUser1) ? "" : model.EndUser1
-                                                      , string.IsNullOrEmpty(model.EndUser2) ? "" : model.EndUser2            //60
-                                                      , string.IsNullOrEmpty(model.EndUser3) ? "" : model.EndUser3
-                                                      , string.IsNullOrEmpty(model.EndUser4) ? "" : model.EndUser4
-                                                      , model.EdgeWave.GetDecimal()
-                                                      , String.IsNullOrEmpty(model.EdgeWaveRemark) ? "" : model.EdgeWaveRemark);
 
-                    Repository.Instance.ExecuteWithTransaction(sql, "Update MCSS UD34");
-                }
+                DataRow drUD34 = dsUD34.Tables[0].Rows[0];
+                drUD34.BeginEdit();
+                drUD34["Key1"] = model.McssNum;
+                drUD34["ShortChar08"] = model.MCSSID;
+                //drUD34["Key4"] = epiSession.UserID;
+                drUD34["Key5"] = epiSession.PlantID;
+                drUD34["Character01"] = String.IsNullOrEmpty(model.IDCoil.ToString()) ? "" : model.IDCoil.ToString();
+                drUD34["Character02"] = String.IsNullOrEmpty(model.BaseMaterial) ? "" : model.BaseMaterial;
+                drUD34["Character03"] = String.IsNullOrEmpty(model.CenterWaveRemark) ? "" : model.CenterWaveRemark;
+                drUD34["Character04"] = String.IsNullOrEmpty(model.EdgeWaveRemark) ? "" : model.EdgeWaveRemark;
+                drUD34["Character05"] = String.IsNullOrEmpty(model.OtherRemark) ? "" : model.OtherRemark;
+                drUD34["Character06"] = String.IsNullOrEmpty(model.ODCoil.ToString()) ? "" : model.ODCoil.ToString(); ;
+                drUD34["Character07"] = String.IsNullOrEmpty(model.ChemPersentRemark) ? "" : model.ChemPersentRemark; ;
+                drUD34["Character08"] = String.IsNullOrEmpty(model.CategoryGroup3) ? "" : model.CategoryGroup3;
+                drUD34["Character09"] = String.IsNullOrEmpty(model.CategoryGroup2) ? "" : model.CategoryGroup2;
+                drUD34["Character10"] = String.IsNullOrEmpty(model.CategoryGroup1) ? "" : model.CategoryGroup1;
+                drUD34["Number01"] = model.ChemPersent.GetInt();
+                drUD34["Number02"] = model.Yield.GetInt();
+                drUD34["Number03"] = model.Tensile.GetInt();
+                drUD34["Number04"] = model.Elongation.GetInt();
+                drUD34["Number06"] = model.CoreLoss.GetInt();
+                drUD34["Number07"] = model.Magnatic.GetInt();
+                drUD34["Number08"] = model.Oriented.GetInt();
+                drUD34["Number12"] = model.EdgeWave.GetDecimal();
+                drUD34["Number13"] = model.WeightPerCoilMin.GetDecimal();
+                drUD34["Number14"] = model.WeightPerCoilMax.GetDecimal();
+                drUD34["Number15"] = model.PackingStyle.GetInt();
+                drUD34["Number16"] = model.CenterWave.GetInt();
+                drUD34["Number17"] = model.Stainless.GetInt();
+                drUD34["Number18"] = model.DistGI.GetInt();
+                drUD34["Number19"] = model.DistHR.GetInt();
+                drUD34["Number20"] = model.DistCR.GetInt();
+                drUD34["CheckBox01"] = Convert.ToInt32(model.Welding);
+                drUD34["CheckBox02"] = Convert.ToInt32(model.Painting);
+                drUD34["CheckBox03"] = Convert.ToInt32(model.Degreasing);
+                drUD34["CheckBox04"] = Convert.ToInt32(model.Blanking);
+                drUD34["CheckBox05"] = Convert.ToInt32(model.ProcessOther);
+                drUD34["CheckBox06"] = Convert.ToInt32(model.Commercial);
+                drUD34["CheckBox07"] = Convert.ToInt32(model.Drawing);
+                drUD34["CheckBox08"] = Convert.ToInt32(model.DeepDrawing);
+                drUD34["CheckBox09"] = Convert.ToInt32(model.ExtraDeep);
+                drUD34["CheckBox10"] = Convert.ToInt32(model.Folding);
+                drUD34["CheckBox11"] = Convert.ToInt32(model.FormingOther);
+                drUD34["CheckBox12"] = Convert.ToInt32(model.RoHS);
+                drUD34["CheckBox13"] = Convert.ToInt32(model.PFOS);
+                drUD34["CheckBox14"] = Convert.ToInt32(model.SOC);
+                drUD34["CheckBox15"] = Convert.ToInt32(model.ELV);
+                drUD34["CheckBox16"] = Convert.ToInt32(model.REACH);
+                drUD34["CheckBox17"] = Convert.ToInt32(model.Other);
+                drUD34["ShortChar01"] = string.IsNullOrEmpty(model.DistCRRemark) ? "" : model.DistCRRemark;
+                drUD34["ShortChar02"] = string.IsNullOrEmpty(model.DistHRRemark) ? "" : model.DistHRRemark;
+                drUD34["ShortChar03"] = string.IsNullOrEmpty(model.DistGIRemark) ? "" : model.DistGIRemark;
+                drUD34["ShortChar04"] = string.IsNullOrEmpty(model.StainlessRemark) ? "" : model.StainlessRemark;
+                drUD34["ShortChar05"] = string.IsNullOrEmpty(model.Hardness.GetString()) ? "" : model.Hardness.GetString(); //ChemPersentRemark
+                drUD34["ShortChar06"] = string.IsNullOrEmpty(model.YieldRemark) ? "" : model.YieldRemark;
+                drUD34["ShortChar07"] = string.IsNullOrEmpty(model.TensileRemark) ? "" : model.TensileRemark;
+                drUD34["ShortChar08"] = string.IsNullOrEmpty(model.ElongationRemark) ? "" : model.ElongationRemark;
+                drUD34["ShortChar09"] = string.IsNullOrEmpty(model.HardnessRemark) ? "" : model.HardnessRemark;
+                drUD34["ShortChar10"] = string.IsNullOrEmpty(model.CoreLossRemark) ? "" : model.CoreLossRemark;
+                drUD34["ShortChar11"] = string.IsNullOrEmpty(model.MagnaticRemark) ? "" : model.MagnaticRemark;
+                drUD34["ShortChar12"] = string.IsNullOrEmpty(model.ProcessOtherRemark) ? "" : model.ProcessOtherRemark;
+                drUD34["ShortChar13"] = string.IsNullOrEmpty(model.FormingOtherRemark) ? "" : model.FormingOtherRemark;
+                drUD34["ShortChar14"] = string.IsNullOrEmpty(model.PartName) ? "" : model.PartName;
+                drUD34["ShortChar15"] = string.IsNullOrEmpty(model.ProductName) ? "" : model.ProductName;
+                drUD34["ShortChar16"] = string.IsNullOrEmpty(model.CusProcessRemark) ? "" : model.CusProcessRemark;
+                drUD34["ShortChar17"] = string.IsNullOrEmpty(model.EndUser1) ? "" : model.EndUser1;
+                drUD34["ShortChar18"] = string.IsNullOrEmpty(model.EndUser2) ? "" : model.EndUser2;
+                drUD34["ShortChar19"] = string.IsNullOrEmpty(model.EndUser3) ? "" : model.EndUser3;
+                drUD34["ShortChar20"] = string.IsNullOrEmpty(model.EndUser4) ? "" : model.EndUser4;
+                drUD34.EndEdit();
+                myUD34.Update(dsUD34);
+                currSession.Dispose();
 
                 IsSucces = true;
                 msgError = "";
@@ -804,12 +614,12 @@ namespace Epicoil.Library.Repositories.TQA
             {
                 Session currSession = new Session(epiSession.UserID, epiSession.UserPassword, epiSession.AppServer, Session.LicenseType.Default);
                 Part myPart = new Part(currSession.ConnectionPool);
-               
+
                 bool partExst = false;
                 string whereClausePart = string.Format(@"Part.PartNum='{0}'", model.McssNum);
                 //whereClausePart.Replace("=\"","");
                 PartDataSet dsPart = new PartDataSet();
-                if(myPart.PartExists(model.McssNum))
+                if (myPart.PartExists(model.McssNum))
                 {
                     dsPart = myPart.GetRows(whereClausePart, "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", 0, 1, out partExst);
                 }
@@ -817,17 +627,17 @@ namespace Epicoil.Library.Repositories.TQA
                 {
                     myPart.GetNewPart(dsPart);
                 }
-                
+               
                 DataRow drPart = dsPart.Tables[0].Rows[0];
                 drPart.BeginEdit();
                 drPart["PartNum"] = model.McssNum;
                 drPart["PartDescription"] = model.McssNum;
-                drPart["UOMClassID"] = "COUNT";
+                drPart["UOMClassID"] = "UCC";
                 drPart["TypeCode"] = "P";
-                drPart["IUM"] = "KG";  //Our UOM
-                drPart["PUM"] = "KG";   //Purchasing UOM
+                drPart["IUM"] = (model.Length > 0) ? "PCS" : "KG";  //Our UOM
+                drPart["PUM"] = (model.Length > 0) ? "PCS" : "KG"; ;   //Purchasing UOM
                 drPart["TypeCode"] = "M";
-                drPart["SalesUM"] = "KG";   //Sale UOM
+                drPart["SalesUM"] = (model.Length > 0) ? "PCS" : "KG"; ;   //Sale UOM
                 drPart["Character02"] = "";  //NCR No.
                 drPart["Character08"] = string.IsNullOrEmpty(model.CustID) ? "" : model.CustID;
                 drPart["Character10"] = ""; //Pack No.
@@ -917,7 +727,7 @@ namespace Epicoil.Library.Repositories.TQA
 
             return Repository.Instance.GetMany<SpecialRef>(sql);
         }
-        
+
         public int GenerateRefNo(string mcssno)
         {
             string sql = string.Format(@"SELECT TOP 1 * FROM ucc_tqa_McssSpecialRef WHERE MCSSNum = N'{0}' ORDER BY LineID DESC", mcssno);

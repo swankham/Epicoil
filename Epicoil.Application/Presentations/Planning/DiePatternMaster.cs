@@ -16,13 +16,14 @@ namespace Epicoil.Appl.Presentations.Planning
         public string PatternPara;
         public string StorePerPcsPara;
         public string RemarkPara;
-        public DiePatternMaster()
+        public DiePatternMaster(SessionInfo _session, DiePatternModel model = null)
         {
             InitializeComponent();
             this._repo = new DieMasterRepo();
             this.PatternPara = "";
             this.StorePerPcsPara = "";
             this.RemarkPara = "";
+            epiSession = _session;
         }
 
         private void DiePatternMaster_Load(object sender, EventArgs e)
@@ -51,7 +52,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            PatternPara = dgvList.Rows[e.RowIndex].Cells["Pattern"].Value.ToString ();
+            PatternPara = dgvList.Rows[e.RowIndex].Cells["Pattern"].Value.ToString();
             StorePerPcsPara = dgvList.Rows[e.RowIndex].Cells["StorkePerPcs"].Value.ToString();
             RemarkPara = dgvList.Rows[e.RowIndex].Cells["Remark"].Value.ToString();
             this.Close(); 

@@ -13,14 +13,15 @@ namespace Epicoil.Appl.Presentations.Planning
     public partial class DieMaster : BaseSession
     {
         private readonly IDieMasterRepo _repo;
-
+        //private static SessionInfo epiSession;
         private DieModel DieHeader;
 
-        public DieMaster(SessionInfo _session = null, DieModel model = null)
+        public DieMaster(SessionInfo _session, DieModel model = null)
         {
             InitializeComponent();
             this._repo = new DieMasterRepo();
             epiSession = _session;
+            //epiSession = _session;
             DieHeader = model;
         }
 
@@ -97,26 +98,29 @@ namespace Epicoil.Appl.Presentations.Planning
             {
                 err = true;
             }
-            //else
-            //{
-            //    model.DieCode = txtDieCode.Text.Trim();
-            //}
+            else
+            {
+                model.DieCode = txtDieCode.Text.Trim();
+            }
+
             if (txtDieName.Text.Trim() == "")
             {
                 err = true;
             }
-            //else
-            //{
-            //    model.DieName = txtDieName.Text.Trim();
-            //}
+            else
+            {
+                model.DieName = txtDieName.Text.Trim();
+            }
+
             if (txtPattern.Text.Trim() == "")
             {
                 err = true;
             }
-            //else
-            //{
-            //    model.PatternID = txtPattern.Text.Trim();
-            //}                   
+            else
+            {
+                model.PatternID = txtPattern.Text.Trim();
+            }
+                  
             model.DieRemark = txtDieRemark.Text.Trim();
             
             if (err == false)
@@ -171,12 +175,14 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void btnPattern_Click(object sender, EventArgs e)
         {
-            using (DiePatternMaster frm = new DiePatternMaster())
+            using (DiePatternMaster frm = new DiePatternMaster(epiSession))
             {
                 frm.ShowDialog();
-                txtPattern.Text = frm.PatternPara.ToString(); 
-                txtStrokePcs.Text =frm.StorePerPcsPara.ToString();
-                txtPatternRemark.Text = frm.RemarkPara.ToString();
+                DieHeader.PatternID = frm.PatternPara.ToString();
+                DieHeader.Pattern.PatternID = DieHeader.PatternID;
+                DieHeader.Pattern.Remark = frm.RemarkPara.ToString();
+                DieHeader.Pattern.StrokePerPcs = frm.StorePerPcsPara.ToString();
+                SetHeaderContent(DieHeader);
             }
         }
     }

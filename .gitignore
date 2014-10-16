@@ -29,3 +29,4 @@
 *.hex
 Epicoil.Application/Presentations/Common/SaleSectionDialog.resx
 Epicoil.Application/obj/Debug/Epicoil.Appl.Presentations.SaleSectionDialog.resources
+Epicoil.Library/obj/Debug/
