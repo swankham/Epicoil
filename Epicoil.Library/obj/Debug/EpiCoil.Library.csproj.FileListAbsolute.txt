@@ -119,7 +119,6 @@ D:\SourceControl\EpiCoil\Epicoil\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IPO.dll
 D:\SourceControl\EpiCoil\Epicoil\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.PO.xml
 D:\SourceControl\EpiCoil\Epicoil\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IPO.xml
 D:\SourceControl\EpiCoil\Epicoil\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
-D:\SourceTree\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
 D:\SourceTree\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
 D:\SourceTree\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceTree\EPIC\Epicoil.Library\obj\Debug\Library.dll
@@ -247,3 +246,4 @@ D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.Custo
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
+D:\SourceTree\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache

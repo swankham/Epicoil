@@ -23,6 +23,10 @@ namespace Epicoil.Library.Repositories.Planning
         IEnumerable<DieModel> Save(DieModel data, SessionInfo epiSession);
 
         string MaxID();
+
+        void DeleteLine(string dieID);
+
+        IEnumerable<DieModel> GetByFilterDie(DieModel Filter);
     }
 
 }
