@@ -15,7 +15,7 @@ namespace Epicoil.Appl.Presentations
 {
     public partial class SaleSectionDialog : BaseSession
     {
-        private readonly ISaleSectionRepo _repo;
+        private readonly ICustomerZoneRepo _repo;
         public string Code;
         public string Description;
 
@@ -34,7 +34,7 @@ namespace Epicoil.Appl.Presentations
             SetGrid(result);
 
         }
-        private void SetGrid(IEnumerable<SaleSectionModel> list)
+        private void SetGrid(IEnumerable<CustomerZoneModel> list)
         {
             dgvList.Rows.Clear();
             foreach(var item in list)
@@ -45,7 +45,7 @@ namespace Epicoil.Appl.Presentations
 
         private void butSearch_Click(object sender, EventArgs e)
         {
-            SaleSectionModel model = new SaleSectionModel();
+            CustomerZoneModel model = new CustomerZoneModel();
             model.SaleSectCode = txtFilter.Text;
             model.Plant = "MfgSys";
 
