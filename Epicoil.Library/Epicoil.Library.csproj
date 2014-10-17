@@ -130,13 +130,13 @@
     <Compile Include="Models\Common\CommodityModel.cs" />
     <Compile Include="Models\Common\CurrenciesModel.cs" />
     <Compile Include="Models\Common\CustomerModel.cs" />
+    <Compile Include="Models\Common\CustomerZoneModel.cs" />
     <Compile Include="Models\Common\MakerModel.cs" />
     <Compile Include="Models\Common\MillModel.cs" />
     <Compile Include="Models\Common\PackingStyleModel.cs" />
     <Compile Include="Models\Common\POLineModel.cs" />
     <Compile Include="Models\Common\PortModel.cs" />
     <Compile Include="Models\Common\ResourceModel.cs" />
-    <Compile Include="Models\Common\SaleSectionModel.cs" />
     <Compile Include="Models\Common\SpecModel.cs" />
     <Compile Include="Models\Common\SupplierModel.cs" />
     <Compile Include="Models\Common\UserCodeModel.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="Repositories\Common\Interface\ICommodity.cs" />
     <Compile Include="Repositories\Common\Interface\ICurrenciesRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICustomerRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\ICustomerZoneRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IImportPortRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IMainRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IMakerRepo.cs" />
@@ -178,7 +179,6 @@
     <Compile Include="Repositories\Common\Interface\IPackingStyle.cs" />
     <Compile Include="Repositories\Common\Interface\IPORepo.cs" />
     <Compile Include="Repositories\Common\Interface\IResourceRepo.cs" />
-    <Compile Include="Repositories\Common\Interface\ISaleSectionRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISpecRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISupplierRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IUserCodeRepo.cs" />

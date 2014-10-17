@@ -8,19 +8,19 @@ using Epicoil.Library.Frameworks;
 
 namespace Epicoil.Library.Repositories
 {
-    public class SaleSectionRepo : ISaleSectionRepo
+    public class SaleSectionRepo : ICustomerZoneRepo
     {
 
-        public IEnumerable<SaleSectionModel> GetAll(string plant)
+        public IEnumerable<CustomerZoneModel> GetAll(string plant)
         {
             string sql = string.Format(@"select * from ud35 WHERE ShortChar20 = '{0}'", plant);
-            return Repository.Instance.GetMany<SaleSectionModel>(sql);
+            return Repository.Instance.GetMany<CustomerZoneModel>(sql);
         }
 
 
-        public IEnumerable<SaleSectionModel> GetByFilet(SaleSectionModel filter)
+        public IEnumerable<CustomerZoneModel> GetByFilet(CustomerZoneModel filter)
         {
-            IEnumerable<SaleSectionModel> query = this.GetAll(filter.Plant);
+            IEnumerable<CustomerZoneModel> query = this.GetAll(filter.Plant);
 
             if (!string.IsNullOrEmpty(filter.SaleSectCode.ToString().ToUpper())) query = query.Where(p => p.SaleSectCode.ToString().ToUpper().Equals(filter.SaleSectCode.ToString().ToUpper()));
 

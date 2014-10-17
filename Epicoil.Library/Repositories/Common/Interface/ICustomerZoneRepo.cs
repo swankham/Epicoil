@@ -8,7 +8,7 @@ using Epicoil.Library.Models;
 namespace Epicoil.Library.Repositories
 {
 
-        public interface ISaleSectionRepo
+        public interface ICustomerZoneRepo
         {
             IEnumerable<CustomerZoneModel> GetAll(string plant);
             IEnumerable<CustomerZoneModel> GetByFilet(CustomerZoneModel filter);

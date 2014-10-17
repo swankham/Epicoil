@@ -246,3 +246,7 @@ D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.Custo
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
+C:\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
+C:\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
+C:\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
+C:\EPIC\Epicoil.Library\obj\Debug\Library.dll
