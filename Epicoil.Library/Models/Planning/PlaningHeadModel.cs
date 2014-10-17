@@ -85,7 +85,7 @@ namespace Epicoil.Library.Models.Planning
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
-        public IEnumerable<MaterailModel> MaterialList = new List<MaterailModel>();
+        public IEnumerable<MaterialModel> MaterialList = new List<MaterialModel>();
 
         public List<ResourceModel> Resources
         {
@@ -105,7 +105,7 @@ namespace Epicoil.Library.Models.Planning
             set { this.PossessionList = value; }
         }
 
-        public List<MaterailModel> Materails
+        public List<MaterialModel> Materails
         {
             get { return this.MaterialList.ToList(); }
             set { this.MaterialList = value; }
@@ -153,7 +153,7 @@ namespace Epicoil.Library.Models.Planning
             this.ResourceList = new List<ResourceModel>();
             this.OrderTypeList = new List<UserCodeModel>();
             this.PossessionList = new List<UserCodeModel>();
-            this.MaterialList = new List<MaterailModel>();
+            this.MaterialList = new List<MaterialModel>();
         }
 
         public void New(string plantId) //1 = New Transaction.
@@ -164,7 +164,7 @@ namespace Epicoil.Library.Models.Planning
             this.ResourceList = _repoRes.GetAll(plantId);
             this.OrderTypeList = _repoUcd.GetAll("OrderType");
             this.PossessionList = _repoUcd.GetAll("Pocessed");
-            this.MaterialList = new List<MaterailModel>();
+            this.MaterialList = new List<MaterialModel>();
         }
 
         public void Save() //2 = Transaction was save.

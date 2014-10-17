@@ -178,7 +178,6 @@
     <Compile Include="Repositories\Common\Interface\IPackingStyle.cs" />
     <Compile Include="Repositories\Common\Interface\IPORepo.cs" />
     <Compile Include="Repositories\Common\Interface\IResourceRepo.cs" />
-    <Compile Include="Repositories\Common\Interface\ISaleSectionRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISpecRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ISupplierRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IUserCodeRepo.cs" />
@@ -197,7 +196,6 @@
     <Compile Include="Repositories\Common\Repository\PackingStyle.cs" />
     <Compile Include="Repositories\Common\Repository\PORepo.cs" />
     <Compile Include="Repositories\Common\Repository\ResourceRepo.cs" />
-    <Compile Include="Repositories\Common\Repository\SaleSectionRepo.cs" />
     <Compile Include="Repositories\Common\Repository\SpecRepo.cs" />
     <Compile Include="Repositories\Common\Repository\SupplierRepo.cs" />
     <Compile Include="Repositories\Common\Repository\UserCodeRepo.cs" />

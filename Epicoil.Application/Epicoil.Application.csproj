@@ -155,12 +155,6 @@
     <Compile Include="Presentations\Common\POLineDialog.Designer.cs">
       <DependentUpon>POLineDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presentations\Common\SaleSectionDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Presentations\Common\SaleSectionDialog.Designer.cs">
-      <DependentUpon>SaleSectionDialog.cs</DependentUpon>
-    </Compile>
     <Compile Include="Presentations\Common\SpecDialog.cs">
       <SubType>Form</SubType>
     </Compile>
