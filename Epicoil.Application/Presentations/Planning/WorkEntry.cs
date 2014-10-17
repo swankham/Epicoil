@@ -13,6 +13,7 @@ using Epicoil.Library.Models.StoreInPlan;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Common;
 using Epicoil.Library.Models.Planning;
+using Epicoil.Library.Repositories.Planning;
 
 namespace Epicoil.Appl.Presentations.Planning
 {
@@ -20,6 +21,7 @@ namespace Epicoil.Appl.Presentations.Planning
     {
         private readonly IResourceRepo _repoRes;
         private readonly IUserCodeRepo _repoUcd;
+        private readonly IWorkEntryRepo _repo;
         private PlaningHeadModel HeaderContent;
 
         public WorkEntry(SessionInfo _session = null, PlaningHeadModel model = null)
@@ -27,6 +29,7 @@ namespace Epicoil.Appl.Presentations.Planning
             InitializeComponent();
             this._repoRes = new ResourceRepo();
             this._repoUcd = new UserCodeRepo();
+            this._repo = new WorkEntryRepo();
 
             this.HeaderContent = new PlaningHeadModel();
 
@@ -275,6 +278,9 @@ namespace Epicoil.Appl.Presentations.Planning
             //Selected Complate.
             HeaderContent.FormState = 3;
             SetFormState();
+            var result = _repo.GetAllMaterial(epiSession.PlantID);
+            dgvMaterial.DataSource = result;
+
         }
         #endregion
 

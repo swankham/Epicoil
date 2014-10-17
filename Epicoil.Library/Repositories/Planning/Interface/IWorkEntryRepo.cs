@@ -11,5 +11,7 @@ namespace Epicoil.Library.Repositories.Planning
     public interface IWorkEntryRepo
     {
         IEnumerable<MaterialModel> GetAllMaterial(string plant);
+
+        IEnumerable<MaterialModel> GetAllMatByFilter(string plant, MaterialModel model);
     }
 }

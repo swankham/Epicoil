@@ -49,9 +49,15 @@ namespace Epicoil.Library.Models.Planning
 
         public string Note { get; set; }
 
-        public string MaterialCode { get; set; }
+        public int Possession { get; set; }
 
-        public string Description { get; set; }
+        public string PossessionName 
+        { 
+            get 
+            {
+                return Enum.GetName(typeof(Possession), Possession);
+            }
+        }
 
         public string BussinessType { get; set; }
 
@@ -67,7 +73,7 @@ namespace Epicoil.Library.Models.Planning
             this.CommodityName = (string)row["CommodityName"].GetString();
             this.SpecCode = (string)row["SpecCode"].GetString();
             this.SpecName = (string)row["SpecName"].GetString();
-            this.CoatingCode = (string)row["CoatingCode"].GetString();
+            this.CoatingCode = string.IsNullOrEmpty(row["CoatingCode"].GetString()) ? "" : row["CoatingCode"].GetString();
             this.CoatingName = (string)row["CoatingName"].GetString();
             this.Thick = (decimal)row["Number01"].GetDecimal();
             this.Width = (decimal)row["Number02"].GetDecimal();
@@ -82,9 +88,8 @@ namespace Epicoil.Library.Models.Planning
             this.CBSelect = Convert.ToBoolean((int)row["CBSelect"].GetInt());
             this.Status = (string)row["Status"].GetString();
             this.Note = (string)row["Note"].GetString();
-            this.MaterialCode = (string)row["MaterialCode"].GetString();
-            this.Description = (string)row["Description"].GetString();
-            this.BussinessType = (string)row["BussinessType"].GetString();
+            this.Possession = (int)row["Possession"].GetInt();
+            this.BussinessType = string.IsNullOrEmpty(row["BussinessType"].GetString()) ? "" : row["BussinessType"].GetString();
             this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.ProductStatus = (string)row["ProductStatus"].GetString();
         }
