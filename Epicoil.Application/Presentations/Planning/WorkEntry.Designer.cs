@@ -194,7 +194,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer1.Size = new System.Drawing.Size(1020, 498);
+            this.splitContainer1.Size = new System.Drawing.Size(1304, 498);
             this.splitContainer1.SplitterDistance = 230;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -211,8 +211,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1020, 230);
-            this.splitContainer2.SplitterDistance = 648;
+            this.splitContainer2.Size = new System.Drawing.Size(1304, 230);
+            this.splitContainer2.SplitterDistance = 827;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox2
@@ -222,7 +222,7 @@
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(648, 230);
+            this.groupBox2.Size = new System.Drawing.Size(827, 230);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Material";
@@ -272,7 +272,7 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(642, 186);
+            this.dgvMaterial.Size = new System.Drawing.Size(821, 186);
             this.dgvMaterial.TabIndex = 17;
             // 
             // MCSSNum
@@ -355,10 +355,10 @@
             // 
             // quantity
             // 
-            this.quantity.HeaderText = "Quantity";
+            this.quantity.HeaderText = "Quantity(Pcs)";
             this.quantity.Name = "quantity";
             this.quantity.ReadOnly = true;
-            this.quantity.Width = 70;
+            this.quantity.Width = 94;
             // 
             // RemQuantity
             // 
@@ -431,7 +431,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(3, 16);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(642, 25);
+            this.panel1.Size = new System.Drawing.Size(821, 25);
             this.panel1.TabIndex = 0;
             // 
             // panel4
@@ -441,14 +441,14 @@
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(2);
-            this.panel4.Size = new System.Drawing.Size(535, 25);
+            this.panel4.Size = new System.Drawing.Size(714, 25);
             this.panel4.TabIndex = 1;
             // 
             // txtMCSSNo
             // 
             this.txtMCSSNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMCSSNo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.txtMCSSNo.Location = new System.Drawing.Point(351, 2);
+            this.txtMCSSNo.Location = new System.Drawing.Point(530, 2);
             this.txtMCSSNo.Name = "txtMCSSNo";
             this.txtMCSSNo.Size = new System.Drawing.Size(182, 20);
             this.txtMCSSNo.TabIndex = 2;
@@ -457,7 +457,7 @@
             // 
             this.butAddMaterial.Dock = System.Windows.Forms.DockStyle.Right;
             this.butAddMaterial.ForeColor = System.Drawing.Color.Black;
-            this.butAddMaterial.Location = new System.Drawing.Point(535, 0);
+            this.butAddMaterial.Location = new System.Drawing.Point(714, 0);
             this.butAddMaterial.Name = "butAddMaterial";
             this.butAddMaterial.Size = new System.Drawing.Size(107, 25);
             this.butAddMaterial.TabIndex = 0;
@@ -472,7 +472,7 @@
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(368, 230);
+            this.groupBox3.Size = new System.Drawing.Size(473, 230);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Coil Back / Sheet Back";
@@ -514,7 +514,7 @@
             this.dgvCoilBack.RowHeadersVisible = false;
             this.dgvCoilBack.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCoilBack.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCoilBack.Size = new System.Drawing.Size(362, 186);
+            this.dgvCoilBack.Size = new System.Drawing.Size(467, 186);
             this.dgvCoilBack.TabIndex = 18;
             // 
             // dataGridViewTextBoxColumn2
@@ -616,14 +616,14 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 16);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(362, 25);
+            this.panel2.Size = new System.Drawing.Size(467, 25);
             this.panel2.TabIndex = 1;
             // 
             // butAddCoilBack
             // 
             this.butAddCoilBack.Dock = System.Windows.Forms.DockStyle.Right;
             this.butAddCoilBack.ForeColor = System.Drawing.Color.Black;
-            this.butAddCoilBack.Location = new System.Drawing.Point(226, 0);
+            this.butAddCoilBack.Location = new System.Drawing.Point(331, 0);
             this.butAddCoilBack.Name = "butAddCoilBack";
             this.butAddCoilBack.Size = new System.Drawing.Size(136, 25);
             this.butAddCoilBack.TabIndex = 1;
@@ -637,7 +637,7 @@
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(1020, 264);
+            this.groupBox4.Size = new System.Drawing.Size(1304, 264);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Cutting Design";
@@ -693,7 +693,7 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(1014, 219);
+            this.dgvCutting.Size = new System.Drawing.Size(1298, 219);
             this.dgvCutting.TabIndex = 18;
             // 
             // sono
@@ -884,7 +884,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel3.Location = new System.Drawing.Point(3, 235);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1014, 26);
+            this.panel3.Size = new System.Drawing.Size(1298, 26);
             this.panel3.TabIndex = 1;
             // 
             // groupBox1
@@ -912,7 +912,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1020, 138);
+            this.groupBox1.Size = new System.Drawing.Size(1304, 138);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
@@ -975,7 +975,7 @@
             this.txtBT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBT.Location = new System.Drawing.Point(184, 91);
             this.txtBT.Name = "txtBT";
-            this.txtBT.Size = new System.Drawing.Size(74, 20);
+            this.txtBT.Size = new System.Drawing.Size(35, 20);
             this.txtBT.TabIndex = 13;
             this.txtBT.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.txtBT.Visible = false;
@@ -1320,7 +1320,7 @@
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(2);
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(1020, 34);
+            this.toolStrip2.Size = new System.Drawing.Size(1304, 34);
             this.toolStrip2.TabIndex = 39;
             this.toolStrip2.Text = "Tool Bar";
             // 
@@ -1464,7 +1464,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1020, 670);
+            this.ClientSize = new System.Drawing.Size(1304, 670);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip2);
@@ -1533,27 +1533,6 @@
         private System.Windows.Forms.DataGridView dgvMaterial;
         public System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton tlbClear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn article;
-        private System.Windows.Forms.DataGridViewTextBoxColumn spec;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coating;
-        private System.Windows.Forms.DataGridViewTextBoxColumn thick;
-        private System.Windows.Forms.DataGridViewTextBoxColumn width;
-        private System.Windows.Forms.DataGridViewTextBoxColumn length;
-        private System.Windows.Forms.DataGridViewTextBoxColumn weight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn usingweight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn remainWeight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn LengthM;
-        private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RemQuantity;
-        private System.Windows.Forms.DataGridViewTextBoxColumn qtyPack;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn SelectCB;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status;
-        private System.Windows.Forms.DataGridViewTextBoxColumn note;
-        private System.Windows.Forms.DataGridViewTextBoxColumn matCode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn descriptioin;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bt;
-        private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
         private System.Windows.Forms.DataGridView dgvCoilBack;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn commodity;
@@ -1633,5 +1612,26 @@
         private System.Windows.Forms.TextBox txtMCSSNo;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem tbutCancelWorkOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn article;
+        private System.Windows.Forms.DataGridViewTextBoxColumn spec;
+        private System.Windows.Forms.DataGridViewTextBoxColumn coating;
+        private System.Windows.Forms.DataGridViewTextBoxColumn thick;
+        private System.Windows.Forms.DataGridViewTextBoxColumn width;
+        private System.Windows.Forms.DataGridViewTextBoxColumn length;
+        private System.Windows.Forms.DataGridViewTextBoxColumn weight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn usingweight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn remainWeight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LengthM;
+        private System.Windows.Forms.DataGridViewTextBoxColumn quantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn RemQuantity;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qtyPack;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn SelectCB;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn note;
+        private System.Windows.Forms.DataGridViewTextBoxColumn matCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn descriptioin;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bt;
+        private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
     }
 }

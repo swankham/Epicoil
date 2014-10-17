@@ -2,11 +2,22 @@
 using System.Data;
 using System.Linq;
 using System.Collections.Generic;
+using Epicoil.Library.Repositories;
 
 namespace Epicoil.Library.Models.Planning
 {
     public class PlaningHeadModel
     {
+        private readonly IResourceRepo _repoRes;
+        private readonly IUserCodeRepo _repoUcd;
+
+        public PlaningHeadModel()
+        {
+            this._repoRes = new ResourceRepo();
+            this._repoUcd = new UserCodeRepo();
+        }
+
+        #region Attribute
         public string Company { get; set; }
 
         public string Plant { get; set; }
@@ -99,7 +110,9 @@ namespace Epicoil.Library.Models.Planning
             get { return this.MaterialList.ToList(); }
             set { this.MaterialList = value; }
         }
+        #endregion
 
+        #region Method
         public virtual void DataBind(DataRow row)
         {
             this.Company = (string)row["Company"].GetString();
@@ -123,12 +136,43 @@ namespace Epicoil.Library.Models.Planning
             this.TotalMaterialAmount = (decimal)row["TotalMatAmount"].GetDecimal();
             this.TotalWidth = (decimal)row["TotalWidth"].GetDecimal();
             this.BT = (string)row["BT"].GetString();
-            this.LVTrim =  Convert.ToBoolean(row["LVTrim"].GetInt());
+            this.LVTrim = Convert.ToBoolean(row["LVTrim"].GetInt());
             this.PackingPlan = Convert.ToBoolean(row["PackingPlan"].GetInt());
             this.CreationDate = (DateTime)row["CreationDate"].GetDate();
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
         }
+
+        public void Load() //0 = Nothing.
+        {
+            this.FormState = 0;
+            this.SimulateFlag = false;
+            this.IssueDate = DateTime.Now;
+            this.DueDate = DateTime.Now;
+            this.ResourceList = new List<ResourceModel>();
+            this.OrderTypeList = new List<UserCodeModel>();
+            this.PossessionList = new List<UserCodeModel>();
+            this.MaterialList = new List<MaterailModel>();
+        }
+
+        public void New(string plantId) //1 = New Transaction.
+        {
+            this.FormState = 1;            
+            this.IssueDate = DateTime.Now;
+            this.DueDate = DateTime.Now;
+            this.ResourceList = _repoRes.GetAll(plantId);
+            this.OrderTypeList = _repoUcd.GetAll("OrderType");
+            this.PossessionList = _repoUcd.GetAll("Pocessed");
+            this.MaterialList = new List<MaterailModel>();
+        }
+
+        public void Save() //2 = Transaction was save.
+        {
+            this.FormState = 2;
+        }
+
+
+        #endregion
     }
 }

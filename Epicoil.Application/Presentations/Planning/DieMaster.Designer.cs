@@ -30,8 +30,8 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DieMaster));
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btnDieSearch = new System.Windows.Forms.Button();
+            this.txtDieSearch = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtPatternRemark = new System.Windows.Forms.TextBox();
             this.txtStrokePcs = new System.Windows.Forms.TextBox();
@@ -69,24 +69,25 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // btnDieSearch
             // 
-            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.Highlight;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Image = global::Epicoil.Appl.Properties.Resources._find;
-            this.button1.Location = new System.Drawing.Point(169, 56);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(28, 20);
-            this.button1.TabIndex = 41;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnDieSearch.FlatAppearance.BorderColor = System.Drawing.SystemColors.Highlight;
+            this.btnDieSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDieSearch.Image = global::Epicoil.Appl.Properties.Resources._find;
+            this.btnDieSearch.Location = new System.Drawing.Point(169, 56);
+            this.btnDieSearch.Name = "btnDieSearch";
+            this.btnDieSearch.Size = new System.Drawing.Size(28, 20);
+            this.btnDieSearch.TabIndex = 41;
+            this.btnDieSearch.UseVisualStyleBackColor = true;
+            this.btnDieSearch.Click += new System.EventHandler(this.btnDieSearch_Click);
             // 
-            // textBox1
+            // txtDieSearch
             // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(0, 56);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(163, 20);
-            this.textBox1.TabIndex = 40;
+            this.txtDieSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDieSearch.Location = new System.Drawing.Point(0, 56);
+            this.txtDieSearch.Name = "txtDieSearch";
+            this.txtDieSearch.Size = new System.Drawing.Size(163, 20);
+            this.txtDieSearch.TabIndex = 40;
             // 
             // groupBox1
             // 
@@ -113,7 +114,6 @@
             this.txtPatternRemark.ReadOnly = true;
             this.txtPatternRemark.Size = new System.Drawing.Size(314, 20);
             this.txtPatternRemark.TabIndex = 8;
-            this.txtPatternRemark.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // txtStrokePcs
             // 
@@ -140,7 +140,6 @@
             this.txtPattern.Name = "txtPattern";
             this.txtPattern.Size = new System.Drawing.Size(100, 20);
             this.txtPattern.TabIndex = 5;
-            this.txtPattern.TextChanged += new System.EventHandler(this.txtPattern_TextChanged);
             this.txtPattern.Leave += new System.EventHandler(this.txtPattern_Leave);
             // 
             // btnPattern
@@ -242,6 +241,7 @@
             this.tblDelete.Name = "tblDelete";
             this.tblDelete.Size = new System.Drawing.Size(23, 20);
             this.tblDelete.Text = "Delete";
+            this.tblDelete.Click += new System.EventHandler(this.tblDelete_Click);
             // 
             // tlbRefresh
             // 
@@ -252,6 +252,7 @@
             this.tlbRefresh.Name = "tlbRefresh";
             this.tlbRefresh.Size = new System.Drawing.Size(23, 20);
             this.tlbRefresh.Text = "Refresh";
+            this.tlbRefresh.Click += new System.EventHandler(this.tlbRefresh_Click);
             // 
             // tlbClear
             // 
@@ -262,6 +263,7 @@
             this.tlbClear.Name = "tlbClear";
             this.tlbClear.Size = new System.Drawing.Size(23, 20);
             this.tlbClear.Text = "Clear";
+            this.tlbClear.Click += new System.EventHandler(this.tlbClear_Click);
             // 
             // menuStrip1
             // 
@@ -292,37 +294,41 @@
             this.newToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources._new;
             this.newToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(154, 24);
             this.newToolStripMenuItem.Text = "New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
             // saveToolStripMenuItem
             // 
             this.saveToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_save;
             this.saveToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(154, 24);
             this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
             // 
             this.deleteToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
             this.deleteToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(154, 24);
             this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(106, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(151, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.file_exit;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(109, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 24);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -338,16 +344,18 @@
             this.clearToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_clear;
             this.clearToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.clearToolStripMenuItem.Text = "Clear";
+            this.clearToolStripMenuItem.Click += new System.EventHandler(this.clearToolStripMenuItem_Click);
             // 
             // refreshToolStripMenuItem
             // 
             this.refreshToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_refresh;
             this.refreshToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(113, 24);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             this.refreshToolStripMenuItem.Text = "Refresh";
+            this.refreshToolStripMenuItem.Click += new System.EventHandler(this.refreshToolStripMenuItem_Click);
             // 
             // dataGridView1
             // 
@@ -424,8 +432,8 @@
             this.Controls.Add(this.txtDieRemark);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnDieSearch);
+            this.Controls.Add(this.txtDieSearch);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.menuStrip1);
@@ -468,8 +476,8 @@
         private System.Windows.Forms.ToolStripButton tlbRefresh;
         private System.Windows.Forms.ToolStripButton tlbClear;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtDieSearch;
+        private System.Windows.Forms.Button btnDieSearch;
         private System.Windows.Forms.TextBox txtPattern;
         private System.Windows.Forms.Button btnPattern;
         private System.Windows.Forms.TextBox txtDieName;

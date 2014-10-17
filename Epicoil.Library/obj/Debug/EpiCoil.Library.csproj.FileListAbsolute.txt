@@ -242,7 +242,6 @@ D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Lib.SessionMod.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Lib.BOReader.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Lib.ISessionMod.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
