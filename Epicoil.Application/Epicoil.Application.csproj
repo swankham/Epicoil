@@ -185,6 +185,12 @@
     <Compile Include="Presentations\Planning\DiePatternMaster.Designer.cs">
       <DependentUpon>DiePatternMaster.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Planning\MaterialSelecting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\MaterialSelecting.Designer.cs">
+      <DependentUpon>MaterialSelecting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Planning\WorkEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\DiePatternMaster.resx">
       <DependentUpon>DiePatternMaster.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\MaterialSelecting.resx">
+      <DependentUpon>MaterialSelecting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\WorkEntry.resx">
       <DependentUpon>WorkEntry.cs</DependentUpon>

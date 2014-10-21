@@ -80,11 +80,9 @@ namespace Epicoil.Appl.Presentations.Planning
             ClearHeaderContent();
             txtDieCode.DataBindings.Add("Text", model, "DieCode", false, DataSourceUpdateMode.OnPropertyChanged);
             txtDieName.DataBindings.Add("Text", model, "DieName", false, DataSourceUpdateMode.OnPropertyChanged);
-
             txtPattern.DataBindings.Add("Text", model, "Pattern.PatternID", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPatternRemark.DataBindings.Add("Text", model, "Pattern.Remark", false, DataSourceUpdateMode.OnPropertyChanged);
             txtStrokePcs.DataBindings.Add("Text", model, "Pattern.StrokePerPcs", false, DataSourceUpdateMode.OnPropertyChanged);
-
             txtDieRemark.DataBindings.Add("Text", model, "DieRemark", false, DataSourceUpdateMode.OnPropertyChanged);          
         }
 

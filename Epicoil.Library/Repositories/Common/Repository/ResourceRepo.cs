@@ -10,7 +10,7 @@ namespace Epicoil.Library.Repositories
         public IEnumerable<ResourceModel> GetAll(string plant)
         {
             string sql = string.Format(@"SELECT rgp.Plant, rgp.ResourceGrpID, rgp.Description as GropDescription
-	                                             , res.ResourceID, res.Description as ResourceDescription
+	                                             , res.ResourceID, res.Description as ResourceDescription, res.*
                                             FROM Resource_ res
                                             INNER JOIN ResourceGroup rgp ON(res.ResourceGrpID = rgp.ResourceGrpID)
                                             WHERE res.Inactive = 0 AND rgp.Plant = N'{0}'
@@ -32,7 +32,7 @@ namespace Epicoil.Library.Repositories
         public ResourceModel GetByID(string plant, string ResourceID)
         {
             string sql = string.Format(@"SELECT rgp.Plant, rgp.ResourceGrpID, rgp.Description as GropDescription
-	                                             , res.ResourceID, res.Description as ResourceDescription
+	                                             , res.ResourceID, res.Description as ResourceDescription, res.*
                                             FROM Resource_ res
                                             INNER JOIN ResourceGroup rgp ON(res.ResourceGrpID = rgp.ResourceGrpID)
                                             WHERE res.Inactive = 0 AND rgp.Plant = N'{0}' AND res.ResourceID = N'{1}'

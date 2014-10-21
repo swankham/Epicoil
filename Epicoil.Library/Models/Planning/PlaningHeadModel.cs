@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Epicoil.Library.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Collections.Generic;
-using Epicoil.Library.Repositories;
 
 namespace Epicoil.Library.Models.Planning
 {
@@ -10,14 +10,22 @@ namespace Epicoil.Library.Models.Planning
     {
         private readonly IResourceRepo _repoRes;
         private readonly IUserCodeRepo _repoUcd;
+        private readonly IResourceRepo _reRes;
+
+        //MaterialModel _materail;
+        //ClassMasterModel _class;
 
         public PlaningHeadModel()
         {
             this._repoRes = new ResourceRepo();
             this._repoUcd = new UserCodeRepo();
+            this._reRes = new ResourceRepo();
+            //this._materail = new MaterialModel();
+            //this._class = new ClassMasterModel();
         }
 
         #region Attribute
+
         public string Company { get; set; }
 
         public string Plant { get; set; }
@@ -26,7 +34,7 @@ namespace Epicoil.Library.Models.Planning
 
         public string WorkOrderNum { get; set; }
 
-        public string ProcessLine { get; set; }
+        //public string ProcessLine { get; set; }
 
         public decimal ProcessStep { get; set; }
 
@@ -38,6 +46,13 @@ namespace Epicoil.Library.Models.Planning
 
         public string Possession { get; set; }
 
+        public string PossessionName
+        {
+            get
+            {
+                return Enum.GetName(typeof(Possession), Convert.ToInt32(Possession));
+            }
+        }
         public DateTime IssueDate { get; set; }
 
         public DateTime DueDate { get; set; }
@@ -55,6 +70,7 @@ namespace Epicoil.Library.Models.Planning
         public decimal Yield { get; set; }
 
         public decimal TotalMaterialAmount { get; set; }
+
         public decimal TotalWidth { get; set; }
 
         public string BT { get; set; }
@@ -81,6 +97,12 @@ namespace Epicoil.Library.Models.Planning
         public int FormState { get; set; }
 
         public bool SimulateFlag { get; set; }
+
+        public MaterialModel MaterialPattern { get; set; }
+
+        public ClassMasterModel CurrentClass { get; set; }
+
+        public ResourceModel ProcessLineSpec { get; set; }
 
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
@@ -110,16 +132,18 @@ namespace Epicoil.Library.Models.Planning
             get { return this.MaterialList.ToList(); }
             set { this.MaterialList = value; }
         }
-        #endregion
+
+        #endregion Attribute
 
         #region Method
+
         public virtual void DataBind(DataRow row)
         {
             this.Company = (string)row["Company"].GetString();
             this.Plant = (string)row["Plant"].GetString();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
-            this.ProcessLine = (string)row["ProcessLine"].GetString();
+            this.ProcessLineSpec = _reRes.GetByID(this.Plant, (string)row["ProcessLine"].GetString());
             this.ProcessStep = (decimal)row["ProcessStep"].GetDecimal();
             this.OrderType = (string)row["OrderType"].GetString();
             this.PIC = (string)row["PIC"].GetString();
@@ -154,17 +178,22 @@ namespace Epicoil.Library.Models.Planning
             this.OrderTypeList = new List<UserCodeModel>();
             this.PossessionList = new List<UserCodeModel>();
             this.MaterialList = new List<MaterialModel>();
+            this.MaterialPattern = new MaterialModel();
+            this.CurrentClass = new ClassMasterModel();
         }
 
         public void New(string plantId) //1 = New Transaction.
         {
-            this.FormState = 1;            
+            this.FormState = 1;
             this.IssueDate = DateTime.Now;
             this.DueDate = DateTime.Now;
             this.ResourceList = _repoRes.GetAll(plantId);
             this.OrderTypeList = _repoUcd.GetAll("OrderType");
             this.PossessionList = _repoUcd.GetAll("Pocessed");
             this.MaterialList = new List<MaterialModel>();
+            //this.MaterialPattern = new MaterialModel();
+            this.CurrentClass.ClassNo = 0;
+            this.ProcessLineSpec = new ResourceModel();
         }
 
         public void Save() //2 = Transaction was save.
@@ -172,7 +201,6 @@ namespace Epicoil.Library.Models.Planning
             this.FormState = 2;
         }
 
-
-        #endregion
+        #endregion Method
     }
 }

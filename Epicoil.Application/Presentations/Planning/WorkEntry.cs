@@ -22,7 +22,10 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IResourceRepo _repoRes;
         private readonly IUserCodeRepo _repoUcd;
         private readonly IWorkEntryRepo _repo;
+        private readonly IResourceRepo _reRes;
+
         private PlaningHeadModel HeaderContent;
+        private ClassMasterModel _class;
 
         public WorkEntry(SessionInfo _session = null, PlaningHeadModel model = null)
         {
@@ -30,8 +33,10 @@ namespace Epicoil.Appl.Presentations.Planning
             this._repoRes = new ResourceRepo();
             this._repoUcd = new UserCodeRepo();
             this._repo = new WorkEntryRepo();
+            this._reRes = new ResourceRepo();
 
             this.HeaderContent = new PlaningHeadModel();
+            this._class = new ClassMasterModel();
 
             //Initial Session and content
             this.HeaderContent = new PlaningHeadModel();
@@ -126,8 +131,8 @@ namespace Epicoil.Appl.Presentations.Planning
             //ComboBox            
             cmbProcessLine.DataSource = model.ResourceList.ToList();
             cmbProcessLine.DisplayMember = "ResourceDescription";
-            cmbProcessLine.ValueMember = "ResourceID";            
-            cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLine", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbProcessLine.ValueMember = "ResourceID";
+            cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineSpec.ResourceID", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbOrderType.DataSource = model.OrderTypeList.ToList();
             cmbOrderType.DisplayMember = "CodeDesc";
             cmbOrderType.ValueMember = "CodeID";
@@ -278,15 +283,21 @@ namespace Epicoil.Appl.Presentations.Planning
             //Selected Complate.
             HeaderContent.FormState = 3;
             SetFormState();
-            var result = _repo.GetAllMaterial(epiSession.PlantID);
-            dgvMaterial.DataSource = result;
+
+            HeaderContent.MaterialPattern.SpecCode = "11";
+
+            var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
+            using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
+            {
+                frm.ShowDialog();
+            }
 
         }
         #endregion
 
         private void butWorkOrder_Click(object sender, EventArgs e)
         {
-            using (CoilBackRuleDialog frm = new CoilBackRuleDialog())
+            using (CoilBackRuleDialog frm = new CoilBackRuleDialog(epiSession))
             {
                 frm.ShowDialog();
                 txtWorkOrderNum.Text = frm.Code;
@@ -294,6 +305,27 @@ namespace Epicoil.Appl.Presentations.Planning
         }
 
         #region Method
+        private void ListMaterialGrid(IEnumerable<MaterialModel> item)
+        {
+            int i = 0;
+            foreach (var p in item)
+            {
+                dgvMaterial.Rows.Add(p.MCSSNo, p.SerialNo, p.SpecCode + " - "+ p.SpecName, p.CoatingCode +" - "+ p.CoatingName, p.Thick, p.Width, p.Length
+                                     , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.Quantity, p.RemainQty, p.QuantityPack, p.CBSelect
+                                     , p.Status, p.Note, p.BussinessTypeName, p.ProductStatus);
+
+                if (i % 2 == 1)
+                {
+                    this.dgvMaterial.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
+        }
         #endregion
+
+        private void cmbProcessLine_SelectedValueChanged(object sender, EventArgs e)
+        {
+            HeaderContent.ProcessLineSpec = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
+        }
     }
 }

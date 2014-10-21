@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Epicoil.Library.Models;
+﻿using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
+using System.Collections.Generic;
 
 namespace Epicoil.Library.Repositories.Planning
 {
@@ -12,6 +8,6 @@ namespace Epicoil.Library.Repositories.Planning
     {
         IEnumerable<MaterialModel> GetAllMaterial(string plant);
 
-        IEnumerable<MaterialModel> GetAllMatByFilter(string plant, MaterialModel model);
+        IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlaningHeadModel model);
     }
 }

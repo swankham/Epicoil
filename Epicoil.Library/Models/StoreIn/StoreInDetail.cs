@@ -25,7 +25,7 @@ namespace Epicoil.Library.Models.StoreIn
 
         public string NGRemark { get; set; }
 
-        public virtual void DataBind(DataRow row)
+        public override void DataBind(DataRow row)
         {
             base.DataBind(row);
             this.TransactionID = (decimal)row["TransactionID"].GetDecimal();

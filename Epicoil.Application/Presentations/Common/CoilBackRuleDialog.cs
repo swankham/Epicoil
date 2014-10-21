@@ -11,12 +11,13 @@ namespace Epicoil.Appl.Presentations
         public string Code;
         public string Description;
 
-        public CoilBackRuleDialog()
+        public CoilBackRuleDialog(SessionInfo _session)
         {
             InitializeComponent();
             this._repo = new CoilBackRuleRepo();
             this.Code = "";
             this.Description = "";
+            epiSession = _session;
         }
 
         private void CoilBackRuleDialog_Load(object sender, EventArgs e)
