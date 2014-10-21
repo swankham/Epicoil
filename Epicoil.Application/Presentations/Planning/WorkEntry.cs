@@ -1,19 +1,12 @@
-﻿using System;
+﻿using Epicoil.Library.Models;
+using Epicoil.Library.Models.Planning;
+using Epicoil.Library.Repositories;
+using Epicoil.Library.Repositories.Planning;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Epicoil.Library.Models;
-using Epicoil.Library.Models.StoreInPlan;
-using Epicoil.Library.Repositories;
-using Epicoil.Library.Repositories.Common;
-using Epicoil.Library.Models.Planning;
-using Epicoil.Library.Repositories.Planning;
 
 namespace Epicoil.Appl.Presentations.Planning
 {
@@ -40,15 +33,15 @@ namespace Epicoil.Appl.Presentations.Planning
 
             //Initial Session and content
             this.HeaderContent = new PlaningHeadModel();
-            epiSession = _session;           
+            epiSession = _session;
             if (model != null)
             {
                 this.HeaderContent = model;
             }
-
         }
 
         #region Properties
+
         private void SetFormState()
         {
             switch (HeaderContent.FormState)
@@ -64,6 +57,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tlbClear.Enabled = false;
                     tbutCancelWorkOrder.Enabled = false;
                     break;
+
                 case 1: /// 1 = New Transaction.
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = false;
@@ -78,11 +72,13 @@ namespace Epicoil.Appl.Presentations.Planning
                     ResetCoilBackGrid();
                     ResetCuttingGrid();
                     break;
+
                 case 2: /// 2 = Transaction was save.
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
                     tlbClear.Enabled = true;
                     break;
+
                 case 3: /// 3 = Selected materail.
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
@@ -94,6 +90,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tlbClear.Enabled = true;
                     tbutCancelWorkOrder.Enabled = true;
                     break;
+
                 case 4: /// 4 = Calculated.
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
@@ -117,18 +114,19 @@ namespace Epicoil.Appl.Presentations.Planning
             model.PICName = epiSession.UserName;
             //TextBox
             txtWorkOrderNum.DataBindings.Add("Text", model, "WorkOrderNum", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtProcessStep.DataBindings.Add("Text", model, "ProcessStep", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPICName.DataBindings.Add("Text", model, "PICName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtUsingWeight.DataBindings.Add("Text", model, "UsingWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtInputWeight.DataBindings.Add("Text", model, "InputWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtRewindWeight.DataBindings.Add("Text", model, "RewindWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtOutputWeight.DataBindings.Add("Text", model, "OutputWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtBT.DataBindings.Add("Text", model, "BT", false, DataSourceUpdateMode.OnPropertyChanged);
-            txtLossWeight.DataBindings.Add("Text", model, "LossWeight", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtLossWeight.DataBindings.Add("Text", model, "LossWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
             txtYield.DataBindings.Add("Text", model, "Yield", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
-            txtTotalMaterialAmount.DataBindings.Add("Text", model, "TotalMaterialAmount", false, DataSourceUpdateMode.OnPropertyChanged);
-            txtTotalWidth.DataBindings.Add("Text", model, "TotalWidth", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtTotalMaterialAmount.DataBindings.Add("Text", model, "TotalMaterialAmount", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
+            txtTotalWidth.DataBindings.Add("Text", model, "TotalWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
 
-            //ComboBox            
+            //ComboBox
             cmbProcessLine.DataSource = model.ResourceList.ToList();
             cmbProcessLine.DisplayMember = "ResourceDescription";
             cmbProcessLine.ValueMember = "ResourceID";
@@ -140,12 +138,12 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbPossession.DataSource = model.PossessionList.ToList();
             cmbPossession.DisplayMember = "CodeDesc";
             cmbPossession.ValueMember = "CodeID";
-            cmbPossession.DataBindings.Add("SelectedValue", model, "Possession", false, DataSourceUpdateMode.OnPropertyChanged);            
+            cmbPossession.DataBindings.Add("SelectedValue", model, "Possession", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //CheckBox
             chkPackingPlan.DataBindings.Add("Checked", model, "PackingPlan", false, DataSourceUpdateMode.OnPropertyChanged);
-            chkLVTrim.DataBindings.Add("Checked", model, "LVTrim", false, DataSourceUpdateMode.OnPropertyChanged);    
-  
+            chkLVTrim.DataBindings.Add("Checked", model, "LVTrim", false, DataSourceUpdateMode.OnPropertyChanged);
+
             //DatePicker
             dptIssueDate.Value = model.IssueDate;
             dptDueDate.Value = model.DueDate;
@@ -153,7 +151,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void ClearHeaderContent()
         {
-            txtWorkOrderNum.DataBindings.Clear();            
+            txtWorkOrderNum.DataBindings.Clear();
+            txtProcessStep.DataBindings.Clear();
             txtPICName.DataBindings.Clear();
             txtUsingWeight.DataBindings.Clear();
             txtInputWeight.DataBindings.Clear();
@@ -165,7 +164,7 @@ namespace Epicoil.Appl.Presentations.Planning
             txtTotalMaterialAmount.DataBindings.Clear();
             txtTotalWidth.DataBindings.Clear();
 
-            //ComboBox  
+            //ComboBox
             cmbProcessLine.DataBindings.Clear();
             cmbOrderType.DataBindings.Clear();
             cmbPossession.DataBindings.Clear();
@@ -175,7 +174,6 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbProcessLine.Text = "";
             cmbOrderType.Text = "";
             cmbPossession.Text = "";
-            cmbProcessStep.Text = "";
             cmbProcessLine.Items.Clear();
             cmbOrderType.Items.Clear();
             cmbPossession.Items.Clear();
@@ -192,6 +190,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             //Clear Content
             txtWorkOrderNum.Clear();
+            txtProcessStep.Clear();
             txtPICName.Clear();
             txtUsingWeight.Clear();
             txtInputWeight.Clear();
@@ -218,14 +217,20 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             dgvCutting.Rows.Clear();
         }
-        #endregion
+
+        #endregion Properties
 
         #region Evnet
+
         private void WorkEntrySlitter_Load(object sender, EventArgs e)
         {
-            HeaderContent.Load();
+            HeaderContent.PreLoad();
             SetFormState();
         }
+
+        #endregion Evnet
+
+        #region Method
 
         private void tbutNewWork_Click(object sender, EventArgs e)
         {
@@ -234,13 +239,31 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.PICName = epiSession.UserName;
             SetFormState();
             SetHeadContent(HeaderContent);
-            cmbProcessStep.SelectedIndex = 0;
+            //cmbProcessStep.SelectedIndex = 0;
         }
 
         private void tbutSave_Click(object sender, EventArgs e)
         {
-            //Save Complated.
-            HeaderContent.Save();
+            string objectValid;
+            string messageValid;
+
+            IEnumerable<MaterialModel> model = new List<MaterialModel>();
+            var result = HeaderContent.ValidateModel(model, out objectValid, out messageValid);
+
+            if (!result)
+            {
+                MessageBox.Show(messageValid, "a", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else
+            {
+                HeaderContent = _repo.Save(epiSession, HeaderContent);
+            }
+
+            //Validate complated.
+            HeaderContent.Saved();
+            SetHeadContent(HeaderContent);
+            
             SetFormState();
         }
 
@@ -253,7 +276,6 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutNewCoilBack_Click(object sender, EventArgs e)
         {
-
         }
 
         private void tbutSimulate_Click(object sender, EventArgs e)
@@ -265,8 +287,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tlbClear_Click(object sender, EventArgs e)
         {
-            //Simulated Complate.            
-            HeaderContent.Load();
+            //Simulated Complate.
+            HeaderContent.PreLoad();
             SetFormState();
             ClearHeaderContent();
         }
@@ -284,33 +306,21 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.FormState = 3;
             SetFormState();
 
-            HeaderContent.MaterialPattern.SpecCode = "11";
-
+            HeaderContent.MaterialPattern = new MaterialModel();
+            HeaderContent.ProcessLineSpec = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
             var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
             using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
             {
                 frm.ShowDialog();
             }
-
-        }
-        #endregion
-
-        private void butWorkOrder_Click(object sender, EventArgs e)
-        {
-            using (CoilBackRuleDialog frm = new CoilBackRuleDialog(epiSession))
-            {
-                frm.ShowDialog();
-                txtWorkOrderNum.Text = frm.Code;
-            }
         }
 
-        #region Method
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
         {
             int i = 0;
             foreach (var p in item)
             {
-                dgvMaterial.Rows.Add(p.MCSSNo, p.SerialNo, p.SpecCode + " - "+ p.SpecName, p.CoatingCode +" - "+ p.CoatingName, p.Thick, p.Width, p.Length
+                dgvMaterial.Rows.Add(p.MCSSNo, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
                                      , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.Quantity, p.RemainQty, p.QuantityPack, p.CBSelect
                                      , p.Status, p.Note, p.BussinessTypeName, p.ProductStatus);
 
@@ -321,11 +331,21 @@ namespace Epicoil.Appl.Presentations.Planning
                 i++;
             }
         }
-        #endregion
+
+        private void butWorkOrder_Click(object sender, EventArgs e)
+        {
+            using (CoilBackRuleDialog frm = new CoilBackRuleDialog(epiSession))
+            {
+                frm.ShowDialog();
+                txtWorkOrderNum.Text = frm.Code;
+            }
+        }
 
         private void cmbProcessLine_SelectedValueChanged(object sender, EventArgs e)
         {
-            HeaderContent.ProcessLineSpec = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
+
         }
+
+        #endregion Method
     }
 }

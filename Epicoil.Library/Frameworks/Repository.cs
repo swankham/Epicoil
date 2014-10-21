@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Runtime.Serialization;
@@ -277,9 +278,18 @@ namespace Epicoil.Library.Frameworks
                     int intValue = (int)row[name];
                     return (T)(object)intValue;
 
+                case "System.Int64":
+                    Int64 intValue64 = (Int64)row[name];
+                    return (T)(object)intValue64;
+
+                case "System.Double":
+                    Double doubleValue = (Double)row[name];
+                    return (T)(object)doubleValue;
+
                 case "System.Decimal":
                     decimal decimalValue = (decimal)row[name];
                     return (T)(object)decimalValue;
+      
             }
 
             return generic;

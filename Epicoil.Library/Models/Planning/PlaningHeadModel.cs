@@ -1,4 +1,5 @@
 ﻿using Epicoil.Library.Repositories;
+using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,20 +9,15 @@ namespace Epicoil.Library.Models.Planning
 {
     public class PlaningHeadModel
     {
-        private readonly IResourceRepo _repoRes;
+        private readonly IWorkEntryRepo _repo;
         private readonly IUserCodeRepo _repoUcd;
-        private readonly IResourceRepo _reRes;
-
-        //MaterialModel _materail;
-        //ClassMasterModel _class;
+        private readonly IResourceRepo _repoRes;
 
         public PlaningHeadModel()
         {
-            this._repoRes = new ResourceRepo();
+            this._repo = new WorkEntryRepo();
             this._repoUcd = new UserCodeRepo();
-            this._reRes = new ResourceRepo();
-            //this._materail = new MaterialModel();
-            //this._class = new ClassMasterModel();
+            this._repoRes = new ResourceRepo();
         }
 
         #region Attribute
@@ -33,8 +29,6 @@ namespace Epicoil.Library.Models.Planning
         public int WorkOrderID { get; set; }
 
         public string WorkOrderNum { get; set; }
-
-        //public string ProcessLine { get; set; }
 
         public decimal ProcessStep { get; set; }
 
@@ -53,6 +47,7 @@ namespace Epicoil.Library.Models.Planning
                 return Enum.GetName(typeof(Possession), Convert.ToInt32(Possession));
             }
         }
+
         public DateTime IssueDate { get; set; }
 
         public DateTime DueDate { get; set; }
@@ -71,7 +66,7 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal TotalMaterialAmount { get; set; }
 
-        public decimal TotalWidth { get; set; }
+        public decimal TotalWeight { get; set; }
 
         public string BT { get; set; }
 
@@ -139,11 +134,16 @@ namespace Epicoil.Library.Models.Planning
 
         public virtual void DataBind(DataRow row)
         {
+            this.ProcessLineSpec = new ResourceModel();
+            this.ResourceList = new List<ResourceModel>();
+            this.OrderTypeList = new List<UserCodeModel>();
+            this.PossessionList = new List<UserCodeModel>();
+
             this.Company = (string)row["Company"].GetString();
             this.Plant = (string)row["Plant"].GetString();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
-            this.ProcessLineSpec = _reRes.GetByID(this.Plant, (string)row["ProcessLine"].GetString());
+            this.ProcessLineSpec.ResourceID = (string)row["ProcessLine"].GetString();
             this.ProcessStep = (decimal)row["ProcessStep"].GetDecimal();
             this.OrderType = (string)row["OrderType"].GetString();
             this.PIC = (string)row["PIC"].GetString();
@@ -158,7 +158,7 @@ namespace Epicoil.Library.Models.Planning
             this.LossWeight = (decimal)row["LossWgt"].GetDecimal();
             this.Yield = (decimal)row["Yield"].GetDecimal();
             this.TotalMaterialAmount = (decimal)row["TotalMatAmount"].GetDecimal();
-            this.TotalWidth = (decimal)row["TotalWidth"].GetDecimal();
+            this.TotalWeight = (decimal)row["TotalWidth"].GetDecimal();
             this.BT = (string)row["BT"].GetString();
             this.LVTrim = Convert.ToBoolean(row["LVTrim"].GetInt());
             this.PackingPlan = Convert.ToBoolean(row["PackingPlan"].GetInt());
@@ -168,7 +168,7 @@ namespace Epicoil.Library.Models.Planning
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
         }
 
-        public void Load() //0 = Nothing.
+        public void PreLoad() //0 = Nothing.
         {
             this.FormState = 0;
             this.SimulateFlag = false;
@@ -194,11 +194,60 @@ namespace Epicoil.Library.Models.Planning
             //this.MaterialPattern = new MaterialModel();
             this.CurrentClass.ClassNo = 0;
             this.ProcessLineSpec = new ResourceModel();
+            this.ProcessStep = _repo.GetLastStep(WorkOrderID);
         }
 
-        public void Save() //2 = Transaction was save.
+        public void Saved() //2 = Transaction was save.
         {
             this.FormState = 2;
+            this.MaterialPattern = new MaterialModel();
+            this.CurrentClass = new ClassMasterModel();
+        }
+
+        public bool ValidateModel(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)
+        {
+            invalidObject = "";
+            msg = "";
+            bool valid = true;
+
+            //Validate Process Line Selected.
+            if (ProcessLineSpec.ResourceID == null)
+            {
+                invalidObject = "ProcessLine";
+                msg = "Please select Process Line.";
+                return false;
+            }
+
+            //Validate compatible between Machine and Materail.
+            if (materialList.ToList().Count() > 0)
+            {
+                decimal valmin = materialList.Min(i => i.Width);
+                decimal valmax = materialList.Max(i => i.Width);
+                if (ProcessLineSpec.WidthMax < valmax || ProcessLineSpec.WidthMin < valmin)
+                {
+                    invalidObject = "ProcessLine";
+                    msg = "Machine and Materail is not compatible for width range.";
+                    return false;
+                }
+            }
+
+            //Validate OrderType Selected.
+            if (OrderType == null)
+            {
+                invalidObject = "OrderType";
+                msg = "Please select Order Type.";
+                return false;
+            }
+
+            //Validate Possession.
+            if (Possession == null)
+            {
+                invalidObject = "Possession";
+                msg = "Please select Possession.";
+                return false;
+            }
+
+            return valid;
         }
 
         #endregion Method

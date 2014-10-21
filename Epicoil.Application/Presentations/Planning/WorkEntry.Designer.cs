@@ -114,6 +114,7 @@
             this.materailcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtProcessStep = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkLVTrim = new System.Windows.Forms.CheckBox();
             this.txtTotalWidth = new System.Windows.Forms.TextBox();
@@ -144,7 +145,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cmbOrderType = new System.Windows.Forms.ComboBox();
-            this.cmbProcessStep = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbProcessLine = new System.Windows.Forms.ComboBox();
@@ -941,6 +941,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtProcessStep);
             this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.txtUsingWeight);
             this.groupBox1.Controls.Add(this.label8);
@@ -954,7 +955,6 @@
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.cmbOrderType);
-            this.groupBox1.Controls.Add(this.cmbProcessStep);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.cmbProcessLine);
@@ -970,6 +970,15 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
+            // 
+            // txtProcessStep
+            // 
+            this.txtProcessStep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtProcessStep.Location = new System.Drawing.Point(144, 81);
+            this.txtProcessStep.Margin = new System.Windows.Forms.Padding(4);
+            this.txtProcessStep.Name = "txtProcessStep";
+            this.txtProcessStep.Size = new System.Drawing.Size(145, 21);
+            this.txtProcessStep.TabIndex = 21;
             // 
             // groupBox5
             // 
@@ -1264,9 +1273,9 @@
             this.label6.Location = new System.Drawing.Point(298, 56);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(74, 15);
+            this.label6.Size = new System.Drawing.Size(76, 15);
             this.label6.TabIndex = 10;
-            this.label6.Text = "Procession :";
+            this.label6.Text = "Possession :";
             // 
             // label4
             // 
@@ -1288,48 +1297,6 @@
             this.cmbOrderType.Name = "cmbOrderType";
             this.cmbOrderType.Size = new System.Drawing.Size(144, 23);
             this.cmbOrderType.TabIndex = 7;
-            // 
-            // cmbProcessStep
-            // 
-            this.cmbProcessStep.AutoCompleteCustomSource.AddRange(new string[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"});
-            this.cmbProcessStep.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cmbProcessStep.FormattingEnabled = true;
-            this.cmbProcessStep.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15"});
-            this.cmbProcessStep.Location = new System.Drawing.Point(144, 81);
-            this.cmbProcessStep.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbProcessStep.Name = "cmbProcessStep";
-            this.cmbProcessStep.Size = new System.Drawing.Size(144, 23);
-            this.cmbProcessStep.TabIndex = 6;
             // 
             // label3
             // 
@@ -1620,7 +1587,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cmbOrderType;
-        private System.Windows.Forms.ComboBox cmbProcessStep;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbProcessLine;
@@ -1725,5 +1691,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt;
         private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
+        private System.Windows.Forms.TextBox txtProcessStep;
     }
 }
