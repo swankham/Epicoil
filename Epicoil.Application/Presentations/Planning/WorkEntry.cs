@@ -13,6 +13,7 @@ using Epicoil.Library.Models.StoreInPlan;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Common;
 using Epicoil.Library.Models.Planning;
+using Epicoil.Appl;
 
 namespace Epicoil.Appl.Presentations.Planning
 {
