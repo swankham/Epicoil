@@ -130,7 +130,7 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbProcessLine.DataSource = model.ResourceList.ToList();
             cmbProcessLine.DisplayMember = "ResourceDescription";
             cmbProcessLine.ValueMember = "ResourceID";
-            cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineSpec.ResourceID", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineId", false, DataSourceUpdateMode.OnPropertyChanged);
             cmbOrderType.DataSource = model.OrderTypeList.ToList();
             cmbOrderType.DisplayMember = "CodeDesc";
             cmbOrderType.ValueMember = "CodeID";
@@ -181,8 +181,8 @@ namespace Epicoil.Appl.Presentations.Planning
             //CheckBox
             chkLVTrim.DataBindings.Clear();
             chkPackingPlan.DataBindings.Clear();
-            HeaderContent.PackingPlan = false;
-            HeaderContent.LVTrim = false;
+            chkPackingPlan.Checked = false;
+            chkLVTrim.Checked = false;
 
             //DatePicker
             dptIssueDate.Value = DateTime.Now;
@@ -234,6 +234,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutNewWork_Click(object sender, EventArgs e)
         {
+            HeaderContent = new PlaningHeadModel();
             HeaderContent.New(epiSession.PlantID);
             HeaderContent.PIC = epiSession.UserID;
             HeaderContent.PICName = epiSession.UserName;
@@ -248,11 +249,13 @@ namespace Epicoil.Appl.Presentations.Planning
             string messageValid;
 
             IEnumerable<MaterialModel> model = new List<MaterialModel>();
+            HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, HeaderContent.ProcessLineId);
+
             var result = HeaderContent.ValidateModel(model, out objectValid, out messageValid);
 
             if (!result)
             {
-                MessageBox.Show(messageValid, "a", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(messageValid, "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             else
@@ -263,7 +266,7 @@ namespace Epicoil.Appl.Presentations.Planning
             //Validate complated.
             HeaderContent.Saved();
             SetHeadContent(HeaderContent);
-            
+
             SetFormState();
         }
 
@@ -307,12 +310,15 @@ namespace Epicoil.Appl.Presentations.Planning
             SetFormState();
 
             HeaderContent.MaterialPattern = new MaterialModel();
-            HeaderContent.ProcessLineSpec = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
+            HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
             var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
             using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
             {
                 frm.ShowDialog();
+                HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
             }
+
+            ListMaterialGrid(HeaderContent.Materails);
         }
 
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
@@ -341,11 +347,20 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-        private void cmbProcessLine_SelectedValueChanged(object sender, EventArgs e)
-        {
-
-        }
 
         #endregion Method
+
+        private void dptIssueDate_ValueChanged(object sender, EventArgs e)
+        {
+            HeaderContent.IssueDate = dptIssueDate.Value;
+        }
+
+        private void dptDueDate_ValueChanged(object sender, EventArgs e)
+        {
+            HeaderContent.DueDate = dptDueDate.Value;
+        }
+
+
+
     }
 }

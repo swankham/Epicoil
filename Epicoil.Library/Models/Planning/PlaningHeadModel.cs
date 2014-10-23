@@ -30,6 +30,8 @@ namespace Epicoil.Library.Models.Planning
 
         public string WorkOrderNum { get; set; }
 
+        public string ProcessLineId { get; set; }
+
         public decimal ProcessStep { get; set; }
 
         public string OrderType { get; set; }
@@ -97,12 +99,18 @@ namespace Epicoil.Library.Models.Planning
 
         public ClassMasterModel CurrentClass { get; set; }
 
-        public ResourceModel ProcessLineSpec { get; set; }
-
+        public ResourceModel ProcessLineDetail = new ResourceModel();
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
+
         public IEnumerable<MaterialModel> MaterialList = new List<MaterialModel>();
+
+        public ResourceModel ProcessLine
+        {
+            get { return this.ProcessLineDetail; }
+            set { this.ProcessLineDetail = value; }
+        }
 
         public List<ResourceModel> Resources
         {
@@ -134,16 +142,11 @@ namespace Epicoil.Library.Models.Planning
 
         public virtual void DataBind(DataRow row)
         {
-            this.ProcessLineSpec = new ResourceModel();
-            this.ResourceList = new List<ResourceModel>();
-            this.OrderTypeList = new List<UserCodeModel>();
-            this.PossessionList = new List<UserCodeModel>();
-
             this.Company = (string)row["Company"].GetString();
             this.Plant = (string)row["Plant"].GetString();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
-            this.ProcessLineSpec.ResourceID = (string)row["ProcessLine"].GetString();
+            this.ProcessLineId = (string)row["ProcessLine"].GetString();
             this.ProcessStep = (decimal)row["ProcessStep"].GetDecimal();
             this.OrderType = (string)row["OrderType"].GetString();
             this.PIC = (string)row["PIC"].GetString();
@@ -187,13 +190,11 @@ namespace Epicoil.Library.Models.Planning
             this.FormState = 1;
             this.IssueDate = DateTime.Now;
             this.DueDate = DateTime.Now;
-            this.ResourceList = _repoRes.GetAll(plantId);
+            this.ResourceList = _repoRes.GetAll(plantId).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
             this.OrderTypeList = _repoUcd.GetAll("OrderType");
             this.PossessionList = _repoUcd.GetAll("Pocessed");
+            this.ProcessLineDetail.ResourceID = "R08";
             this.MaterialList = new List<MaterialModel>();
-            //this.MaterialPattern = new MaterialModel();
-            this.CurrentClass.ClassNo = 0;
-            this.ProcessLineSpec = new ResourceModel();
             this.ProcessStep = _repo.GetLastStep(WorkOrderID);
         }
 
@@ -211,19 +212,36 @@ namespace Epicoil.Library.Models.Planning
             bool valid = true;
 
             //Validate Process Line Selected.
-            if (ProcessLineSpec.ResourceID == null)
+            if (ProcessLineId == null)
             {
                 invalidObject = "ProcessLine";
                 msg = "Please select Process Line.";
                 return false;
             }
+            else
+            {
+                if (ProcessLineDetail.ResourceGrpID != "S" && PackingPlan == true)
+                {
+                    invalidObject = "ProcessLine";
+                    msg = "Packing Plan can be select for Sliter only.";
+                    return false;
+                }
+            }
 
             //Validate compatible between Machine and Materail.
             if (materialList.ToList().Count() > 0)
             {
+                //Validate Possession.
+                if (Possession == null)
+                {
+                    invalidObject = "Possession";
+                    msg = "Please select Possession.";
+                    return false;
+                }
+
                 decimal valmin = materialList.Min(i => i.Width);
                 decimal valmax = materialList.Max(i => i.Width);
-                if (ProcessLineSpec.WidthMax < valmax || ProcessLineSpec.WidthMin < valmin)
+                if (ProcessLineDetail.WidthMax < valmax || ProcessLineDetail.WidthMin < valmin)
                 {
                     invalidObject = "ProcessLine";
                     msg = "Machine and Materail is not compatible for width range.";
@@ -239,11 +257,11 @@ namespace Epicoil.Library.Models.Planning
                 return false;
             }
 
-            //Validate Possession.
-            if (Possession == null)
+            //Compare date between Issue date and Due date.
+            if (IssueDate > DueDate)
             {
-                invalidObject = "Possession";
-                msg = "Please select Possession.";
+                invalidObject = "IssueDate";
+                msg = "Please change Due Date to be greater than Issue Date.";
                 return false;
             }
 

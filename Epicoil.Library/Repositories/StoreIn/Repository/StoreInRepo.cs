@@ -498,13 +498,6 @@ namespace Epicoil.Library.Repositories.StoreIn
                                             WHERE dtl.StoreInPlanId = {0} AND pod.POLine = {1}  and dtl.StoreInFlag = 0", storeInPlantId, POLine);
 
             result = Repository.Instance.GetMany<StoreInDetail>(sql);
-            ///TODO Fix Plant
-            //if(result != null)
-            //{
-            //    foreach (var item in result) {
-            //        item._locationList = _repoWhs.GetAll("MfgSys");
-            //    }
-            //}
             return result;
         }
 

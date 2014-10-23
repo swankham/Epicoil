@@ -32,7 +32,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
 	                                        , cust.CustID, ISNULL(cust.Name, '') as CustomerName
 	                                        , pl.ShortChar01 as MakerCode, ISNULL(maker.Character01, '') as MakerName
-	                                        , pl.ShortChar02 as MillCode, ISNULL(mill.Character01, '') as MillName
+	                                        , pl.ShortChar02 as MillCode, ISNULL(mill.Character01, '') as MillName, 0 as CBalready, 0 as UsingLM
                                         FROM PartLot pl
 	                                        INNER JOIN Part p ON(pl.PartNum = p.PartNum)
                                             INNER JOIN PartPlant pln ON(p.PartNum = pln.PartNum)
@@ -52,6 +52,79 @@ namespace Epicoil.Library.Repositories.Planning
             return Repository.Instance.GetMany<MaterialModel>(sql);
         }
 
+        public IEnumerable<MaterialModel> GetAllMaterial(string plant, int workOrderId)
+        {
+            string sql = string.Format(@"SELECT pl.PartNum
+	                                        , pl.LotNum
+	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
+	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
+	                                        , 0 as UsingWeight, oh.Quantity * pl.Number10 as RemainWeight, (pl.Number03 / 100) as LengthM
+	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
+	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
+	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
+	                                        , cust.CustID, ISNULL(cust.Name, '') as CustomerName
+	                                        , pl.ShortChar01 as MakerCode, ISNULL(maker.Character01, '') as MakerName
+	                                        , pl.ShortChar02 as MillCode, ISNULL(mill.Character01, '') as MillName, mat.CBalready, mat.UsingLM
+                                        FROM ucc_pln_Material mat
+		                                    INNER JOIN PartLot pl ON(mat.MCSSNo = pl.PartNum AND mat.Serial = pl.LotNum)
+	                                        INNER JOIN Part p ON(pl.PartNum = p.PartNum)
+                                            INNER JOIN PartPlant pln ON(p.PartNum = pln.PartNum)
+	                                        LEFT JOIN UD29 cmdt ON(p.ShortChar01 = cmdt.Key1)
+	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
+	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
+	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
+	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                                        GROUP BY PartNum, LotNum, DimCode) oh
+				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
+	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
+	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
+	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1)
+                                              AND mat.WorkOrderID = {1}", plant, workOrderId);
+
+            return Repository.Instance.GetMany<MaterialModel>(sql);
+        }
+
+        public MaterialModel GetMaterial(string plant, string partNum, string lotNum)
+        {
+            string sql = string.Format(@"SELECT pl.PartNum
+	                                        , pl.LotNum
+	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
+	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
+	                                        , 0 as UsingWeight, oh.Quantity * pl.Number10 as RemainWeight, (pl.Number03 / 100) as LengthM
+	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
+	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
+	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
+	                                        , cust.CustID, ISNULL(cust.Name, '') as CustomerName
+	                                        , pl.ShortChar01 as MakerCode, ISNULL(maker.Character01, '') as MakerName
+	                                        , pl.ShortChar02 as MillCode, ISNULL(mill.Character01, '') as MillName, 0 as CBalready, 0 as UsingLM
+                                        FROM PartLot pl
+	                                        INNER JOIN Part p ON(pl.PartNum = p.PartNum)
+                                            INNER JOIN PartPlant pln ON(p.PartNum = pln.PartNum)
+	                                        LEFT JOIN UD29 cmdt ON(p.ShortChar01 = cmdt.Key1)
+	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
+	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
+	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
+	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                                        GROUP BY PartNum, LotNum, DimCode) oh
+				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
+	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
+	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
+	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1)
+                                              AND pl.PartNum = N'{1}' AND pl.LotNum = N'{2}'", plant, partNum, lotNum);
+
+            return Repository.Instance.GetOne<MaterialModel>(sql);
+        }
+
         public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlaningHeadModel model)
         {
             IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
@@ -64,11 +137,17 @@ namespace Epicoil.Library.Repositories.Planning
             if (!string.IsNullOrEmpty(model.MaterialPattern.MillCode) && Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(model.MaterialPattern.MillCode.ToString().ToUpper()));
             if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
 
-            query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
-
+            if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
             if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
             if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
             if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
+
+            if (model.ProcessLineDetail.ThickMin != 0) query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
+            if (model.ProcessLineDetail.ThickMax != 0) query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
+            if (model.ProcessLineDetail.WidthMin != 0) query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
+            if (model.ProcessLineDetail.WidthMax != 0) query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
+            if (model.ProcessLineDetail.LengthMin != 0) query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
+            if (model.ProcessLineDetail.LengthMax != 0) query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
 
             return query;
         }
@@ -100,8 +179,18 @@ namespace Epicoil.Library.Repositories.Planning
 
         public PlaningHeadModel Save(Models.SessionInfo _session, PlaningHeadModel model)
         {
-            int id = GetLastWorkOrder(_session.PlantID);
-            string workOrderNum = GenWorkOrderFixFormat(id);
+            int id = 0;
+            string workOrderNum = "";
+
+            if (string.IsNullOrEmpty(model.WorkOrderNum))
+            {
+                id = GetLastWorkOrder(_session.PlantID);
+                workOrderNum = GenWorkOrderFixFormat(id);
+            }
+            else
+            {
+                workOrderNum = model.WorkOrderNum;
+            }
 
             string sql = string.Format(@"IF NOT EXISTS
 									    (
@@ -203,7 +292,7 @@ namespace Epicoil.Library.Repositories.Planning
                                               , id
                                               , model.ProcessStep
                                               , 0       //{5}
-                                              , model.ProcessLineSpec.ResourceID
+                                              , model.ProcessLineId
                                               , model.OrderType
                                               , model.PIC
                                               , model.Possession
@@ -246,10 +335,116 @@ namespace Epicoil.Library.Repositories.Planning
                 result.ResourceList = _repoResrc.GetAll(plant);
                 result.OrderTypeList = _repoUcode.GetAll("OrderType");
                 result.PossessionList = _repoUcode.GetAll("Pocessed");
-                result.ProcessLineSpec = _repoResrc.GetByID(plant, result.ProcessLineSpec.ResourceID);
+                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
             }
 
             return result;
+        }
+
+        public MaterialModel SaveMaterail(Models.SessionInfo _session, MaterialModel model)
+        {
+            //int id = 0;
+            string sql = string.Format(@"INSERT INTO ucc_pln_Material
+                                               (Company
+                                               ,Plant
+                                               ,WorkOrderID
+                                               ,MatSeq
+                                               ,Serial
+                                               ,Cmdty
+                                               ,Spec
+                                               ,Coating
+                                               ,Category
+                                               ,Thick
+                                               ,Width
+                                               ,Length
+                                               ,Weight
+                                               ,UsingWgt
+                                               ,RemainWgt
+                                               ,Qty
+                                               ,RemainQty
+                                               ,LenghtM
+                                               ,UsingLM
+                                               ,SelectCB
+                                               ,CBalready
+                                               ,MCSSNo
+                                               ,Status
+                                               ,BT
+                                               ,Possession
+                                               ,ProductSts
+                                               ,Descriptions
+                                               ,Note
+                                               ,CreationDate
+                                               ,LastUpdateDate
+                                               ,CreatedBy
+                                               ,UpdatedBy)
+                                         VALUES
+                                               ( N'{0}' --<Company, nvarchar(8),>
+                                               , N'{1}' --<Plant, nvarchar(8),>
+                                               , {2} --<WorkOrderID, bigint,>
+                                               , {3} --<MatSeq, int,>
+                                               , N'{4}' --<Serial, nvarchar(18),>
+                                               , N'{5}' --<Cmdty, nvarchar(10),>
+                                               , N'{6}' --<Spec, nvarchar(10),>
+                                               , N'{7}' --<Coating, nvarchar(10),>
+                                               , N'{8}' --<Category, nvarchar(10),>
+                                               , {9} --<Thick, decimal(20,9),>
+                                               , {10} --<Width, decimal(20,9),>
+                                               , {11} --<Length, decimal(20,9),>
+                                               , {12} --<Weight, decimal(20,9),>
+                                               , {13} --<UsingWgt, decimal(20,9),>
+                                               , {14} --<RemainWgt, decimal(20,9),>
+                                               , {15} --<Qty, decimal(20,9),>
+                                               , {16} --<RemainQty, decimal(20,9),>
+                                               , {17} --<LenghtM, decimal(20,9),>
+                                               , {18} --<UsingLM, decimal(20,9),>
+                                               , {19} --<SelectCB, tinyint,>
+                                               , {20} --<CBalready, tinyint,>
+                                               , N'{21}' --<MCSSNo, nvarchar(18),>
+                                               , N'{22}' --<Status, nvarchar(10),>
+                                               , N'{23}' --<BT, nvarchar(10),>
+                                               , {24} --<Possession, int,>
+                                               , N'{25}' --<ProductSts, nvarchar(10),>
+                                               , N'{26}' --<Descriptions, varchar(500),>
+                                               , N'{27}' --<Note, varchar(500),>
+                                               , GETDATE() --<CreationDate, datetime,>
+                                               , GETDATE() --<LastUpdateDate, datetime,>
+                                               , N'{28}' --<CreatedBy, varchar(45),>
+                                               , N'{28}' --<UpdatedBy, varchar(45),>
+		                                    )" + Environment.NewLine
+                                              , _session.CompanyID
+                                              , _session.PlantID
+                                              , model.WorkOrderID
+                                              , 1 //model.Seq
+                                              , model.SerialNo
+                                              , model.CommodityCode     //{5}
+                                              , model.SpecCode
+                                              , model.CoatingCode
+                                              , ""
+                                              , model.Thick
+                                              , model.Width         //{10}
+                                              , model.Length
+                                              , model.Weight
+                                              , model.UsingWeight
+                                              , model.RemainWeight
+                                              , model.Quantity      //{15}
+                                              , model.RemainQty
+                                              , model.LengthM
+                                              , model.UsingLengthM
+                                              , Convert.ToInt32(model.CBSelect.GetBoolean())
+                                              , Convert.ToInt32(model.CBalready.GetBoolean())   //{20}
+                                              , model.MCSSNo
+                                              , model.Status
+                                              , model.BussinessType
+                                              , model.Possession
+                                              , model.ProductStatus         //{25}
+                                              , model.PrdDescriptions
+                                              , model.Note
+                                              , _session.UserID
+                                              );
+
+            Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
+
+            return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
         }
     }
 }

@@ -59,6 +59,7 @@
             this.qtyPack = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SelectCB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbAlready = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -249,10 +250,9 @@
             this.dgvMaterial.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvMaterial.BackgroundColor = System.Drawing.Color.White;
             this.dgvMaterial.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvMaterial.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dgvMaterial.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvMaterial.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvMaterial.ColumnHeadersHeight = 25;
-            this.dgvMaterial.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvMaterial.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.MCSSNum,
             this.article,
@@ -270,6 +270,7 @@
             this.qtyPack,
             this.SelectCB,
             this.status,
+            this.cbAlready,
             this.note,
             this.bt,
             this.productstatus});
@@ -442,6 +443,13 @@
             this.status.ReadOnly = true;
             this.status.Width = 65;
             // 
+            // cbAlready
+            // 
+            this.cbAlready.HeaderText = "CBalready";
+            this.cbAlready.Name = "cbAlready";
+            this.cbAlready.ReadOnly = true;
+            this.cbAlready.Width = 87;
+            // 
             // note
             // 
             this.note.HeaderText = "Note";
@@ -531,7 +539,7 @@
             this.dgvCoilBack.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCoilBack.BackgroundColor = System.Drawing.Color.White;
             this.dgvCoilBack.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvCoilBack.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dgvCoilBack.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvCoilBack.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvCoilBack.ColumnHeadersHeight = 25;
             this.dgvCoilBack.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -701,7 +709,7 @@
             this.dgvCutting.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvCutting.BackgroundColor = System.Drawing.Color.White;
             this.dgvCutting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvCutting.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dgvCutting.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvCutting.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvCutting.ColumnHeadersHeight = 25;
             this.dgvCutting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
@@ -1222,6 +1230,7 @@
             // 
             // cmbPossession
             // 
+            this.cmbPossession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPossession.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbPossession.FormattingEnabled = true;
             this.cmbPossession.Location = new System.Drawing.Point(377, 52);
@@ -1249,6 +1258,7 @@
             this.dptDueDate.Name = "dptDueDate";
             this.dptDueDate.Size = new System.Drawing.Size(140, 21);
             this.dptDueDate.TabIndex = 13;
+            this.dptDueDate.ValueChanged += new System.EventHandler(this.dptDueDate_ValueChanged);
             // 
             // dptIssueDate
             // 
@@ -1257,6 +1267,7 @@
             this.dptIssueDate.Name = "dptIssueDate";
             this.dptIssueDate.Size = new System.Drawing.Size(140, 21);
             this.dptIssueDate.TabIndex = 12;
+            this.dptIssueDate.ValueChanged += new System.EventHandler(this.dptIssueDate_ValueChanged);
             // 
             // txtPICName
             // 
@@ -1328,7 +1339,6 @@
             this.cmbProcessLine.Name = "cmbProcessLine";
             this.cmbProcessLine.Size = new System.Drawing.Size(144, 23);
             this.cmbProcessLine.TabIndex = 3;
-            this.cmbProcessLine.SelectedValueChanged += new System.EventHandler(this.cmbProcessLine_SelectedValueChanged);
             // 
             // label1
             // 
@@ -1672,6 +1682,7 @@
         private System.Windows.Forms.TextBox txtMCSSNo;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem tbutCancelWorkOrder;
+        private System.Windows.Forms.TextBox txtProcessStep;
         private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn article;
         private System.Windows.Forms.DataGridViewTextBoxColumn spec;
@@ -1688,9 +1699,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn qtyPack;
         private System.Windows.Forms.DataGridViewCheckBoxColumn SelectCB;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cbAlready;
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt;
         private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
-        private System.Windows.Forms.TextBox txtProcessStep;
     }
 }

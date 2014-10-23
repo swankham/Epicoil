@@ -1,6 +1,5 @@
 ﻿using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
-using System;
 using System.Collections.Generic;
 
 namespace Epicoil.Library.Repositories.Planning
@@ -8,6 +7,10 @@ namespace Epicoil.Library.Repositories.Planning
     public interface IWorkEntryRepo
     {
         IEnumerable<MaterialModel> GetAllMaterial(string plant);
+
+        IEnumerable<MaterialModel> GetAllMaterial(string plant, int workOrderId);
+
+        MaterialModel GetMaterial(string plant, string partNum, string lotNum);
 
         IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlaningHeadModel model);
 
@@ -22,5 +25,7 @@ namespace Epicoil.Library.Repositories.Planning
         IEnumerable<PlaningHeadModel> GetWorkAll(string plant);
 
         PlaningHeadModel GetWorkById(string workOrderNum, string plant);
+
+        MaterialModel SaveMaterail(SessionInfo _session, MaterialModel model);
     }
 }

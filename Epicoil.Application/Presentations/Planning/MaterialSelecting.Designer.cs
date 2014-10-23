@@ -248,6 +248,7 @@
             this.butSelect.TabIndex = 3;
             this.butSelect.Text = "Select";
             this.butSelect.UseVisualStyleBackColor = true;
+            this.butSelect.Click += new System.EventHandler(this.butSelect_Click);
             // 
             // butClear
             // 
@@ -652,7 +653,7 @@
             this.MinimizeBox = false;
             this.Name = "MaterialSelecting";
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Material Selecting";
             this.Load += new System.EventHandler(this.MaterialSelecting_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);

@@ -7,6 +7,8 @@ namespace Epicoil.Library.Models.Planning
     {
         public string MCSSNo { get; set; }
 
+        public int WorkOrderID { get; set; }
+
         public int Seq { get; set; }
 
         public string SerialNo { get; set; }
@@ -50,6 +52,8 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
+        public decimal UsingLengthM { get; set; }
+
         public decimal Quantity { get; set; }
 
         public decimal RemainQty { get; set; }
@@ -63,6 +67,7 @@ namespace Epicoil.Library.Models.Planning
         }
 
         public bool CBSelect { get; set; }
+        public bool CBalready { get; set; }
 
         public string Status { get; set; }
 
@@ -83,6 +88,8 @@ namespace Epicoil.Library.Models.Planning
         public string BussinessTypeName { get; set; }
 
         public string ProductStatus { get; set; }
+
+        public string PrdDescriptions { get; set; }
 
         public string SupplierCode { get; set; }
 
@@ -119,18 +126,19 @@ namespace Epicoil.Library.Models.Planning
             this.Weight = (decimal)row["Number04"].GetDecimal();
             this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
             this.RemainWeight = (decimal)row["RemainWeight"].GetDecimal();
-            //this.LengthM = (decimal)row["LengthM"].GetDecimal();
+            this.UsingLengthM = (decimal)row["UsingLM"].GetDecimal();
             this.Quantity = (decimal)row["Quantity"].GetDecimal();
             this.RemainQty = (decimal)row["RemainQty"].GetDecimal();
             //this.QuantityPack = (decimal)row["QuantityPack"].GetDecimal();
             this.CBSelect = Convert.ToBoolean((int)row["CBSelect"].GetInt());
+            this.CBalready = Convert.ToBoolean((int)row["CBalready"].GetInt());
             this.Status = (string)row["Status"].GetString();
             this.Note = (string)row["Note"].GetString();
             this.Possession = (int)row["Possession"].GetInt();
             this.BussinessType = string.IsNullOrEmpty(row["BussinessType"].GetString()) ? "" : row["BussinessType"].GetString();
             this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.ProductStatus = (string)row["ProductStatus"].GetString();
-            
+
             this.SupplierCode = (string)row["SupplierCode"].GetString();
             this.SupplierName = (string)row["SupplierName"].GetString();
             this.CustID = (string)row["CustID"].GetString();
@@ -139,7 +147,6 @@ namespace Epicoil.Library.Models.Planning
             this.MakerName = (string)row["MakerName"].GetString();
             this.MillCode = (string)row["MillCode"].GetString();
             this.MillName = (string)row["MillName"].GetString();
-            
         }
 
         public decimal CalculateLengthMeter(decimal weight, decimal width, decimal thick, decimal gravity, decimal frontPlate, decimal backPlate)
@@ -152,7 +159,7 @@ namespace Epicoil.Library.Models.Planning
             d2 = d2 + d3;
             d2 = d2 * d4;
 
-            //Fix bug infinity.
+            //Fix bug Infinity.
             if (d2 == 0) d2 = 1;
             decimal result = d1 / d2;
 
