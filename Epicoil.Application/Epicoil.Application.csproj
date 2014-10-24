@@ -42,10 +42,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
-      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
+      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.Core.Session">
-      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.Session.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
