@@ -318,7 +318,13 @@ namespace Epicoil.Library.Repositories.Planning
 
         public IEnumerable<PlaningHeadModel> GetWorkAll(string plant)
         {
-            throw new NotImplementedException();
+            string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
+                                            FROM ucc_pln_PlanHead plh (NOLOCK)
+                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+                                            WHERE plh.Plant = N'{1}'", plant);
+
+            var result = Repository.Instance.GetMany<PlaningHeadModel>(sql);
+            return result;
         }
 
         public PlaningHeadModel GetWorkById(string workOrderNum, string plant)

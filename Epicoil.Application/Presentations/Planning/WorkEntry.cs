@@ -324,9 +324,10 @@ namespace Epicoil.Appl.Presentations.Planning
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
         {
             int i = 0;
+            dgvMaterial.Rows.Clear();
             foreach (var p in item)
             {
-                dgvMaterial.Rows.Add(p.MCSSNo, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
+                dgvMaterial.Rows.Add(p.MCSSNo, i+1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
                                      , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.Quantity, p.RemainQty, p.QuantityPack, p.CBSelect
                                      , p.Status, p.Note, p.BussinessTypeName, p.ProductStatus);
 

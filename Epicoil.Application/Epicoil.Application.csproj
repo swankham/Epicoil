@@ -197,6 +197,12 @@
     <Compile Include="Presentations\Planning\WorkEntry.Designer.cs">
       <DependentUpon>WorkEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Planning\WorkEntryDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\WorkEntryDialog.Designer.cs">
+      <DependentUpon>WorkEntryDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Progression.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\WorkEntry.resx">
       <DependentUpon>WorkEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\WorkEntryDialog.resx">
+      <DependentUpon>WorkEntryDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Progression.resx">
       <DependentUpon>Progression.cs</DependentUpon>
