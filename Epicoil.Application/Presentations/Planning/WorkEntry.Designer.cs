@@ -43,6 +43,27 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgvMaterial = new System.Windows.Forms.DataGridView();
+            this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.seqno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.article = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.spec = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.coating = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.thick = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.usingweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.remainWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LengthM = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qtyPack = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SelectCB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cbAlready = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtMCSSNo = new System.Windows.Forms.TextBox();
@@ -95,7 +116,30 @@
             this.materailcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.butWorkOrder = new System.Windows.Forms.Button();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.txtWorkOrderNum = new System.Windows.Forms.TextBox();
             this.txtProcessStep = new System.Windows.Forms.TextBox();
+            this.cmbOrderType = new System.Windows.Forms.ComboBox();
+            this.cmbProcessLine = new System.Windows.Forms.ComboBox();
+            this.splitContainer6 = new System.Windows.Forms.SplitContainer();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
+            this.cmbPossession = new System.Windows.Forms.ComboBox();
+            this.txtPICName = new System.Windows.Forms.TextBox();
+            this.chkPackingPlan = new System.Windows.Forms.CheckBox();
+            this.txtUsingWeight = new System.Windows.Forms.TextBox();
+            this.dptIssueDate = new System.Windows.Forms.DateTimePicker();
+            this.label8 = new System.Windows.Forms.Label();
+            this.dptDueDate = new System.Windows.Forms.DateTimePicker();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.chkLVTrim = new System.Windows.Forms.CheckBox();
             this.txtTotalWidth = new System.Windows.Forms.TextBox();
@@ -114,24 +158,6 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtUsingWeight = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbPossession = new System.Windows.Forms.ComboBox();
-            this.chkPackingPlan = new System.Windows.Forms.CheckBox();
-            this.dptDueDate = new System.Windows.Forms.DateTimePicker();
-            this.dptIssueDate = new System.Windows.Forms.DateTimePicker();
-            this.txtPICName = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cmbOrderType = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cmbProcessLine = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtWorkOrderNum = new System.Windows.Forms.TextBox();
-            this.butWorkOrder = new System.Windows.Forms.Button();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.tbutNew = new System.Windows.Forms.ToolStripSplitButton();
             this.tbutNewWork = new System.Windows.Forms.ToolStripMenuItem();
@@ -147,27 +173,7 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.tbutCancelWorkOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tlbClear = new System.Windows.Forms.ToolStripButton();
-            this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.seqno = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.article = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.spec = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.coating = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.thick = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.length = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.weight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.usingweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remainWeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LengthM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RemQuantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.qtyPack = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SelectCB = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cbAlready = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tlbDelete = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -186,6 +192,26 @@
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).BeginInit();
+            this.splitContainer6.Panel1.SuspendLayout();
+            this.splitContainer6.Panel2.SuspendLayout();
+            this.splitContainer6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).BeginInit();
+            this.splitContainer7.Panel1.SuspendLayout();
+            this.splitContainer7.Panel2.SuspendLayout();
+            this.splitContainer7.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
@@ -205,7 +231,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer1.Size = new System.Drawing.Size(1522, 575);
+            this.splitContainer1.Size = new System.Drawing.Size(1334, 575);
             this.splitContainer1.SplitterDistance = 265;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
@@ -224,8 +250,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1522, 265);
-            this.splitContainer2.SplitterDistance = 799;
+            this.splitContainer2.Size = new System.Drawing.Size(1334, 265);
+            this.splitContainer2.SplitterDistance = 698;
             this.splitContainer2.TabIndex = 0;
             // 
             // groupBox2
@@ -237,7 +263,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(799, 265);
+            this.groupBox2.Size = new System.Drawing.Size(698, 265);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Material";
@@ -287,8 +313,190 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(791, 218);
+            this.dgvMaterial.Size = new System.Drawing.Size(690, 218);
             this.dgvMaterial.TabIndex = 17;
+            this.dgvMaterial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellEndEdit);
+            this.dgvMaterial.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMaterial_DataError);
+            // 
+            // MCSSNum
+            // 
+            this.MCSSNum.HeaderText = "MCSS No.";
+            this.MCSSNum.Name = "MCSSNum";
+            this.MCSSNum.ReadOnly = true;
+            this.MCSSNum.Width = 88;
+            // 
+            // seqno
+            // 
+            this.seqno.HeaderText = "Seq.";
+            this.seqno.Name = "seqno";
+            this.seqno.ReadOnly = true;
+            this.seqno.Width = 56;
+            // 
+            // article
+            // 
+            this.article.HeaderText = "Serial No.";
+            this.article.Name = "article";
+            this.article.ReadOnly = true;
+            this.article.Width = 85;
+            // 
+            // spec
+            // 
+            this.spec.HeaderText = "Spec";
+            this.spec.Name = "spec";
+            this.spec.ReadOnly = true;
+            this.spec.Width = 59;
+            // 
+            // coating
+            // 
+            this.coating.HeaderText = "Coating";
+            this.coating.Name = "coating";
+            this.coating.ReadOnly = true;
+            this.coating.Width = 73;
+            // 
+            // thick
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.thick.DefaultCellStyle = dataGridViewCellStyle1;
+            this.thick.HeaderText = "Thick";
+            this.thick.Name = "thick";
+            this.thick.ReadOnly = true;
+            this.thick.Width = 60;
+            // 
+            // width
+            // 
+            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.width.DefaultCellStyle = dataGridViewCellStyle2;
+            this.width.HeaderText = "Width";
+            this.width.Name = "width";
+            this.width.ReadOnly = true;
+            this.width.Width = 62;
+            // 
+            // length
+            // 
+            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Format = "N2";
+            dataGridViewCellStyle3.NullValue = "0";
+            this.length.DefaultCellStyle = dataGridViewCellStyle3;
+            this.length.HeaderText = "Length";
+            this.length.Name = "length";
+            this.length.ReadOnly = true;
+            this.length.Width = 69;
+            // 
+            // weight
+            // 
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle4.Format = "N0";
+            dataGridViewCellStyle4.NullValue = "0";
+            this.weight.DefaultCellStyle = dataGridViewCellStyle4;
+            this.weight.HeaderText = "Weight";
+            this.weight.Name = "weight";
+            this.weight.ReadOnly = true;
+            this.weight.Width = 69;
+            // 
+            // usingweight
+            // 
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "N2";
+            dataGridViewCellStyle5.NullValue = "0";
+            this.usingweight.DefaultCellStyle = dataGridViewCellStyle5;
+            this.usingweight.HeaderText = "Using Weight";
+            this.usingweight.Name = "usingweight";
+            this.usingweight.Width = 104;
+            // 
+            // remainWeight
+            // 
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = "0";
+            this.remainWeight.DefaultCellStyle = dataGridViewCellStyle6;
+            this.remainWeight.HeaderText = "Remain Weight";
+            this.remainWeight.Name = "remainWeight";
+            this.remainWeight.Width = 116;
+            // 
+            // LengthM
+            // 
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle7.Format = "N0";
+            dataGridViewCellStyle7.NullValue = "0";
+            this.LengthM.DefaultCellStyle = dataGridViewCellStyle7;
+            this.LengthM.HeaderText = "Length(M)";
+            this.LengthM.Name = "LengthM";
+            this.LengthM.Width = 88;
+            // 
+            // quantity
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N0";
+            dataGridViewCellStyle8.NullValue = "0";
+            this.quantity.DefaultCellStyle = dataGridViewCellStyle8;
+            this.quantity.HeaderText = "Quantity(Pcs)";
+            this.quantity.Name = "quantity";
+            this.quantity.Width = 103;
+            // 
+            // RemQuantity
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N0";
+            dataGridViewCellStyle9.NullValue = "0";
+            this.RemQuantity.DefaultCellStyle = dataGridViewCellStyle9;
+            this.RemQuantity.HeaderText = "Remain Quantity";
+            this.RemQuantity.Name = "RemQuantity";
+            this.RemQuantity.Width = 122;
+            // 
+            // qtyPack
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N0";
+            dataGridViewCellStyle10.NullValue = "0";
+            this.qtyPack.DefaultCellStyle = dataGridViewCellStyle10;
+            this.qtyPack.HeaderText = "Quantity/Pack";
+            this.qtyPack.Name = "qtyPack";
+            this.qtyPack.Width = 105;
+            // 
+            // SelectCB
+            // 
+            this.SelectCB.HeaderText = "Select C/B";
+            this.SelectCB.Name = "SelectCB";
+            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.SelectCB.Width = 87;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.Width = 65;
+            // 
+            // cbAlready
+            // 
+            this.cbAlready.HeaderText = "CBalready";
+            this.cbAlready.Name = "cbAlready";
+            this.cbAlready.Width = 87;
+            // 
+            // note
+            // 
+            this.note.HeaderText = "Note";
+            this.note.Name = "note";
+            this.note.Width = 57;
+            // 
+            // bt
+            // 
+            this.bt.HeaderText = "BT";
+            this.bt.Name = "bt";
+            this.bt.ReadOnly = true;
+            this.bt.Width = 46;
+            // 
+            // productstatus
+            // 
+            this.productstatus.HeaderText = "Product Status";
+            this.productstatus.Name = "productstatus";
+            this.productstatus.Width = 110;
             // 
             // panel1
             // 
@@ -298,7 +506,7 @@
             this.panel1.Location = new System.Drawing.Point(4, 18);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(791, 25);
+            this.panel1.Size = new System.Drawing.Size(690, 25);
             this.panel1.TabIndex = 0;
             // 
             // panel4
@@ -309,14 +517,14 @@
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
             this.panel4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel4.Size = new System.Drawing.Size(666, 25);
+            this.panel4.Size = new System.Drawing.Size(565, 25);
             this.panel4.TabIndex = 1;
             // 
             // txtMCSSNo
             // 
             this.txtMCSSNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMCSSNo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.txtMCSSNo.Location = new System.Drawing.Point(451, 2);
+            this.txtMCSSNo.Location = new System.Drawing.Point(350, 2);
             this.txtMCSSNo.Margin = new System.Windows.Forms.Padding(4);
             this.txtMCSSNo.Name = "txtMCSSNo";
             this.txtMCSSNo.Size = new System.Drawing.Size(212, 21);
@@ -326,7 +534,7 @@
             // 
             this.butAddMaterial.Dock = System.Windows.Forms.DockStyle.Right;
             this.butAddMaterial.ForeColor = System.Drawing.Color.Black;
-            this.butAddMaterial.Location = new System.Drawing.Point(666, 0);
+            this.butAddMaterial.Location = new System.Drawing.Point(565, 0);
             this.butAddMaterial.Margin = new System.Windows.Forms.Padding(4);
             this.butAddMaterial.Name = "butAddMaterial";
             this.butAddMaterial.Size = new System.Drawing.Size(125, 25);
@@ -344,7 +552,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(719, 265);
+            this.groupBox3.Size = new System.Drawing.Size(632, 265);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Coil Back / Sheet Back";
@@ -387,7 +595,7 @@
             this.dgvCoilBack.RowHeadersVisible = false;
             this.dgvCoilBack.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCoilBack.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCoilBack.Size = new System.Drawing.Size(711, 214);
+            this.dgvCoilBack.Size = new System.Drawing.Size(624, 214);
             this.dgvCoilBack.TabIndex = 18;
             // 
             // dataGridViewTextBoxColumn2
@@ -490,14 +698,14 @@
             this.panel2.Location = new System.Drawing.Point(4, 18);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(711, 29);
+            this.panel2.Size = new System.Drawing.Size(624, 29);
             this.panel2.TabIndex = 1;
             // 
             // butAddCoilBack
             // 
             this.butAddCoilBack.Dock = System.Windows.Forms.DockStyle.Right;
             this.butAddCoilBack.ForeColor = System.Drawing.Color.Black;
-            this.butAddCoilBack.Location = new System.Drawing.Point(553, 0);
+            this.butAddCoilBack.Location = new System.Drawing.Point(466, 0);
             this.butAddCoilBack.Margin = new System.Windows.Forms.Padding(4);
             this.butAddCoilBack.Name = "butAddCoilBack";
             this.butAddCoilBack.Size = new System.Drawing.Size(158, 29);
@@ -514,7 +722,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(1522, 305);
+            this.groupBox4.Size = new System.Drawing.Size(1334, 305);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Cutting Design";
@@ -571,7 +779,7 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(1514, 253);
+            this.dgvCutting.Size = new System.Drawing.Size(1326, 253);
             this.dgvCutting.TabIndex = 18;
             // 
             // sono
@@ -763,49 +971,315 @@
             this.panel3.Location = new System.Drawing.Point(4, 271);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1514, 30);
+            this.panel3.Size = new System.Drawing.Size(1326, 30);
             this.panel3.TabIndex = 1;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.txtProcessStep);
-            this.groupBox1.Controls.Add(this.groupBox5);
-            this.groupBox1.Controls.Add(this.txtUsingWeight);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.cmbPossession);
-            this.groupBox1.Controls.Add(this.chkPackingPlan);
-            this.groupBox1.Controls.Add(this.dptDueDate);
-            this.groupBox1.Controls.Add(this.dptIssueDate);
-            this.groupBox1.Controls.Add(this.txtPICName);
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.cmbOrderType);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.cmbProcessLine);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.txtWorkOrderNum);
-            this.groupBox1.Controls.Add(this.butWorkOrder);
+            this.groupBox1.Controls.Add(this.splitContainer3);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 39);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1522, 159);
+            this.groupBox1.Size = new System.Drawing.Size(1334, 159);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
             // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.Location = new System.Drawing.Point(4, 18);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer4);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.groupBox5);
+            this.splitContainer3.Size = new System.Drawing.Size(1326, 137);
+            this.splitContainer3.SplitterDistance = 765;
+            this.splitContainer3.TabIndex = 22;
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.label3);
+            this.splitContainer4.Panel1.Controls.Add(this.label2);
+            this.splitContainer4.Panel1.Controls.Add(this.label1);
+            this.splitContainer4.Panel1.Controls.Add(this.butWorkOrder);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
+            this.splitContainer4.Size = new System.Drawing.Size(765, 137);
+            this.splitContainer4.SplitterDistance = 138;
+            this.splitContainer4.TabIndex = 41;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(57, 100);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 15);
+            this.label3.TabIndex = 31;
+            this.label3.Text = "Order Type :";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(45, 71);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 15);
+            this.label2.TabIndex = 30;
+            this.label2.Text = "Process Step :";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(47, 43);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(84, 15);
+            this.label1.TabIndex = 29;
+            this.label1.Text = "Process Line :";
+            // 
+            // butWorkOrder
+            // 
+            this.butWorkOrder.ForeColor = System.Drawing.Color.Black;
+            this.butWorkOrder.Location = new System.Drawing.Point(3, 10);
+            this.butWorkOrder.Margin = new System.Windows.Forms.Padding(4);
+            this.butWorkOrder.Name = "butWorkOrder";
+            this.butWorkOrder.Size = new System.Drawing.Size(130, 23);
+            this.butWorkOrder.TabIndex = 28;
+            this.butWorkOrder.Text = "Work Order No.";
+            this.butWorkOrder.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer5
+            // 
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer5.Name = "splitContainer5";
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.Controls.Add(this.txtWorkOrderNum);
+            this.splitContainer5.Panel1.Controls.Add(this.txtProcessStep);
+            this.splitContainer5.Panel1.Controls.Add(this.cmbOrderType);
+            this.splitContainer5.Panel1.Controls.Add(this.cmbProcessLine);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
+            this.splitContainer5.Size = new System.Drawing.Size(623, 137);
+            this.splitContainer5.SplitterDistance = 144;
+            this.splitContainer5.TabIndex = 0;
+            // 
+            // txtWorkOrderNum
+            // 
+            this.txtWorkOrderNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtWorkOrderNum.Location = new System.Drawing.Point(4, 12);
+            this.txtWorkOrderNum.Margin = new System.Windows.Forms.Padding(4);
+            this.txtWorkOrderNum.Name = "txtWorkOrderNum";
+            this.txtWorkOrderNum.Size = new System.Drawing.Size(134, 21);
+            this.txtWorkOrderNum.TabIndex = 23;
+            // 
             // txtProcessStep
             // 
             this.txtProcessStep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtProcessStep.Location = new System.Drawing.Point(144, 81);
+            this.txtProcessStep.Location = new System.Drawing.Point(4, 69);
             this.txtProcessStep.Margin = new System.Windows.Forms.Padding(4);
             this.txtProcessStep.Name = "txtProcessStep";
-            this.txtProcessStep.Size = new System.Drawing.Size(145, 21);
-            this.txtProcessStep.TabIndex = 21;
+            this.txtProcessStep.Size = new System.Drawing.Size(134, 21);
+            this.txtProcessStep.TabIndex = 40;
+            // 
+            // cmbOrderType
+            // 
+            this.cmbOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbOrderType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmbOrderType.FormattingEnabled = true;
+            this.cmbOrderType.Location = new System.Drawing.Point(4, 97);
+            this.cmbOrderType.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbOrderType.Name = "cmbOrderType";
+            this.cmbOrderType.Size = new System.Drawing.Size(133, 23);
+            this.cmbOrderType.TabIndex = 28;
+            // 
+            // cmbProcessLine
+            // 
+            this.cmbProcessLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbProcessLine.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmbProcessLine.FormattingEnabled = true;
+            this.cmbProcessLine.Location = new System.Drawing.Point(4, 40);
+            this.cmbProcessLine.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbProcessLine.Name = "cmbProcessLine";
+            this.cmbProcessLine.Size = new System.Drawing.Size(133, 23);
+            this.cmbProcessLine.TabIndex = 25;
+            // 
+            // splitContainer6
+            // 
+            this.splitContainer6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer6.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer6.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer6.Name = "splitContainer6";
+            // 
+            // splitContainer6.Panel1
+            // 
+            this.splitContainer6.Panel1.Controls.Add(this.label6);
+            this.splitContainer6.Panel1.Controls.Add(this.label4);
+            // 
+            // splitContainer6.Panel2
+            // 
+            this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
+            this.splitContainer6.Size = new System.Drawing.Size(475, 137);
+            this.splitContainer6.SplitterDistance = 81;
+            this.splitContainer6.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 47);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(76, 15);
+            this.label6.TabIndex = 32;
+            this.label6.Text = "Possession :";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(39, 18);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(40, 15);
+            this.label4.TabIndex = 31;
+            this.label4.Text = "P-I-C :";
+            // 
+            // splitContainer7
+            // 
+            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer7.Name = "splitContainer7";
+            // 
+            // splitContainer7.Panel1
+            // 
+            this.splitContainer7.Panel1.Controls.Add(this.cmbPossession);
+            this.splitContainer7.Panel1.Controls.Add(this.txtPICName);
+            this.splitContainer7.Panel1.Controls.Add(this.chkPackingPlan);
+            // 
+            // splitContainer7.Panel2
+            // 
+            this.splitContainer7.Panel2.Controls.Add(this.txtUsingWeight);
+            this.splitContainer7.Panel2.Controls.Add(this.dptIssueDate);
+            this.splitContainer7.Panel2.Controls.Add(this.label8);
+            this.splitContainer7.Panel2.Controls.Add(this.dptDueDate);
+            this.splitContainer7.Panel2.Controls.Add(this.label7);
+            this.splitContainer7.Panel2.Controls.Add(this.label5);
+            this.splitContainer7.Size = new System.Drawing.Size(390, 137);
+            this.splitContainer7.SplitterDistance = 140;
+            this.splitContainer7.TabIndex = 0;
+            // 
+            // cmbPossession
+            // 
+            this.cmbPossession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPossession.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.cmbPossession.FormattingEnabled = true;
+            this.cmbPossession.Location = new System.Drawing.Point(4, 42);
+            this.cmbPossession.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbPossession.Name = "cmbPossession";
+            this.cmbPossession.Size = new System.Drawing.Size(127, 23);
+            this.cmbPossession.TabIndex = 38;
+            this.cmbPossession.SelectedValueChanged += new System.EventHandler(this.cmbPossession_SelectedValueChanged);
+            this.cmbPossession.Leave += new System.EventHandler(this.cmbPossession_Leave);
+            // 
+            // txtPICName
+            // 
+            this.txtPICName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtPICName.Location = new System.Drawing.Point(4, 16);
+            this.txtPICName.Margin = new System.Windows.Forms.Padding(4);
+            this.txtPICName.Name = "txtPICName";
+            this.txtPICName.Size = new System.Drawing.Size(128, 21);
+            this.txtPICName.TabIndex = 36;
+            // 
+            // chkPackingPlan
+            // 
+            this.chkPackingPlan.AutoSize = true;
+            this.chkPackingPlan.Location = new System.Drawing.Point(4, 73);
+            this.chkPackingPlan.Margin = new System.Windows.Forms.Padding(4);
+            this.chkPackingPlan.Name = "chkPackingPlan";
+            this.chkPackingPlan.Size = new System.Drawing.Size(98, 19);
+            this.chkPackingPlan.TabIndex = 37;
+            this.chkPackingPlan.Text = "Packing Plan";
+            this.chkPackingPlan.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.chkPackingPlan.UseVisualStyleBackColor = true;
+            // 
+            // txtUsingWeight
+            // 
+            this.txtUsingWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtUsingWeight.Location = new System.Drawing.Point(101, 68);
+            this.txtUsingWeight.Margin = new System.Windows.Forms.Padding(4);
+            this.txtUsingWeight.Name = "txtUsingWeight";
+            this.txtUsingWeight.Size = new System.Drawing.Size(141, 21);
+            this.txtUsingWeight.TabIndex = 45;
+            this.txtUsingWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // dptIssueDate
+            // 
+            this.dptIssueDate.Location = new System.Drawing.Point(101, 9);
+            this.dptIssueDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dptIssueDate.Name = "dptIssueDate";
+            this.dptIssueDate.Size = new System.Drawing.Size(140, 21);
+            this.dptIssueDate.TabIndex = 40;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(5, 70);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(86, 15);
+            this.label8.TabIndex = 44;
+            this.label8.Text = "Using Weight :";
+            // 
+            // dptDueDate
+            // 
+            this.dptDueDate.Location = new System.Drawing.Point(101, 36);
+            this.dptDueDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dptDueDate.Name = "dptDueDate";
+            this.dptDueDate.Size = new System.Drawing.Size(140, 21);
+            this.dptDueDate.TabIndex = 41;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(26, 42);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(65, 15);
+            this.label7.TabIndex = 43;
+            this.label7.Text = "Due Date :";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(22, 13);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(71, 15);
+            this.label5.TabIndex = 42;
+            this.label5.Text = "Issue Date :";
             // 
             // groupBox5
             // 
@@ -826,18 +1300,19 @@
             this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.label10);
             this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Location = new System.Drawing.Point(755, 9);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Right;
+            this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(578, 140);
-            this.groupBox5.TabIndex = 20;
+            this.groupBox5.Size = new System.Drawing.Size(557, 137);
+            this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             // 
             // chkLVTrim
             // 
             this.chkLVTrim.AutoSize = true;
-            this.chkLVTrim.Location = new System.Drawing.Point(113, 109);
+            this.chkLVTrim.Location = new System.Drawing.Point(111, 97);
             this.chkLVTrim.Margin = new System.Windows.Forms.Padding(4);
             this.chkLVTrim.Name = "chkLVTrim";
             this.chkLVTrim.Size = new System.Drawing.Size(51, 19);
@@ -848,7 +1323,7 @@
             // txtTotalWidth
             // 
             this.txtTotalWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTotalWidth.Location = new System.Drawing.Point(427, 107);
+            this.txtTotalWidth.Location = new System.Drawing.Point(395, 95);
             this.txtTotalWidth.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalWidth.Name = "txtTotalWidth";
             this.txtTotalWidth.Size = new System.Drawing.Size(145, 21);
@@ -858,7 +1333,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(298, 110);
+            this.label15.Location = new System.Drawing.Point(266, 98);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(119, 15);
@@ -868,7 +1343,7 @@
             // txtBT
             // 
             this.txtBT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBT.Location = new System.Drawing.Point(214, 105);
+            this.txtBT.Location = new System.Drawing.Point(212, 93);
             this.txtBT.Margin = new System.Windows.Forms.Padding(4);
             this.txtBT.Name = "txtBT";
             this.txtBT.Size = new System.Drawing.Size(40, 21);
@@ -879,7 +1354,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(174, 109);
+            this.label16.Location = new System.Drawing.Point(172, 97);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 15);
@@ -890,7 +1365,7 @@
             // txtTotalMaterialAmount
             // 
             this.txtTotalMaterialAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(427, 82);
+            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(395, 70);
             this.txtTotalMaterialAmount.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalMaterialAmount.Name = "txtTotalMaterialAmount";
             this.txtTotalMaterialAmount.Size = new System.Drawing.Size(145, 21);
@@ -900,7 +1375,7 @@
             // txtYield
             // 
             this.txtYield.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtYield.Location = new System.Drawing.Point(427, 53);
+            this.txtYield.Location = new System.Drawing.Point(395, 41);
             this.txtYield.Margin = new System.Windows.Forms.Padding(4);
             this.txtYield.Name = "txtYield";
             this.txtYield.Size = new System.Drawing.Size(145, 21);
@@ -910,7 +1385,7 @@
             // txtLossWeight
             // 
             this.txtLossWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtLossWeight.Location = new System.Drawing.Point(427, 24);
+            this.txtLossWeight.Location = new System.Drawing.Point(395, 12);
             this.txtLossWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtLossWeight.Name = "txtLossWeight";
             this.txtLossWeight.Size = new System.Drawing.Size(145, 21);
@@ -920,7 +1395,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(288, 84);
+            this.label12.Location = new System.Drawing.Point(256, 72);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(133, 15);
@@ -930,7 +1405,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(372, 56);
+            this.label13.Location = new System.Drawing.Point(340, 44);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 15);
@@ -940,7 +1415,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(340, 28);
+            this.label14.Location = new System.Drawing.Point(308, 16);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(80, 15);
@@ -950,7 +1425,7 @@
             // txtOutputWeight
             // 
             this.txtOutputWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtOutputWeight.Location = new System.Drawing.Point(113, 81);
+            this.txtOutputWeight.Location = new System.Drawing.Point(111, 69);
             this.txtOutputWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtOutputWeight.Name = "txtOutputWeight";
             this.txtOutputWeight.Size = new System.Drawing.Size(142, 21);
@@ -960,7 +1435,7 @@
             // txtRewindWeight
             // 
             this.txtRewindWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRewindWeight.Location = new System.Drawing.Point(113, 52);
+            this.txtRewindWeight.Location = new System.Drawing.Point(111, 40);
             this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtRewindWeight.Name = "txtRewindWeight";
             this.txtRewindWeight.Size = new System.Drawing.Size(142, 21);
@@ -970,7 +1445,7 @@
             // txtInputWeight
             // 
             this.txtInputWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtInputWeight.Location = new System.Drawing.Point(113, 23);
+            this.txtInputWeight.Location = new System.Drawing.Point(111, 11);
             this.txtInputWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtInputWeight.Name = "txtInputWeight";
             this.txtInputWeight.Size = new System.Drawing.Size(142, 21);
@@ -980,7 +1455,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(14, 84);
+            this.label11.Location = new System.Drawing.Point(12, 72);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(90, 15);
@@ -990,7 +1465,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(10, 55);
+            this.label10.Location = new System.Drawing.Point(8, 43);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(96, 15);
@@ -1000,195 +1475,12 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 26);
+            this.label9.Location = new System.Drawing.Point(22, 14);
             this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(81, 15);
             this.label9.TabIndex = 0;
             this.label9.Text = "Input Weight :";
-            // 
-            // txtUsingWeight
-            // 
-            this.txtUsingWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUsingWeight.Location = new System.Drawing.Point(606, 82);
-            this.txtUsingWeight.Margin = new System.Windows.Forms.Padding(4);
-            this.txtUsingWeight.Name = "txtUsingWeight";
-            this.txtUsingWeight.Size = new System.Drawing.Size(141, 21);
-            this.txtUsingWeight.TabIndex = 19;
-            this.txtUsingWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(510, 84);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(86, 15);
-            this.label8.TabIndex = 18;
-            this.label8.Text = "Using Weight :";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(531, 56);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 15);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Due Date :";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(525, 29);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 15);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Issue Date :";
-            // 
-            // cmbPossession
-            // 
-            this.cmbPossession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbPossession.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cmbPossession.FormattingEnabled = true;
-            this.cmbPossession.Location = new System.Drawing.Point(377, 52);
-            this.cmbPossession.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbPossession.Name = "cmbPossession";
-            this.cmbPossession.Size = new System.Drawing.Size(140, 23);
-            this.cmbPossession.TabIndex = 15;
-            // 
-            // chkPackingPlan
-            // 
-            this.chkPackingPlan.AutoSize = true;
-            this.chkPackingPlan.Location = new System.Drawing.Point(377, 83);
-            this.chkPackingPlan.Margin = new System.Windows.Forms.Padding(4);
-            this.chkPackingPlan.Name = "chkPackingPlan";
-            this.chkPackingPlan.Size = new System.Drawing.Size(98, 19);
-            this.chkPackingPlan.TabIndex = 14;
-            this.chkPackingPlan.Text = "Packing Plan";
-            this.chkPackingPlan.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.chkPackingPlan.UseVisualStyleBackColor = true;
-            // 
-            // dptDueDate
-            // 
-            this.dptDueDate.Location = new System.Drawing.Point(606, 50);
-            this.dptDueDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dptDueDate.Name = "dptDueDate";
-            this.dptDueDate.Size = new System.Drawing.Size(140, 21);
-            this.dptDueDate.TabIndex = 13;
-            this.dptDueDate.ValueChanged += new System.EventHandler(this.dptDueDate_ValueChanged);
-            // 
-            // dptIssueDate
-            // 
-            this.dptIssueDate.Location = new System.Drawing.Point(606, 21);
-            this.dptIssueDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dptIssueDate.Name = "dptIssueDate";
-            this.dptIssueDate.Size = new System.Drawing.Size(140, 21);
-            this.dptIssueDate.TabIndex = 12;
-            this.dptIssueDate.ValueChanged += new System.EventHandler(this.dptIssueDate_ValueChanged);
-            // 
-            // txtPICName
-            // 
-            this.txtPICName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPICName.Location = new System.Drawing.Point(377, 26);
-            this.txtPICName.Margin = new System.Windows.Forms.Padding(4);
-            this.txtPICName.Name = "txtPICName";
-            this.txtPICName.Size = new System.Drawing.Size(141, 21);
-            this.txtPICName.TabIndex = 11;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(298, 56);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 15);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "Possession :";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(332, 29);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(40, 15);
-            this.label4.TabIndex = 8;
-            this.label4.Text = "P-I-C :";
-            // 
-            // cmbOrderType
-            // 
-            this.cmbOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbOrderType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cmbOrderType.FormattingEnabled = true;
-            this.cmbOrderType.Location = new System.Drawing.Point(144, 110);
-            this.cmbOrderType.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbOrderType.Name = "cmbOrderType";
-            this.cmbOrderType.Size = new System.Drawing.Size(144, 23);
-            this.cmbOrderType.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(60, 113);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Order Type :";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(48, 84);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(85, 15);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Process Step :";
-            // 
-            // cmbProcessLine
-            // 
-            this.cmbProcessLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbProcessLine.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.cmbProcessLine.FormattingEnabled = true;
-            this.cmbProcessLine.Location = new System.Drawing.Point(144, 52);
-            this.cmbProcessLine.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbProcessLine.Name = "cmbProcessLine";
-            this.cmbProcessLine.Size = new System.Drawing.Size(144, 23);
-            this.cmbProcessLine.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(50, 56);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 15);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Process Line :";
-            // 
-            // txtWorkOrderNum
-            // 
-            this.txtWorkOrderNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtWorkOrderNum.Location = new System.Drawing.Point(144, 25);
-            this.txtWorkOrderNum.Margin = new System.Windows.Forms.Padding(4);
-            this.txtWorkOrderNum.Name = "txtWorkOrderNum";
-            this.txtWorkOrderNum.Size = new System.Drawing.Size(145, 21);
-            this.txtWorkOrderNum.TabIndex = 1;
-            // 
-            // butWorkOrder
-            // 
-            this.butWorkOrder.ForeColor = System.Drawing.Color.Black;
-            this.butWorkOrder.Location = new System.Drawing.Point(6, 23);
-            this.butWorkOrder.Margin = new System.Windows.Forms.Padding(4);
-            this.butWorkOrder.Name = "butWorkOrder";
-            this.butWorkOrder.Size = new System.Drawing.Size(130, 23);
-            this.butWorkOrder.TabIndex = 0;
-            this.butWorkOrder.Text = "Work Order No.";
-            this.butWorkOrder.UseVisualStyleBackColor = true;
-            this.butWorkOrder.Click += new System.EventHandler(this.butWorkOrder_Click);
             // 
             // toolStrip2
             // 
@@ -1202,14 +1494,15 @@
             this.tbutNew,
             this.tbutSave,
             this.tbutAction,
-            this.tlbClear});
+            this.tlbClear,
+            this.tlbDelete});
             this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(1522, 39);
+            this.toolStrip2.Size = new System.Drawing.Size(1334, 39);
             this.toolStrip2.TabIndex = 39;
             this.toolStrip2.Text = "Tool Bar";
             // 
@@ -1349,201 +1642,22 @@
             this.tlbClear.Text = "Clear";
             this.tlbClear.Click += new System.EventHandler(this.tlbClear_Click);
             // 
-            // MCSSNum
+            // tlbDelete
             // 
-            this.MCSSNum.HeaderText = "MCSS No.";
-            this.MCSSNum.Name = "MCSSNum";
-            this.MCSSNum.Width = 88;
-            // 
-            // seqno
-            // 
-            this.seqno.HeaderText = "Seq.";
-            this.seqno.Name = "seqno";
-            this.seqno.ReadOnly = true;
-            this.seqno.Width = 56;
-            // 
-            // article
-            // 
-            this.article.HeaderText = "Serial No.";
-            this.article.Name = "article";
-            this.article.ReadOnly = true;
-            this.article.Width = 85;
-            // 
-            // spec
-            // 
-            this.spec.HeaderText = "Spec";
-            this.spec.Name = "spec";
-            this.spec.ReadOnly = true;
-            this.spec.Width = 59;
-            // 
-            // coating
-            // 
-            this.coating.HeaderText = "Coating";
-            this.coating.Name = "coating";
-            this.coating.ReadOnly = true;
-            this.coating.Width = 73;
-            // 
-            // thick
-            // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle1.Format = "N2";
-            dataGridViewCellStyle1.NullValue = "0";
-            this.thick.DefaultCellStyle = dataGridViewCellStyle1;
-            this.thick.HeaderText = "Thick";
-            this.thick.Name = "thick";
-            this.thick.ReadOnly = true;
-            this.thick.Width = 60;
-            // 
-            // width
-            // 
-            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle2.Format = "N2";
-            dataGridViewCellStyle2.NullValue = "0";
-            this.width.DefaultCellStyle = dataGridViewCellStyle2;
-            this.width.HeaderText = "Width";
-            this.width.Name = "width";
-            this.width.ReadOnly = true;
-            this.width.Width = 62;
-            // 
-            // length
-            // 
-            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle3.Format = "N2";
-            dataGridViewCellStyle3.NullValue = "0";
-            this.length.DefaultCellStyle = dataGridViewCellStyle3;
-            this.length.HeaderText = "Length";
-            this.length.Name = "length";
-            this.length.ReadOnly = true;
-            this.length.Width = 69;
-            // 
-            // weight
-            // 
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "N0";
-            dataGridViewCellStyle4.NullValue = "0";
-            this.weight.DefaultCellStyle = dataGridViewCellStyle4;
-            this.weight.HeaderText = "Weight";
-            this.weight.Name = "weight";
-            this.weight.ReadOnly = true;
-            this.weight.Width = 69;
-            // 
-            // usingweight
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "N2";
-            dataGridViewCellStyle5.NullValue = "0";
-            this.usingweight.DefaultCellStyle = dataGridViewCellStyle5;
-            this.usingweight.HeaderText = "Using Weight";
-            this.usingweight.Name = "usingweight";
-            this.usingweight.ReadOnly = true;
-            this.usingweight.Width = 104;
-            // 
-            // remainWeight
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.remainWeight.DefaultCellStyle = dataGridViewCellStyle6;
-            this.remainWeight.HeaderText = "Remain Weight";
-            this.remainWeight.Name = "remainWeight";
-            this.remainWeight.ReadOnly = true;
-            this.remainWeight.Width = 116;
-            // 
-            // LengthM
-            // 
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "N0";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.LengthM.DefaultCellStyle = dataGridViewCellStyle7;
-            this.LengthM.HeaderText = "Length(M)";
-            this.LengthM.Name = "LengthM";
-            this.LengthM.ReadOnly = true;
-            this.LengthM.Width = 88;
-            // 
-            // quantity
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N0";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.quantity.DefaultCellStyle = dataGridViewCellStyle8;
-            this.quantity.HeaderText = "Quantity(Pcs)";
-            this.quantity.Name = "quantity";
-            this.quantity.ReadOnly = true;
-            this.quantity.Width = 103;
-            // 
-            // RemQuantity
-            // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N0";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.RemQuantity.DefaultCellStyle = dataGridViewCellStyle9;
-            this.RemQuantity.HeaderText = "Remain Quantity";
-            this.RemQuantity.Name = "RemQuantity";
-            this.RemQuantity.ReadOnly = true;
-            this.RemQuantity.Width = 122;
-            // 
-            // qtyPack
-            // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N0";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.qtyPack.DefaultCellStyle = dataGridViewCellStyle10;
-            this.qtyPack.HeaderText = "Quantity/Pack";
-            this.qtyPack.Name = "qtyPack";
-            this.qtyPack.ReadOnly = true;
-            this.qtyPack.Width = 105;
-            // 
-            // SelectCB
-            // 
-            this.SelectCB.HeaderText = "Select C/B";
-            this.SelectCB.Name = "SelectCB";
-            this.SelectCB.ReadOnly = true;
-            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.SelectCB.Width = 87;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.Width = 65;
-            // 
-            // cbAlready
-            // 
-            this.cbAlready.HeaderText = "CBalready";
-            this.cbAlready.Name = "cbAlready";
-            this.cbAlready.ReadOnly = true;
-            this.cbAlready.Width = 87;
-            // 
-            // note
-            // 
-            this.note.HeaderText = "Note";
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
-            this.note.Width = 57;
-            // 
-            // bt
-            // 
-            this.bt.HeaderText = "BT";
-            this.bt.Name = "bt";
-            this.bt.ReadOnly = true;
-            this.bt.Width = 46;
-            // 
-            // productstatus
-            // 
-            this.productstatus.HeaderText = "Product Status";
-            this.productstatus.Name = "productstatus";
-            this.productstatus.ReadOnly = true;
-            this.productstatus.Width = 110;
+            this.tlbDelete.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlbDelete.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
+            this.tlbDelete.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tlbDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tlbDelete.Name = "tlbDelete";
+            this.tlbDelete.Size = new System.Drawing.Size(23, 32);
+            this.tlbDelete.Text = "toolStripButton1";
+            this.tlbDelete.Click += new System.EventHandler(this.tlbDelete_Click);
             // 
             // WorkEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1522, 773);
+            this.ClientSize = new System.Drawing.Size(1334, 773);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip2);
@@ -1573,7 +1687,31 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel1.PerformLayout();
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel1.PerformLayout();
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
+            this.splitContainer6.Panel1.ResumeLayout(false);
+            this.splitContainer6.Panel1.PerformLayout();
+            this.splitContainer6.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer6)).EndInit();
+            this.splitContainer6.ResumeLayout(false);
+            this.splitContainer7.Panel1.ResumeLayout(false);
+            this.splitContainer7.Panel1.PerformLayout();
+            this.splitContainer7.Panel2.ResumeLayout(false);
+            this.splitContainer7.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer7)).EndInit();
+            this.splitContainer7.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
@@ -1590,25 +1728,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtWorkOrderNum;
-        private System.Windows.Forms.Button butWorkOrder;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox txtUsingWeight;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cmbPossession;
-        private System.Windows.Forms.CheckBox chkPackingPlan;
-        private System.Windows.Forms.DateTimePicker dptDueDate;
-        private System.Windows.Forms.DateTimePicker dptIssueDate;
-        private System.Windows.Forms.TextBox txtPICName;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox cmbOrderType;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox cmbProcessLine;
         private System.Windows.Forms.DataGridView dgvMaterial;
         public System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripButton tlbClear;
@@ -1629,24 +1749,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.DataGridView dgvCutting;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtOutputWeight;
-        private System.Windows.Forms.TextBox txtRewindWeight;
-        private System.Windows.Forms.TextBox txtInputWeight;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtTotalMaterialAmount;
-        private System.Windows.Forms.TextBox txtYield;
-        private System.Windows.Forms.TextBox txtLossWeight;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtTotalWidth;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox txtBT;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.CheckBox chkLVTrim;
         private System.Windows.Forms.DataGridViewTextBoxColumn sono;
         private System.Windows.Forms.DataGridViewTextBoxColumn soline;
         private System.Windows.Forms.DataGridViewTextBoxColumn seq;
@@ -1691,7 +1793,49 @@
         private System.Windows.Forms.TextBox txtMCSSNo;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem tbutCancelWorkOrder;
+        private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TextBox txtProcessStep;
+        private System.Windows.Forms.ComboBox cmbOrderType;
+        private System.Windows.Forms.ComboBox cmbProcessLine;
+        private System.Windows.Forms.TextBox txtWorkOrderNum;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox chkLVTrim;
+        private System.Windows.Forms.TextBox txtTotalWidth;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox txtBT;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtTotalMaterialAmount;
+        private System.Windows.Forms.TextBox txtYield;
+        private System.Windows.Forms.TextBox txtLossWeight;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox txtOutputWeight;
+        private System.Windows.Forms.TextBox txtRewindWeight;
+        private System.Windows.Forms.TextBox txtInputWeight;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cmbPossession;
+        private System.Windows.Forms.CheckBox chkPackingPlan;
+        private System.Windows.Forms.TextBox txtPICName;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button butWorkOrder;
+        private System.Windows.Forms.SplitContainer splitContainer5;
+        private System.Windows.Forms.SplitContainer splitContainer6;
+        private System.Windows.Forms.TextBox txtUsingWeight;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DateTimePicker dptDueDate;
+        private System.Windows.Forms.DateTimePicker dptIssueDate;
+        private System.Windows.Forms.SplitContainer splitContainer7;
+        private System.Windows.Forms.ToolStripButton tlbDelete;
         private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn seqno;
         private System.Windows.Forms.DataGridViewTextBoxColumn article;

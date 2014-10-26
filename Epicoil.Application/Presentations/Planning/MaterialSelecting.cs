@@ -12,8 +12,10 @@ namespace Epicoil.Appl.Presentations.Planning
 {
     public partial class MaterialSelecting : BaseSession
     {
+        public MaterialModel _selected;
+
         private readonly IWorkEntryRepo _repo;
-        private IEnumerable<MaterialModel> model;
+        private IEnumerable<MaterialModel> model;        
         private PlaningHeadModel baseOrder;
 
         public MaterialSelecting(SessionInfo _session, IEnumerable<MaterialModel> data, PlaningHeadModel workOrder)
@@ -22,6 +24,7 @@ namespace Epicoil.Appl.Presentations.Planning
             this._repo = new WorkEntryRepo();
             epiSession = _session;
             this.model = data;
+            this._selected = new MaterialModel();
             this.baseOrder = workOrder;
         }
 
@@ -120,9 +123,9 @@ namespace Epicoil.Appl.Presentations.Planning
 
                 if (!string.IsNullOrEmpty(mcssno))
                 {
-                    var selected = _repo.GetMaterial(epiSession.PlantID, mcssno, lotno);
-                    selected.WorkOrderID = baseOrder.WorkOrderID;                   
-                    var result = _repo.SaveMaterail(epiSession, selected);
+                    _selected = _repo.GetMaterial(epiSession.PlantID, mcssno, lotno);
+                    _selected.WorkOrderID = baseOrder.WorkOrderID;
+                    var result = _repo.SaveMaterail(epiSession, _selected);
                 }
 
                 this.Close();

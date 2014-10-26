@@ -4,6 +4,7 @@ using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,6 +14,7 @@ namespace Epicoil.Appl.Presentations.Planning
     public partial class WorkEntry : BaseSession
     {
         private readonly IResourceRepo _repoRes;
+
         private readonly IUserCodeRepo _repoUcd;
         private readonly IWorkEntryRepo _repo;
         private readonly IResourceRepo _reRes;
@@ -147,6 +149,12 @@ namespace Epicoil.Appl.Presentations.Planning
             //DatePicker
             dptIssueDate.Value = model.IssueDate;
             dptDueDate.Value = model.DueDate;
+
+            try
+            {
+                ListMaterialGrid(HeaderContent.Materails);
+            }
+            catch { }
         }
 
         private void ClearHeaderContent()
@@ -305,20 +313,30 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butAddMaterial_Click(object sender, EventArgs e)
         {
-            //Selected Complate.
+            //Initialization
             HeaderContent.FormState = 3;
             SetFormState();
-
             HeaderContent.MaterialPattern = new MaterialModel();
+
+            //Get Machine detail from combobox 'Process Line' to finding material.
             HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
+
+            //Get Material that compatible with Machine was select.
             var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
             using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
             {
                 frm.ShowDialog();
                 HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+
+                //
+                if (string.IsNullOrEmpty(HeaderContent.Possession))
+                {
+                    HeaderContent.Possession = frm._selected.Possession.GetString();
+                }
             }
 
-            ListMaterialGrid(HeaderContent.Materails);
+            //Set content and list Material was add from dialog.
+            SetHeadContent(HeaderContent);
         }
 
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
@@ -327,10 +345,10 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvMaterial.Rows.Clear();
             foreach (var p in item)
             {
-                dgvMaterial.Rows.Add(p.MCSSNo, i+1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
+                dgvMaterial.Rows.Add(p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
                                      , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.Quantity, p.RemainQty, p.QuantityPack, p.CBSelect
                                      , p.Status, p.Note, p.BussinessTypeName, p.ProductStatus);
-
+                //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
                     this.dgvMaterial.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
@@ -348,7 +366,6 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-
         #endregion Method
 
         private void dptIssueDate_ValueChanged(object sender, EventArgs e)
@@ -361,7 +378,85 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.DueDate = dptDueDate.Value;
         }
 
+        private void tlbDelete_Click(object sender, EventArgs e)
+        {
+            if (dgvMaterial.Focused) MessageBox.Show("dgvMaterial");
+            if (dgvCoilBack.Focused) MessageBox.Show("dgvCoilBack");
+        }
 
+        private void dgvMaterial_DataError(object sender, DataGridViewDataErrorEventArgs anError)
+        {
+            MessageBox.Show("Error happened " + anError.Context.ToString());
 
+            if (anError.Context == DataGridViewDataErrorContexts.Commit)
+            {
+                MessageBox.Show("Commit error");
+            }
+            if (anError.Context == DataGridViewDataErrorContexts.CurrentCellChange)
+            {
+                MessageBox.Show("Cell change");
+            }
+            if (anError.Context == DataGridViewDataErrorContexts.Parsing)
+            {
+                MessageBox.Show("parsing error");
+            }
+            if (anError.Context == DataGridViewDataErrorContexts.LeaveControl)
+            {
+                MessageBox.Show("leave control error");
+            }
+
+            if ((anError.Exception) is ConstraintException)
+            {
+                DataGridView view = (DataGridView)sender;
+                view.Rows[anError.RowIndex].ErrorText = "an error";
+                view.Rows[anError.RowIndex].Cells[anError.ColumnIndex].ErrorText = "an error";
+
+                anError.ThrowException = false;
+            }
+        }
+
+        private void dgvMaterial_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string colHeadName = dgvMaterial.Columns[e.ColumnIndex].HeaderText;
+            string colName = dgvMaterial.Columns[e.ColumnIndex].Name;
+            string strVal = dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+            decimal parseDec = 0M;
+            int parseInt = 0;
+
+            //Abort validation if cell is not in the column.
+            if (colName == "usingweight" || colName == "remainWeight"  || colName ==  "LengthM"
+                || colName == "quantity" || colName == "RemQuantity" || colName == "qtyPack")
+            {
+                if (!Decimal.TryParse(strVal, out parseDec))
+                {
+                    dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0M;
+                    dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Format(@"{0} must be format valid.", colHeadName);
+                }
+                else
+                {
+                    dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Empty;
+                }
+            }
+
+        }
+
+        private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbPossession_Leave(object sender, EventArgs e)
+        {
+            if (HeaderContent.Materails.ToList().Count > 0)
+            {
+                int result = HeaderContent.Materails.Max(p => p.Possession);
+                if (cmbPossession.SelectedValue.ToString() != result.ToString())
+                {
+                    MessageBox.Show("Please select 'Possession' that compatable with material.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbPossession.SelectedValue = result.ToString();
+                    return;
+                }
+            }
+        }
     }
 }

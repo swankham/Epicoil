@@ -104,7 +104,7 @@ namespace Epicoil.Library.Models.Planning
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
 
-        public IEnumerable<MaterialModel> MaterialList = new List<MaterialModel>();
+        //public IEnumerable<MaterialModel> MaterialList = new List<MaterialModel>();
 
         public ResourceModel ProcessLine
         {
@@ -130,11 +130,7 @@ namespace Epicoil.Library.Models.Planning
             set { this.PossessionList = value; }
         }
 
-        public List<MaterialModel> Materails
-        {
-            get { return this.MaterialList.ToList(); }
-            set { this.MaterialList = value; }
-        }
+        public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
 
         #endregion Attribute
 
@@ -143,7 +139,7 @@ namespace Epicoil.Library.Models.Planning
         public virtual void DataBind(DataRow row)
         {
             this.Company = (string)row["Company"].GetString();
-            this.Plant = (string)row["Plant"].GetString();
+            this.Plant = (string)row["Plant"].GetString();            
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
             this.ProcessLineId = (string)row["ProcessLine"].GetString();
@@ -180,7 +176,7 @@ namespace Epicoil.Library.Models.Planning
             this.ResourceList = new List<ResourceModel>();
             this.OrderTypeList = new List<UserCodeModel>();
             this.PossessionList = new List<UserCodeModel>();
-            this.MaterialList = new List<MaterialModel>();
+            //this.MaterialList = new List<MaterialModel>();
             this.MaterialPattern = new MaterialModel();
             this.CurrentClass = new ClassMasterModel();
         }
@@ -194,7 +190,7 @@ namespace Epicoil.Library.Models.Planning
             this.OrderTypeList = _repoUcd.GetAll("OrderType");
             this.PossessionList = _repoUcd.GetAll("Pocessed");
             this.ProcessLineDetail.ResourceID = "R08";
-            this.MaterialList = new List<MaterialModel>();
+            //this.MaterialList = new List<MaterialModel>();
             this.ProcessStep = _repo.GetLastStep(WorkOrderID);
         }
 
@@ -229,7 +225,7 @@ namespace Epicoil.Library.Models.Planning
             }
 
             //Validate compatible between Machine and Materail.
-            if (materialList.ToList().Count() > 0)
+            if (Materails.ToList().Count() > 0)
             {
                 //Validate Possession.
                 if (Possession == null)
@@ -237,14 +233,23 @@ namespace Epicoil.Library.Models.Planning
                     invalidObject = "Possession";
                     msg = "Please select Possession.";
                     return false;
-                }
+                }               
 
-                decimal valmin = materialList.Min(i => i.Width);
-                decimal valmax = materialList.Max(i => i.Width);
-                if (ProcessLineDetail.WidthMax < valmax || ProcessLineDetail.WidthMin < valmin)
+                decimal valmin = Materails.Min(i => i.Width);
+                if (ProcessLineDetail.WidthMin > valmin)
                 {
                     invalidObject = "ProcessLine";
-                    msg = "Machine and Materail is not compatible for width range.";
+                    msg = string.Format(@"Machine and Materail is not compatible for Machine width min = {0} and Materail width = {1}.",
+                                        ProcessLineDetail.WidthMin.ToString("#,##0.00"), valmin.ToString("#,##0.00"));
+                    return false;
+                }
+
+                decimal valmax = Materails.Max(i => i.Width);
+                if (ProcessLineDetail.WidthMax < valmax)
+                {
+                    invalidObject = "ProcessLine";
+                    msg = string.Format(@"Machine and Materail is not compatible for Machine width max = {0} and Materail width = {1}.",
+                                        ProcessLineDetail.WidthMin.ToString("#,##0.00"), valmax.ToString("#,##0.00"));
                     return false;
                 }
             }

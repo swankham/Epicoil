@@ -189,13 +189,14 @@ namespace Epicoil.Library.Repositories.Planning
             }
             else
             {
+                id = model.WorkOrderID;
                 workOrderNum = model.WorkOrderNum;
             }
 
             string sql = string.Format(@"IF NOT EXISTS
 									    (
 										    SELECT * FROM ucc_pln_PlanHead (NOLOCK)
-										    WHERE WorkNumber = {3} AND Plant = N'{1}'
+										    WHERE WorkOrderID = {3} AND Plant = N'{1}'
 									    )
                                         BEGIN
                                             INSERT INTO ucc_pln_PlanHead
@@ -284,7 +285,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
                                                       ,UpdatedBy = N'{22}' --<UpdatedBy, varchar(45),>
                                                       ,TotalWidth = {23} --<TotalWidth, decimal(20,9),>
-                                                 WHERE WorkNumber = {3} AND Plant = N'{1}'
+                                                 WHERE WorkOrderID = {3} AND Plant = N'{1}'
                                             END" + Environment.NewLine
                                               , _session.CompanyID
                                               , _session.PlantID
@@ -342,6 +343,7 @@ namespace Epicoil.Library.Repositories.Planning
                 result.OrderTypeList = _repoUcode.GetAll("OrderType");
                 result.PossessionList = _repoUcode.GetAll("Pocessed");
                 result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
+                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
             }
 
             return result;
