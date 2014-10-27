@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace Epicoil.Library.Models.Planning
 {
-    public class PlaningHeadModel
+    public class PlanningHeadModel
     {
         private readonly IWorkEntryRepo _repo;
         private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
 
-        public PlaningHeadModel()
+        public PlanningHeadModel()
         {
             this._repo = new WorkEntryRepo();
             this._repoUcd = new UserCodeRepo();
@@ -189,7 +189,7 @@ namespace Epicoil.Library.Models.Planning
             this.ResourceList = _repoRes.GetAll(plantId).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
             this.OrderTypeList = _repoUcd.GetAll("OrderType");
             this.PossessionList = _repoUcd.GetAll("Pocessed");
-            this.ProcessLineDetail.ResourceID = "R08";
+            //this.ProcessLineDetail.ResourceID = "R08";
             //this.MaterialList = new List<MaterialModel>();
             this.ProcessStep = _repo.GetLastStep(WorkOrderID);
         }
@@ -201,7 +201,12 @@ namespace Epicoil.Library.Models.Planning
             this.CurrentClass = new ClassMasterModel();
         }
 
-        public bool ValidateModel(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)
+        public void SumUsingWeight(IEnumerable<MaterialModel> materialList)
+        {
+            UsingWeight = materialList.Sum(p => p.UsingWeight).GetDecimal();
+        }
+
+        public bool ValidateToSave(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)
         {
             invalidObject = "";
             msg = "";
@@ -270,6 +275,17 @@ namespace Epicoil.Library.Models.Planning
                 return false;
             }
 
+            return valid;
+        }
+
+        public bool ValidateToDelMaterial(MaterialModel material, out string msg)
+        {
+            bool valid = true;
+            msg = "";
+            //TODO : Work around method.
+            /*
+             * Condition statement...
+            */
             return valid;
         }
 

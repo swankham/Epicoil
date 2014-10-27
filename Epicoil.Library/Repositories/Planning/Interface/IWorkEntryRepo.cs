@@ -10,9 +10,11 @@ namespace Epicoil.Library.Repositories.Planning
 
         IEnumerable<MaterialModel> GetAllMaterial(string plant, int workOrderId);
 
+        MaterialModel GetMaterial(int transactionLineID);
+
         MaterialModel GetMaterial(string plant, string partNum, string lotNum);
 
-        IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlaningHeadModel model);
+        IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model);
 
         int GetLastStep(int workOrderID);
 
@@ -20,12 +22,14 @@ namespace Epicoil.Library.Repositories.Planning
 
         string GenWorkOrderFixFormat(int id);
 
-        PlaningHeadModel Save(SessionInfo _session, PlaningHeadModel model);
+        PlanningHeadModel Save(SessionInfo _session, PlanningHeadModel model);
 
-        IEnumerable<PlaningHeadModel> GetWorkAll(string plant);
+        IEnumerable<PlanningHeadModel> GetWorkAll(string plant);
 
-        PlaningHeadModel GetWorkById(string workOrderNum, string plant);
+        PlanningHeadModel GetWorkById(string workOrderNum, string plant);
 
-        MaterialModel SaveMaterail(SessionInfo _session, MaterialModel model);
+        MaterialModel SaveMaterial(SessionInfo _session, MaterialModel model);
+
+        bool DeleteMaterail(SessionInfo _session, MaterialModel model, out string msg);
     }
 }

@@ -17,15 +17,21 @@ namespace Epicoil.Library.Repositories.Planning
             this._repoResrc = new ResourceRepo();
         }
 
+        /// <summary>
+        /// Get Material when new WorkOrder from master data [PartLot].
+        /// Fix pl.CheckBox01 = 0 for material is not used in WorkOrder.
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <returns>Rows</returns>
         public IEnumerable<MaterialModel> GetAllMaterial(string plant)
         {
-            string sql = string.Format(@"SELECT pl.PartNum
+            string sql = string.Format(@"SELECT pl.PartNum, 0 as TransactionLineID
 	                                        , pl.LotNum
 	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
 	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
-	                                        , 0 as UsingWeight, oh.Quantity * pl.Number10 as RemainWeight, (pl.Number03 / 100) as LengthM
+	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
 	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
@@ -47,20 +53,27 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
 	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
-                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1)", plant);
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1) AND pl.CheckBox01 = 0", plant);
 
             return Repository.Instance.GetMany<MaterialModel>(sql);
         }
 
+        /// <summary>
+        /// Get Material by WorkOrder from transaction data [WorkOrder => ucc_pln_Material].
+        /// Fix pl.CheckBox01 = 1 for material is used in the [workOrderId] param.
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <param name="workOrderId"></param>
+        /// <returns>Rows</returns>
         public IEnumerable<MaterialModel> GetAllMaterial(string plant, int workOrderId)
         {
-            string sql = string.Format(@"SELECT pl.PartNum
+            string sql = string.Format(@"SELECT pl.PartNum, mat.TransactionLineID
 	                                        , pl.LotNum
 	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
 	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
-	                                        , 0 as UsingWeight, oh.Quantity * pl.Number10 as RemainWeight, (pl.Number03 / 100) as LengthM
+	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
 	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
@@ -83,21 +96,69 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
 	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
-                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1)
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (2) AND pl.CheckBox01 = 1
                                               AND mat.WorkOrderID = {1}", plant, workOrderId);
 
             return Repository.Instance.GetMany<MaterialModel>(sql);
         }
 
-        public MaterialModel GetMaterial(string plant, string partNum, string lotNum)
+        /// <summary>
+        /// Get one row from selecting material from transaction data [WorkOrder => ucc_pln_Material].
+        /// </summary>
+        /// <param name="transactionLineID">Type of transaction running unique id from ucc_pln_Material table</param>
+        /// <returns>A row</returns>
+        public MaterialModel GetMaterial(int transactionLineID)
         {
-            string sql = string.Format(@"SELECT pl.PartNum
+            string sql = string.Format(@"SELECT pl.PartNum, mat.TransactionLineID
 	                                        , pl.LotNum
 	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
 	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
-	                                        , 0 as UsingWeight, oh.Quantity * pl.Number10 as RemainWeight, (pl.Number03 / 100) as LengthM
+	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
+	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
+	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
+	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
+	                                        , cust.CustID, ISNULL(cust.Name, '') as CustomerName
+	                                        , pl.ShortChar01 as MakerCode, ISNULL(maker.Character01, '') as MakerName
+	                                        , pl.ShortChar02 as MillCode, ISNULL(mill.Character01, '') as MillName, mat.CBalready, mat.UsingLM
+                                        FROM ucc_pln_Material mat
+		                                    INNER JOIN PartLot pl ON(mat.MCSSNo = pl.PartNum AND mat.Serial = pl.LotNum)
+	                                        INNER JOIN Part p ON(pl.PartNum = p.PartNum)
+                                            INNER JOIN PartPlant pln ON(p.PartNum = pln.PartNum)
+	                                        LEFT JOIN UD29 cmdt ON(p.ShortChar01 = cmdt.Key1)
+	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
+	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
+	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
+	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                                        GROUP BY PartNum, LotNum, DimCode) oh
+				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
+	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
+	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
+	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
+                                        WHERE mat.TransactionLineID ={0} AND pl.Number05 = 1 AND pl.Number08 IN (2)", transactionLineID);
+
+            return Repository.Instance.GetOne<MaterialModel>(sql);
+        }
+
+        /// <summary>
+        /// Get one row from selecting material from master data [PartLot].
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <param name="partNum"></param>
+        /// <param name="lotNum"></param>
+        /// <returns>A row</returns>
+        public MaterialModel GetMaterial(string plant, string partNum, string lotNum)
+        {
+            string sql = string.Format(@"SELECT pl.PartNum, 0 as TransactionLineID
+	                                        , pl.LotNum
+	                                        , p.ShortChar01 as CommodityCode, cmdt.Character01 as CommodityName
+	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
+	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
 	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
@@ -119,13 +180,19 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
 	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
-                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1)
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1) --AND pl.CheckBox01 = 0
                                               AND pl.PartNum = N'{1}' AND pl.LotNum = N'{2}'", plant, partNum, lotNum);
 
             return Repository.Instance.GetOne<MaterialModel>(sql);
         }
 
-        public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlaningHeadModel model)
+        /// <summary>
+        /// Get rows by filtering base on the model from master data [PartLot].
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <param name="model"></param>
+        /// <returns>Rows</returns>
+        public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model)
         {
             IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
 
@@ -142,16 +209,27 @@ namespace Epicoil.Library.Repositories.Planning
             if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
             if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
 
-            if (model.ProcessLineDetail.ThickMin != 0) query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            if (model.ProcessLineDetail.ThickMax != 0) query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            if (model.ProcessLineDetail.WidthMin != 0) query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            if (model.ProcessLineDetail.WidthMax != 0) query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            if (model.ProcessLineDetail.LengthMin != 0) query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            if (model.ProcessLineDetail.LengthMax != 0) query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
+            //if (model.ProcessLineDetail.ThickMin != 0) 
+                query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
+            //if (model.ProcessLineDetail.ThickMax != 0) 
+                query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
+            //if (model.ProcessLineDetail.WidthMin != 0) 
+                query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
+            //if (model.ProcessLineDetail.WidthMax != 0) 
+                query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
+            //if (model.ProcessLineDetail.LengthMin != 0) 
+                query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
+            //if (model.ProcessLineDetail.LengthMax != 0) 
+                query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
 
             return query;
         }
 
+        /// <summary>
+        /// Get last WorkOrder step for each WorkOrder by WorkOrderID.
+        /// </summary>
+        /// <param name="workOrderID"></param>
+        /// <returns>int</returns>
         public int GetLastStep(int workOrderID)
         {
             string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
@@ -162,6 +240,11 @@ namespace Epicoil.Library.Repositories.Planning
             return Convert.ToInt32(id) + 1;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <returns></returns>
         public int GetLastWorkOrder(string plant)
         {
             string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
@@ -172,12 +255,23 @@ namespace Epicoil.Library.Repositories.Planning
             return Convert.ToInt32(id) + 1;
         }
 
+        /// <summary>
+        /// Formatting WorkOrder Number.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>string : WorkOrderNumber</returns>
         public string GenWorkOrderFixFormat(int id)
         {
             return ("K" + DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM"))) + id.ToString("0000"));
         }
 
-        public PlaningHeadModel Save(Models.SessionInfo _session, PlaningHeadModel model)
+        /// <summary>
+        /// Save transaction header.
+        /// </summary>
+        /// <param name="_session"></param>
+        /// <param name="model"></param>
+        /// <returns>PlaningHeadModel : Transaction to saved</returns>
+        public PlanningHeadModel Save(Models.SessionInfo _session, PlanningHeadModel model)
         {
             int id = 0;
             string workOrderNum = "";
@@ -317,25 +411,36 @@ namespace Epicoil.Library.Repositories.Planning
             return GetWorkById(workOrderNum, _session.PlantID);
         }
 
-        public IEnumerable<PlaningHeadModel> GetWorkAll(string plant)
+        /// <summary>
+        /// Get WorkOrders all that to saved.
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <returns>WorkOrder rows</returns>
+        public IEnumerable<PlanningHeadModel> GetWorkAll(string plant)
         {
             string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
                                             WHERE plh.Plant = N'{1}'", plant);
 
-            var result = Repository.Instance.GetMany<PlaningHeadModel>(sql);
+            var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
             return result;
         }
 
-        public PlaningHeadModel GetWorkById(string workOrderNum, string plant)
+        /// <summary>
+        /// Get WorkOrder that to saved by WorkOrderNumber.
+        /// </summary>
+        /// <param name="workOrderNum"></param>
+        /// <param name="plant"></param>
+        /// <returns>a row by workOrderNum</returns>
+        public PlanningHeadModel GetWorkById(string workOrderNum, string plant)
         {
             string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
                                             WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}'", workOrderNum, plant);
 
-            var result = Repository.Instance.GetOne<PlaningHeadModel>(sql);
+            var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
 
             if (result != null)
             {
@@ -349,7 +454,13 @@ namespace Epicoil.Library.Repositories.Planning
             return result;
         }
 
-        public MaterialModel SaveMaterail(Models.SessionInfo _session, MaterialModel model)
+        /// <summary>
+        /// Save a material for each WorkOrder.
+        /// </summary>
+        /// <param name="_session"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public MaterialModel SaveMaterial(Models.SessionInfo _session, MaterialModel model)
         {
             //int id = 0;
             string sql = string.Format(@"INSERT INTO ucc_pln_Material
@@ -450,9 +561,41 @@ namespace Epicoil.Library.Repositories.Planning
                                               , _session.UserID
                                               );
 
-            Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
+            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
+                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
 
+            Repository.Instance.ExecuteWithTransaction(sql, "Add Material");
             return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
         }
+
+        /// <summary>
+        /// Must be call PlanningHeadModel.ValidateToDelMaterial 
+        /// </summary>
+        /// <param name="_session">Type of current session login</param>
+        /// <param name="model">Type of material selected to delete</param>
+        /// <param name="msg">Out put result messege from this</param>
+        /// <returns>true = success/false = unsuccess</returns>
+        public bool DeleteMaterail(Models.SessionInfo _session, MaterialModel model, out string msg)
+        {
+            msg = "";
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_Material WHERE TransactionLineID = {0}", model.TransactionLineID);
+
+                sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 0, ShortChar05 = '', Date03 = null , Number08 = 1
+                                        WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                           , model.MCSSNo, model.SerialNo);
+
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Material");                
+                return true;
+            }
+            catch(Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+        }
+
     }
 }

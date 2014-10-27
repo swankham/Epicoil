@@ -7,7 +7,13 @@ namespace Epicoil.Library.Models.Planning
     {
         public string MCSSNo { get; set; }
 
+        public int TransactionLineID { get; set; }
+
         public int WorkOrderID { get; set; }
+
+        public string WorkOrderNum { get; set; }
+
+        public DateTime WorkDate { get; set; }
 
         public int Seq { get; set; }
 
@@ -67,6 +73,7 @@ namespace Epicoil.Library.Models.Planning
         }
 
         public bool CBSelect { get; set; }
+
         public bool CBalready { get; set; }
 
         public string Status { get; set; }
@@ -110,6 +117,7 @@ namespace Epicoil.Library.Models.Planning
         public virtual void DataBind(DataRow row)
         {
             this.MCSSNo = (string)row["PartNum"].GetString();
+            this.TransactionLineID = (int)row["TransactionLineID"].GetInt();
             this.SerialNo = (string)row["LotNum"].GetString();
             this.CommodityCode = (string)row["CommodityCode"].GetString();
             this.CommodityName = (string)row["CommodityName"].GetString();

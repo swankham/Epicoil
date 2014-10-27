@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\MonthCode.cs" />
+    <Compile Include="Enums\PlanningMaterialStatus.cs" />
     <Compile Include="Enums\Possession.cs" />
     <Compile Include="Extentions\ObjectHelper.cs" />
     <Compile Include="Frameworks\ComboBox.cs">

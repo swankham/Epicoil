@@ -16,9 +16,9 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private readonly IWorkEntryRepo _repo;
         private IEnumerable<MaterialModel> model;        
-        private PlaningHeadModel baseOrder;
+        private PlanningHeadModel baseOrder;
 
-        public MaterialSelecting(SessionInfo _session, IEnumerable<MaterialModel> data, PlaningHeadModel workOrder)
+        public MaterialSelecting(SessionInfo _session, IEnumerable<MaterialModel> data, PlanningHeadModel workOrder)
         {
             InitializeComponent();
             this._repo = new WorkEntryRepo();
@@ -125,7 +125,9 @@ namespace Epicoil.Appl.Presentations.Planning
                 {
                     _selected = _repo.GetMaterial(epiSession.PlantID, mcssno, lotno);
                     _selected.WorkOrderID = baseOrder.WorkOrderID;
-                    var result = _repo.SaveMaterail(epiSession, _selected);
+                    _selected.WorkOrderNum = baseOrder.WorkOrderNum;
+                    _selected.WorkDate = baseOrder.IssueDate;
+                    var result = _repo.SaveMaterial(epiSession, _selected);
                 }
 
                 this.Close();

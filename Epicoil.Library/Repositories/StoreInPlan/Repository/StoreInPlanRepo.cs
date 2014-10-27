@@ -290,7 +290,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 
         public StoreInPlanHead SaveHead(StoreInPlanHead model, SessionInfo _session)
         {
-            ///TODO not yet fix GETDATE()
+            ///TODO : not yet fix GETDATE()
             string sql = "";
             if (model.InsertState)
             {
@@ -464,7 +464,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 
         public void SaveArticle(StoreInPlanDetail model, SessionInfo _session)
         {
-            ///TODO not yet fix GETDATE()
+            ///TODO : not yet fix GETDATE()
             string sql = "";
             sql += string.Format(@"IF NOT EXISTS
 									(

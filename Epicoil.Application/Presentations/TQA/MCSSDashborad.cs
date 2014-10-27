@@ -25,6 +25,7 @@ namespace Epicoil.Appl.Presentations.TQA
             this._repo = new McssRepo();
             this.McssList = new List<MCSS>();
             this.McssNum = "";
+            epiSession = _session;
         }
 
         private void MCSSDashborad_Load(object sender, EventArgs e)

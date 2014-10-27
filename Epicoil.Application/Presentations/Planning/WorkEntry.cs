@@ -1,4 +1,5 @@
-﻿using Epicoil.Library.Models;
+﻿using Epicoil.Library;
+using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
@@ -19,10 +20,10 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IWorkEntryRepo _repo;
         private readonly IResourceRepo _reRes;
 
-        private PlaningHeadModel HeaderContent;
+        private PlanningHeadModel HeaderContent;
         private ClassMasterModel _class;
 
-        public WorkEntry(SessionInfo _session = null, PlaningHeadModel model = null)
+        public WorkEntry(SessionInfo _session = null, PlanningHeadModel model = null)
         {
             InitializeComponent();
             this._repoRes = new ResourceRepo();
@@ -30,11 +31,11 @@ namespace Epicoil.Appl.Presentations.Planning
             this._repo = new WorkEntryRepo();
             this._reRes = new ResourceRepo();
 
-            this.HeaderContent = new PlaningHeadModel();
+            this.HeaderContent = new PlanningHeadModel();
             this._class = new ClassMasterModel();
 
             //Initial Session and content
-            this.HeaderContent = new PlaningHeadModel();
+            this.HeaderContent = new PlanningHeadModel();
             epiSession = _session;
             if (model != null)
             {
@@ -109,7 +110,7 @@ namespace Epicoil.Appl.Presentations.Planning
             butAddCoilBack.Enabled = tbutNewCoilBack.Enabled;
         }
 
-        private void SetHeadContent(PlaningHeadModel model)
+        private void SetHeadContent(PlanningHeadModel model)
         {
             ClearHeaderContent();
             model.PIC = epiSession.UserID;
@@ -149,12 +150,6 @@ namespace Epicoil.Appl.Presentations.Planning
             //DatePicker
             dptIssueDate.Value = model.IssueDate;
             dptDueDate.Value = model.DueDate;
-
-            try
-            {
-                ListMaterialGrid(HeaderContent.Materails);
-            }
-            catch { }
         }
 
         private void ClearHeaderContent()
@@ -242,7 +237,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutNewWork_Click(object sender, EventArgs e)
         {
-            HeaderContent = new PlaningHeadModel();
+            HeaderContent = new PlanningHeadModel();
             HeaderContent.New(epiSession.PlantID);
             HeaderContent.PIC = epiSession.UserID;
             HeaderContent.PICName = epiSession.UserName;
@@ -259,7 +254,7 @@ namespace Epicoil.Appl.Presentations.Planning
             IEnumerable<MaterialModel> model = new List<MaterialModel>();
             HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, HeaderContent.ProcessLineId);
 
-            var result = HeaderContent.ValidateModel(model, out objectValid, out messageValid);
+            var result = HeaderContent.ValidateToSave(model, out objectValid, out messageValid);
 
             if (!result)
             {
@@ -321,6 +316,29 @@ namespace Epicoil.Appl.Presentations.Planning
             //Get Machine detail from combobox 'Process Line' to finding material.
             HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
 
+            //If material list > 0 must be assign materail filtering.
+            if (HeaderContent.Materails.ToList().Count > 0)
+            {
+                var mat = HeaderContent.Materails.FirstOrDefault();
+
+                HeaderContent.CurrentClass.ComudityReq = 1;
+                HeaderContent.MaterialPattern.CommodityCode = mat.CommodityCode;
+                HeaderContent.CurrentClass.SpecCodeReq = 1;
+                HeaderContent.MaterialPattern.SpecCode = mat.SpecCode;
+                HeaderContent.CurrentClass.PlateCodeReq = 1;
+                HeaderContent.MaterialPattern.CoatingCode = mat.CoatingCode;
+                HeaderContent.MaterialPattern.Possession = mat.Possession;
+                //HeaderContent.MaterialPattern.BussinessType = mat.BussinessType;
+
+                //Fix material size
+                HeaderContent.ProcessLineDetail.ThickMin = mat.Thick;
+                HeaderContent.ProcessLineDetail.ThickMax = mat.Thick;
+                HeaderContent.ProcessLineDetail.WidthMin = mat.Width;
+                HeaderContent.ProcessLineDetail.WidthMax = mat.Width;
+                HeaderContent.ProcessLineDetail.LengthMin = mat.Length;
+                HeaderContent.ProcessLineDetail.LengthMax = mat.Length;
+            }
+
             //Get Material that compatible with Machine was select.
             var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
             using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
@@ -335,8 +353,21 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
+            //Summaries using weight
+            HeaderContent.SumUsingWeight(HeaderContent.Materails);
+
             //Set content and list Material was add from dialog.
             SetHeadContent(HeaderContent);
+
+            //Set Material Grid.
+            try
+            {
+                ListMaterialGrid(HeaderContent.Materails);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
@@ -345,9 +376,9 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvMaterial.Rows.Clear();
             foreach (var p in item)
             {
-                dgvMaterial.Rows.Add(p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
-                                     , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.Quantity, p.RemainQty, p.QuantityPack, p.CBSelect
-                                     , p.Status, p.Note, p.BussinessTypeName, p.ProductStatus);
+                dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
+                                     , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.QuantityPack, p.Quantity, p.RemainQty, p.CBSelect
+                                     , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
@@ -380,8 +411,48 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tlbDelete_Click(object sender, EventArgs e)
         {
-            if (dgvMaterial.Focused) MessageBox.Show("dgvMaterial");
+            string validateMsg = string.Empty;
+
+            //Delete Material list
+            if (dgvMaterial.Focused)
+            {
+                int iRow = dgvMaterial.CurrentRow.Index;
+                MaterialModel mat = _repo.GetMaterial(Convert.ToInt32(dgvMaterial.Rows[iRow].Cells["transactionlineid"].Value.ToString()));
+                if (HeaderContent.ValidateToDelMaterial(mat, out validateMsg))
+                {
+                    if (_repo.DeleteMaterail(epiSession, mat, out validateMsg))
+                    {
+                        HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+                        SetHeadContent(HeaderContent);
+
+                        //Set Material Grid.
+                        try
+                        {
+                            ListMaterialGrid(HeaderContent.Materails);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.ToString());
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(validateMsg, "Delete material error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(validateMsg, "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            //Delete Coil Back list
             if (dgvCoilBack.Focused) MessageBox.Show("dgvCoilBack");
+
+            //Delete Cutting list
+            if (dgvCutting.Focused) MessageBox.Show("dgvCutting");
         }
 
         private void dgvMaterial_DataError(object sender, DataGridViewDataErrorEventArgs anError)
@@ -420,17 +491,17 @@ namespace Epicoil.Appl.Presentations.Planning
             string colHeadName = dgvMaterial.Columns[e.ColumnIndex].HeaderText;
             string colName = dgvMaterial.Columns[e.ColumnIndex].Name;
             string strVal = dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+            string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
             decimal parseDec = 0M;
-            int parseInt = 0;
 
             //Abort validation if cell is not in the column.
-            if (colName == "usingweight" || colName == "remainWeight"  || colName ==  "LengthM"
-                || colName == "quantity" || colName == "RemQuantity" || colName == "qtyPack")
+            if (colName == "usingweight" || colName == "quantity" || colName == "RemQuantity" || colName == "qtyPack")
             {
                 if (!Decimal.TryParse(strVal, out parseDec))
                 {
                     dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = 0M;
                     dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].ErrorText = string.Format(@"{0} must be format valid.", colHeadName);
+                    return;
                 }
                 else
                 {
@@ -438,6 +509,15 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
+            switch (colName)
+            {
+                case "usingweight":
+                    HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
+                                                        .ForEach(i => i.UsingWeight = Convert.ToDecimal(strVal));
+                    break;
+            }
+            HeaderContent.SumUsingWeight(HeaderContent.Materails);
+            SetHeadContent(HeaderContent);
         }
 
         private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)

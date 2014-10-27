@@ -456,6 +456,8 @@ namespace Epicoil.Appl.Presentations.TQA
             model.Width = Convert.ToDecimal(txtWidth.Text);
             model.Length = Convert.ToDecimal(txtLength.Text);
 
+            McssContent.Pocession = (rdoPocession0.Checked) ?  0 : 1;
+
             var dupRecord = _repo.GetByFilter(DateTime.Now, DateTime.Now, model, false);
             int i = 1;
 
