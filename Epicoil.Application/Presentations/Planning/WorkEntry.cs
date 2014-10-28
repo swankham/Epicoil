@@ -538,5 +538,15 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
         }
+
+        private void butWorkOrder_Click_1(object sender, EventArgs e)
+        {
+            using (WorkEntryDialog frm = new WorkEntryDialog(epiSession))
+            {
+                frm.ShowDialog();
+                HeaderContent = frm._selected;
+                SetHeadContent(HeaderContent);
+            }
+        }
     }
 }

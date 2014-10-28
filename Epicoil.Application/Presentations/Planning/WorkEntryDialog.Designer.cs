@@ -103,7 +103,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvWorkOrder);
-            this.splitContainer1.Size = new System.Drawing.Size(997, 483);
+            this.splitContainer1.Size = new System.Drawing.Size(775, 483);
             this.splitContainer1.SplitterDistance = 140;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -132,7 +132,7 @@
             // 
             // btnSelect
             // 
-            this.btnSelect.Location = new System.Drawing.Point(814, 83);
+            this.btnSelect.Location = new System.Drawing.Point(662, 101);
             this.btnSelect.Name = "btnSelect";
             this.btnSelect.Size = new System.Drawing.Size(109, 30);
             this.btnSelect.TabIndex = 26;
@@ -142,7 +142,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(814, 49);
+            this.btnClear.Location = new System.Drawing.Point(544, 101);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(109, 30);
             this.btnClear.TabIndex = 25;
@@ -152,7 +152,7 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(814, 17);
+            this.btnSearch.Location = new System.Drawing.Point(429, 101);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(109, 30);
             this.btnSearch.TabIndex = 24;
@@ -319,8 +319,9 @@
             this.dgvWorkOrder.RowHeadersVisible = false;
             this.dgvWorkOrder.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvWorkOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvWorkOrder.Size = new System.Drawing.Size(997, 339);
+            this.dgvWorkOrder.Size = new System.Drawing.Size(775, 339);
             this.dgvWorkOrder.TabIndex = 18;
+            this.dgvWorkOrder.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvWorkOrder_CellDoubleClick);
             // 
             // workordernumber
             // 
@@ -387,7 +388,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(997, 483);
+            this.ClientSize = new System.Drawing.Size(775, 483);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

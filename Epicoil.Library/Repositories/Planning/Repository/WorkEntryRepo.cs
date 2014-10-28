@@ -408,7 +408,7 @@ namespace Epicoil.Library.Repositories.Planning
                                               );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
 
-            return GetWorkById(workOrderNum, _session.PlantID);
+            return GetWorkById(workOrderNum, Convert.ToInt32(model.ProcessStep), _session.PlantID);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Epicoil.Library.Repositories.Planning
             string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
-                                            WHERE plh.Plant = N'{1}'", plant);
+                                            WHERE plh.Plant = N'{0}'", plant);
 
             var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
             return result;
@@ -433,12 +433,12 @@ namespace Epicoil.Library.Repositories.Planning
         /// <param name="workOrderNum"></param>
         /// <param name="plant"></param>
         /// <returns>a row by workOrderNum</returns>
-        public PlanningHeadModel GetWorkById(string workOrderNum, string plant)
+        public PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant)
         {
             string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
-                                            WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}'", workOrderNum, plant);
+                                            WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderNum, plant, processStep);
 
             var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
 

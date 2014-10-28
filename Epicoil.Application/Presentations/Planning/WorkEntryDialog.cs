@@ -19,12 +19,12 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
         private readonly IWorkEntryRepo _repo;
-        private PlaningHeadModel HeaderContent;
-        private IEnumerable<PlaningHeadModel> _model;
-        public PlaningHeadModel _selected;
-       
+        private PlanningHeadModel Header;
+        private IEnumerable<PlanningHeadModel> _model;
+        public PlanningHeadModel _selected;
 
-        public WorkEntryDialog(SessionInfo _session, WorkEntryRepo model = null)
+
+        public WorkEntryDialog(SessionInfo _session)
         {
             InitializeComponent();
             this._repo = new WorkEntryRepo();
@@ -71,7 +71,7 @@ namespace Epicoil.Appl.Presentations.Planning
            
         }
 
-        private void SetHeadContent(PlaningHeadModel model)
+        private void SetHeadContent(PlanningHeadModel model)
         {
             ClearHeaderContent();
             model.PIC = epiSession.UserID;
@@ -99,18 +99,18 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void WorkEntryDialog_Load(object sender, EventArgs e)
         {
-            HeaderContent = new PlaningHeadModel();
-            HeaderContent.ResourceList = _repoRes.GetAll(epiSession.PlantID).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-            HeaderContent.OrderTypeList = _repoUcd.GetAll("OrderType");
-            HeaderContent.PossessionList = _repoUcd.GetAll("Pocessed");
+            Header = new PlanningHeadModel();
+            Header.ResourceList = _repoRes.GetAll(epiSession.PlantID).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
+            Header.OrderTypeList = _repoUcd.GetAll("OrderType");
+            Header.PossessionList = _repoUcd.GetAll("Pocessed");
 
-            SetHeadContent(HeaderContent);
+            SetHeadContent(Header);
             //ClearHeaderContent();
             _model = _repo.GetWorkAll(epiSession.PlantID);
             SetGrid(_model);
         }
 
-        private void SetGrid(IEnumerable<PlaningHeadModel> data)
+        private void SetGrid(IEnumerable<PlanningHeadModel> data)
         {
             dgvWorkOrder.Rows.Clear();
             int i = 0;
@@ -123,7 +123,6 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
                 i++;
             }
-
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -158,14 +157,15 @@ namespace Epicoil.Appl.Presentations.Planning
 
                 if (!string.IsNullOrEmpty(WrkNoPara))
                 {
-                    _selected = _repo.GetWorkById(WrkNoPara, epiSession.PlantID);
-                    //_selected.WorkOrderID = baseOrder.WorkOrderID;
-                    var result = _repo.Save(epiSession, _selected);
-                }
-
-                this.Close();
+                    _selected = _repo.GetWorkById(WrkNoPara, Convert.ToInt32(ProcessStepPara), epiSession.PlantID);
+                    this.Close();
+                }                
             }
         }
 
+        private void dgvWorkOrder_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            btnSelect_Click(sender, e);
+        }
         }
     }

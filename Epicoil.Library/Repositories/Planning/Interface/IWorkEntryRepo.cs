@@ -26,7 +26,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         IEnumerable<PlanningHeadModel> GetWorkAll(string plant);
 
-        PlanningHeadModel GetWorkById(string workOrderNum, string plant);
+        PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant);
 
         MaterialModel SaveMaterial(SessionInfo _session, MaterialModel model);
 

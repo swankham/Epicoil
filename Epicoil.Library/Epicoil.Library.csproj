@@ -159,7 +159,7 @@
     <Compile Include="Models\Planning\DieModel.cs" />
     <Compile Include="Models\Planning\DiePatternModel.cs" />
     <Compile Include="Models\Planning\MaterailModel.cs" />
-    <Compile Include="Models\Planning\PlaningHeadModel.cs" />
+    <Compile Include="Models\Planning\PlanningHeadModel.cs" />
     <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />
     <Compile Include="Models\StoreInPlan\ImexCheckModel.cs" />
     <Compile Include="Models\StoreInPlan\MappingLookupModel.cs" />
