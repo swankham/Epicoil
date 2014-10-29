@@ -5,7 +5,6 @@ using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -278,6 +277,7 @@ namespace Epicoil.Appl.Presentations.Planning
             //Selected Complate.
             HeaderContent.FormState = 3;
             SetFormState();
+            butAddMaterial_Click(sender, e);
         }
 
         private void tbutNewCoilBack_Click(object sender, EventArgs e)
@@ -297,6 +297,7 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.PreLoad();
             SetFormState();
             ClearHeaderContent();
+            ResetMaterialGrid();
         }
 
         private void tbutCalculate_Click(object sender, EventArgs e)
@@ -377,12 +378,25 @@ namespace Epicoil.Appl.Presentations.Planning
             foreach (var p in item)
             {
                 dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
-                                     , p.Weight, p.UsingWeight, p.RemainWeight, p.LengthM, p.QuantityPack, p.Quantity, p.RemainQty, p.CBSelect
-                                     , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
+                    , p.Weight, (p.UsingWeight == 0) ? p.Weight : p.UsingWeight
+                    , p.RemainWeight, p.LengthM
+                    , (p.Length == 0) ? 1 : p.QuantityPack, (p.UsingQuantity == 0) ? ((p.Length == 0) ? 1 : p.QuantityPack) : p.UsingQuantity
+                    , p.RemainQuantity, p.CBSelect
+                    , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
                     this.dgvMaterial.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                if (p.Length == 0)
+                {
+                    dgvMaterial.Columns["quantity"].ReadOnly = true;
+                    dgvMaterial.Columns["usingweight"].ReadOnly = false;
+                }
+                else
+                {
+                    dgvMaterial.Columns["quantity"].ReadOnly = false;
+                    dgvMaterial.Columns["usingweight"].ReadOnly = true;
                 }
                 i++;
             }
@@ -455,42 +469,13 @@ namespace Epicoil.Appl.Presentations.Planning
             if (dgvCutting.Focused) MessageBox.Show("dgvCutting");
         }
 
-        private void dgvMaterial_DataError(object sender, DataGridViewDataErrorEventArgs anError)
-        {
-            MessageBox.Show("Error happened " + anError.Context.ToString());
-
-            if (anError.Context == DataGridViewDataErrorContexts.Commit)
-            {
-                MessageBox.Show("Commit error");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.CurrentCellChange)
-            {
-                MessageBox.Show("Cell change");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.Parsing)
-            {
-                MessageBox.Show("parsing error");
-            }
-            if (anError.Context == DataGridViewDataErrorContexts.LeaveControl)
-            {
-                MessageBox.Show("leave control error");
-            }
-
-            if ((anError.Exception) is ConstraintException)
-            {
-                DataGridView view = (DataGridView)sender;
-                view.Rows[anError.RowIndex].ErrorText = "an error";
-                view.Rows[anError.RowIndex].Cells[anError.ColumnIndex].ErrorText = "an error";
-
-                anError.ThrowException = false;
-            }
-        }
-
         private void dgvMaterial_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             string colHeadName = dgvMaterial.Columns[e.ColumnIndex].HeaderText;
             string colName = dgvMaterial.Columns[e.ColumnIndex].Name;
             string strVal = dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+            string weight = dgvMaterial.Rows[e.RowIndex].Cells["weight"].Value.GetString();
+            string qtyPack = dgvMaterial.Rows[e.RowIndex].Cells["qtyPack"].Value.GetString();
             string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
             decimal parseDec = 0M;
 
@@ -515,14 +500,46 @@ namespace Epicoil.Appl.Presentations.Planning
                     HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                         .ForEach(i => i.UsingWeight = Convert.ToDecimal(strVal));
                     break;
+
+                case "quantity":
+                    decimal val = (Convert.ToDecimal(strVal) / Convert.ToDecimal(qtyPack)) * 100;
+
+                    HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
+                                                        .ForEach(i => i.UsingQuantity = Convert.ToDecimal(strVal));
+
+                    HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
+                                                        .ForEach(i => i.UsingWeight = (Convert.ToDecimal(weight) / 100) * val);
+                    break;
             }
+
+            var result = (from item in HeaderContent.Materails
+                          where item.TransactionLineID == Convert.ToInt32(transId)
+                          select item).First();
+
+            dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
+            dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
+            dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
+
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             SetHeadContent(HeaderContent);
         }
 
+        public bool ValidateUsing(decimal usingVal, decimal baseVal, bool weightValid, out string col, out string msg)
+        {
+            bool valid = true;
+            col = (weightValid) ? "Weight" : "Quantity";
+            msg = string.Empty;
+
+            if (usingVal > baseVal)
+            {
+                msg = string.Format("Using {0} must less than or equals with {0}.", (weightValid) ? "Weight" : "Quantity");
+                valid = false;
+            }
+            return valid;
+        }
+
         private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)
         {
-
         }
 
         private void cmbPossession_Leave(object sender, EventArgs e)
@@ -546,6 +563,25 @@ namespace Epicoil.Appl.Presentations.Planning
                 frm.ShowDialog();
                 HeaderContent = frm._selected;
                 SetHeadContent(HeaderContent);
+            }
+        }
+
+        private void dgvMaterial_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvMaterial.Rows.Count > 0)
+            {
+                //string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
+
+                //var result = (from item in HeaderContent.Materails
+                //              where item.TransactionLineID == Convert.ToInt32(transId)
+                //              select item).First();
+
+                //dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
+                //dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
+                //dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
+
+                //HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                //SetHeadContent(HeaderContent);
             }
         }
     }

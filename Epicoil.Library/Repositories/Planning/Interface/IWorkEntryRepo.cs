@@ -31,5 +31,9 @@ namespace Epicoil.Library.Repositories.Planning
         MaterialModel SaveMaterial(SessionInfo _session, MaterialModel model);
 
         bool DeleteMaterail(SessionInfo _session, MaterialModel model, out string msg);
+
+        decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat);
+
+        decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack);
     }
 }

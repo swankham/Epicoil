@@ -44,8 +44,9 @@
     <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
     </Reference>
-    <Reference Include="Epicor.Mfg.Core.Session">
-      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+    <Reference Include="Epicor.Mfg.Core.Session, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.Session.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>

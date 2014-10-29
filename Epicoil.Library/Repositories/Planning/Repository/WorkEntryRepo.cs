@@ -209,18 +209,26 @@ namespace Epicoil.Library.Repositories.Planning
             if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
             if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
 
-            //if (model.ProcessLineDetail.ThickMin != 0) 
-                query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            //if (model.ProcessLineDetail.ThickMax != 0) 
-                query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            //if (model.ProcessLineDetail.WidthMin != 0) 
-                query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            //if (model.ProcessLineDetail.WidthMax != 0) 
-                query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            //if (model.ProcessLineDetail.LengthMin != 0) 
-                query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            //if (model.ProcessLineDetail.LengthMax != 0) 
-                query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
+            //if (model.ProcessLineDetail.ThickMin != 0)
+            query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
+            //if (model.ProcessLineDetail.ThickMax != 0)
+            query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
+            //if (model.ProcessLineDetail.WidthMin != 0)
+            query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
+            //if (model.ProcessLineDetail.WidthMax != 0)
+            query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
+            //if (model.ProcessLineDetail.LengthMin != 0)
+            query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
+            //if (model.ProcessLineDetail.LengthMax != 0)
+            query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
+
+            //if machine is not Sliter and Leveller must be filter for sheet only.
+            if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
+                query = query.Where(p => p.Length > 0);
+
+            //if machine is Sliter and Leveller must be filter for coil only.
+            if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
+                query = query.Where(p => p.Length.Equals(0));
 
             return query;
         }
@@ -241,7 +249,7 @@ namespace Epicoil.Library.Repositories.Planning
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="plant"></param>
         /// <returns></returns>
@@ -545,8 +553,8 @@ namespace Epicoil.Library.Repositories.Planning
                                               , model.Weight
                                               , model.UsingWeight
                                               , model.RemainWeight
-                                              , model.Quantity      //{15}
-                                              , model.RemainQty
+                                              , model.UsingQuantity      //{15}
+                                              , model.RemainQuantity
                                               , model.LengthM
                                               , model.UsingLengthM
                                               , Convert.ToInt32(model.CBSelect.GetBoolean())
@@ -570,7 +578,7 @@ namespace Epicoil.Library.Repositories.Planning
         }
 
         /// <summary>
-        /// Must be call PlanningHeadModel.ValidateToDelMaterial 
+        /// Must be call PlanningHeadModel.ValidateToDelMaterial
         /// </summary>
         /// <param name="_session">Type of current session login</param>
         /// <param name="model">Type of material selected to delete</param>
@@ -587,15 +595,43 @@ namespace Epicoil.Library.Repositories.Planning
                                         WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
                                            , model.MCSSNo, model.SerialNo);
 
-                Repository.Instance.ExecuteWithTransaction(sql, "Delete Material");                
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Material");
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg = ex.Message;
                 return false;
             }
         }
 
+        
+        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
+        {//If Coil length must be LengthM*1000
+            decimal Ma = 0.0M;
+            decimal Mb = 0.0M;
+            decimal Mc = 0.0M;
+            decimal WgtPerUnit = 0;
+
+            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
+            Mb = (W / 1000) * (L);
+            Mc = (Ma * Mb);
+            WgtPerUnit = Math.Round(Mc, 2);
+            return WgtPerUnit;
+        }
+
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+        }
+
+        public decimal CalWgtFromMat(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+        }
     }
 }

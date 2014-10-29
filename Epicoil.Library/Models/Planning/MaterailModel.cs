@@ -47,7 +47,13 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal UsingWeight { get; set; }
 
-        public decimal RemainWeight { get; set; }
+        public decimal RemainWeight//  { get; set; }
+        {
+            get
+            {
+                return Weight - UsingWeight;
+            }
+        }
 
         public decimal LengthM
         {
@@ -60,15 +66,15 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal UsingLengthM { get; set; }
 
-        public decimal Quantity { get; set; }
+        public decimal QuantityPack { get; set; }
 
-        public decimal RemainQty { get; set; }
+        public decimal UsingQuantity { get; set; }
 
-        public decimal QuantityPack
+        public decimal RemainQuantity //{ get; set; }
         {
             get
             {
-                return (Length == 0) ? 1M : Quantity;
+                return ((Length == 0) ? 1 : QuantityPack) - UsingQuantity;
             }
         }
 
@@ -132,12 +138,12 @@ namespace Epicoil.Library.Models.Planning
             this.Width = (decimal)row["Number02"].GetDecimal();
             this.Length = (decimal)row["Number03"].GetDecimal();
             this.Weight = (decimal)row["Number04"].GetDecimal();
-            this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
-            this.RemainWeight = (decimal)row["RemainWeight"].GetDecimal();
+            //this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
+            //this.RemainWeight = (decimal)row["RemainWeight"].GetDecimal();
             this.UsingLengthM = (decimal)row["UsingLM"].GetDecimal();
-            this.Quantity = (decimal)row["Quantity"].GetDecimal();
-            this.RemainQty = (decimal)row["RemainQty"].GetDecimal();
-            //this.QuantityPack = (decimal)row["QuantityPack"].GetDecimal();
+            //this.UsingQuantity = (decimal)row["Quantity"].GetDecimal();
+            //this.RemainQuantity = (decimal)row["RemainQty"].GetDecimal();
+            this.QuantityPack = (decimal)row["Quantity"].GetDecimal();
             this.CBSelect = Convert.ToBoolean((int)row["CBSelect"].GetInt());
             this.CBalready = Convert.ToBoolean((int)row["CBalready"].GetInt());
             this.Status = (string)row["Status"].GetString();

@@ -316,7 +316,7 @@
             this.dgvMaterial.Size = new System.Drawing.Size(690, 218);
             this.dgvMaterial.TabIndex = 17;
             this.dgvMaterial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellEndEdit);
-            this.dgvMaterial.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dgvMaterial_DataError);
+            this.dgvMaterial.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellValueChanged);
             // 
             // transactionlineid
             // 

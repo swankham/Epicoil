@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Epicoil.Library.Models.Planning;
 
 namespace Epicoil.Library.Models.Planning.Tests
 {
@@ -34,6 +35,13 @@ namespace Epicoil.Library.Models.Planning.Tests
 
             var result = model.CalculateLengthMeter(weight, width, thick, gravity, frontPlate, backPlate);
             Assert.AreEqual(0, Math.Round(result, 0));
+        }
+
+        [TestMethod()]
+        public void ValidateUsingTest()
+        {
+
+            Assert.Fail();
         }
     }
 }

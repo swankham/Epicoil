@@ -57,7 +57,7 @@
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD34.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD35">
-      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD35.dll</HintPath>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UD35.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD39">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD39.dll</HintPath>
@@ -95,13 +95,13 @@
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD34.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD35">
-      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD35.dll</HintPath>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IUD35.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD39">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD39.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.UI.UD107Entry">
-      <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.UI.UD107Entry.dll</HintPath>
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.UI.UD107Entry.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
