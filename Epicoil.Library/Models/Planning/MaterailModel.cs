@@ -138,12 +138,12 @@ namespace Epicoil.Library.Models.Planning
             this.Width = (decimal)row["Number02"].GetDecimal();
             this.Length = (decimal)row["Number03"].GetDecimal();
             this.Weight = (decimal)row["Number04"].GetDecimal();
-            //this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
+            this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
             //this.RemainWeight = (decimal)row["RemainWeight"].GetDecimal();
             this.UsingLengthM = (decimal)row["UsingLM"].GetDecimal();
-            //this.UsingQuantity = (decimal)row["Quantity"].GetDecimal();
+            this.UsingQuantity = (decimal)row["Quantity"].GetDecimal();
             //this.RemainQuantity = (decimal)row["RemainQty"].GetDecimal();
-            this.QuantityPack = (decimal)row["Quantity"].GetDecimal();
+            this.QuantityPack = (decimal)row["QuantityPack"].GetDecimal();
             this.CBSelect = Convert.ToBoolean((int)row["CBSelect"].GetInt());
             this.CBalready = Convert.ToBoolean((int)row["CBalready"].GetInt());
             this.Status = (string)row["Status"].GetString();
@@ -179,6 +179,21 @@ namespace Epicoil.Library.Models.Planning
 
             //Convert mm to M.
             return Math.Round(result / 1000, 2);
+        }
+
+        public void SetUsingWeight()
+        {
+            UsingWeight = (UsingWeight == 0) ? Weight : UsingWeight;
+        }
+
+        public void SetUsingQuantity()
+        {
+            UsingQuantity = (UsingQuantity == 0) ? ((Length == 0) ? 1 : QuantityPack) : QuantityPack;
+        }
+
+        public void SetQuantityPack()
+        {
+            QuantityPack = (Length == 0) ? 1 : QuantityPack;
         }
     }
 }

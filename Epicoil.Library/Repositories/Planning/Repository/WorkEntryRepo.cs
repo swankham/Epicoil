@@ -10,11 +10,13 @@ namespace Epicoil.Library.Repositories.Planning
     {
         private readonly IUserCodeRepo _repoUcode;
         private readonly IResourceRepo _repoResrc;
+        private readonly IClassMasterRepo _repoCls;
 
         public WorkEntryRepo()
         {
             this._repoUcode = new UserCodeRepo();
             this._repoResrc = new ResourceRepo();
+            this._repoCls = new ClassMasterRepo();
         }
 
         /// <summary>
@@ -74,7 +76,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
-	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -116,7 +118,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
-	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -452,11 +454,12 @@ namespace Epicoil.Library.Repositories.Planning
 
             if (result != null)
             {
-                result.ResourceList = _repoResrc.GetAll(plant);
+                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
                 result.OrderTypeList = _repoUcode.GetAll("OrderType");
                 result.PossessionList = _repoUcode.GetAll("Pocessed");
                 result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
                 result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
+                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
             }
 
             return result;

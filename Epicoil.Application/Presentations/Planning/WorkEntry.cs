@@ -58,6 +58,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutCreateSerial.Enabled = false;
                     tlbClear.Enabled = false;
                     tbutCancelWorkOrder.Enabled = false;
+                    butWorkOrder.Enabled = true;
                     break;
 
                 case 1: /// 1 = New Transaction.
@@ -70,6 +71,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutCreateSerial.Enabled = false;
                     tlbClear.Enabled = true;
                     tbutCancelWorkOrder.Enabled = false;
+                    butWorkOrder.Enabled = false;
                     ResetMaterialGrid();
                     ResetCoilBackGrid();
                     ResetCuttingGrid();
@@ -79,6 +81,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
                     tlbClear.Enabled = true;
+                    butWorkOrder.Enabled = false;
                     break;
 
                 case 3: /// 3 = Selected materail.
@@ -91,6 +94,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutCreateSerial.Enabled = false;
                     tlbClear.Enabled = true;
                     tbutCancelWorkOrder.Enabled = true;
+                    butWorkOrder.Enabled = false;
                     break;
 
                 case 4: /// 4 = Calculated.
@@ -103,6 +107,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutCreateSerial.Enabled = true;
                     tlbClear.Enabled = true;
                     tbutCancelWorkOrder.Enabled = true;
+                    butWorkOrder.Enabled = false;
                     break;
             }
             butAddMaterial.Enabled = tbutNewMaterial.Enabled;
@@ -354,12 +359,6 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
-            //Summaries using weight
-            HeaderContent.SumUsingWeight(HeaderContent.Materails);
-
-            //Set content and list Material was add from dialog.
-            SetHeadContent(HeaderContent);
-
             //Set Material Grid.
             try
             {
@@ -369,6 +368,11 @@ namespace Epicoil.Appl.Presentations.Planning
             {
                 MessageBox.Show(ex.ToString());
             }
+
+            //Summaries using weight
+            HeaderContent.SumUsingWeight(HeaderContent.Materails);
+            //Set content and list Material was add from dialog.
+            SetHeadContent(HeaderContent);
         }
 
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
@@ -378,7 +382,7 @@ namespace Epicoil.Appl.Presentations.Planning
             foreach (var p in item)
             {
                 dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
-                    , p.Weight, (p.UsingWeight == 0) ? p.Weight : p.UsingWeight
+                    , p.Weight, p.UsingWeight
                     , p.RemainWeight, p.LengthM
                     , (p.Length == 0) ? 1 : p.QuantityPack, (p.UsingQuantity == 0) ? ((p.Length == 0) ? 1 : p.QuantityPack) : p.UsingQuantity
                     , p.RemainQuantity, p.CBSelect
@@ -561,28 +565,30 @@ namespace Epicoil.Appl.Presentations.Planning
             using (WorkEntryDialog frm = new WorkEntryDialog(epiSession))
             {
                 frm.ShowDialog();
-                HeaderContent = frm._selected;
-                SetHeadContent(HeaderContent);
+                if (frm._selected != null)
+                {
+                    HeaderContent = frm._selected;
+                    HeaderContent.FormState = 3;
+                    SetFormState();
+                    //Summaries using weight
+                    HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                    //Set content and list Material was add from dialog.
+                    SetHeadContent(HeaderContent);
+                    //Set Material Grid.
+                    try
+                    {
+                        ListMaterialGrid(HeaderContent.Materails);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString());
+                    }
+                }
             }
         }
 
         private void dgvMaterial_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgvMaterial.Rows.Count > 0)
-            {
-                //string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
-
-                //var result = (from item in HeaderContent.Materails
-                //              where item.TransactionLineID == Convert.ToInt32(transId)
-                //              select item).First();
-
-                //dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
-                //dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
-                //dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
-
-                //HeaderContent.SumUsingWeight(HeaderContent.Materails);
-                //SetHeadContent(HeaderContent);
-            }
         }
     }
 }

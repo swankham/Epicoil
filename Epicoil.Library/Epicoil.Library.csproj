@@ -156,6 +156,7 @@
     <Compile Include="Models\Common\ItemMenuModel.cs" />
     <Compile Include="Models\Common\MenuModel.cs" />
     <Compile Include="Models\Common\SessionInfo.cs" />
+    <Compile Include="Models\Planning\CutDesignModel.cs" />
     <Compile Include="Models\Planning\DieModel.cs" />
     <Compile Include="Models\Planning\DiePatternModel.cs" />
     <Compile Include="Models\Planning\MaterailModel.cs" />
@@ -173,11 +174,13 @@
     <Compile Include="Models\StoreIn\StoreInHead.cs" />
     <Compile Include="Models\StoreIn\StoreInHeadBalance.cs" />
     <Compile Include="Models\TQA\MCSS.cs" />
+    <Compile Include="Models\TQA\ProductsMasterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Billing\Interface\IBillingRepo.cs" />
     <Compile Include="Repositories\Billing\Repository\BillingRepo.cs" />
     <Compile Include="Repositories\Common\Interface\IBussinessTypeRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICategoryGroupRepo.cs" />
+    <Compile Include="Repositories\Common\Interface\IClassMasterRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICoatingRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICoilBackRuleRepo.cs" />
     <Compile Include="Repositories\Common\Interface\ICommodity.cs" />
@@ -196,6 +199,7 @@
     <Compile Include="Repositories\Common\Interface\IWharehouseRepo.cs" />
     <Compile Include="Repositories\Common\Repository\BussinessTypeRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CategoryGroupRepo.cs" />
+    <Compile Include="Repositories\Common\Repository\ClassMasterRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CoatingRepo.cs" />
     <Compile Include="Repositories\Common\Repository\CoilBackRuleRepo.cs" />
     <Compile Include="Repositories\Common\Repository\Commodity.cs" />
@@ -223,7 +227,9 @@
     <Compile Include="Repositories\StoreIn\Interface\IStoreInRepo.cs" />
     <Compile Include="Repositories\StoreIn\Repository\StoreInRepo.cs" />
     <Compile Include="Repositories\TQA\Interface\IMcssRepo.cs" />
+    <Compile Include="Repositories\TQA\Interface\IProductMasterRepo.cs" />
     <Compile Include="Repositories\TQA\Repository\McssRepo.cs" />
+    <Compile Include="Repositories\TQA\Repository\ProductMasterRepo.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

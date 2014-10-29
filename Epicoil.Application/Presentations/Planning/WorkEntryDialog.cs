@@ -158,6 +158,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 if (!string.IsNullOrEmpty(WrkNoPara))
                 {
                     _selected = _repo.GetWorkById(WrkNoPara, Convert.ToInt32(ProcessStepPara), epiSession.PlantID);
+                    _selected.Materails = _repo.GetAllMaterial(epiSession.PlantID, _selected.WorkOrderID).ToList();
                     this.Close();
                 }                
             }

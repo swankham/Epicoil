@@ -127,6 +127,9 @@ namespace Epicoil.Appl.Presentations.Planning
                     _selected.WorkOrderID = baseOrder.WorkOrderID;
                     _selected.WorkOrderNum = baseOrder.WorkOrderNum;
                     _selected.WorkDate = baseOrder.IssueDate;
+                    _selected.SetQuantityPack();
+                    _selected.SetUsingWeight();
+                    _selected.SetUsingQuantity();
                     var result = _repo.SaveMaterial(epiSession, _selected);
                 }
 

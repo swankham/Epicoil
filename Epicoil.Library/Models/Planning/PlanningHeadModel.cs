@@ -97,14 +97,17 @@ namespace Epicoil.Library.Models.Planning
 
         public MaterialModel MaterialPattern { get; set; }
 
-        public ClassMasterModel CurrentClass { get; set; }
-
+        public ClassMasterModel CurrentClass = new ClassMasterModel();
         public ResourceModel ProcessLineDetail = new ResourceModel();
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
 
-        //public IEnumerable<MaterialModel> MaterialList = new List<MaterialModel>();
+        public ClassMasterModel Class
+        {
+            get { return this.CurrentClass; }
+            set { this.CurrentClass = value; }
+        }
 
         public ResourceModel ProcessLine
         {
@@ -132,6 +135,8 @@ namespace Epicoil.Library.Models.Planning
 
         public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
 
+        public int ClassID { get; set; }
+
         #endregion Attribute
 
         #region Method
@@ -139,7 +144,7 @@ namespace Epicoil.Library.Models.Planning
         public virtual void DataBind(DataRow row)
         {
             this.Company = (string)row["Company"].GetString();
-            this.Plant = (string)row["Plant"].GetString();            
+            this.Plant = (string)row["Plant"].GetString();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
             this.ProcessLineId = (string)row["ProcessLine"].GetString();
@@ -165,6 +170,7 @@ namespace Epicoil.Library.Models.Planning
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
+            this.ClassID = (int)row["ClassID"].GetInt();
         }
 
         public void PreLoad() //0 = Nothing.
@@ -238,7 +244,7 @@ namespace Epicoil.Library.Models.Planning
                     invalidObject = "Possession";
                     msg = "Please select Possession.";
                     return false;
-                }               
+                }
 
                 decimal valmin = Materails.Min(i => i.Width);
                 if (ProcessLineDetail.WidthMin > valmin)
