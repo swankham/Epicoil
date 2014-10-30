@@ -20,6 +20,9 @@ namespace Epicoil.Library
     {
         B = 0,
         N = 1,
-        X = 2
+        X = 2,
+        F = 3,
+        C = 4,
+        S = 5   
     }
 }

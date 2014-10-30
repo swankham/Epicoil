@@ -210,6 +210,12 @@
     <Compile Include="Presentations\Progression.Designer.cs">
       <DependentUpon>Progression.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Sales\OrderHeadDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Sales\OrderHeadDialog.Designer.cs">
+      <DependentUpon>OrderHeadDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\StoreInPlan\ImexConfirmCheckList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -339,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Progression.resx">
       <DependentUpon>Progression.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Sales\OrderHeadDialog.resx">
+      <DependentUpon>OrderHeadDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\StoreInPlan\ImexConfirmCheckList.resx">
       <DependentUpon>ImexConfirmCheckList.cs</DependentUpon>

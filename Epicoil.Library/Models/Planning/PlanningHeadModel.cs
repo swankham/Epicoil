@@ -134,6 +134,7 @@ namespace Epicoil.Library.Models.Planning
         }
 
         public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
+        public IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
 
         public int ClassID { get; set; }
 

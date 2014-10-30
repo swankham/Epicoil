@@ -113,7 +113,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvMaterial);
-            this.splitContainer1.Size = new System.Drawing.Size(962, 529);
+            this.splitContainer1.Size = new System.Drawing.Size(822, 529);
             this.splitContainer1.SplitterDistance = 139;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -152,14 +152,14 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(7, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(952, 124);
+            this.groupBox1.Size = new System.Drawing.Size(809, 124);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // numLengthMax
             // 
             this.numLengthMax.DecimalPlaces = 2;
-            this.numLengthMax.Location = new System.Drawing.Point(861, 62);
+            this.numLengthMax.Location = new System.Drawing.Point(719, 62);
             this.numLengthMax.Maximum = new decimal(new int[] {
             0,
             0,
@@ -173,7 +173,7 @@
             // numLengthMin
             // 
             this.numLengthMin.DecimalPlaces = 2;
-            this.numLengthMin.Location = new System.Drawing.Point(760, 62);
+            this.numLengthMin.Location = new System.Drawing.Point(618, 62);
             this.numLengthMin.Maximum = new decimal(new int[] {
             0,
             0,
@@ -187,7 +187,7 @@
             // numWidthMax
             // 
             this.numWidthMax.DecimalPlaces = 2;
-            this.numWidthMax.Location = new System.Drawing.Point(861, 39);
+            this.numWidthMax.Location = new System.Drawing.Point(719, 39);
             this.numWidthMax.Maximum = new decimal(new int[] {
             0,
             0,
@@ -201,7 +201,7 @@
             // numWidthMin
             // 
             this.numWidthMin.DecimalPlaces = 2;
-            this.numWidthMin.Location = new System.Drawing.Point(760, 39);
+            this.numWidthMin.Location = new System.Drawing.Point(618, 39);
             this.numWidthMin.Maximum = new decimal(new int[] {
             0,
             0,
@@ -215,7 +215,7 @@
             // numThickMax
             // 
             this.numThickMax.DecimalPlaces = 2;
-            this.numThickMax.Location = new System.Drawing.Point(861, 16);
+            this.numThickMax.Location = new System.Drawing.Point(719, 16);
             this.numThickMax.Maximum = new decimal(new int[] {
             0,
             0,
@@ -229,7 +229,7 @@
             // numThickMin
             // 
             this.numThickMin.DecimalPlaces = 2;
-            this.numThickMin.Location = new System.Drawing.Point(760, 16);
+            this.numThickMin.Location = new System.Drawing.Point(618, 16);
             this.numThickMin.Maximum = new decimal(new int[] {
             0,
             0,
@@ -242,7 +242,7 @@
             // 
             // butSelect
             // 
-            this.butSelect.Location = new System.Drawing.Point(837, 89);
+            this.butSelect.Location = new System.Drawing.Point(695, 87);
             this.butSelect.Name = "butSelect";
             this.butSelect.Size = new System.Drawing.Size(106, 26);
             this.butSelect.TabIndex = 3;
@@ -252,7 +252,7 @@
             // 
             // butClear
             // 
-            this.butClear.Location = new System.Drawing.Point(725, 89);
+            this.butClear.Location = new System.Drawing.Point(583, 87);
             this.butClear.Name = "butClear";
             this.butClear.Size = new System.Drawing.Size(106, 26);
             this.butClear.TabIndex = 2;
@@ -263,7 +263,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(703, 65);
+            this.label14.Location = new System.Drawing.Point(561, 65);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(51, 15);
             this.label14.TabIndex = 11;
@@ -271,7 +271,7 @@
             // 
             // butSearch
             // 
-            this.butSearch.Location = new System.Drawing.Point(613, 89);
+            this.butSearch.Location = new System.Drawing.Point(471, 87);
             this.butSearch.Name = "butSearch";
             this.butSearch.Size = new System.Drawing.Size(106, 26);
             this.butSearch.TabIndex = 1;
@@ -282,15 +282,15 @@
             // txtMillCode
             // 
             this.txtMillCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMillCode.Location = new System.Drawing.Point(548, 39);
+            this.txtMillCode.Location = new System.Drawing.Point(335, 90);
             this.txtMillCode.Name = "txtMillCode";
-            this.txtMillCode.Size = new System.Drawing.Size(96, 21);
+            this.txtMillCode.Size = new System.Drawing.Size(124, 21);
             this.txtMillCode.TabIndex = 15;
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(710, 42);
+            this.label13.Location = new System.Drawing.Point(568, 42);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(44, 15);
             this.label13.TabIndex = 10;
@@ -299,7 +299,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(479, 42);
+            this.label7.Location = new System.Drawing.Point(266, 93);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 15);
             this.label7.TabIndex = 14;
@@ -308,7 +308,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(712, 19);
+            this.label12.Location = new System.Drawing.Point(570, 19);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(42, 15);
             this.label12.TabIndex = 9;
@@ -317,15 +317,15 @@
             // txtMakerCode
             // 
             this.txtMakerCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMakerCode.Location = new System.Drawing.Point(548, 15);
+            this.txtMakerCode.Location = new System.Drawing.Point(114, 89);
             this.txtMakerCode.Name = "txtMakerCode";
-            this.txtMakerCode.Size = new System.Drawing.Size(96, 21);
+            this.txtMakerCode.Size = new System.Drawing.Size(124, 21);
             this.txtMakerCode.TabIndex = 13;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(844, 65);
+            this.label11.Location = new System.Drawing.Point(702, 65);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(11, 15);
             this.label11.TabIndex = 8;
@@ -334,7 +334,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(463, 18);
+            this.label8.Location = new System.Drawing.Point(29, 92);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(80, 15);
             this.label8.TabIndex = 12;
@@ -343,7 +343,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(845, 42);
+            this.label10.Location = new System.Drawing.Point(703, 42);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(11, 15);
             this.label10.TabIndex = 7;
@@ -360,7 +360,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(845, 19);
+            this.label9.Location = new System.Drawing.Point(703, 19);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(11, 15);
             this.label9.TabIndex = 6;
@@ -501,7 +501,7 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(962, 386);
+            this.dgvMaterial.Size = new System.Drawing.Size(822, 386);
             this.dgvMaterial.TabIndex = 18;
             // 
             // MCSSNum
@@ -645,7 +645,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(962, 529);
+            this.ClientSize = new System.Drawing.Size(822, 529);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);

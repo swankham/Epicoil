@@ -161,6 +161,8 @@
     <Compile Include="Models\Planning\DiePatternModel.cs" />
     <Compile Include="Models\Planning\MaterailModel.cs" />
     <Compile Include="Models\Planning\PlanningHeadModel.cs" />
+    <Compile Include="Models\Sales\OrderDetailModel.cs" />
+    <Compile Include="Models\Sales\OrderHeadModel.cs" />
     <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />
     <Compile Include="Models\StoreInPlan\ImexCheckModel.cs" />
     <Compile Include="Models\StoreInPlan\MappingLookupModel.cs" />
@@ -220,6 +222,8 @@
     <Compile Include="Repositories\Planning\Interface\IWorkEntryRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\DieMasterRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\WorkEntryRepo.cs" />
+    <Compile Include="Repositories\Sales\Interface\ISaleOrderRepo.cs" />
+    <Compile Include="Repositories\Sales\Repository\SaleOrderRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Interface\ILookupRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Interface\IStoreInPlanRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Repository\LookupRepo.cs" />

@@ -28,6 +28,8 @@ namespace Epicoil.Library.Models
 
         public decimal LengthMax { get; set; }
 
+        public decimal YieldPercent { get; set; }
+
         public void DataBind(DataRow row)
         {
             this.Plant = (string)row["Plant"].GetString();

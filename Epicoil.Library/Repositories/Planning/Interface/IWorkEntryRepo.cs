@@ -35,5 +35,13 @@ namespace Epicoil.Library.Repositories.Planning
         decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat);
 
         decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack);
+
+        CutDesignModel GetCuttingByID(int LineID);
+
+        IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID);
+
+        IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data);
+
+        bool DeleteCutting(SessionInfo _session, CutDesignModel model, out string msg);
     }
 }

@@ -37,6 +37,10 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal BackPlate { get; set; }
 
+        public string CategoryCode { get; set; }
+
+        public string CategoryName { get; set; }
+
         public decimal Thick { get; set; }
 
         public decimal Width { get; set; }

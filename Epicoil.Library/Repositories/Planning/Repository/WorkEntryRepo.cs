@@ -1,4 +1,5 @@
 ﻿using Epicoil.Library.Frameworks;
+using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 using System;
 using System.Collections.Generic;
@@ -197,19 +198,22 @@ namespace Epicoil.Library.Repositories.Planning
         public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model)
         {
             IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
+            if (model.CurrentClass != null)
+            {
+                if (!string.IsNullOrEmpty(model.MaterialPattern.CustID) && Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(model.MaterialPattern.CustID.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.CommodityCode) && Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(model.MaterialPattern.CommodityCode.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.SpecCode) && Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(model.MaterialPattern.SpecCode.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.CoatingCode) && Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(model.MaterialPattern.CoatingCode.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.MakerCode) && Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(model.MaterialPattern.MakerCode.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.MillCode) && Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(model.MaterialPattern.MillCode.ToString().ToUpper()));
+                if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
 
-            if (!string.IsNullOrEmpty(model.MaterialPattern.CustID) && Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(model.MaterialPattern.CustID.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.CommodityCode) && Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(model.MaterialPattern.CommodityCode.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.SpecCode) && Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(model.MaterialPattern.SpecCode.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.CoatingCode) && Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(model.MaterialPattern.CoatingCode.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.MakerCode) && Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(model.MaterialPattern.MakerCode.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.MillCode) && Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(model.MaterialPattern.MillCode.ToString().ToUpper()));
-            if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
+                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
+            }
 
             if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
-            if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
-            if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
-            if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
 
             //if (model.ProcessLineDetail.ThickMin != 0)
             query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
@@ -300,7 +304,7 @@ namespace Epicoil.Library.Repositories.Planning
             string sql = string.Format(@"IF NOT EXISTS
 									    (
 										    SELECT * FROM ucc_pln_PlanHead (NOLOCK)
-										    WHERE WorkOrderID = {3} AND Plant = N'{1}'
+										    WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
 									    )
                                         BEGIN
                                             INSERT INTO ucc_pln_PlanHead
@@ -389,7 +393,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
                                                       ,UpdatedBy = N'{22}' --<UpdatedBy, varchar(45),>
                                                       ,TotalWidth = {23} --<TotalWidth, decimal(20,9),>
-                                                 WHERE WorkOrderID = {3} AND Plant = N'{1}'
+                                                 WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
                                             END" + Environment.NewLine
                                               , _session.CompanyID
                                               , _session.PlantID
@@ -608,7 +612,6 @@ namespace Epicoil.Library.Repositories.Planning
             }
         }
 
-        
         public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
         {//If Coil length must be LengthM*1000
             decimal Ma = 0.0M;
@@ -635,6 +638,202 @@ namespace Epicoil.Library.Repositories.Planning
             decimal YieldPer = 0;
             YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
             return YieldPer;
+        }
+
+        public CutDesignModel GetCuttingByID(int LineID)
+        {
+            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.LineID = {0}", LineID);
+            return Repository.Instance.GetOne<CutDesignModel>(sql);
+        }
+
+        public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.WorkOrderID = {0}", workOrderID);
+            return Repository.Instance.GetMany<CutDesignModel>(sql);
+        }
+
+        public IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data)
+        {
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_CuttingDesign (NOLOCK)
+										    WHERE LineID = {34}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_CuttingDesign
+                                                       (Company
+                                                       ,Plant
+                                                       ,WorkOrderID
+                                                       ,TransactionLineID
+                                                       ,CutSeq
+                                                       ,SONo
+                                                       ,SOLine
+                                                       ,NORNum
+                                                       ,CommodityCode
+                                                       ,SpecCode
+                                                       ,CoatingCode
+                                                       ,Thick
+                                                       ,Width
+                                                       ,Length
+                                                       ,Status
+                                                       ,Stand
+                                                       ,CutDivision
+                                                       ,UnitWeight
+                                                       ,TotalWeight
+                                                       ,CustID
+                                                       ,EndUserCode
+                                                       ,DestinationCode
+                                                       ,QtyPack
+                                                       ,Pack
+                                                       ,SOWeight
+                                                       ,SOQuantity
+                                                       ,CalQuantity
+                                                       ,DeliveryDate
+                                                       ,BussinessType
+                                                       ,Possession
+                                                       ,ProductStatus
+                                                       ,Description
+                                                       ,Note
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy)
+                                                 VALUES
+                                                       ( N'{0}' --<Company, nvarchar(8),>
+                                                       , N'{1}' --<Plant, nvarchar(8),>
+                                                       , {2} --<WorkOrderID, bigint,>
+                                                       , {3} --<TransactionLineID, bigint,>
+                                                       , {4} --<CutSeq, int,>
+                                                       , N'{5}' --<SONo, nvarchar(30),>
+                                                       , {6} --<SOLine, int,>
+                                                       , N'{7}' --<NORNum, nvarchar(100),>
+                                                       , N'{8}' --<CommodityCode, nvarchar(30),>
+                                                       , N'{9}' --<SpecCode, nvarchar(30),>
+                                                       , N'{10}' --<CoatingCode, nvarchar(30),>
+                                                       , {11} --<Thick, decimal(20,9),>
+                                                       , {12} --<Width, decimal(20,9),>
+                                                       , {13} --<Length, decimal(20,9),>
+                                                       , N'{14}' --<Status, nvarchar(20),>
+                                                       , {15} --<Stand, int,>
+                                                       , {16} --<CutDivision, int,>
+                                                       , {17} --<UnitWeight, decimal(20,9),>
+                                                       , {18} --<TotalWeight, decimal(20,9),>
+                                                       , N'{19}' --<CustID, nvarchar(20),>
+                                                       , N'{20}' --<EndUserCode, nvarchar(20),>
+                                                       , N'{21}' --<DestinationCode, nvarchar(20),>
+                                                       , {22} --<QtyPack, decimal(20,9),>
+                                                       , {23} --<Pack, decimal(20,9),>
+                                                       , {24} --<SOWeight, decimal(20,9),>
+                                                       , {25} --<SOQuantity, decimal(20,9),>
+                                                       , {26} --<CalQuantity, decimal(20,9),>
+                                                       , CONVERT(DATETIME, '{27}',103) --<DeliveryDate, datetime,>
+                                                       , N'{28}' --<BussinessType, nvarchar(50),>
+                                                       , {29} --<Procession, int,>
+                                                       , {30} --<ProductStatus, int,>
+                                                       , N'{31}' --<Description, varchar(max),>
+                                                       , N'{32}' --<Note, varchar(max),>
+                                                       , GETDATE() --<CreationDate, datetime,>
+                                                       , GETDATE() --<LastUpdateDate, datetime,>
+                                                       , N'{33}' --<CreatedBy, varchar(45),>
+                                                       , N'{33}' --<UpdatedBy, varchar(45),>
+		                                               )
+                                            END
+                                        ELSE
+                                            BEGIN
+                                                UPDATE ucc_pln_CuttingDesign
+                                                   SET Company = N'{0}'  --<Company, nvarchar(8),>
+                                                      ,Plant = N'{1}'  --<Plant, nvarchar(8),>
+                                                      ,WorkOrderID = {2}  --<WorkOrderID, bigint,>
+                                                      ,TransactionLineID = {3}  --<TransactionLineID, bigint,>
+                                                      ,CutSeq = {4}  --<CutSeq, int,>
+                                                      ,SONo = N'{5}'  --<SONo, nvarchar(30),>
+                                                      ,SOLine = {6}  --<SOLine, int,>
+                                                      ,NORNum = N'{7}'  --<NORNum, nvarchar(100),>
+                                                      ,CommodityCode = N'{8}'  --<CommodityCode, nvarchar(30),>
+                                                      ,SpecCode = N'{9}'  --<SpecCode, nvarchar(30),>
+                                                      ,CoatingCode = N'{10}'  --<CoatingCode, nvarchar(30),>
+                                                      ,Thick = {11}  --<Thick, decimal(20,9),>
+                                                      ,Width = {12}  --<Width, decimal(20,9),>
+                                                      ,Length = {13}  --<Length, decimal(20,9),>
+                                                      ,Status = N'{14}'  --<Status, nvarchar(20),>
+                                                      ,Stand = {15}  --<Stand, int,>
+                                                      ,CutDivision = {16}  --<CutDivision, int,>
+                                                      ,UnitWeight = {17}  --<UnitWeight, decimal(20,9),>
+                                                      ,TotalWeight = {18}  --<TotalWeight, decimal(20,9),>
+                                                      ,CustID = N'{19}'  --<CustID, nvarchar(20),>
+                                                      ,EndUserCode = N'{20}'  --<EndUserCode, nvarchar(20),>
+                                                      ,DestinationCode = N'{21}'  --<DestinationCode, nvarchar(20),>
+                                                      ,QtyPack = {22}  --<QtyPack, decimal(20,9),>
+                                                      ,Pack = {23}  --<Pack, decimal(20,9),>
+                                                      ,SOWeight = {24}  --<SOWeight, decimal(20,9),>
+                                                      ,SOQuantity = {25}  --<SOQuantity, decimal(20,9),>
+                                                      ,CalQuantity = {26}  --<CalQuantity, decimal(20,9),>
+                                                      ,DeliveryDate = CONVERT(DATETIME, '{27}',103)  --<DeliveryDate, datetime,>
+                                                      ,BussinessType = N'{28}'  --<BussinessType, nvarchar(50),>
+                                                      ,Possession = {29}  --<Procession, int,>
+                                                      ,ProductStatus = {30}  --<ProductStatus, int,>
+                                                      ,Description = N'{31}'  --<Description, varchar(max),>
+                                                      ,Note = N'{32}'  --<Note, varchar(max),>
+                                                      ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
+                                                      ,CreatedBy = N'{33}'  --<CreatedBy, varchar(45),>
+                                                      ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
+                                                 WHERE LineID = {34}
+                                            END" + Environment.NewLine
+                                  , _session.CompanyID
+                                  , _session.PlantID
+                                  , head.WorkOrderID
+                                  , 0 //Defualt TransactionLineID => Material Line
+                                  , data.CutSeq.GetString()
+                                  , data.SONo.GetString()           //{5}
+                                  , data.SOLine.GetInt()
+                                  , data.NORNum.GetString()
+                                  , data.CommodityCode.GetString()
+                                  , data.SpecCode.GetString()
+                                  , data.CoatingCode.GetString()    //{10}
+                                  , data.Thick.GetDecimal()
+                                  , data.Width
+                                  , data.Length
+                                  , data.Status.GetString()
+                                  , data.Stand      //{15}
+                                  , data.CutDivision
+                                  , data.UnitWeight
+                                  , data.TotalWeight
+                                  , data.CustID.GetString()
+                                  , data.EndUserCode.GetString()    //{20}
+                                  , data.DestinationCode.GetString()
+                                  , data.QtyPack
+                                  , data.Pack
+                                  , data.SOWeight
+                                  , data.SOQuantity     //{25}
+                                  , data.CalQuantity
+                                  , data.DeliveryDate.ToString("dd/MM/yyyy hh:mm:ss")
+                                  , data.BussinessType.GetString()
+                                  , data.Possession
+                                  , data.ProductStatus.GetInt()      //{30}
+                                  , data.Description.GetString()
+                                  , data.Note.GetString()
+                                  , _session.UserID
+                                  , data.LineID.GetInt()
+                                  );
+            Repository.Instance.ExecuteWithTransaction(sql, "Update Cutting");
+
+            return GetCuttingLines(head.WorkOrderID);
+        }
+
+        public bool DeleteCutting(SessionInfo _session, CutDesignModel model, out string msg)
+        {
+            msg = "";
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE LineID = {0}", model.LineID);
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
         }
     }
 }
