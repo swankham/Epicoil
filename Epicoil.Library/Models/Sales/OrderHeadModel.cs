@@ -59,16 +59,16 @@ namespace Epicoil.Library.Models.Sales
             this.EndUserName = (string)row["EndUserName"].GetString();
             this.ShipTo = (string)row["ShipTo"].GetString();
             this.ShipToName = (string)row["ShipToName"].GetString();
-            this.CustPO = (string)row["PONum"].GetString();
+            this.CustPO = string.IsNullOrEmpty((string)row["PONum"].GetString()) ? "" : (string)row["PONum"].GetString();
             this.SOCode = (string)row["SOCode"].GetString();
             this.SOCodeName = (string)row["SOCodeName"].GetString();
-            this.Term = (string)row["TermsCode"].GetString();
-            this.BussinessType = (string)row["BussinessType"].GetString();
-            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
-            this.OrderType = (string)row["OrderType"].GetString();
-            this.PIC = (string)row["EntryPerson"].GetString();
-            this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
-            this.TotalAmount = (decimal)row["TotalAmount"].GetDecimal();
+            //this.Term = (string)row["TermsCode"].GetString();
+            //this.BussinessType = (string)row["BussinessType"].GetString();
+            //this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
+            //this.OrderType = (string)row["OrderType"].GetString();
+            //this.PIC = (string)row["EntryPerson"].GetString();
+            //this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
+            //this.TotalAmount = (decimal)row["TotalAmount"].GetDecimal();
         }
     }
 }

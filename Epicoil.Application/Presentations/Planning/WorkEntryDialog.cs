@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Epicoil.Library.Models;
+﻿using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Epicoil.Appl.Presentations.Planning
 {
@@ -22,7 +18,6 @@ namespace Epicoil.Appl.Presentations.Planning
         private PlanningHeadModel Header;
         private IEnumerable<PlanningHeadModel> _model;
         public PlanningHeadModel _selected;
-
 
         public WorkEntryDialog(SessionInfo _session)
         {
@@ -46,7 +41,6 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbOrderType.DataBindings.Clear();
             cmbPossession.DataBindings.Clear();
 
-
             cmbProcessLine.DataSource = null;
             cmbOrderType.DataSource = null;
             cmbPossession.DataSource = null;
@@ -68,7 +62,6 @@ namespace Epicoil.Appl.Presentations.Planning
             txtWONo.Clear();
             txtPIC.Clear();
             txtProcessStep.Clear();
-           
         }
 
         private void SetHeadContent(PlanningHeadModel model)
@@ -90,8 +83,8 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbPossession.DisplayMember = "CodeDesc";
             cmbPossession.ValueMember = "CodeID";
             cmbPossession.DataBindings.Add("SelectedValue", model, "Possession", false, DataSourceUpdateMode.OnPropertyChanged);
-
         }
+
         private void btnClear_Click(object sender, EventArgs e)
         {
             WorkEntryDialog_Load(sender, e);
@@ -161,7 +154,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     _selected.Materails = _repo.GetAllMaterial(epiSession.PlantID, _selected.WorkOrderID).ToList();
                     _selected.CuttingLines = _repo.GetCuttingLines(_selected.WorkOrderID);
                     this.Close();
-                }                
+                }
             }
         }
 
@@ -169,5 +162,5 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             btnSelect_Click(sender, e);
         }
-        }
     }
+}

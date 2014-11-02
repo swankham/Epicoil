@@ -76,7 +76,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
-	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
+	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
 	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
@@ -118,7 +118,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar02 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
-	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
+	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
 	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
@@ -334,7 +334,9 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,LastUpdateDate
                                                        ,CreatedBy
                                                        ,UpdatedBy
-                                                       ,TotalWidth)
+                                                       ,TotalWidth
+                                                       ,ClassID
+                                                       ,Completed)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -363,6 +365,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , N'{22}' --<CreatedBy, varchar(45),>
                                                        , N'{22}' --<UpdatedBy, varchar(45),>
                                                        , {23} --<TotalWidth, decimal(20,9),>
+                                                       , {24} --<ClassID, int,>
+                                                       , {25} --<Completed, tinyint>
 		                                               )
                                             END
                                         ELSE
@@ -393,6 +397,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
                                                       ,UpdatedBy = N'{22}' --<UpdatedBy, varchar(45),>
                                                       ,TotalWidth = {23} --<TotalWidth, decimal(20,9),>
+                                                      ,ClassID = {24} --<TotalWidth, decimal(20,9),>
                                                  WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
                                             END" + Environment.NewLine
                                               , _session.CompanyID
@@ -419,8 +424,12 @@ namespace Epicoil.Library.Repositories.Planning
                                               , Convert.ToInt32(model.PackingPlan).GetInt()
                                               , _session.UserID
                                               , model.TotalWeight.GetDecimal()
+                                              , model.ClassID.GetInt()
+                                              , 0
                                               );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
+            //if (model.Materails.ToList().Count != 0)
+            //    var result = SaveMaterial(_session, model.Materails);
 
             return GetWorkById(workOrderNum, Convert.ToInt32(model.ProcessStep), _session.PlantID);
         }
@@ -464,6 +473,7 @@ namespace Epicoil.Library.Repositories.Planning
                 result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
                 result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
                 result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
+                result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
             }
 
             return result;
@@ -478,7 +488,13 @@ namespace Epicoil.Library.Repositories.Planning
         public MaterialModel SaveMaterial(Models.SessionInfo _session, MaterialModel model)
         {
             //int id = 0;
-            string sql = string.Format(@"INSERT INTO ucc_pln_Material
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_Material (NOLOCK)
+										    WHERE TransactionLineID = {29}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_Material
                                                (Company
                                                ,Plant
                                                ,WorkOrderID
@@ -511,7 +527,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                ,LastUpdateDate
                                                ,CreatedBy
                                                ,UpdatedBy)
-                                         VALUES
+                                            VALUES
                                                ( N'{0}' --<Company, nvarchar(8),>
                                                , N'{1}' --<Plant, nvarchar(8),>
                                                , {2} --<WorkOrderID, bigint,>
@@ -544,7 +560,22 @@ namespace Epicoil.Library.Repositories.Planning
                                                , GETDATE() --<LastUpdateDate, datetime,>
                                                , N'{28}' --<CreatedBy, varchar(45),>
                                                , N'{28}' --<UpdatedBy, varchar(45),>
-		                                    )" + Environment.NewLine
+		                                    )
+                                        END
+                                    ELSE
+                                        BEGIN
+                                            UPDATE ucc_pln_Material
+                                               SET UsingWgt = {13} --<UsingWgt, decimal(20,9),>
+                                                  ,RemainWgt = {14} --<RemainWgt, decimal(20,9),>
+                                                  ,Qty = {15} --<Qty, decimal(20,9),>
+                                                  ,RemainQty = {16} --<RemainQty, decimal(20,9),>
+                                                  ,LenghtM = {17} --<LenghtM, decimal(20,9),>
+                                                  ,UsingLM = {18} --<UsingLM, decimal(20,9),>
+                                                  ,SelectCB = {19} --<SelectCB, tinyint,>
+                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{28}' --<UpdatedBy, varchar(45),>
+                                             WHERE  TransactionLineID = {29}
+                                        END" + Environment.NewLine
                                               , _session.CompanyID
                                               , _session.PlantID
                                               , model.WorkOrderID
@@ -574,6 +605,7 @@ namespace Epicoil.Library.Repositories.Planning
                                               , model.PrdDescriptions
                                               , model.Note
                                               , _session.UserID
+                                              , model.TransactionLineID
                                               );
 
             sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2

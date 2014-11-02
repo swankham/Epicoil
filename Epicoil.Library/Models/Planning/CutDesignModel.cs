@@ -59,6 +59,8 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal TotalWeight { get; set; }
 
+        public decimal TotalLength { get; set; }
+
         public string CustID { get; set; }
 
         public string EndUserCode { get; set; }
@@ -116,6 +118,7 @@ namespace Epicoil.Library.Models.Planning
             this.CutDivision = (int)row["CutDivision"].GetInt();
             this.UnitWeight = (decimal)row["UnitWeight"].GetDecimal();
             this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
+            this.TotalLength = (decimal)row["TotalLength"].GetDecimal();
             this.CustID = string.IsNullOrEmpty((string)row["CustID"].GetString()) ? "" : (string)row["CustID"].GetString();
             this.EndUserCode = string.IsNullOrEmpty((string)row["EndUserCode"].GetString()) ? "" : (string)row["EndUserCode"].GetString();
             this.DestinationCode = string.IsNullOrEmpty((string)row["DestinationCode"].GetString()) ? "" : (string)row["DestinationCode"].GetString();
@@ -136,18 +139,81 @@ namespace Epicoil.Library.Models.Planning
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
         }
 
-        public bool ValidateByRow(IEnumerable<PlanningHeadModel> head, IEnumerable<MaterialModel> matList,out string field, out string msg)
+        public void CalUnitWeight(PlanningHeadModel head)
+        {
+            //Fix bug in case Materials is null.
+            decimal widthMat = 0;
+            if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
+            UnitWeight = (CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width)) / ((CutDivision == 0) ? 1 : CutDivision);
+            TotalWeight = UnitWeight * CutDivision * Stand;
+            //TotalLength = CalUsingLength()
+        }
+ 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="UsingWgt">Unit is Kg.</param>
+        /// <param name="WidthMaterial">Unit is MM.</param>
+        /// <param name="WidthFG">Unit is MM.</param>
+        /// <returns></returns>
+        public decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
+        {
+            decimal CalWeightFG = 0.0M;
+            if (UsingWgt > 0 && WidthMaterial > 0 && WidthFG > 0)
+            {
+                CalWeightFG = Math.Round((UsingWgt / WidthMaterial * WidthFG), 2);
+            }
+            return CalWeightFG;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="MaterialLengthM">Unit is Meter</param>
+        /// <param name="MaterialWeight">Unit is Kg.</param>
+        /// <param name="MaterialUsingWeight">Unit is Kg.</param>
+        /// <param name="CutDiv">Value of cut</param>
+        /// <returns></returns>
+        static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
+        {
+            decimal ActualLength = 0.0M;
+            if (MaterialWeight > 0 && MaterialUsingWeight > 0 && MaterialLengthM > 0 && CutDiv > 0)
+            {
+                ActualLength = MaterialUsingWeight * MaterialLengthM / MaterialWeight / CutDiv;
+            }
+            return ActualLength;
+        }
+
+        public bool ValidateByRow(PlanningHeadModel head, out string risk, out string msg)
         {
             bool valid = true;
-            field = string.Empty;
+            risk = string.Empty;
             msg = string.Empty;
+            var r = this.Thick.ToString();
+
+            if(head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0)
+            {
+                risk = "ERROR";
+                msg = "Status 'S' is already exist in cutting lines.";
+                return false;
+            }
 
             if (Status == "F")
             {
                 if (string.IsNullOrEmpty(SONo) || SOLine == 0)
                 {
-                    field = "SO";
+                    risk = "ERROR";
                     msg = "This line is status = 'F' required S/O.";
+                    return false;
+                }
+            }
+
+            if(!string.IsNullOrEmpty(SONo) && SOLine == 0)
+            {
+                if (string.IsNullOrEmpty(SONo) || SOLine == 0)
+                {
+                    risk = "WARNNING";
+                    msg = "Please select SO Line.";
                     return false;
                 }
             }

@@ -136,6 +136,11 @@ namespace Epicoil.Library.Models.Planning
         public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
         public IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
 
+        public List<CutDesignModel> CuttingDesign
+        {
+            get { return this.CuttingLines.ToList(); }
+            set { this.CuttingLines = value; }
+        }
         public int ClassID { get; set; }
 
         #endregion Attribute
@@ -208,9 +213,97 @@ namespace Epicoil.Library.Models.Planning
             this.CurrentClass = new ClassMasterModel();
         }
 
+        public void CalculationHeader(PlanningHeadModel model)
+        {
+            SumUsingWeight(model.Materails);
+            SumInputWeight(model);
+            SumRewindWeight(model);
+            SumOutputWeight(model);
+            SumLossWeight(model);
+            SumYeild(model);
+        }
+
+        /// <summary>
+        /// Sum Using weight on header
+        /// </summary>
+        /// <param name="materialList"></param>
         public void SumUsingWeight(IEnumerable<MaterialModel> materialList)
         {
             UsingWeight = materialList.Sum(p => p.UsingWeight).GetDecimal();
+        }
+
+        /// <summary>
+        /// Sum Input Weight on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumInputWeight(PlanningHeadModel model)
+        {
+            if (model.Materails.ToList().Count != 0)
+            {
+                InputWeight = model.Materails.Sum(p => p.Weight);
+            }
+            else
+            {
+                InputWeight = 0;
+            }
+        }
+
+        /// <summary>
+        /// Sum Rewind weight on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumRewindWeight(PlanningHeadModel model)
+        {
+            //if (model.CoilBackModel.ToList().Count != 0)
+            //{
+            //    RewindWeight = model.CoilBackModel.Sum(p => p.Weight);
+            //}
+            //else
+            //{
+                RewindWeight = 0;
+            //}
+        }
+
+        /// <summary>
+        /// Sum Output weight on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumOutputWeight(PlanningHeadModel model)
+        {
+            if (model.CuttingLines.ToList().Count != 0)
+            {
+                OutputWeight = model.CuttingLines.Where(p => p.Status != "C").Sum(i => i.TotalWeight);
+            }
+            else
+            {
+                OutputWeight = 0;
+            }
+        }
+
+        /// <summary>
+        /// Sum Loss weight on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumLossWeight(PlanningHeadModel model)
+        {
+            LossWeight = InputWeight.GetDecimal() - RewindWeight.GetDecimal() - OutputWeight.GetDecimal();
+        }
+
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+
+        }
+
+        /// <summary>
+        /// Sum Yield percent on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumYeild(PlanningHeadModel model)
+        {
+            Yield = CalYeildPercent(OutputWeight, InputWeight, RewindWeight);
         }
 
         public bool ValidateToSave(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)

@@ -12,6 +12,8 @@ namespace Epicoil.Library.Repositories.Sales
     {
         IEnumerable<OrderHeadModel> GetOrderHeadAll();
 
+        OrderHeadModel GetOrderByID(string orderId);
+
         IEnumerable<OrderHeadModel> GetOrderHeadByFilter(OrderHeadModel data);
     }
 }

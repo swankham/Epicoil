@@ -1,8 +1,10 @@
-﻿using Epicoil.Library;
+﻿using Epicoil.Appl.Presentations.Sales;
+using Epicoil.Library;
 using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
+using Epicoil.Library.Repositories.Sales;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,6 +20,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IUserCodeRepo _repoUcd;
         private readonly IWorkEntryRepo _repo;
         private readonly IResourceRepo _reRes;
+        private readonly ISaleOrderRepo _repoSale;
 
         private PlanningHeadModel HeaderContent;
         private ClassMasterModel _class;
@@ -29,6 +32,7 @@ namespace Epicoil.Appl.Presentations.Planning
             this._repoUcd = new UserCodeRepo();
             this._repo = new WorkEntryRepo();
             this._reRes = new ResourceRepo();
+            this._repoSale = new SaleOrderRepo();
 
             this.HeaderContent = new PlanningHeadModel();
             this._class = new ClassMasterModel();
@@ -116,7 +120,6 @@ namespace Epicoil.Appl.Presentations.Planning
                     break;
             }
             butAddMaterial.Enabled = tbutNewMaterial.Enabled;
-            //butAddCoilBack.Enabled = tbutNewCoilBack.Enabled;
         }
 
         private void SetHeadContent(PlanningHeadModel model)
@@ -134,7 +137,7 @@ namespace Epicoil.Appl.Presentations.Planning
             txtOutputWeight.DataBindings.Add("Text", model, "OutputWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtBT.DataBindings.Add("Text", model, "BT", false, DataSourceUpdateMode.OnPropertyChanged);
             txtLossWeight.DataBindings.Add("Text", model, "LossWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
-            txtYield.DataBindings.Add("Text", model, "Yield", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
+            txtYield.DataBindings.Add("Text", model, "Yield", true, DataSourceUpdateMode.OnPropertyChanged, 1, "##0");
             txtTotalMaterialAmount.DataBindings.Add("Text", model, "TotalMaterialAmount", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
             txtTotalWidth.DataBindings.Add("Text", model, "TotalWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
 
@@ -232,6 +235,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void SetPermissCuttingDesign()
         {
+            dgvCutting.Columns["customer"].ReadOnly = true;
             dgvCutting.Columns["commodity1"].ReadOnly = true;
             dgvCutting.Columns["spec1"].ReadOnly = true;
             dgvCutting.Columns["coating1"].ReadOnly = true;
@@ -241,7 +245,6 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvCutting.Columns["status1"].ReadOnly = true;
             dgvCutting.Columns["stand"].ReadOnly = true;
             dgvCutting.Columns["cutdiv"].ReadOnly = true;
-
 
             if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
             {
@@ -263,6 +266,7 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             if (dgvCutting.Rows.Count != 0) tbutNewCutting.Enabled = false;
         }
+
         #endregion Properties
 
         #region Evnet
@@ -348,6 +352,9 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutCalculate_Click(object sender, EventArgs e)
         {
             //Simulated Complate.
+            HeaderContent.CalculationHeader(HeaderContent);
+            SetHeadContent(HeaderContent);
+            ListCuttingGrid(HeaderContent.CuttingDesign);
             HeaderContent.FormState = 4;
             SetFormState();
         }
@@ -411,6 +418,7 @@ namespace Epicoil.Appl.Presentations.Planning
             }
 
             //Summaries using weight
+            HeaderContent.SumInputWeight(HeaderContent);
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             //Set content and list Material was add from dialog.
             SetHeadContent(HeaderContent);
@@ -450,18 +458,27 @@ namespace Epicoil.Appl.Presentations.Planning
         private void ListCuttingGrid(IEnumerable<CutDesignModel> item)
         {
             int i = 0;
-            dgvCutting.Rows.Clear();
+            if (dgvCutting.Rows.Count != 0) dgvCutting.Rows.Clear();
             foreach (var p in item)
             {
                 dgvCutting.Rows.Add(p.LineID, i + 1, p.SONo, (p.SOLine == 0) ? "" : p.SOLine.ToString(), p.NORNum, p.CustID, p.CommodityCode, p.SpecCode
                                     , p.CoatingCode, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDivision, p.Note
-                                    , p.UnitWeight, p.TotalWeight, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack, false);
+                                    , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack, p.BussinessType, true);
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
                     this.dgvCutting.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
                 }
                 i++;
+            }
+            SetPermissCuttingDesign();
+            if (dgvCutting.Rows.Count == 0)
+            {
+                tbutNewCutting.Enabled = true;
+            }
+            else
+            {
+                tbutNewCutting.Enabled = false;
             }
         }
 
@@ -537,16 +554,15 @@ namespace Epicoil.Appl.Presentations.Planning
                 {
                     HeaderContent.CuttingLines = _repo.GetCuttingLines(HeaderContent.WorkOrderID).ToList();
                     SetHeadContent(HeaderContent);
-
+                    //if (dgvCutting.Rows.Count == 0) tbutNewCutting.Enabled = true;
                     //Set Cutting Grid.
                     try
                     {
                         ListCuttingGrid(HeaderContent.CuttingLines);
-                        if (dgvCutting.Rows.Count == 0) tbutNewCutting.Enabled = true;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show(ex.ToString(), "After deleted line to be set grid.");
                     }
                 }
                 else
@@ -608,6 +624,8 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
             dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
 
+            result.WorkDate = dptIssueDate.Value;
+            var res = _repo.SaveMaterial(epiSession, result);
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             SetHeadContent(HeaderContent);
         }
@@ -662,7 +680,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     try
                     {
                         ListMaterialGrid(HeaderContent.Materails);
-                        ListCuttingGrid(HeaderContent.CuttingLines);
+                        ListCuttingGrid(HeaderContent.CuttingDesign);
                     }
                     catch (Exception ex)
                     {
@@ -682,7 +700,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             if (HeaderContent.Materails.ToList().Count == 0)
             {
-                model.Status = "F";
+                model.Status = "S";
                 model.DeliveryDate = DateTime.Now;
                 model.BussinessType = string.IsNullOrEmpty(HeaderContent.BT.GetString()) ? "" : HeaderContent.BT;
             }
@@ -701,18 +719,25 @@ namespace Epicoil.Appl.Presentations.Planning
                 model.Thick = result.Thick;
                 model.Width = result.Width;
                 model.Length = result.Length;
-                model.Stand = 0;
-                model.CutDivision = 0;
+                model.Stand = 1;
+                model.CutDivision = 1;
                 model.UnitWeight = HeaderContent.UsingWeight;
                 model.TotalWeight = HeaderContent.UsingWeight;
                 model.CustID = result.CustID;
                 model.BussinessType = result.BussinessType;
-                model.ProductStatus = string.IsNullOrEmpty(result.ProductStatus.GetString()) ? 0 : Convert.ToInt32(result.ProductStatus);                
+                model.ProductStatus = string.IsNullOrEmpty(result.ProductStatus.GetString()) ? 0 : Convert.ToInt32(result.ProductStatus);
             }
 
             HeaderContent.CuttingLines = _repo.SaveLineCutting(epiSession, HeaderContent, model);
             ListCuttingGrid(HeaderContent.CuttingLines);
             SetPermissCuttingDesign();
+            dgvCutting.Columns["customer"].ReadOnly = false;
+            dgvCutting.Columns["commodity1"].ReadOnly = false;
+            dgvCutting.Columns["spec1"].ReadOnly = false;
+            dgvCutting.Columns["coating1"].ReadOnly = false;
+            dgvCutting.Columns["thick1"].ReadOnly = false;
+            dgvCutting.Columns["width1"].ReadOnly = false;
+            dgvCutting.Columns["length1"].ReadOnly = false;
         }
 
         private void cmbProcessLine_Leave(object sender, EventArgs e)
@@ -723,6 +748,202 @@ namespace Epicoil.Appl.Presentations.Planning
                 cmbProcessLine.SelectedValue = HeaderContent.ProcessLineDetail.ResourceID;
                 return;
             }
+
+            if (HeaderContent.CuttingLines.ToList().Count > 0)
+            {
+                MessageBox.Show("Please clear all cutting design before change process line.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbProcessLine.SelectedValue = HeaderContent.ProcessLineDetail.ResourceID;
+                return;
+            }
+        }
+
+        private void dgvCutting_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            string colName = dgvCutting.Columns[e.ColumnIndex].Name;
+            string lineId = dgvCutting.Rows[e.RowIndex].Cells["lineid"].Value.GetString();
+
+            switch (colName)
+            {
+                case "sono":
+                    string code = dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+                    var rowData = (from item in HeaderContent.CuttingDesign
+                                   where item.LineID == Convert.ToInt32(lineId)
+                                   select item).First();
+
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        var result = _repoSale.GetOrderByID(code);
+                        dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = string.Empty;
+                        if (result == null)
+                        {
+                            var soResult = _repoSale.GetOrderHeadAll();
+                            using (OrderHeadDialog frm = new OrderHeadDialog(epiSession, soResult))
+                            {
+                                frm.ShowDialog();
+                            }
+                        }
+                        else
+                        {
+                            dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private void dgvCutting_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if (dgvCutting.Rows.Count == 0) return;
+            //Fix bug CutLines is null
+            if (HeaderContent.CuttingDesign.ToList().Count == 0) return;
+
+            int i;
+            decimal d;
+            string riskFlag = string.Empty; //Set error level WARNNING/ERROR
+            string msg = string.Empty;
+            string strVal = e.FormattedValue.ToString();// dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+            string lineId = dgvCutting.Rows[e.RowIndex].Cells["lineid"].Value.GetString();
+            string colName = dgvCutting.Columns[e.ColumnIndex].Name;
+
+            if (HeaderContent.Materails.ToList().Count != 0)
+            {
+                HeaderContent.MaterialPattern = (from item in HeaderContent.Materails select item).First();
+            }
+
+            var rowData = (from item in HeaderContent.CuttingDesign
+                           where item.LineID == Convert.ToInt32(lineId)
+                           select item).First();
+
+            //Update current row
+            rowData.SONo = dgvCutting.Rows[e.RowIndex].Cells["sono"].Value.GetString();
+            rowData.SOLine = Convert.ToInt32(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["soline"].Value.GetString()) ? "0" :
+                                                    dgvCutting.Rows[e.RowIndex].Cells["soline"].Value.GetString());
+            rowData.NORNum = dgvCutting.Rows[e.RowIndex].Cells["norno"].Value.GetString();
+            rowData.CustID = dgvCutting.Rows[e.RowIndex].Cells["customer"].Value.GetString();
+            rowData.CommodityCode = dgvCutting.Rows[e.RowIndex].Cells["commodity1"].Value.GetString();
+            rowData.SpecCode = dgvCutting.Rows[e.RowIndex].Cells["spec1"].Value.GetString();
+            rowData.CoatingCode = dgvCutting.Rows[e.RowIndex].Cells["coating1"].Value.GetString();
+            rowData.Width = Convert.ToDecimal(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["width1"].Value.GetString()) ? "0M" :
+                                                    dgvCutting.Rows[e.RowIndex].Cells["width1"].Value.GetString()); ;
+            rowData.Length = Convert.ToDecimal(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["length1"].Value.GetString()) ? "0M" :
+                                                    dgvCutting.Rows[e.RowIndex].Cells["length1"].Value.GetString()); ;
+            rowData.Status = dgvCutting.Rows[e.RowIndex].Cells["status1"].Value.GetString();
+            rowData.Stand = dgvCutting.Rows[e.RowIndex].Cells["stand"].Value.GetInt();
+            rowData.CutDivision = dgvCutting.Rows[e.RowIndex].Cells["cutdiv"].Value.GetInt();
+
+            switch (colName)
+            {
+                case "sono":
+                    rowData.SONo = strVal;
+                    break;
+
+                case "soline":
+                    rowData.SOLine = Convert.ToInt32(string.IsNullOrEmpty(strVal) ? "0" : strVal);
+                    break;
+
+                case "norno":
+                    break;
+
+                case "customer":
+                    rowData.CustID = strVal;
+                    break;
+
+                case "commodity1":
+                    rowData.CommodityCode = strVal;
+                    break;
+
+                case "spec1":
+                    rowData.SpecCode = strVal;
+                    break;
+
+                case "coating1":
+                    rowData.CoatingCode = strVal;
+                    break;
+
+                case "thick1":
+                    if (!decimal.TryParse(strVal, out d))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    rowData.Thick = Convert.ToDecimal(string.IsNullOrEmpty(strVal) ? "0M" : strVal);
+                    break;
+
+                case "width1":
+                    if (!decimal.TryParse(strVal, out d))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    rowData.Width = Convert.ToDecimal(string.IsNullOrEmpty(strVal) ? "0M" : strVal);
+                    break;
+
+                case "length1":
+                    if (!decimal.TryParse(strVal, out d))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    rowData.Length = Convert.ToDecimal(string.IsNullOrEmpty(strVal) ? "0M" : strVal);
+                    break;
+
+                case "status1":
+                    rowData.Status = strVal;
+                    break;
+
+                case "stand":
+                    if (!int.TryParse(strVal, out i))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    rowData.Stand = Convert.ToInt32(strVal);
+                    break;
+
+                case "cutdiv":
+                    if (!int.TryParse(strVal, out i))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                    rowData.CutDivision = Convert.ToInt32(strVal);
+                    break;
+
+                case "note1":
+                    rowData.Note = strVal;
+                    break;
+            }
+
+            rowData.CalUnitWeight(HeaderContent);
+            if (!rowData.ValidateByRow(HeaderContent, out riskFlag, out msg))
+            {
+                dgvCutting.Rows[e.RowIndex].Cells["rowValidated"].Value = false;
+                if (riskFlag == "ERROR")
+                {
+                    MessageBox.Show(msg, "Row validate error!.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    e.Cancel = true;
+                }
+                return;
+            }
+            else
+            {
+                dgvCutting.Rows[e.RowIndex].Cells["rowValidated"].Value = true;
+                dgvCutting.Rows[e.RowIndex].Cells["unitweight1"].Value = rowData.UnitWeight;
+                dgvCutting.Rows[e.RowIndex].Cells["totalweight"].Value = rowData.TotalWeight;
+                dgvCutting.Rows[e.RowIndex].Cells["totallength"].Value = rowData.TotalLength;
+                HeaderContent.CuttingDesign = _repo.SaveLineCutting(epiSession, HeaderContent, rowData).ToList();
+            }
+        }
+
+        private void dgvMaterial_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
+
+        }
+
+        private void dgvCutting_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

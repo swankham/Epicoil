@@ -2,6 +2,7 @@
 using Epicoil.Library.Models.StoreInPlan;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Common;
+using Epicoil.Library.Repositories.Sales;
 using Epicoil.Library.Repositories.StoreIn;
 using Epicoil.Library.Repositories.StoreInPlan;
 using System;
@@ -17,8 +18,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
     {
         private readonly IStoreInPlanRepo _repo;
         private readonly IStoreInRepo _repoIn;
-        private readonly ICurrenciesRepo _repoCurr;
-
+        private readonly ICurrenciesRepo _repoCurr;        
         private readonly ISupplierRepo _repoSupplier;
         private readonly IBussinessTypeRepo _repoBT;
         private readonly IMakerRepo _repoMaker;
