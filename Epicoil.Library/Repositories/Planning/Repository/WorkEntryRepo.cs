@@ -209,6 +209,7 @@ namespace Epicoil.Library.Repositories.Planning
                 if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
 
                 if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
+                //if (model.CuttingDesign.ToList().Count != 0) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
                 if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
                 if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
             }
@@ -680,7 +681,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
         {
-            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.WorkOrderID = {0}", workOrderID);
+            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
             return Repository.Instance.GetMany<CutDesignModel>(sql);
         }
 
@@ -822,7 +823,7 @@ namespace Epicoil.Library.Repositories.Planning
                                   , data.CommodityCode.GetString()
                                   , data.SpecCode.GetString()
                                   , data.CoatingCode.GetString()    //{10}
-                                  , data.Thick.GetDecimal()
+                                  , data.Thick
                                   , data.Width
                                   , data.Length
                                   , data.Status.GetString()
@@ -866,6 +867,33 @@ namespace Epicoil.Library.Repositories.Planning
                 msg = ex.Message;
                 return false;
             }
+        }
+
+
+        public IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg)
+        {
+            var cutLines = GetCuttingLines(head.WorkOrderID);
+            var rowData = (from item in head.Materails
+                           select item).First();
+
+            risk = string.Empty;
+            msg = string.Empty;
+            decimal cutTotalWidth = cutLines.Sum(i => i.Width);
+
+            if (rowData.Width > cutTotalWidth)
+            {
+                var newCut = cutLines.First();
+                newCut.LineID = 0;
+                newCut.Status = "S";
+                newCut.Width = rowData.Width - cutTotalWidth;
+                newCut.CalUnitWeight(head);
+                if (newCut.ValidateByRow(head, out risk, out msg))
+                {
+                    var result = SaveLineCutting(_session, head, newCut);
+                }
+            }
+
+            return GetCuttingLines(head.WorkOrderID);
         }
     }
 }

@@ -15,6 +15,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
         private readonly IWorkEntryRepo _repo;
+
         private PlanningHeadModel Header;
         private IEnumerable<PlanningHeadModel> _model;
         public PlanningHeadModel _selected;
@@ -153,6 +154,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     _selected = _repo.GetWorkById(WrkNoPara, Convert.ToInt32(ProcessStepPara), epiSession.PlantID);
                     _selected.Materails = _repo.GetAllMaterial(epiSession.PlantID, _selected.WorkOrderID).ToList();
                     _selected.CuttingLines = _repo.GetCuttingLines(_selected.WorkOrderID);
+                    _selected.ProcessLineDetail = _repoRes.GetByID(epiSession.PlantID, _selected.ProcessLineId);
                     this.Close();
                 }
             }

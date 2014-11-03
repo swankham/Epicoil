@@ -62,13 +62,13 @@ namespace Epicoil.Library.Models.Sales
             this.CustPO = string.IsNullOrEmpty((string)row["PONum"].GetString()) ? "" : (string)row["PONum"].GetString();
             this.SOCode = (string)row["SOCode"].GetString();
             this.SOCodeName = (string)row["SOCodeName"].GetString();
-            //this.Term = (string)row["TermsCode"].GetString();
+            this.Term = (string)row["TermsCode"].GetString();
             //this.BussinessType = (string)row["BussinessType"].GetString();
             //this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             //this.OrderType = (string)row["OrderType"].GetString();
-            //this.PIC = (string)row["EntryPerson"].GetString();
-            //this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
-            //this.TotalAmount = (decimal)row["TotalAmount"].GetDecimal();
+            this.PIC = (string)row["EntryPerson"].GetString();
+            this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
+            this.TotalAmount = (decimal)row["TotalAmount"].GetDecimal();
         }
     }
 }

@@ -95,13 +95,18 @@ namespace Epicoil.Library.Models.Planning
 
         public bool SimulateFlag { get; set; }
 
-        public MaterialModel MaterialPattern { get; set; }
-
+        public MaterialModel matSet = new MaterialModel();
         public ClassMasterModel CurrentClass = new ClassMasterModel();
         public ResourceModel ProcessLineDetail = new ResourceModel();
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
+
+        public MaterialModel MaterialPattern
+        {
+            get { return this.matSet; }
+            set { this.matSet = value; }
+        }
 
         public ClassMasterModel Class
         {
@@ -141,6 +146,7 @@ namespace Epicoil.Library.Models.Planning
             get { return this.CuttingLines.ToList(); }
             set { this.CuttingLines = value; }
         }
+
         public int ClassID { get; set; }
 
         #endregion Attribute
@@ -260,7 +266,7 @@ namespace Epicoil.Library.Models.Planning
             //}
             //else
             //{
-                RewindWeight = 0;
+            RewindWeight = 0;
             //}
         }
 
@@ -272,7 +278,7 @@ namespace Epicoil.Library.Models.Planning
         {
             if (model.CuttingLines.ToList().Count != 0)
             {
-                OutputWeight = model.CuttingLines.Where(p => p.Status != "C").Sum(i => i.TotalWeight);
+                OutputWeight = model.CuttingLines.Where(p => p.Status != "S").Sum(i => i.TotalWeight);
             }
             else
             {
@@ -292,9 +298,11 @@ namespace Epicoil.Library.Models.Planning
         public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
         {
             decimal YieldPer = 0;
+            WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
+            WgtCoilBack = (WgtCoilBack == 0) ? 1 : WgtCoilBack;
+
             YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
             return YieldPer;
-
         }
 
         /// <summary>

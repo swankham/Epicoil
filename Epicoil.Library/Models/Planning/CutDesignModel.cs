@@ -191,7 +191,7 @@ namespace Epicoil.Library.Models.Planning
             msg = string.Empty;
             var r = this.Thick.ToString();
 
-            if(head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0)
+            if(head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
             {
                 risk = "ERROR";
                 msg = "Status 'S' is already exist in cutting lines.";

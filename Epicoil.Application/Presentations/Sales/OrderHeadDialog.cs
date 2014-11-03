@@ -24,6 +24,7 @@ namespace Epicoil.Appl.Presentations.Sales
             _repo = new SaleOrderRepo();
             _selected = new OrderHeadModel();
             list = model;
+            epiSession = _session;
         }
 
         private void SetGrid(IEnumerable<OrderHeadModel> data)
@@ -46,6 +47,26 @@ namespace Epicoil.Appl.Presentations.Sales
         private void OrderHeadDialog_Load(object sender, EventArgs e)
         {
             SetGrid(list);
+        }
+
+        private void butSelect_Click(object sender, EventArgs e)
+        {
+            if (dgvList.Rows.Count >= 1)
+            {
+                int iRow = dgvList.CurrentRow.Index;
+                string orderID = dgvList.Rows[iRow].Cells["orderid"].Value.ToString();
+
+                if (!string.IsNullOrEmpty(orderID))
+                {
+                    _selected = _repo.GetOrderByID(orderID);
+                    this.Close();
+                }
+            }
+        }
+
+        private void dgvList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            butSelect_Click(sender, e);
         }
     }
 }

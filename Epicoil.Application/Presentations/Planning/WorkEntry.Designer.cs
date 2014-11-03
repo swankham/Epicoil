@@ -128,6 +128,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -191,7 +192,6 @@
             this.tbutCancelWorkOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tlbClear = new System.Windows.Forms.ToolStripButton();
             this.tlbDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -343,6 +343,7 @@
             this.transactionlineid.HeaderText = "ID";
             this.transactionlineid.Name = "transactionlineid";
             this.transactionlineid.ReadOnly = true;
+            this.transactionlineid.Visible = false;
             this.transactionlineid.Width = 43;
             // 
             // MCSSNum
@@ -820,6 +821,7 @@
             this.lineid.HeaderText = "ID";
             this.lineid.Name = "lineid";
             this.lineid.ReadOnly = true;
+            this.lineid.Visible = false;
             this.lineid.Width = 43;
             // 
             // seq
@@ -1023,11 +1025,11 @@
             // 
             // rowValidated
             // 
-            this.rowValidated.HeaderText = "Row Complete";
+            this.rowValidated.HeaderText = "Completed";
             this.rowValidated.Name = "rowValidated";
             this.rowValidated.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.rowValidated.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.rowValidated.Width = 112;
+            this.rowValidated.Width = 91;
             // 
             // contextMenuStrip1
             // 
@@ -1038,27 +1040,34 @@
             this.deleteLineToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(176, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(195, 76);
             // 
             // nextProcessStepToolStripMenuItem
             // 
             this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
             this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
-            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
             // 
             // processingThisLineToolStripMenuItem
             // 
             this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
             this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
-            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.processingThisLineToolStripMenuItem.Text = "Processing this line";
+            this.processingThisLineToolStripMenuItem.Click += new System.EventHandler(this.processingThisLineToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(191, 6);
             // 
             // deleteLineToolStripMenuItem
             // 
             this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
             this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
-            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(175, 22);
+            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.deleteLineToolStripMenuItem.Text = "Delete line";
             // 
             // panel3
@@ -1706,7 +1715,7 @@
             this.tbutCalculate.Image = global::Epicoil.Appl.Properties.Resources.cal1;
             this.tbutCalculate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbutCalculate.Name = "tbutCalculate";
-            this.tbutCalculate.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.tbutCalculate.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F5)));
             this.tbutCalculate.Size = new System.Drawing.Size(204, 26);
             this.tbutCalculate.Text = "Calculate";
             this.tbutCalculate.Click += new System.EventHandler(this.tbutCalculate_Click);
@@ -1769,11 +1778,6 @@
             this.tlbDelete.Size = new System.Drawing.Size(23, 32);
             this.tlbDelete.Text = "toolStripButton1";
             this.tlbDelete.Click += new System.EventHandler(this.tlbDelete_Click);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(172, 6);
             // 
             // WorkEntry
             // 
@@ -1932,6 +1936,15 @@
         private System.Windows.Forms.DateTimePicker dptIssueDate;
         private System.Windows.Forms.SplitContainer splitContainer7;
         private System.Windows.Forms.ToolStripButton tlbDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem tbutNewCutting;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rsdiff;
+        private System.Windows.Forms.DataGridViewTextBoxColumn coilback;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem nextProcessStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem processingThisLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionlineid;
         private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn seqno;
@@ -1953,10 +1966,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt;
         private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem tbutNewCutting;
-        private System.Windows.Forms.DataGridViewTextBoxColumn rsdiff;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coilback;
         private System.Windows.Forms.DataGridViewTextBoxColumn lineid;
         private System.Windows.Forms.DataGridViewTextBoxColumn seq;
         private System.Windows.Forms.DataGridViewTextBoxColumn sono;
@@ -1983,10 +1992,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn pack;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn rowValidated;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem nextProcessStepToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem processingThisLineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteLineToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
     }
 }

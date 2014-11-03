@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderHeadDialog));
             this.butSelect = new System.Windows.Forms.Button();
             this.butClear = new System.Windows.Forms.Button();
@@ -35,6 +37,18 @@
             this.txtBT = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.dgvList = new System.Windows.Forms.DataGridView();
+            this.txtCustID = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.orderid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ordernum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderdate = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,18 +62,6 @@
             this.ordertype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalamount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtCustID = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -76,6 +78,7 @@
             this.butSelect.TabIndex = 3;
             this.butSelect.Text = "Select";
             this.butSelect.UseVisualStyleBackColor = true;
+            this.butSelect.Click += new System.EventHandler(this.butSelect_Click);
             // 
             // butClear
             // 
@@ -152,97 +155,7 @@
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(725, 534);
             this.dgvList.TabIndex = 18;
-            // 
-            // orderid
-            // 
-            this.orderid.HeaderText = "ID";
-            this.orderid.Name = "orderid";
-            this.orderid.ReadOnly = true;
-            this.orderid.Width = 43;
-            // 
-            // ordernum
-            // 
-            this.ordernum.HeaderText = "Order No.";
-            this.ordernum.Name = "ordernum";
-            this.ordernum.ReadOnly = true;
-            this.ordernum.Width = 84;
-            // 
-            // orderdate
-            // 
-            this.orderdate.HeaderText = "Order Date";
-            this.orderdate.Name = "orderdate";
-            this.orderdate.ReadOnly = true;
-            this.orderdate.Width = 91;
-            // 
-            // customer
-            // 
-            this.customer.HeaderText = "Customer";
-            this.customer.Name = "customer";
-            this.customer.ReadOnly = true;
-            this.customer.Width = 84;
-            // 
-            // enduser
-            // 
-            this.enduser.HeaderText = "End User";
-            this.enduser.Name = "enduser";
-            this.enduser.ReadOnly = true;
-            this.enduser.Width = 82;
-            // 
-            // shipto
-            // 
-            this.shipto.HeaderText = "Ship To";
-            this.shipto.Name = "shipto";
-            this.shipto.ReadOnly = true;
-            this.shipto.Width = 73;
-            // 
-            // custpo
-            // 
-            this.custpo.HeaderText = "Customer PO";
-            this.custpo.Name = "custpo";
-            this.custpo.ReadOnly = true;
-            this.custpo.Width = 104;
-            // 
-            // socode
-            // 
-            this.socode.HeaderText = "S/O Code";
-            this.socode.Name = "socode";
-            this.socode.ReadOnly = true;
-            this.socode.Width = 83;
-            // 
-            // term
-            // 
-            this.term.HeaderText = "Term";
-            this.term.Name = "term";
-            this.term.ReadOnly = true;
-            this.term.Width = 60;
-            // 
-            // bt
-            // 
-            this.bt.HeaderText = "Bussiness Type";
-            this.bt.Name = "bt";
-            this.bt.ReadOnly = true;
-            this.bt.Width = 116;
-            // 
-            // ordertype
-            // 
-            this.ordertype.HeaderText = "Order Type";
-            this.ordertype.Name = "ordertype";
-            this.ordertype.ReadOnly = true;
-            this.ordertype.Width = 91;
-            // 
-            // totalweight
-            // 
-            this.totalweight.HeaderText = "Total Weight";
-            this.totalweight.Name = "totalweight";
-            this.totalweight.ReadOnly = true;
-            this.totalweight.Width = 99;
-            // 
-            // totalamount
-            // 
-            this.totalamount.HeaderText = "Total Amount";
-            this.totalamount.Name = "totalamount";
-            this.totalamount.ReadOnly = true;
-            this.totalamount.Width = 103;
+            this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
             // txtCustID
             // 
@@ -370,6 +283,103 @@
             this.splitContainer1.SplitterDistance = 101;
             this.splitContainer1.TabIndex = 1;
             // 
+            // orderid
+            // 
+            this.orderid.HeaderText = "ID";
+            this.orderid.Name = "orderid";
+            this.orderid.ReadOnly = true;
+            this.orderid.Width = 43;
+            // 
+            // ordernum
+            // 
+            this.ordernum.HeaderText = "Order No.";
+            this.ordernum.Name = "ordernum";
+            this.ordernum.ReadOnly = true;
+            this.ordernum.Width = 84;
+            // 
+            // orderdate
+            // 
+            this.orderdate.HeaderText = "Order Date";
+            this.orderdate.Name = "orderdate";
+            this.orderdate.ReadOnly = true;
+            this.orderdate.Width = 91;
+            // 
+            // customer
+            // 
+            this.customer.HeaderText = "Customer";
+            this.customer.Name = "customer";
+            this.customer.ReadOnly = true;
+            this.customer.Width = 84;
+            // 
+            // enduser
+            // 
+            this.enduser.HeaderText = "End User";
+            this.enduser.Name = "enduser";
+            this.enduser.ReadOnly = true;
+            this.enduser.Width = 82;
+            // 
+            // shipto
+            // 
+            this.shipto.HeaderText = "Ship To";
+            this.shipto.Name = "shipto";
+            this.shipto.ReadOnly = true;
+            this.shipto.Width = 73;
+            // 
+            // custpo
+            // 
+            this.custpo.HeaderText = "Customer PO";
+            this.custpo.Name = "custpo";
+            this.custpo.ReadOnly = true;
+            this.custpo.Width = 104;
+            // 
+            // socode
+            // 
+            this.socode.HeaderText = "S/O Code";
+            this.socode.Name = "socode";
+            this.socode.ReadOnly = true;
+            this.socode.Width = 83;
+            // 
+            // term
+            // 
+            this.term.HeaderText = "Term";
+            this.term.Name = "term";
+            this.term.ReadOnly = true;
+            this.term.Width = 60;
+            // 
+            // bt
+            // 
+            this.bt.HeaderText = "Bussiness Type";
+            this.bt.Name = "bt";
+            this.bt.ReadOnly = true;
+            this.bt.Width = 116;
+            // 
+            // ordertype
+            // 
+            this.ordertype.HeaderText = "Order Type";
+            this.ordertype.Name = "ordertype";
+            this.ordertype.ReadOnly = true;
+            this.ordertype.Width = 91;
+            // 
+            // totalweight
+            // 
+            dataGridViewCellStyle1.Format = "N2";
+            dataGridViewCellStyle1.NullValue = "0";
+            this.totalweight.DefaultCellStyle = dataGridViewCellStyle1;
+            this.totalweight.HeaderText = "Total Weight";
+            this.totalweight.Name = "totalweight";
+            this.totalweight.ReadOnly = true;
+            this.totalweight.Width = 99;
+            // 
+            // totalamount
+            // 
+            dataGridViewCellStyle2.Format = "N2";
+            dataGridViewCellStyle2.NullValue = "0";
+            this.totalamount.DefaultCellStyle = dataGridViewCellStyle2;
+            this.totalamount.HeaderText = "Total Amount";
+            this.totalamount.Name = "totalamount";
+            this.totalamount.ReadOnly = true;
+            this.totalamount.Width = 103;
+            // 
             // OrderHeadDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -408,6 +418,14 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderid;
         private System.Windows.Forms.DataGridViewTextBoxColumn ordernum;
         private System.Windows.Forms.DataGridViewTextBoxColumn orderdate;
@@ -421,13 +439,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ordertype;
         private System.Windows.Forms.DataGridViewTextBoxColumn totalweight;
         private System.Windows.Forms.DataGridViewTextBoxColumn totalamount;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label6;
     }
 }

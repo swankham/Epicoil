@@ -43,5 +43,7 @@ namespace Epicoil.Library.Repositories.Planning
         IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data);
 
         bool DeleteCutting(SessionInfo _session, CutDesignModel model, out string msg);
+
+        IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg);
     }
 }

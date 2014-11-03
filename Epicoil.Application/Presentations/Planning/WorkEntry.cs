@@ -2,6 +2,7 @@
 using Epicoil.Library;
 using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
+using Epicoil.Library.Models.Sales;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using Epicoil.Library.Repositories.Sales;
@@ -21,6 +22,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IWorkEntryRepo _repo;
         private readonly IResourceRepo _reRes;
         private readonly ISaleOrderRepo _repoSale;
+        public readonly IClassMasterRepo _repoCls;
 
         private PlanningHeadModel HeaderContent;
         private ClassMasterModel _class;
@@ -33,6 +35,7 @@ namespace Epicoil.Appl.Presentations.Planning
             this._repo = new WorkEntryRepo();
             this._reRes = new ResourceRepo();
             this._repoSale = new SaleOrderRepo();
+            this._repoCls = new ClassMasterRepo();
 
             this.HeaderContent = new PlanningHeadModel();
             this._class = new ClassMasterModel();
@@ -365,13 +368,14 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.FormState = 3;
             SetFormState();
             HeaderContent.MaterialPattern = new MaterialModel();
+            HeaderContent.CurrentClass = new ClassMasterModel();
             if (HeaderContent.CurrentClass == null) HeaderContent.CurrentClass = new ClassMasterModel();
 
             //Get Machine detail from combobox 'Process Line' to finding material.
             HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
 
             //If material list > 0 must be assign materail filtering.
-            if (HeaderContent.Materails.ToList().Count > 0)
+            if (HeaderContent.Materails.ToList().Count > 0 && HeaderContent.CuttingDesign.ToList().Count == 0)
             {
                 var mat = HeaderContent.Materails.FirstOrDefault();
 
@@ -391,6 +395,21 @@ namespace Epicoil.Appl.Presentations.Planning
                 HeaderContent.ProcessLineDetail.WidthMax = mat.Width;
                 HeaderContent.ProcessLineDetail.LengthMin = mat.Length;
                 HeaderContent.ProcessLineDetail.LengthMax = mat.Length;
+            }
+
+            //If material list > 0 must be assign materail filtering.
+            if (HeaderContent.Materails.ToList().Count == 0 && HeaderContent.CuttingDesign.ToList().Count > 0)
+            {
+                var nor = HeaderContent.CuttingDesign.FirstOrDefault();
+                HeaderContent.CurrentClass = _repoCls.GetByID(epiSession.PlantID, HeaderContent.ClassID);
+                HeaderContent.MaterialPattern.CommodityCode = nor.CommodityCode;
+                HeaderContent.MaterialPattern.SpecCode = nor.SpecCode;
+                HeaderContent.MaterialPattern.CoatingCode = nor.CoatingCode;
+                HeaderContent.MaterialPattern.Possession = nor.Possession;
+                HeaderContent.MaterialPattern.Thick = nor.Thick;
+                HeaderContent.MaterialPattern.Width = nor.Width;
+                HeaderContent.MaterialPattern.Length = nor.Length;
+                //HeaderContent.MaterialPattern.BussinessType = mat.BussinessType;
             }
 
             //Get Material that compatible with Machine was select.
@@ -761,15 +780,15 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             string colName = dgvCutting.Columns[e.ColumnIndex].Name;
             string lineId = dgvCutting.Rows[e.RowIndex].Cells["lineid"].Value.GetString();
+            string code = dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+
+            var rowData = (from item in HeaderContent.CuttingDesign
+                           where item.LineID == Convert.ToInt32(lineId)
+                           select item).First();
 
             switch (colName)
             {
                 case "sono":
-                    string code = dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
-                    var rowData = (from item in HeaderContent.CuttingDesign
-                                   where item.LineID == Convert.ToInt32(lineId)
-                                   select item).First();
-
                     if (!string.IsNullOrEmpty(code))
                     {
                         var result = _repoSale.GetOrderByID(code);
@@ -780,12 +799,59 @@ namespace Epicoil.Appl.Presentations.Planning
                             using (OrderHeadDialog frm = new OrderHeadDialog(epiSession, soResult))
                             {
                                 frm.ShowDialog();
+                                dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = frm._selected.OrderNum;
+                                dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = frm._selected.CustID;
                             }
                         }
                         else
                         {
+                            dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = result.OrderNumber;
                             dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
                         }
+                    }
+                    break;
+
+                case "soline":
+                    if (!string.IsNullOrEmpty(code))
+                    {
+                        OrderDetailModel result = new OrderDetailModel();
+                        result = _repoSale.GetOrderDtlByID(rowData.SONo, Convert.ToInt32(code));
+                        if (result == null)
+                        {
+                            var soResult = _repoSale.GetOrderDtlAll(rowData.SONo);
+                            using (OrderLineDialog frm = new OrderLineDialog(epiSession, soResult))
+                            {
+                                frm.ShowDialog();
+                                result = frm._selected;
+                            }
+                        }
+
+                        HeaderContent.MaterialPattern = new MaterialModel();
+                        HeaderContent.ClassID = result.ClassID;
+                        HeaderContent.MaterialPattern.CommodityCode = result.CommodityCode;
+                        HeaderContent.MaterialPattern.SpecCode = result.SpecCode;
+                        HeaderContent.MaterialPattern.CoatingCode = result.CoatingCode;
+                        HeaderContent.MaterialPattern.Thick = result.Thick;
+                        HeaderContent.MaterialPattern.Width = result.Width;
+                        HeaderContent.MaterialPattern.Length = result.Length;
+                        HeaderContent.MaterialPattern.BussinessType = result.BussinessType;
+                        HeaderContent.MaterialPattern.Possession = result.Possession;
+
+                        dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = result.OrderLine;
+                        dgvCutting.Rows[e.RowIndex].Cells["norno"].Value = result.NORNo;
+                        dgvCutting.Rows[e.RowIndex].Cells["commodity1"].Value = result.CommodityCode;
+                        dgvCutting.Rows[e.RowIndex].Cells["spec1"].Value = result.SpecCode;
+                        dgvCutting.Rows[e.RowIndex].Cells["coating1"].Value = result.CoatingCode;
+                        dgvCutting.Rows[e.RowIndex].Cells["thick1"].Value = result.Thick;
+                        dgvCutting.Rows[e.RowIndex].Cells["width1"].Value = result.Width;
+                        dgvCutting.Rows[e.RowIndex].Cells["length1"].Value = result.Length;
+                        //dgvCutting.Rows[e.RowIndex].Cells["status1"].Value = "F";
+                        dgvCutting.Rows[e.RowIndex].Cells["soweight"].Value = result.SOWeight;
+                        dgvCutting.Rows[e.RowIndex].Cells["soqty"].Value = result.SOQuantity;
+                        //dgvCutting.Rows[e.RowIndex].Cells["calqty"].Value = result.so;
+                        //dgvCutting.Rows[e.RowIndex].Cells["qtyPack1"].Value = result;
+                        dgvCutting.Rows[e.RowIndex].Cells["pack"].Value = result.Pack;
+                        dgvCutting.Rows[e.RowIndex].Cells["bt1"].Value = result.BussinessType;
                     }
                     break;
             }
@@ -797,6 +863,7 @@ namespace Epicoil.Appl.Presentations.Planning
             //Fix bug CutLines is null
             if (HeaderContent.CuttingDesign.ToList().Count == 0) return;
 
+            CutDesignModel rowData = new CutDesignModel();
             int i;
             decimal d;
             string riskFlag = string.Empty; //Set error level WARNNING/ERROR
@@ -810,9 +877,24 @@ namespace Epicoil.Appl.Presentations.Planning
                 HeaderContent.MaterialPattern = (from item in HeaderContent.Materails select item).First();
             }
 
-            var rowData = (from item in HeaderContent.CuttingDesign
+            try
+            {
+                rowData = (from item in HeaderContent.CuttingDesign
                            where item.LineID == Convert.ToInt32(lineId)
                            select item).First();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "Sequence contains no elements")
+                {
+                    return;
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             //Update current row
             rowData.SONo = dgvCutting.Rows[e.RowIndex].Cells["sono"].Value.GetString();
@@ -823,10 +905,12 @@ namespace Epicoil.Appl.Presentations.Planning
             rowData.CommodityCode = dgvCutting.Rows[e.RowIndex].Cells["commodity1"].Value.GetString();
             rowData.SpecCode = dgvCutting.Rows[e.RowIndex].Cells["spec1"].Value.GetString();
             rowData.CoatingCode = dgvCutting.Rows[e.RowIndex].Cells["coating1"].Value.GetString();
+            rowData.Thick = Convert.ToDecimal(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["thick1"].Value.GetString()) ? "0M" :
+                                                    dgvCutting.Rows[e.RowIndex].Cells["thick1"].Value.GetString());
             rowData.Width = Convert.ToDecimal(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["width1"].Value.GetString()) ? "0M" :
-                                                    dgvCutting.Rows[e.RowIndex].Cells["width1"].Value.GetString()); ;
+                                                    dgvCutting.Rows[e.RowIndex].Cells["width1"].Value.GetString());
             rowData.Length = Convert.ToDecimal(string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["length1"].Value.GetString()) ? "0M" :
-                                                    dgvCutting.Rows[e.RowIndex].Cells["length1"].Value.GetString()); ;
+                                                    dgvCutting.Rows[e.RowIndex].Cells["length1"].Value.GetString());
             rowData.Status = dgvCutting.Rows[e.RowIndex].Cells["status1"].Value.GetString();
             rowData.Stand = dgvCutting.Rows[e.RowIndex].Cells["stand"].Value.GetInt();
             rowData.CutDivision = dgvCutting.Rows[e.RowIndex].Cells["cutdiv"].Value.GetInt();
@@ -937,13 +1021,35 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvMaterial_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
-
-
         }
 
         private void dgvCutting_CellLeave(object sender, DataGridViewCellEventArgs e)
         {
+        }
 
+        private void processingThisLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvCutting.Focused == false) return;
+
+            string riskFlag = string.Empty;
+            string msg = string.Empty;
+            //var rows = from DataGridViewRow row in dgvCutting.Rows
+            //           where row.Selected
+            //           select row;
+
+            //if (rows != null)
+            //{
+            //    MessageBox.Show("Please complete data in cutting design list.", "Data invalid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            HeaderContent.CuttingDesign = _repo.GenerateCuttingLine(epiSession, HeaderContent, out riskFlag, out msg).ToList();
+            if (!string.IsNullOrEmpty(msg))
+            {
+                MessageBox.Show(msg, "Data invalid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            ListCuttingGrid(HeaderContent.CuttingDesign);
         }
     }
 }

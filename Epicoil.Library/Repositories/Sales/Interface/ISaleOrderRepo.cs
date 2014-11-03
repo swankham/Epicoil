@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Epicoil.Library.Models;
 using Epicoil.Library.Models.Sales;
+using Epicoil.Library.Models.Planning;
 
 namespace Epicoil.Library.Repositories.Sales
 {
@@ -15,5 +16,11 @@ namespace Epicoil.Library.Repositories.Sales
         OrderHeadModel GetOrderByID(string orderId);
 
         IEnumerable<OrderHeadModel> GetOrderHeadByFilter(OrderHeadModel data);
+
+        IEnumerable<OrderDetailModel> GetOrderDtlAll(string OrderId);
+
+        OrderDetailModel GetOrderDtlByID(string orderId, int lineId);
+
+        IEnumerable<OrderDetailModel> GetOrderDtlByFilter(OrderDetailModel data, PlanningHeadModel model);
     }
 }
