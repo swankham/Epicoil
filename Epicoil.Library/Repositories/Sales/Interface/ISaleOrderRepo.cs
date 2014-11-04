@@ -21,6 +21,6 @@ namespace Epicoil.Library.Repositories.Sales
 
         OrderDetailModel GetOrderDtlByID(string orderId, int lineId);
 
-        IEnumerable<OrderDetailModel> GetOrderDtlByFilter(OrderDetailModel data, PlanningHeadModel model);
+        IEnumerable<OrderDetailModel> GetOrderDtlByFilter(string soNo, PlanningHeadModel model);
     }
 }

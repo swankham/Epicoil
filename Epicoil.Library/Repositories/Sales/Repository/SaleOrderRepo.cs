@@ -115,47 +115,37 @@ namespace Epicoil.Library.Repositories.Sales
             return result;
         }
 
-        public IEnumerable<OrderDetailModel> GetOrderDtlByFilter(OrderDetailModel data, PlanningHeadModel model)
+        public IEnumerable<OrderDetailModel> GetOrderDtlByFilter(string soNo, PlanningHeadModel model)
         {
-            IEnumerable<OrderDetailModel> query = this.GetOrderDtlAll(data.OrderNum);
-            if (model.CurrentClass != null)
-            {
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CustID) && Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(model.MaterialPattern.CustID.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CommodityCode) && Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(model.MaterialPattern.CommodityCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.SpecCode) && Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(model.MaterialPattern.SpecCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CoatingCode) && Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(model.MaterialPattern.CoatingCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.MakerCode) && Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(model.MaterialPattern.MakerCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.MillCode) && Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(model.MaterialPattern.MillCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
+            IEnumerable<OrderDetailModel> query = this.GetOrderDtlAll(soNo);
 
-                //if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
-                if (model.CuttingDesign.ToList().Count != 0) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
-                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
-            }
-
+            //Verify alway.
+            if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
             if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
 
-            //if (model.ProcessLineDetail.ThickMin != 0)
+            if (model.Materails.ToList().Count > 0)
+            {
+                var mat = model.Materails.FirstOrDefault();
+                if (Convert.ToBoolean(model.CurrentClass.CustomerReq)) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.ComudityReq)) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq)) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq)) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
+
+                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
+
+                query = query.Where(p => p.Thick.Equals(mat.Thick));
+                query = query.Where(p => p.Width <= mat.Width);
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+            }
+
             query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            //if (model.ProcessLineDetail.ThickMax != 0)
             query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            //if (model.ProcessLineDetail.WidthMin != 0)
             query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            //if (model.ProcessLineDetail.WidthMax != 0)
             query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            //if (model.ProcessLineDetail.LengthMin != 0)
             query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            //if (model.ProcessLineDetail.LengthMax != 0)
             query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
-
-            //if machine is not Sliter and Leveller must be filter for sheet only.
-            if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
-                query = query.Where(p => p.Length > 0);
-
-            //if machine is Sliter and Leveller must be filter for coil only.
-            if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
-                query = query.Where(p => p.Length.Equals(0));
 
             return query;
         }

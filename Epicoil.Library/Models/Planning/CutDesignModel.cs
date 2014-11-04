@@ -1,7 +1,6 @@
 ﻿using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
@@ -9,7 +8,6 @@ namespace Epicoil.Library.Models.Planning
 {
     public class CutDesignModel
     {
-
         private readonly IWorkEntryRepo _repo;
         private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
@@ -61,8 +59,6 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal TotalLength { get; set; }
 
-        public string CustID { get; set; }
-
         public string EndUserCode { get; set; }
 
         public string DestinationCode { get; set; }
@@ -96,6 +92,22 @@ namespace Epicoil.Library.Models.Planning
         public string CreatedBy { get; set; }
 
         public string UpdatedBy { get; set; }
+
+        public string SupplierCode { get; set; }
+
+        public string SupplierName { get; set; }
+
+        public string CustID { get; set; }
+
+        public string CustomerName { get; set; }
+
+        public string MakerCode { get; set; }
+
+        public string MakerName { get; set; }
+
+        public string MillCode { get; set; }
+
+        public string MillName { get; set; }
 
         public void DataBind(DataRow row)
         {
@@ -139,18 +151,22 @@ namespace Epicoil.Library.Models.Planning
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
         }
 
-        public void CalUnitWeight(PlanningHeadModel head)
+        public void CalculateRow(PlanningHeadModel head)
         {
             //Fix bug in case Materials is null.
             decimal widthMat = 0;
             if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
-            UnitWeight = (CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width)) / ((CutDivision == 0) ? 1 : CutDivision);
-            TotalWeight = UnitWeight * CutDivision * Stand;
-            //TotalLength = CalUsingLength()
+            UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
+            TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
+
+            decimal matLengthM = head.Materails.Sum(i => i.LengthM);
+            decimal matWeight = head.Materails.Sum(i => i.Weight);
+            decimal matUsingWeight = head.Materails.Sum(i => i.UsingWeight);
+            TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
         }
- 
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="UsingWgt">Unit is Kg.</param>
         /// <param name="WidthMaterial">Unit is MM.</param>
@@ -167,14 +183,14 @@ namespace Epicoil.Library.Models.Planning
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="MaterialLengthM">Unit is Meter</param>
         /// <param name="MaterialWeight">Unit is Kg.</param>
         /// <param name="MaterialUsingWeight">Unit is Kg.</param>
         /// <param name="CutDiv">Value of cut</param>
         /// <returns></returns>
-        static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
+        private static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
         {
             decimal ActualLength = 0.0M;
             if (MaterialWeight > 0 && MaterialUsingWeight > 0 && MaterialLengthM > 0 && CutDiv > 0)
@@ -191,12 +207,39 @@ namespace Epicoil.Library.Models.Planning
             msg = string.Empty;
             var r = this.Thick.ToString();
 
-            if(head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
+            if (head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
             {
                 risk = "ERROR";
                 msg = "Status 'S' is already exist in cutting lines.";
                 return false;
             }
+
+            if (head.Materails.ToList().Count > 0)
+            {
+                decimal totalWidth = (from item in head.CuttingDesign
+                                      select item).Sum(i => i.Width * i.Stand);
+                var totalMatWidth = (from mat in head.Materails
+                                     select mat).First();
+
+                if (totalMatWidth.Width < totalWidth)
+                {
+                    risk = "ERROR";
+                    msg = "Total width in cutting line is greater than material width.";
+                    return false;
+                }
+            }
+
+            //decimal totalWeight = head.CuttingDesign.Sum(i => i.TotalWeight);
+            //decimal totalWeight = (from item in head.CuttingDesign
+            //           where item.LineID != LineID
+            //           select item).Sum(i => i.TotalWeight);
+
+            //if (head.UsingWeight < (totalWeight + TotalWeight))
+            //{
+            //    risk = "ERROR";
+            //    msg = "Total weight in cutting line is greater than material using weight.";
+            //    return false;
+            //}
 
             if (Status == "F")
             {
@@ -208,7 +251,7 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
-            if(!string.IsNullOrEmpty(SONo) && SOLine == 0)
+            if (!string.IsNullOrEmpty(SONo) && SOLine == 0)
             {
                 if (string.IsNullOrEmpty(SONo) || SOLine == 0)
                 {

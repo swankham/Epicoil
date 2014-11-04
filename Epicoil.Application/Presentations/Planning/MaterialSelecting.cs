@@ -136,5 +136,10 @@ namespace Epicoil.Appl.Presentations.Planning
                 this.Close();
             }
         }
+
+        private void dgvMaterial_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            butSelect_Click(sender, e);
+        }
     }
 }

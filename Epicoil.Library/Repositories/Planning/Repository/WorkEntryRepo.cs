@@ -198,42 +198,53 @@ namespace Epicoil.Library.Repositories.Planning
         public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model)
         {
             IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
-            if (model.CurrentClass != null)
-            {
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CustID) && Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(model.MaterialPattern.CustID.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CommodityCode) && Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(model.MaterialPattern.CommodityCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.SpecCode) && Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(model.MaterialPattern.SpecCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.CoatingCode) && Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(model.MaterialPattern.CoatingCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.MakerCode) && Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(model.MaterialPattern.MakerCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.MillCode) && Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(model.MaterialPattern.MillCode.ToString().ToUpper()));
-                if (!string.IsNullOrEmpty(model.MaterialPattern.SupplierCode) && Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(model.MaterialPattern.SupplierCode.ToString().ToUpper()));
 
-                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
-                //if (model.CuttingDesign.ToList().Count != 0) query = query.Where(p => p.Thick.Equals(model.MaterialPattern.Thick));
-                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(model.MaterialPattern.Width));
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(model.MaterialPattern.Length));
-            }
-
+            //Verify alway.
+            if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
             if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
 
-            //if (model.ProcessLineDetail.ThickMin != 0)
+            if (model.Materails.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
+            {
+                var mat = model.Materails.FirstOrDefault();
+                query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
+                query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
+                query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
+                query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
+
+                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
+
+                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
+                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+            }
+
+            if (model.CuttingDesign.ToList().Count > 0)
+            {
+                var cut = model.CuttingDesign.FirstOrDefault();
+                if (Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(cut.CustID.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(cut.CommodityCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(cut.SpecCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(cut.CoatingCode.ToString().ToUpper()));
+
+                query = query.Where(p => p.Thick.Equals(cut.Thick));
+                query = query.Where(p => p.Width >= cut.Width);
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(cut.Length));
+            }
+
             query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            //if (model.ProcessLineDetail.ThickMax != 0)
             query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            //if (model.ProcessLineDetail.WidthMin != 0)
             query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            //if (model.ProcessLineDetail.WidthMax != 0)
             query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            //if (model.ProcessLineDetail.LengthMin != 0)
             query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            //if (model.ProcessLineDetail.LengthMax != 0)
             query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
 
-            //if machine is not Sliter and Leveller must be filter for sheet only.
+            //if machine is not Sliter and Leveller must be filter for "SHEET" only.
             if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
                 query = query.Where(p => p.Length > 0);
 
-            //if machine is Sliter and Leveller must be filter for coil only.
+            //if machine is Sliter and Leveller must be filter for "COIL" only.
             if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
                 query = query.Where(p => p.Length.Equals(0));
 
@@ -420,11 +431,11 @@ namespace Epicoil.Library.Repositories.Planning
                                               , model.LossWeight.GetDecimal()
                                               , model.Yield.GetDecimal()
                                               , model.TotalMaterialAmount.GetDecimal()
-                                              , model.BT.GetString()
+                                              , model.BussinessType.GetString()
                                               , Convert.ToInt32(model.LVTrim).GetInt()        //{20}
                                               , Convert.ToInt32(model.PackingPlan).GetInt()
                                               , _session.UserID
-                                              , model.TotalWeight.GetDecimal()
+                                              , model.TotalWidth.GetDecimal()
                                               , model.ClassID.GetInt()
                                               , 0
                                               );
@@ -730,7 +741,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,CreationDate
                                                        ,LastUpdateDate
                                                        ,CreatedBy
-                                                       ,UpdatedBy)
+                                                       ,UpdatedBy, TotalLength)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -769,6 +780,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , GETDATE() --<LastUpdateDate, datetime,>
                                                        , N'{33}' --<CreatedBy, varchar(45),>
                                                        , N'{33}' --<UpdatedBy, varchar(45),>
+                                                       , {35}  --<TotalLength, Decimal(20,9)>
 		                                               )
                                             END
                                         ELSE
@@ -810,6 +822,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
                                                       ,CreatedBy = N'{33}'  --<CreatedBy, varchar(45),>
                                                       ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
+                                                      ,TotalLength = {35}  --<TotalLength, decimal(20,9),>
                                                  WHERE LineID = {34}
                                             END" + Environment.NewLine
                                   , _session.CompanyID
@@ -847,6 +860,7 @@ namespace Epicoil.Library.Repositories.Planning
                                   , data.Note.GetString()
                                   , _session.UserID
                                   , data.LineID.GetInt()
+                                  , data.TotalLength.GetDecimal()
                                   );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Cutting");
 
@@ -869,7 +883,6 @@ namespace Epicoil.Library.Repositories.Planning
             }
         }
 
-
         public IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg)
         {
             var cutLines = GetCuttingLines(head.WorkOrderID);
@@ -878,15 +891,19 @@ namespace Epicoil.Library.Repositories.Planning
 
             risk = string.Empty;
             msg = string.Empty;
-            decimal cutTotalWidth = cutLines.Sum(i => i.Width);
+            decimal cutTotalWidth = cutLines.Sum(i => i.Width * i.Stand);
 
             if (rowData.Width > cutTotalWidth)
             {
                 var newCut = cutLines.First();
+                newCut.SONo = "";
+                newCut.SOLine = 0;
+                newCut.NORNum = "";
                 newCut.LineID = 0;
                 newCut.Status = "S";
                 newCut.Width = rowData.Width - cutTotalWidth;
-                newCut.CalUnitWeight(head);
+                newCut.Stand = 1;
+                newCut.CalculateRow(head);
                 if (newCut.ValidateByRow(head, out risk, out msg))
                 {
                     var result = SaveLineCutting(_session, head, newCut);

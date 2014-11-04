@@ -68,9 +68,12 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal TotalMaterialAmount { get; set; }
 
-        public decimal TotalWeight { get; set; }
+        public decimal TotalWidth { get; set; }
 
-        public string BT { get; set; }
+        public string BussinessType { get; set; }
+
+        public string BussinessTypeName { get; set; }
+
 
         public bool LVTrim { get; set; }
 
@@ -174,8 +177,8 @@ namespace Epicoil.Library.Models.Planning
             this.LossWeight = (decimal)row["LossWgt"].GetDecimal();
             this.Yield = (decimal)row["Yield"].GetDecimal();
             this.TotalMaterialAmount = (decimal)row["TotalMatAmount"].GetDecimal();
-            this.TotalWeight = (decimal)row["TotalWidth"].GetDecimal();
-            this.BT = (string)row["BT"].GetString();
+            this.TotalWidth = (decimal)row["TotalWidth"].GetDecimal();
+            this.BussinessType = (string)row["BT"].GetString();
             this.LVTrim = Convert.ToBoolean(row["LVTrim"].GetInt());
             this.PackingPlan = Convert.ToBoolean(row["PackingPlan"].GetInt());
             this.CreationDate = (DateTime)row["CreationDate"].GetDate();
@@ -227,6 +230,14 @@ namespace Epicoil.Library.Models.Planning
             SumOutputWeight(model);
             SumLossWeight(model);
             SumYeild(model);
+            SumProductWidth(model);
+        }
+
+        public void SumProductWidth(PlanningHeadModel model)
+        {
+            TotalWidth = (from item in model.CuttingDesign
+                          where item.Status != "S"
+                          select item).Sum(i => i.Width * i.Stand);
         }
 
         /// <summary>
@@ -246,7 +257,7 @@ namespace Epicoil.Library.Models.Planning
         {
             if (model.Materails.ToList().Count != 0)
             {
-                InputWeight = model.Materails.Sum(p => p.Weight);
+                InputWeight = Math.Round(model.Materails.Sum(p => p.Weight),0);
             }
             else
             {
@@ -278,7 +289,7 @@ namespace Epicoil.Library.Models.Planning
         {
             if (model.CuttingLines.ToList().Count != 0)
             {
-                OutputWeight = model.CuttingLines.Where(p => p.Status != "S").Sum(i => i.TotalWeight);
+                OutputWeight = Math.Round(model.CuttingLines.Where(p => p.Status != "S").Sum(i => i.TotalWeight), 0);
             }
             else
             {
@@ -299,8 +310,6 @@ namespace Epicoil.Library.Models.Planning
         {
             decimal YieldPer = 0;
             WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
-            WgtCoilBack = (WgtCoilBack == 0) ? 1 : WgtCoilBack;
-
             YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
             return YieldPer;
         }
@@ -311,7 +320,29 @@ namespace Epicoil.Library.Models.Planning
         /// <param name="model"></param>
         public void SumYeild(PlanningHeadModel model)
         {
-            Yield = CalYeildPercent(OutputWeight, InputWeight, RewindWeight);
+            Yield = CalYeildPercent(Math.Round(OutputWeight, 0), Math.Round(InputWeight, 0), Math.Round(RewindWeight, 0));
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="YeildValue"></param>
+        /// <returns>True = In of range/False = Out of range</returns>
+        public bool CheckYeild(decimal YeildValue)
+        {
+            decimal YieldMin = ProcessLineDetail.YieldPercentMin;
+            decimal YieldMax = ProcessLineDetail.YieldPercentMax;
+
+            bool FlagYield = true;
+            if (YeildValue < YieldMin)
+            {
+                FlagYield = false;
+            }
+            if (YeildValue > YieldMax)
+            {
+                FlagYield = false;
+            }
+            return FlagYield;
         }
 
         public bool ValidateToSave(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)
@@ -333,6 +364,13 @@ namespace Epicoil.Library.Models.Planning
                 {
                     invalidObject = "ProcessLine";
                     msg = "Packing Plan can be select for Sliter only.";
+                    return false;
+                }
+
+                if (ProcessLineDetail.ResourceGrpID != "L" && LVTrim == true)
+                {
+                    invalidObject = "ProcessLine";
+                    msg = "Trim can be select for Leveller only.";
                     return false;
                 }
             }

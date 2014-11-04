@@ -503,6 +503,7 @@
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvMaterial.Size = new System.Drawing.Size(822, 386);
             this.dgvMaterial.TabIndex = 18;
+            this.dgvMaterial.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellDoubleClick);
             // 
             // MCSSNum
             // 

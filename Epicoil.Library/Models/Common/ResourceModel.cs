@@ -28,7 +28,8 @@ namespace Epicoil.Library.Models
 
         public decimal LengthMax { get; set; }
 
-        public decimal YieldPercent { get; set; }
+        public decimal YieldPercentMin { get; set; }
+        public decimal YieldPercentMax { get; set; }
 
         public void DataBind(DataRow row)
         {
@@ -44,6 +45,8 @@ namespace Epicoil.Library.Models
             this.WidthMax = (decimal)row["Number04"].GetDecimal();
             this.LengthMin = (decimal)row["Number05"].GetDecimal();
             this.LengthMax = (decimal)row["Number06"].GetDecimal();
+            this.YieldPercentMin = (decimal)row["Number08"].GetDecimal();
+            this.YieldPercentMax = (decimal)row["Number09"].GetDecimal();
         }
     }
 }
