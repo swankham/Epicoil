@@ -453,9 +453,10 @@ namespace Epicoil.Library.Repositories.Planning
         /// <returns>WorkOrder rows</returns>
         public IEnumerable<PlanningHeadModel> GetWorkAll(string plant)
         {
-            string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
-                                            FROM ucc_pln_PlanHead plh (NOLOCK)
+            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
+                                        FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+		                                    LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
                                             WHERE plh.Plant = N'{0}'", plant);
 
             var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
@@ -470,9 +471,10 @@ namespace Epicoil.Library.Repositories.Planning
         /// <returns>a row by workOrderNum</returns>
         public PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant)
         {
-            string sql = string.Format(@"SELECT uf.Name as PICName, plh.*
+            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+                                            LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
                                             WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderNum, plant, processStep);
 
             var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
@@ -686,13 +688,19 @@ namespace Epicoil.Library.Repositories.Planning
 
         public CutDesignModel GetCuttingByID(int LineID)
         {
-            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.LineID = {0}", LineID);
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
+                                            FROM ucc_pln_CuttingDesign cut 
+                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+                                            WHERE cut.LineID = {0}", LineID);
             return Repository.Instance.GetOne<CutDesignModel>(sql);
         }
 
         public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
         {
-            string sql = string.Format(@"SELECT cut.* FROM ucc_pln_CuttingDesign cut WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName 
+                                            FROM ucc_pln_CuttingDesign cut 
+                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+                                            WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
             return Repository.Instance.GetMany<CutDesignModel>(sql);
         }
 

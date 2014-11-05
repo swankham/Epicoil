@@ -77,6 +77,8 @@ namespace Epicoil.Library.Models.Planning
 
         public string BussinessType { get; set; }
 
+        public string BussinessTypeName { get; set; }
+
         public int Possession { get; set; }
 
         public int ProductStatus { get; set; }
@@ -141,6 +143,7 @@ namespace Epicoil.Library.Models.Planning
             this.CalQuantity = (decimal)row["CalQuantity"].GetDecimal();
             this.DeliveryDate = (DateTime)row["DeliveryDate"].GetDate();
             this.BussinessType = string.IsNullOrEmpty((string)row["BussinessType"].GetString()) ? "" : (string)row["BussinessType"].GetString();
+            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.Possession = (int)row["Possession"].GetInt();
             this.ProductStatus = (int)row["ProductStatus"].GetInt();
             this.Description = string.IsNullOrEmpty((string)row["Description"].GetString()) ? "" : (string)row["Description"].GetString();

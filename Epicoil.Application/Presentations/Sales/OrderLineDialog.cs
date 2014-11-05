@@ -60,5 +60,10 @@ namespace Epicoil.Appl.Presentations.Sales
                 }
             }
         }
+
+        private void dgvList_CellDoubleClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+            butSelect_Click(sender, e);
+        }
     }
 }

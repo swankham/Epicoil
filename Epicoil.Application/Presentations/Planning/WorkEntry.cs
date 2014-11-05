@@ -712,11 +712,12 @@ namespace Epicoil.Appl.Presentations.Planning
             switch (colName)
             {
                 case "sono":
-                    //
+                    //Load data from current seleted row to rowData.
                     var rowData = (from item in HeaderContent.CuttingDesign
                                    where item.LineID == Convert.ToInt32(lineId)
                                    select item).First();
 
+                    //Verify S/O No.
                     if (!string.IsNullOrEmpty(code))
                     {
                         result = _repoSale.GetOrderByID(code);
@@ -728,28 +729,39 @@ namespace Epicoil.Appl.Presentations.Planning
                             {
                                 frm.ShowDialog();
                                 result = frm._selected;
-                                if (result == null) return;
+
+                                if (result == null) 
+                                {
+                                    dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = string.Empty;
+                                    dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = string.Empty;
+                                    return; 
+                                }
                             }
                         }
-                        else
-                        {
-                            dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = result.OrderNumber;
-                            dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
-                        }
-                    }
 
-                    if (!string.IsNullOrEmpty(code))
-                    {
+                        //Set header value.
+                        HeaderContent.OrderType = result.OrderType;                        
+                        dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = result.OrderNumber;
+                        dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
+
                         OrderDetailModel resultLine = new OrderDetailModel();
-                        var soResult = _repoSale.GetOrderDtlByFilter(rowData.SONo, HeaderContent);
-                        using (OrderLineDialog frm = new OrderLineDialog(epiSession, soResult))
+                        SetDirectionPatter();
+                        var resultParam = _repoSale.GetOrderDtlByFilter(rowData.SONo, HeaderContent);
+                        using (OrderLineDialog frm = new OrderLineDialog(epiSession, resultParam))
                         {
                             frm.ShowDialog();
                             resultLine = frm._selected;
+                            if (resultLine.OrderNum == null)
+                            {
+                                dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = string.Empty;
+                                dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = string.Empty;
+                                return;
+                            }
                         }
 
                         HeaderContent.MaterialPattern = new MaterialModel();
                         HeaderContent.ClassID = resultLine.ClassID;
+                        HeaderContent.Possession = Convert.ToString(resultLine.Possession);
                         HeaderContent.MaterialPattern.CommodityCode = resultLine.CommodityCode;
                         HeaderContent.MaterialPattern.SpecCode = resultLine.SpecCode;
                         HeaderContent.MaterialPattern.CoatingCode = resultLine.CoatingCode;
@@ -778,6 +790,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     break;
             }
 
+            //Set grid after select S/O Line.
             if (!string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["norno"].Value.GetString()))
             {
                 dgvCutting.Rows[e.RowIndex].Cells["norno"].ReadOnly = true;
@@ -789,6 +802,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvCutting.Rows[e.RowIndex].Cells["width1"].ReadOnly = true;
                 dgvCutting.Rows[e.RowIndex].Cells["length1"].ReadOnly = true;
             }
+            SetHeadContent(HeaderContent);
         }
 
         private void dgvCutting_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -1064,7 +1078,9 @@ namespace Epicoil.Appl.Presentations.Planning
             {
                 dgvCutting.Rows.Add(p.LineID, i + 1, p.SONo, (p.SOLine == 0) ? "" : p.SOLine.ToString(), p.NORNum, p.CustID, p.CommodityCode, p.SpecCode
                                     , p.CoatingCode, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDivision, p.Note
-                                    , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack, p.BussinessType, true);
+                                    , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack
+                                    , p.BussinessTypeName, Enum.GetName(typeof(Possession), p.Possession), true);
+
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {

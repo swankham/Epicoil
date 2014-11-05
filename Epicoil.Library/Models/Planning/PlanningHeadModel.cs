@@ -74,7 +74,6 @@ namespace Epicoil.Library.Models.Planning
 
         public string BussinessTypeName { get; set; }
 
-
         public bool LVTrim { get; set; }
 
         public bool PackingPlan { get; set; }
@@ -178,7 +177,8 @@ namespace Epicoil.Library.Models.Planning
             this.Yield = (decimal)row["Yield"].GetDecimal();
             this.TotalMaterialAmount = (decimal)row["TotalMatAmount"].GetDecimal();
             this.TotalWidth = (decimal)row["TotalWidth"].GetDecimal();
-            this.BussinessType = (string)row["BT"].GetString();
+            this.BussinessType = string.IsNullOrEmpty((string)row["BT"].GetString()) ? "" : (string)row["BT"].GetString();
+            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.LVTrim = Convert.ToBoolean(row["LVTrim"].GetInt());
             this.PackingPlan = Convert.ToBoolean(row["PackingPlan"].GetInt());
             this.CreationDate = (DateTime)row["CreationDate"].GetDate();
@@ -257,7 +257,7 @@ namespace Epicoil.Library.Models.Planning
         {
             if (model.Materails.ToList().Count != 0)
             {
-                InputWeight = Math.Round(model.Materails.Sum(p => p.Weight),0);
+                InputWeight = Math.Round(model.Materails.Sum(p => p.Weight), 0);
             }
             else
             {
@@ -324,7 +324,7 @@ namespace Epicoil.Library.Models.Planning
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="YeildValue"></param>
         /// <returns>True = In of range/False = Out of range</returns>

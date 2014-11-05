@@ -192,6 +192,7 @@
             this.qtyPack1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pack = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rowValidated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -794,6 +795,7 @@
             this.qtyPack1,
             this.pack,
             this.bt1,
+            this.possession,
             this.rowValidated});
             this.dgvCutting.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvCutting.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1775,6 +1777,13 @@
             this.bt1.ReadOnly = true;
             this.bt1.Width = 46;
             // 
+            // possession
+            // 
+            this.possession.HeaderText = "Possession";
+            this.possession.Name = "possession";
+            this.possession.ReadOnly = true;
+            this.possession.Width = 94;
+            // 
             // rowValidated
             // 
             this.rowValidated.HeaderText = "Completed";
@@ -1995,6 +2004,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn qtyPack1;
         private System.Windows.Forms.DataGridViewTextBoxColumn pack;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn possession;
         private System.Windows.Forms.DataGridViewCheckBoxColumn rowValidated;
     }
 }

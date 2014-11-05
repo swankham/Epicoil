@@ -36,6 +36,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderLineDialog));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.butClear = new System.Windows.Forms.Button();
             this.butSearch = new System.Windows.Forms.Button();
             this.dgvList = new System.Windows.Forms.DataGridView();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.ordernum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.orderline = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.norno = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,6 +98,14 @@
             this.groupBox1.Size = new System.Drawing.Size(622, 37);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
+            // 
+            // textBox3
+            // 
+            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox3.Location = new System.Drawing.Point(328, 11);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(36, 21);
+            this.textBox3.TabIndex = 17;
             // 
             // label5
             // 
@@ -194,14 +202,7 @@
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvList.Size = new System.Drawing.Size(922, 243);
             this.dgvList.TabIndex = 18;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Location = new System.Drawing.Point(328, 11);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(36, 21);
-            this.textBox3.TabIndex = 17;
+            this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
             // ordernum
             // 
@@ -209,7 +210,7 @@
             this.ordernum.Name = "ordernum";
             this.ordernum.ReadOnly = true;
             this.ordernum.Visible = false;
-            this.ordernum.Width = 89;
+            this.ordernum.Width = 80;
             // 
             // orderline
             // 
