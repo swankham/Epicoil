@@ -156,6 +156,7 @@
     <Compile Include="Models\Common\ItemMenuModel.cs" />
     <Compile Include="Models\Common\MenuModel.cs" />
     <Compile Include="Models\Common\SessionInfo.cs" />
+    <Compile Include="Models\Planning\CoilBackModel.cs" />
     <Compile Include="Models\Planning\CutDesignModel.cs" />
     <Compile Include="Models\Planning\DieModel.cs" />
     <Compile Include="Models\Planning\DiePatternModel.cs" />

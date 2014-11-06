@@ -25,4 +25,14 @@ namespace Epicoil.Library
         C = 4,
         S = 5   
     }
+
+    public enum CoilStep
+    {
+        MA = 1,
+        MB = 2,
+        MC = 3,
+        MD = 4,
+        ME = 5,
+        MF = 6
+    }
 }

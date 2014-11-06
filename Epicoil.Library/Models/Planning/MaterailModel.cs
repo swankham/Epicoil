@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Epicoil.Library.Models.Planning
 {
@@ -198,6 +200,37 @@ namespace Epicoil.Library.Models.Planning
         public void SetQuantityPack()
         {
             QuantityPack = (Length == 0) ? 1 : QuantityPack;
+        }
+
+        public bool ValidateToCoilBackAuto(IEnumerable<CoilBackRuleModel> coilBackRuleList, out string risk, out string msg)
+        {
+            bool valid = false;
+            risk = string.Empty;
+            msg = string.Empty;
+
+            if (RemainWeight <= 0)
+            {
+                //risk = "WARNNING";
+                msg = "Remain weight must greater than 0.";
+                return false;
+            }
+
+            IEnumerable<CoilBackRuleModel> coilRule = coilBackRuleList;
+            coilRule = coilRule.Where(i => i.ThickMin <= Thick && i.ThickMax >= Thick);
+            coilRule = coilRule.Where(i => i.WidthMin <= Width && i.WidthMax >= Width);
+            coilRule = coilRule.Where(i => i.Weight <= RemainWeight);
+
+            if (coilRule.ToList().Count > 0)
+            {
+                var result = coilRule.First();
+                //The remain weight to matched the coil back rule, and then we will create coil back.
+                risk = "WARNNING";
+                msg = result.Description;
+                CBSelect = true;
+                valid = true;
+            }
+
+            return valid;
         }
     }
 }

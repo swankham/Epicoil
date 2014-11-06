@@ -41,7 +41,7 @@ namespace Epicoil.Library.Repositories.Sales
             string sql = string.Format(@"SELECT soh.OrderNum, soh.OrderDate, soh.RequestDate, cust.CustID, cust.Name as CustomerName
 	                            , ensr.CustID as EndUserCode, ensr.Name as EndUserName, vend.CustID as ShipTo, vend.Name as ShipToName
 	                            , soh.PONum, socd.Key1 as SOCode, socd.Character01 as SOCodeName, soh.TermsCode
-	                            , busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                            , busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName, soh.ShortChar04
 	                            , soh.EntryPerson, soh.Number03 as TotalWeight, soh.Number04 as TotalAmount
                             FROM OrderHed soh
                              LEFT JOIN Customer cust ON(soh.CustNum = cust.CustNum)
@@ -126,14 +126,14 @@ namespace Epicoil.Library.Repositories.Sales
             if (model.Materails.ToList().Count > 0)
             {
                 var mat = model.Materails.FirstOrDefault();
-                if (Convert.ToBoolean(model.CurrentClass.CustomerReq)) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.ComudityReq)) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq)) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq)) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.CustomerReq)) query = query.Where(p => p.CustID.GetString().ToUpper().Equals(mat.CustID.GetString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.ComudityReq)) query = query.Where(p => p.CommodityCode.GetString().ToUpper().Equals(mat.CommodityCode.GetString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq)) query = query.Where(p => p.SpecCode.GetString().ToUpper().Equals(mat.SpecCode.GetString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq)) query = query.Where(p => (string.IsNullOrEmpty(p.CoatingCode) ? "" : p.CoatingCode.ToUpper()).Equals(string.IsNullOrEmpty(mat.CoatingCode) ? "" : mat.CoatingCode.ToUpper()));
 
-                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.GetString().ToUpper().Equals(mat.MakerCode.GetString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.GetString().ToUpper().Equals(mat.MillCode.GetString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.GetString().ToUpper().Equals(mat.SupplierCode.GetString().ToUpper()));
 
                 query = query.Where(p => p.Thick.Equals(mat.Thick));
                 query = query.Where(p => p.Width <= mat.Width);
@@ -142,10 +142,6 @@ namespace Epicoil.Library.Repositories.Sales
 
             query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
             query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
 
             return query;
         }

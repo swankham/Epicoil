@@ -142,11 +142,27 @@ namespace Epicoil.Library.Models.Planning
 
         public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
         public IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
+        public IEnumerable<CoilBackModel> CoilBackList = new List<CoilBackModel>();
+
+        public IEnumerable<CoilBackRuleModel> CoilBackRoleList = new List<CoilBackRuleModel>();
+        
 
         public List<CutDesignModel> CuttingDesign
         {
             get { return this.CuttingLines.ToList(); }
             set { this.CuttingLines = value; }
+        }
+
+        public List<CoilBackModel> CoilBacks
+        {
+            get { return this.CoilBackList.ToList(); }
+            set { this.CoilBackList = value; }
+        }
+
+        public List<CoilBackRuleModel> CoilBackRoles
+        {
+            get { return this.CoilBackRoleList.ToList(); }
+            set { this.CoilBackRoleList = value; }
         }
 
         public int ClassID { get; set; }
@@ -271,14 +287,14 @@ namespace Epicoil.Library.Models.Planning
         /// <param name="model"></param>
         public void SumRewindWeight(PlanningHeadModel model)
         {
-            //if (model.CoilBackModel.ToList().Count != 0)
-            //{
-            //    RewindWeight = model.CoilBackModel.Sum(p => p.Weight);
-            //}
-            //else
-            //{
-            RewindWeight = 0;
-            //}
+            if (model.CoilBacks.ToList().Count != 0)
+            {
+                RewindWeight = Math.Round(model.CoilBacks.Sum(p => p.Weight), 0);
+            }
+            else
+            {
+                RewindWeight = 0;
+            }
         }
 
         /// <summary>

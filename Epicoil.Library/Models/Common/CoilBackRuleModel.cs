@@ -45,6 +45,7 @@ namespace Epicoil.Library.Models
             WidthMin = (decimal)row["Number03"].GetDecimal();
             WidthMax = (decimal)row["Number04"].GetDecimal();
             Description = string.IsNullOrEmpty(row["Character01"].GetString()) ? "" : row["Character01"].GetString();
+            Weight = (decimal)row["Number05"].GetDecimal();
         }
     }
 }

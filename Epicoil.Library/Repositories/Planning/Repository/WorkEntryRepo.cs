@@ -9,15 +9,205 @@ namespace Epicoil.Library.Repositories.Planning
 {
     public class WorkEntryRepo : IWorkEntryRepo
     {
-        private readonly IUserCodeRepo _repoUcode;
-        private readonly IResourceRepo _repoResrc;
         private readonly IClassMasterRepo _repoCls;
+        private readonly IResourceRepo _repoResrc;
+        private readonly IUserCodeRepo _repoUcode;
+        private readonly ICoilBackRuleRepo _repoRule;
 
         public WorkEntryRepo()
         {
             this._repoUcode = new UserCodeRepo();
             this._repoResrc = new ResourceRepo();
             this._repoCls = new ClassMasterRepo();
+            this._repoRule = new CoilBackRuleRepo();
+        }
+
+        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
+        {//If Coil length must be LengthM*1000
+            decimal Ma = 0.0M;
+            decimal Mb = 0.0M;
+            decimal Mc = 0.0M;
+            decimal WgtPerUnit = 0;
+
+            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
+            Mb = (W / 1000) * (L);
+            Mc = (Ma * Mb);
+            WgtPerUnit = Math.Round(Mc, 2);
+            return WgtPerUnit;
+        }
+
+        public decimal CalWgtFromMat(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+        }
+
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+        }
+
+        public IEnumerable<CoilBackModel> DeleteCoilBack(SessionInfo _session, int workOrderId, int transactionLineID)
+        {
+            string sql = string.Format(@"DELETE FROM ucc_pln_CoilBack WHERE TransactionLineID = {0}", transactionLineID);
+            Repository.Instance.ExecuteWithTransaction(sql, "Delete CoilBack");
+
+            return GetCoilBackAll(workOrderId);
+        }
+
+        public bool DeleteCutting(SessionInfo _session, CutDesignModel model, out string msg)
+        {
+            msg = "";
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE LineID = {0}", model.LineID);
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Must be call PlanningHeadModel.ValidateToDelMaterial
+        /// </summary>
+        /// <param name="_session">Type of current session login</param>
+        /// <param name="model">Type of material selected to delete</param>
+        /// <param name="msg">Out put result messege from this</param>
+        /// <returns>true = success/false = unsuccess</returns>
+        public bool DeleteMaterail(Models.SessionInfo _session, MaterialModel model, out string msg)
+        {
+            msg = "";
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_Material WHERE TransactionLineID = {0}", model.TransactionLineID);
+
+                sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 0, ShortChar05 = '', Date03 = null , Number08 = 1
+                                        WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                           , model.MCSSNo, model.SerialNo);
+
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Material");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+        }
+
+        public IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg)
+        {
+            risk = "";
+            msg = "";
+            if (head.Materails.ToList().Count > 0)
+            {
+                var cutLines = GetCuttingLines(head.WorkOrderID);
+                var rowData = (from item in head.Materails
+                               select item).First();
+
+                risk = string.Empty;
+                msg = string.Empty;
+                decimal cutTotalWidth = cutLines.Sum(i => i.Width * i.Stand);
+
+                if (rowData.Width > cutTotalWidth)
+                {
+                    var newCut = cutLines.First();
+                    newCut.SONo = "";
+                    newCut.SOLine = 0;
+                    newCut.NORNum = "";
+                    newCut.LineID = 0;
+                    newCut.Status = "S";
+                    newCut.Width = rowData.Width - cutTotalWidth;
+                    newCut.Stand = 1;
+                    newCut.CalculateRow(head);
+                    if (newCut.ValidateByRow(head, out risk, out msg))
+                    {
+                        var result = SaveLineCutting(_session, head, newCut);
+                    }
+                }
+            }
+
+            return GetCuttingLines(head.WorkOrderID);
+        }
+
+        /// <summary>
+        /// Formatting WorkOrder Number.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>string : WorkOrderNumber</returns>
+        public string GenWorkOrderFixFormat(int id)
+        {
+            return ("K" + DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM"))) + id.ToString("0000"));
+        }
+
+        /// <summary>
+        /// Get rows by filtering base on the model from master data [PartLot].
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <param name="model"></param>
+        /// <returns>Rows</returns>
+        public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model)
+        {
+            IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
+
+            //Verify alway.
+            //if (!string.IsNullOrEmpty(model.BussinessType))
+            query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
+            if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
+
+            if (model.Materails.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
+            {
+                var mat = model.Materails.FirstOrDefault();
+                query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
+                query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
+                query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
+                query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
+
+                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
+
+                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
+                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+            }
+
+            if (model.CuttingDesign.ToList().Count > 0)
+            {
+                var cut = model.CuttingDesign.FirstOrDefault();
+                if (Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(cut.CustID.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(cut.CommodityCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(cut.SpecCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(cut.CoatingCode.ToString().ToUpper()));
+
+                query = query.Where(p => p.Thick.Equals(cut.Thick));
+                query = query.Where(p => p.Width >= cut.Width);
+                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(cut.Length));
+            }
+
+            query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
+            query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
+            query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
+            query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
+            query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
+            query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
+
+            //if machine is not Sliter and Leveller must be filter for "SHEET" only.
+            if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
+                query = query.Where(p => p.Length > 0);
+
+            //if machine is Sliter and Leveller must be filter for "COIL" only.
+            if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
+                query = query.Where(p => p.Length.Equals(0));
+
+            return query;
         }
 
         /// <summary>
@@ -77,7 +267,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
-	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, SelectCB as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -103,6 +293,91 @@ namespace Epicoil.Library.Repositories.Planning
                                               AND mat.WorkOrderID = {1}", plant, workOrderId);
 
             return Repository.Instance.GetMany<MaterialModel>(sql);
+        }
+
+        public IEnumerable<CoilBackModel> GetCoilBackAll(int workOrderId)
+        {
+            string sql = string.Format(@"SELECT cb.LineID, cb.WorkOrderID
+	                                        , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                        , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                        , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                        , busi.Key1 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
+	                                        , cb.*
+                                        FROM ucc_pln_CoilBack cb
+	                                        LEFT JOIN UD29 cmdt ON(cb.Cmdty = cmdt.Key1)
+	                                        LEFT JOIN UD30 spec ON(cb.Cmdty = spec.Key2 and cb.Spec = spec.Key1)
+	                                        LEFT JOIN UD31 coat ON(cb.Coating = coat.Key1)
+	                                        LEFT JOIN UD25 busi ON(cb.BT = busi.Key1)
+                                        WHERE cb.WorkOrderID = {0}
+                                        ORDER BY cb.LineID", workOrderId);
+
+            return Repository.Instance.GetMany<CoilBackModel>(sql);
+        }
+
+        public CoilBackModel GetCoilBackByID(int transactionLineID)
+        {
+            string sql = string.Format(@"SELECT cb.LineID, cb.WorkOrderID
+	                                        , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                        , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                        , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                        , busi.Key1 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
+	                                        , cb.*
+                                        FROM ucc_pln_CoilBack cb
+	                                        LEFT JOIN UD29 cmdt ON(cb.Cmdty = cmdt.Key1)
+	                                        LEFT JOIN UD30 spec ON(cb.Cmdty = spec.Key2 and cb.Spec = spec.Key1)
+	                                        LEFT JOIN UD31 coat ON(cb.Coating = coat.Key1)
+	                                        LEFT JOIN UD25 busi ON(cb.BT = busi.Key1)
+                                        WHERE cb.transactionLineID = {0}", transactionLineID);
+
+            return Repository.Instance.GetOne<CoilBackModel>(sql);
+        }
+
+        public CutDesignModel GetCuttingByID(int LineID)
+        {
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
+                                            FROM ucc_pln_CuttingDesign cut
+                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+                                            WHERE cut.LineID = {0}", LineID);
+            return Repository.Instance.GetOne<CutDesignModel>(sql);
+        }
+
+        public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
+                                            FROM ucc_pln_CuttingDesign cut
+                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+                                            WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
+            return Repository.Instance.GetMany<CutDesignModel>(sql);
+        }
+
+        /// <summary>
+        /// Get last WorkOrder step for each WorkOrder by WorkOrderID.
+        /// </summary>
+        /// <param name="workOrderID"></param>
+        /// <returns>int</returns>
+        public int GetLastStep(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
+                                            WHERE WorkOrderID = {0}
+                                            ORDER BY WorkOrderID DESC", workOrderID);
+
+            int id = Repository.Instance.GetOne<int>(sql, "ProcessStep").GetInt();
+            return Convert.ToInt32(id) + 1;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="plant"></param>
+        /// <returns></returns>
+        public int GetLastWorkOrder(string plant)
+        {
+            string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
+                                            WHERE Plant = N'{0}'
+                                            ORDER BY WorkNumber DESC", plant);
+
+            var id = Repository.Instance.GetOne<Int64>(sql, "WorkNumber");
+            return Convert.ToInt32(id) + 1;
         }
 
         /// <summary>
@@ -190,105 +465,52 @@ namespace Epicoil.Library.Repositories.Planning
         }
 
         /// <summary>
-        /// Get rows by filtering base on the model from master data [PartLot].
+        /// Get WorkOrders all that to saved.
         /// </summary>
         /// <param name="plant"></param>
-        /// <param name="model"></param>
-        /// <returns>Rows</returns>
-        public IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model)
+        /// <returns>WorkOrder rows</returns>
+        public IEnumerable<PlanningHeadModel> GetWorkAll(string plant)
         {
-            IEnumerable<MaterialModel> query = this.GetAllMaterial(plant);
+            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
+                                        FROM ucc_pln_PlanHead plh (NOLOCK)
+                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+		                                    LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
+                                            WHERE plh.Plant = N'{0}'", plant);
 
-            //Verify alway.
-            if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
-            if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
-
-            if (model.Materails.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
-            {
-                var mat = model.Materails.FirstOrDefault();
-                query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
-                query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
-                query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
-                query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
-
-                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
-
-                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
-                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
-            }
-
-            if (model.CuttingDesign.ToList().Count > 0)
-            {
-                var cut = model.CuttingDesign.FirstOrDefault();
-                if (Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(cut.CustID.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(cut.CommodityCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(cut.SpecCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(cut.CoatingCode.ToString().ToUpper()));
-
-                query = query.Where(p => p.Thick.Equals(cut.Thick));
-                query = query.Where(p => p.Width >= cut.Width);
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(cut.Length));
-            }
-
-            query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
-
-            //if machine is not Sliter and Leveller must be filter for "SHEET" only.
-            if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
-                query = query.Where(p => p.Length > 0);
-
-            //if machine is Sliter and Leveller must be filter for "COIL" only.
-            if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
-                query = query.Where(p => p.Length.Equals(0));
-
-            return query;
+            var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
+            return result;
         }
 
         /// <summary>
-        /// Get last WorkOrder step for each WorkOrder by WorkOrderID.
+        /// Get WorkOrder that to saved by WorkOrderNumber.
         /// </summary>
-        /// <param name="workOrderID"></param>
-        /// <returns>int</returns>
-        public int GetLastStep(int workOrderID)
-        {
-            string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
-                                            WHERE WorkOrderID = {0}
-                                            ORDER BY WorkOrderID DESC", workOrderID);
-
-            int id = Repository.Instance.GetOne<int>(sql, "ProcessStep").GetInt();
-            return Convert.ToInt32(id) + 1;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
+        /// <param name="workOrderNum"></param>
         /// <param name="plant"></param>
-        /// <returns></returns>
-        public int GetLastWorkOrder(string plant)
+        /// <returns>a row by workOrderNum</returns>
+        public PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant)
         {
-            string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead
-                                            WHERE Plant = N'{0}'
-                                            ORDER BY WorkNumber DESC", plant);
+            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
+                                            FROM ucc_pln_PlanHead plh (NOLOCK)
+                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+                                            LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
+                                            WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderNum, plant, processStep);
 
-            var id = Repository.Instance.GetOne<Int64>(sql, "WorkNumber");
-            return Convert.ToInt32(id) + 1;
-        }
+            var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
 
-        /// <summary>
-        /// Formatting WorkOrder Number.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns>string : WorkOrderNumber</returns>
-        public string GenWorkOrderFixFormat(int id)
-        {
-            return ("K" + DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM"))) + id.ToString("0000"));
+            if (result != null)
+            {
+                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
+                result.OrderTypeList = _repoUcode.GetAll("OrderType");
+                result.PossessionList = _repoUcode.GetAll("Pocessed");
+                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
+                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
+                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
+                result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
+                result.CoilBacks = GetCoilBackAll(result.WorkOrderID).ToList();
+                result.CoilBackRoles = _repoRule.GetAll().ToList();
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -446,262 +668,142 @@ namespace Epicoil.Library.Repositories.Planning
             return GetWorkById(workOrderNum, Convert.ToInt32(model.ProcessStep), _session.PlantID);
         }
 
-        /// <summary>
-        /// Get WorkOrders all that to saved.
-        /// </summary>
-        /// <param name="plant"></param>
-        /// <returns>WorkOrder rows</returns>
-        public IEnumerable<PlanningHeadModel> GetWorkAll(string plant)
+        private int GetCoilBackStep(string serial)
         {
-            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
-                                        FROM ucc_pln_PlanHead plh (NOLOCK)
-                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
-		                                    LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
-                                            WHERE plh.Plant = N'{0}'", plant);
+            string sql = string.Format(@"SELECT BackStep FROM ucc_pln_CoilBack (NOLOCK)
+                                            WHERE Serial = N'{0}'", serial);
 
-            var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
+            var result = Repository.Instance.GetOne<int>(sql, "BackStep").GetInt();
             return result;
         }
 
-        /// <summary>
-        /// Get WorkOrder that to saved by WorkOrderNumber.
-        /// </summary>
-        /// <param name="workOrderNum"></param>
-        /// <param name="plant"></param>
-        /// <returns>a row by workOrderNum</returns>
-        public PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant)
+        public IEnumerable<CoilBackModel> SaveCoilBack(SessionInfo _session, CoilBackModel data)
         {
-            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
-                                            FROM ucc_pln_PlanHead plh (NOLOCK)
-                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
-                                            LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
-                                            WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderNum, plant, processStep);
+            data.BackStep = GetCoilBackStep(data.OldSerial) + 1;
+            data.Serial = data.OldSerial + Enum.GetName(typeof(CoilStep), Convert.ToInt32(data.BackStep));
 
-            var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
-
-            if (result != null)
-            {
-                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-                result.OrderTypeList = _repoUcode.GetAll("OrderType");
-                result.PossessionList = _repoUcode.GetAll("Pocessed");
-                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
-                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
-                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
-                result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Save a material for each WorkOrder.
-        /// </summary>
-        /// <param name="_session"></param>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        public MaterialModel SaveMaterial(Models.SessionInfo _session, MaterialModel model)
-        {
-            //int id = 0;
             string sql = string.Format(@"IF NOT EXISTS
 									    (
-										    SELECT * FROM ucc_pln_Material (NOLOCK)
-										    WHERE TransactionLineID = {29}
+										    SELECT * FROM ucc_pln_CoilBack (NOLOCK)
+										    WHERE TransactionLineID = {1}
 									    )
                                         BEGIN
-                                            INSERT INTO ucc_pln_Material
-                                               (Company
-                                               ,Plant
-                                               ,WorkOrderID
-                                               ,MatSeq
-                                               ,Serial
-                                               ,Cmdty
-                                               ,Spec
-                                               ,Coating
-                                               ,Category
-                                               ,Thick
-                                               ,Width
-                                               ,Length
-                                               ,Weight
-                                               ,UsingWgt
-                                               ,RemainWgt
-                                               ,Qty
-                                               ,RemainQty
-                                               ,LenghtM
-                                               ,UsingLM
-                                               ,SelectCB
-                                               ,CBalready
-                                               ,MCSSNo
-                                               ,Status
-                                               ,BT
-                                               ,Possession
-                                               ,ProductSts
-                                               ,Descriptions
-                                               ,Note
-                                               ,CreationDate
-                                               ,LastUpdateDate
-                                               ,CreatedBy
-                                               ,UpdatedBy)
-                                            VALUES
-                                               ( N'{0}' --<Company, nvarchar(8),>
-                                               , N'{1}' --<Plant, nvarchar(8),>
-                                               , {2} --<WorkOrderID, bigint,>
-                                               , {3} --<MatSeq, int,>
-                                               , N'{4}' --<Serial, nvarchar(18),>
-                                               , N'{5}' --<Cmdty, nvarchar(10),>
-                                               , N'{6}' --<Spec, nvarchar(10),>
-                                               , N'{7}' --<Coating, nvarchar(10),>
-                                               , N'{8}' --<Category, nvarchar(10),>
-                                               , {9} --<Thick, decimal(20,9),>
-                                               , {10} --<Width, decimal(20,9),>
-                                               , {11} --<Length, decimal(20,9),>
-                                               , {12} --<Weight, decimal(20,9),>
-                                               , {13} --<UsingWgt, decimal(20,9),>
-                                               , {14} --<RemainWgt, decimal(20,9),>
-                                               , {15} --<Qty, decimal(20,9),>
-                                               , {16} --<RemainQty, decimal(20,9),>
-                                               , {17} --<LenghtM, decimal(20,9),>
-                                               , {18} --<UsingLM, decimal(20,9),>
-                                               , {19} --<SelectCB, tinyint,>
-                                               , {20} --<CBalready, tinyint,>
-                                               , N'{21}' --<MCSSNo, nvarchar(18),>
-                                               , N'{22}' --<Status, nvarchar(10),>
-                                               , N'{23}' --<BT, nvarchar(10),>
-                                               , {24} --<Possession, int,>
-                                               , N'{25}' --<ProductSts, nvarchar(10),>
-                                               , N'{26}' --<Descriptions, varchar(500),>
-                                               , N'{27}' --<Note, varchar(500),>
-                                               , GETDATE() --<CreationDate, datetime,>
-                                               , GETDATE() --<LastUpdateDate, datetime,>
-                                               , N'{28}' --<CreatedBy, varchar(45),>
-                                               , N'{28}' --<UpdatedBy, varchar(45),>
-		                                    )
-                                        END
-                                    ELSE
-                                        BEGIN
-                                            UPDATE ucc_pln_Material
-                                               SET UsingWgt = {13} --<UsingWgt, decimal(20,9),>
-                                                  ,RemainWgt = {14} --<RemainWgt, decimal(20,9),>
-                                                  ,Qty = {15} --<Qty, decimal(20,9),>
-                                                  ,RemainQty = {16} --<RemainQty, decimal(20,9),>
-                                                  ,LenghtM = {17} --<LenghtM, decimal(20,9),>
-                                                  ,UsingLM = {18} --<UsingLM, decimal(20,9),>
-                                                  ,SelectCB = {19} --<SelectCB, tinyint,>
-                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
-                                                  ,UpdatedBy = N'{28}' --<UpdatedBy, varchar(45),>
-                                             WHERE  TransactionLineID = {29}
-                                        END" + Environment.NewLine
-                                              , _session.CompanyID
-                                              , _session.PlantID
-                                              , model.WorkOrderID
-                                              , 1 //model.Seq
-                                              , model.SerialNo
-                                              , model.CommodityCode     //{5}
-                                              , model.SpecCode
-                                              , model.CoatingCode
-                                              , ""
-                                              , model.Thick
-                                              , model.Width         //{10}
-                                              , model.Length
-                                              , model.Weight
-                                              , model.UsingWeight
-                                              , model.RemainWeight
-                                              , model.UsingQuantity      //{15}
-                                              , model.RemainQuantity
-                                              , model.LengthM
-                                              , model.UsingLengthM
-                                              , Convert.ToInt32(model.CBSelect.GetBoolean())
-                                              , Convert.ToInt32(model.CBalready.GetBoolean())   //{20}
-                                              , model.MCSSNo
-                                              , model.Status
-                                              , model.BussinessType
-                                              , model.Possession
-                                              , model.ProductStatus         //{25}
-                                              , model.PrdDescriptions
-                                              , model.Note
-                                              , _session.UserID
-                                              , model.TransactionLineID
-                                              );
+                                            INSERT INTO ucc_pln_CoilBack
+                                                       (WorkOrderID
+                                                       ,TransactionLineID
+                                                       ,SeqID
+                                                       ,Serial
+                                                       ,Cmdty
+                                                       ,Spec
+                                                       ,Coating
+                                                       ,Thick
+                                                       ,Width
+                                                       ,Length
+                                                       ,Weight
+                                                       ,Qty
+                                                       ,LengthM
+                                                       ,MCSSNo
+                                                       ,OldSerial
+                                                       ,BackStep
+                                                       ,Status
+                                                       ,BT
+                                                       ,Possession
+                                                       ,ProductStatus
+                                                       ,Description
+                                                       ,Note
+                                                       ,CoilBackState
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy)
+                                                 VALUES
+                                                       ({0}  --<WorkOrderID, bigint,>
+                                                       ,{1}  --<TransactionLineID, bigint,>
+                                                       ,{2}  --<SeqID, int,>
+                                                       ,N'{3}'  --<Serial, nvarchar(18),>
+                                                       ,N'{4}'  --<Cmdty, nvarchar(10),>
+                                                       ,N'{5}'  --<Spec, nvarchar(10),>
+                                                       ,N'{6}'  --<Coating, nvarchar(10),>
+                                                       ,{7}  --<Thick, decimal(20,9),>
+                                                       ,{8}  --<Widht, decimal(20,9),>
+                                                       ,{9}  --<Length, decimal(20,9),>
+                                                       ,{10}  --<Weight, decimal(20,9),>
+                                                       ,{11}  --<Qty, decimal(20,9),>
+                                                       ,{12}  --<LengthM, decimal(20,9),>
+                                                       ,N'{13}'  --<MCSSNo, nvarchar(18),>
+                                                       ,N'{14}'  --<OldSerial, nvarchar(18),>
+                                                       ,{15}  --<BackStep, int,>
+                                                       ,N'{16}'  --<Status, nvarchar(10),>
+                                                       ,N'{17}'  --<BT, nvarchar(10),>
+                                                       ,{18}  --<Possession, int,>
+                                                       ,{19}  --<ProductStatus, int,>
+                                                       ,N'{20}'  --<Description, varchar(500),>
+                                                       ,N'{21}'  --<Note, varchar(500),>
+                                                       ,{22}  --<CoilBackState, int,>
+                                                       ,GETDATE()  --<CreationDate, datetime,>
+                                                       ,GETDATE()  --<LastUpdateDate, datetime,>
+                                                       ,N'{23}'  --<CreatedBy, varchar(45),>
+                                                       ,N'{23}'  --<UpdatedBy, varchar(45),>
+		                                               )
+                                            END
+                                        ELSE
+                                            BEGIN
+                                                UPDATE ucc_pln_CoilBack
+                                                   SET WorkOrderID = {0}  --<WorkOrderID, bigint,>
+                                                      ,TransactionLineID = {1}  --<TransactionLineID, bigint,>
+                                                      ,SeqID = {2}  --<SeqID, int,>
+                                                      ,Serial = N'{3}'  --<Serial, nvarchar(18),>
+                                                      ,Cmdty = N'{4}'  --<Cmdty, nvarchar(10),>
+                                                      ,Spec = N'{5}' --<Spec, nvarchar(10),>
+                                                      ,Coating = N'{6}'  --<Coating, nvarchar(10),>
+                                                      ,Thick = {7} --<Thick, decimal(20,9),>
+                                                      ,Width = {8}  --<Widht, decimal(20,9),>
+                                                      ,Length = {9}  --<Length, decimal(20,9),>
+                                                      ,Weight = {10}  --<Weight, decimal(20,9),>
+                                                      ,Qty = {11}  --<Qty, decimal(20,9),>
+                                                      ,LengthM = {12}  --<LengthM, decimal(20,9),>
+                                                      ,MCSSNo =  N'{13}' --<MCSSNo, nvarchar(18),>
+                                                      ,OldSerial = N'{14}'  --<OldSerial, nvarchar(18),>
+                                                      ,BackStep = {15}  --<BackStep, int,>
+                                                      ,Status = N'{16}'  --<Status, nvarchar(10),>
+                                                      ,BT = N'{17}'  --<BT, nvarchar(10),>
+                                                      ,Possession = {18}  --<Possession, int,>
+                                                      ,ProductStatus = {19}  --<ProductStatus, int,>
+                                                      ,Description = N'{20}'  --<Description, varchar(500),>
+                                                      ,Note = N'{21}'  --<Note, varchar(500),>
+                                                      ,CoilBackState = {22}  --<CoilBackState, int,>
+                                                      ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
+                                                      ,UpdatedBy = N'{23}'  --<UpdatedBy, varchar(45),>
+                                                 WHERE TransactionLineID = {1}
+                                            END" + Environment.NewLine
+                                  , data.WorkOrderID
+                                  , data.TransactionLineID
+                                  , data.SeqID
+                                  , data.Serial
+                                  , data.CommodityCode
+                                  , data.SpecCode       //{5}
+                                  , data.CoatingCode
+                                  , data.Thick
+                                  , data.Width
+                                  , data.Length
+                                  , data.Weight         //{10}
+                                  , data.Qty
+                                  , (data.Length == 0) ? data.CBLengthMeter(data.Weight, data.Width, data.Thick, data.Gravity, data.FrontPlate, data.BackPlate) : Math.Round((data.Length / 1000), 2)
+                                  , data.MCSSNo
+                                  , data.OldSerial
+                                  , data.BackStep.GetInt()       //{15}
+                                  , data.Status
+                                  , data.BussinessType
+                                  , data.Possession
+                                  , data.ProductStatus
+                                  , data.Description        //{20}
+                                  , data.Note
+                                  , data.CoilBackState.GetInt()
+                                  , _session.UserID
+                                  );
+            Repository.Instance.ExecuteWithTransaction(sql, "Update Cutting");
 
-            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
-                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
-                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
-
-            Repository.Instance.ExecuteWithTransaction(sql, "Add Material");
-            return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
-        }
-
-        /// <summary>
-        /// Must be call PlanningHeadModel.ValidateToDelMaterial
-        /// </summary>
-        /// <param name="_session">Type of current session login</param>
-        /// <param name="model">Type of material selected to delete</param>
-        /// <param name="msg">Out put result messege from this</param>
-        /// <returns>true = success/false = unsuccess</returns>
-        public bool DeleteMaterail(Models.SessionInfo _session, MaterialModel model, out string msg)
-        {
-            msg = "";
-            try
-            {
-                string sql = string.Format(@"DELETE FROM ucc_pln_Material WHERE TransactionLineID = {0}", model.TransactionLineID);
-
-                sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 0, ShortChar05 = '', Date03 = null , Number08 = 1
-                                        WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
-                                           , model.MCSSNo, model.SerialNo);
-
-                Repository.Instance.ExecuteWithTransaction(sql, "Delete Material");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-                return false;
-            }
-        }
-
-        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
-        {//If Coil length must be LengthM*1000
-            decimal Ma = 0.0M;
-            decimal Mb = 0.0M;
-            decimal Mc = 0.0M;
-            decimal WgtPerUnit = 0;
-
-            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
-            Mb = (W / 1000) * (L);
-            Mc = (Ma * Mb);
-            WgtPerUnit = Math.Round(Mc, 2);
-            return WgtPerUnit;
-        }
-
-        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
-        {
-            decimal YieldPer = 0;
-            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
-            return YieldPer;
-        }
-
-        public decimal CalWgtFromMat(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
-        {
-            decimal YieldPer = 0;
-            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
-            return YieldPer;
-        }
-
-        public CutDesignModel GetCuttingByID(int LineID)
-        {
-            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
-                                            FROM ucc_pln_CuttingDesign cut 
-                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
-                                            WHERE cut.LineID = {0}", LineID);
-            return Repository.Instance.GetOne<CutDesignModel>(sql);
-        }
-
-        public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
-        {
-            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName 
-                                            FROM ucc_pln_CuttingDesign cut 
-                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
-                                            WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
-            return Repository.Instance.GetMany<CutDesignModel>(sql);
+            return GetCoilBackAll(data.WorkOrderID);
         }
 
         public IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data)
@@ -875,50 +977,142 @@ namespace Epicoil.Library.Repositories.Planning
             return GetCuttingLines(head.WorkOrderID);
         }
 
-        public bool DeleteCutting(SessionInfo _session, CutDesignModel model, out string msg)
+        /// <summary>
+        /// Save a material for each WorkOrder.
+        /// </summary>
+        /// <param name="_session"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public MaterialModel SaveMaterial(Models.SessionInfo _session, MaterialModel model)
         {
-            msg = "";
-            try
-            {
-                string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE LineID = {0}", model.LineID);
-                Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-                return false;
-            }
-        }
+            //int id = 0;
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_Material (NOLOCK)
+										    WHERE TransactionLineID = {29}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_Material
+                                               (Company
+                                               ,Plant
+                                               ,WorkOrderID
+                                               ,MatSeq
+                                               ,Serial
+                                               ,Cmdty
+                                               ,Spec
+                                               ,Coating
+                                               ,Category
+                                               ,Thick
+                                               ,Width
+                                               ,Length
+                                               ,Weight
+                                               ,UsingWgt
+                                               ,RemainWgt
+                                               ,Qty
+                                               ,RemainQty
+                                               ,LenghtM
+                                               ,UsingLM
+                                               ,SelectCB
+                                               ,CBalready
+                                               ,MCSSNo
+                                               ,Status
+                                               ,BT
+                                               ,Possession
+                                               ,ProductSts
+                                               ,Descriptions
+                                               ,Note
+                                               ,CreationDate
+                                               ,LastUpdateDate
+                                               ,CreatedBy
+                                               ,UpdatedBy)
+                                            VALUES
+                                               ( N'{0}' --<Company, nvarchar(8),>
+                                               , N'{1}' --<Plant, nvarchar(8),>
+                                               , {2} --<WorkOrderID, bigint,>
+                                               , {3} --<MatSeq, int,>
+                                               , N'{4}' --<Serial, nvarchar(18),>
+                                               , N'{5}' --<Cmdty, nvarchar(10),>
+                                               , N'{6}' --<Spec, nvarchar(10),>
+                                               , N'{7}' --<Coating, nvarchar(10),>
+                                               , N'{8}' --<Category, nvarchar(10),>
+                                               , {9} --<Thick, decimal(20,9),>
+                                               , {10} --<Width, decimal(20,9),>
+                                               , {11} --<Length, decimal(20,9),>
+                                               , {12} --<Weight, decimal(20,9),>
+                                               , {13} --<UsingWgt, decimal(20,9),>
+                                               , {14} --<RemainWgt, decimal(20,9),>
+                                               , {15} --<Qty, decimal(20,9),>
+                                               , {16} --<RemainQty, decimal(20,9),>
+                                               , {17} --<LenghtM, decimal(20,9),>
+                                               , {18} --<UsingLM, decimal(20,9),>
+                                               , {19} --<SelectCB, tinyint,>
+                                               , {20} --<CBalready, tinyint,>
+                                               , N'{21}' --<MCSSNo, nvarchar(18),>
+                                               , N'{22}' --<Status, nvarchar(10),>
+                                               , N'{23}' --<BT, nvarchar(10),>
+                                               , {24} --<Possession, int,>
+                                               , N'{25}' --<ProductSts, nvarchar(10),>
+                                               , N'{26}' --<Descriptions, varchar(500),>
+                                               , N'{27}' --<Note, varchar(500),>
+                                               , GETDATE() --<CreationDate, datetime,>
+                                               , GETDATE() --<LastUpdateDate, datetime,>
+                                               , N'{28}' --<CreatedBy, varchar(45),>
+                                               , N'{28}' --<UpdatedBy, varchar(45),>
+		                                    )
+                                        END
+                                    ELSE
+                                        BEGIN
+                                            UPDATE ucc_pln_Material
+                                               SET UsingWgt = {13} --<UsingWgt, decimal(20,9),>
+                                                  ,RemainWgt = {14} --<RemainWgt, decimal(20,9),>
+                                                  ,Qty = {15} --<Qty, decimal(20,9),>
+                                                  ,RemainQty = {16} --<RemainQty, decimal(20,9),>
+                                                  ,LenghtM = {17} --<LenghtM, decimal(20,9),>
+                                                  ,UsingLM = {18} --<UsingLM, decimal(20,9),>
+                                                  ,SelectCB = {19} --<SelectCB, tinyint,>
+                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{28}' --<UpdatedBy, varchar(45),>
+                                             WHERE  TransactionLineID = {29}
+                                        END" + Environment.NewLine
+                                              , _session.CompanyID
+                                              , _session.PlantID
+                                              , model.WorkOrderID
+                                              , 1 //model.Seq
+                                              , model.SerialNo
+                                              , model.CommodityCode     //{5}
+                                              , model.SpecCode
+                                              , model.CoatingCode
+                                              , ""
+                                              , model.Thick
+                                              , model.Width         //{10}
+                                              , model.Length
+                                              , model.Weight
+                                              , model.UsingWeight
+                                              , model.RemainWeight
+                                              , model.UsingQuantity      //{15}
+                                              , model.RemainQuantity
+                                              , model.LengthM
+                                              , model.UsingLengthM
+                                              , Convert.ToInt32(model.CBSelect.GetBoolean())
+                                              , Convert.ToInt32(model.CBalready.GetBoolean())   //{20}
+                                              , model.MCSSNo
+                                              , model.Status
+                                              , model.BussinessType
+                                              , model.Possession
+                                              , model.ProductStatus         //{25}
+                                              , model.PrdDescriptions
+                                              , model.Note
+                                              , _session.UserID
+                                              , model.TransactionLineID
+                                              );
 
-        public IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg)
-        {
-            var cutLines = GetCuttingLines(head.WorkOrderID);
-            var rowData = (from item in head.Materails
-                           select item).First();
+            //Update PartLot.CheckBox01 = 1 to change status has already used.
+            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
+                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
 
-            risk = string.Empty;
-            msg = string.Empty;
-            decimal cutTotalWidth = cutLines.Sum(i => i.Width * i.Stand);
-
-            if (rowData.Width > cutTotalWidth)
-            {
-                var newCut = cutLines.First();
-                newCut.SONo = "";
-                newCut.SOLine = 0;
-                newCut.NORNum = "";
-                newCut.LineID = 0;
-                newCut.Status = "S";
-                newCut.Width = rowData.Width - cutTotalWidth;
-                newCut.Stand = 1;
-                newCut.CalculateRow(head);
-                if (newCut.ValidateByRow(head, out risk, out msg))
-                {
-                    var result = SaveLineCutting(_session, head, newCut);
-                }
-            }
-
-            return GetCuttingLines(head.WorkOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql, "Add Material");
+            return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
         }
     }
 }

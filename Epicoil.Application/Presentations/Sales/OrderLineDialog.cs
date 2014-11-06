@@ -4,6 +4,7 @@ using Epicoil.Library.Repositories.Sales;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace Epicoil.Appl.Presentations.Sales
 {
@@ -11,14 +12,15 @@ namespace Epicoil.Appl.Presentations.Sales
     {
         private readonly ISaleOrderRepo _repo;
         public OrderDetailModel _selected;
-        private IEnumerable<OrderDetailModel> list;
+        private IEnumerable<OrderDetailModel> listAll;
 
         public OrderLineDialog(SessionInfo _session, IEnumerable<OrderDetailModel> model)
         {
             InitializeComponent();
             _repo = new SaleOrderRepo();
             _selected = new OrderDetailModel();
-            list = model;
+            this.listAll = new List<OrderDetailModel>();
+            listAll = model;
             epiSession = _session;
         }
 
@@ -42,7 +44,9 @@ namespace Epicoil.Appl.Presentations.Sales
 
         private void OrderLineDialog_Load(object sender, EventArgs e)
         {
-            SetGrid(list);
+            //var ord = listAll.FirstOrDefault();
+            //textBox2.Text = ord.OrderNum.ToString();
+            SetGrid(listAll);
         }
 
         private void butSelect_Click(object sender, EventArgs e)

@@ -36,10 +36,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderLineDialog));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.butSelect = new System.Windows.Forms.Button();
             this.butClear = new System.Windows.Forms.Button();
             this.butSearch = new System.Windows.Forms.Button();
@@ -80,63 +76,24 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvList);
-            this.splitContainer1.Size = new System.Drawing.Size(922, 302);
+            this.splitContainer1.Size = new System.Drawing.Size(916, 302);
             this.splitContainer1.SplitterDistance = 55;
             this.splitContainer1.TabIndex = 2;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox3);
-            this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox2);
-            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.butSelect);
             this.groupBox1.Controls.Add(this.butClear);
             this.groupBox1.Controls.Add(this.butSearch);
             this.groupBox1.Location = new System.Drawing.Point(7, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(622, 37);
+            this.groupBox1.Size = new System.Drawing.Size(903, 37);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
-            // textBox3
-            // 
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Location = new System.Drawing.Point(328, 11);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(36, 21);
-            this.textBox3.TabIndex = 17;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(251, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 15);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Order Line :";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(110, 11);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(124, 21);
-            this.textBox2.TabIndex = 15;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(39, 13);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(66, 15);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Order No. :";
-            // 
             // butSelect
             // 
-            this.butSelect.Location = new System.Drawing.Point(534, 9);
+            this.butSelect.Location = new System.Drawing.Point(818, 9);
             this.butSelect.Name = "butSelect";
             this.butSelect.Size = new System.Drawing.Size(80, 25);
             this.butSelect.TabIndex = 3;
@@ -146,7 +103,7 @@
             // 
             // butClear
             // 
-            this.butClear.Location = new System.Drawing.Point(452, 9);
+            this.butClear.Location = new System.Drawing.Point(736, 9);
             this.butClear.Name = "butClear";
             this.butClear.Size = new System.Drawing.Size(80, 25);
             this.butClear.TabIndex = 2;
@@ -155,7 +112,7 @@
             // 
             // butSearch
             // 
-            this.butSearch.Location = new System.Drawing.Point(370, 9);
+            this.butSearch.Location = new System.Drawing.Point(654, 9);
             this.butSearch.Name = "butSearch";
             this.butSearch.Size = new System.Drawing.Size(80, 25);
             this.butSearch.TabIndex = 1;
@@ -200,7 +157,7 @@
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(922, 243);
+            this.dgvList.Size = new System.Drawing.Size(916, 243);
             this.dgvList.TabIndex = 18;
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
@@ -314,7 +271,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(922, 302);
+            this.ClientSize = new System.Drawing.Size(916, 302);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -330,7 +287,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
             this.ResumeLayout(false);
 
@@ -340,10 +296,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button butSelect;
         private System.Windows.Forms.Button butClear;
         private System.Windows.Forms.Button butSearch;

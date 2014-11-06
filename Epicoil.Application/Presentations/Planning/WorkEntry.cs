@@ -276,6 +276,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvCutting.Columns["length1"].ReadOnly = false;
                 dgvCutting.Columns["status1"].ReadOnly = false;
             }
+
             if (dgvCutting.Rows.Count != 0) tbutNewCutting.Enabled = false;
         }
 
@@ -323,8 +324,10 @@ namespace Epicoil.Appl.Presentations.Planning
             //Validate complated.
             HeaderContent.Saved();
             SetHeadContent(HeaderContent);
-
             SetFormState();
+
+            //ListCuttingGrid need final step only.
+            ListCuttingGrid(HeaderContent.CuttingDesign);
         }
 
         private void tbutNewMaterial_Click(object sender, EventArgs e)
@@ -430,6 +433,7 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             //Set content and list Material was add from dialog.
             SetHeadContent(HeaderContent);
+            ListCuttingGrid(HeaderContent.CuttingDesign);
         }
 
         private void butWorkOrder_Click(object sender, EventArgs e)
@@ -523,6 +527,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvMaterial_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            string risk = string.Empty;
+            string msg = string.Empty;
             string colHeadName = dgvMaterial.Columns[e.ColumnIndex].HeaderText;
             string colName = dgvMaterial.Columns[e.ColumnIndex].Name;
             string strVal = dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
@@ -546,11 +552,56 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
+            var result = (from item in HeaderContent.Materails
+                          where item.TransactionLineID == Convert.ToInt32(transId)
+                          select item).First();
+
             switch (colName)
             {
                 case "usingweight":
                     HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                         .ForEach(i => i.UsingWeight = Convert.ToDecimal(strVal));
+
+                    var coilExist = HeaderContent.CoilBacks.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList();
+
+                    if (result.ValidateToCoilBackAuto(HeaderContent.CoilBackRoles, out risk, out msg))
+                    {
+                        MessageBox.Show("The remain weight to matched the coil back rule, and then we will Create/Update coil back.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        result.CBSelect = true;
+                        CoilBackModel CBack = new CoilBackModel();
+                        CBack.WorkOrderID = HeaderContent.WorkOrderID;
+                        CBack.TransactionLineID = result.TransactionLineID;
+                        //CBack.SeqID
+                        //CBack.Serial = result.SerialNo;
+                        CBack.CommodityCode = result.CommodityCode;
+                        CBack.SpecCode = result.SpecCode;
+                        CBack.CoatingCode = result.CoatingCode;
+                        CBack.Thick = result.Thick;
+                        CBack.Width = result.Width;
+                        CBack.Length = result.Length;
+                        CBack.Weight = result.RemainWeight;
+                        CBack.Qty = result.RemainQuantity;
+                        CBack.MCSSNo = result.MCSSNo;
+                        CBack.OldSerial = result.SerialNo;
+                        CBack.Gravity = result.Gravity;
+                        CBack.FrontPlate = result.FrontPlate;
+                        CBack.BackPlate = result.BackPlate;
+                        //CBack.BackStep
+                        CBack.Status = result.Status;
+                        CBack.BussinessType = result.BussinessType;
+                        CBack.Possession = result.Possession;
+                        CBack.ProductStatus = Convert.ToInt32(result.ProductStatus);
+                        CBack.Note = msg;
+
+                        HeaderContent.CoilBacks = _repo.SaveCoilBack(epiSession, CBack).ToList();
+                    }
+                    else if (coilExist.Count > 0 && result.RemainWeight == 0)
+                    {
+                        MessageBox.Show("The RemainWeight = 0 still have CoilBack then system will delete coilback!", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        HeaderContent.CoilBacks = _repo.DeleteCoilBack(epiSession, HeaderContent.WorkOrderID, result.TransactionLineID).ToList();
+                    }
+
+
                     break;
 
                 case "quantity":
@@ -562,20 +613,22 @@ namespace Epicoil.Appl.Presentations.Planning
                     HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                         .ForEach(i => i.UsingWeight = (Convert.ToDecimal(weight) / 100) * val);
                     break;
-            }
 
-            var result = (from item in HeaderContent.Materails
-                          where item.TransactionLineID == Convert.ToInt32(transId)
-                          select item).First();
+                //case "SelectCB":
+                //    result.CBSelect = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
+                //    break;
+            }
 
             dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
             dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
             dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
+            dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value = result.CBSelect;
 
             result.WorkDate = dptIssueDate.Value;
             var res = _repo.SaveMaterial(epiSession, result);
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             SetHeadContent(HeaderContent);
+            ListCoilBackGrid(HeaderContent.CoilBacks);
         }
 
         private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)
@@ -626,6 +679,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     {
                         ListMaterialGrid(HeaderContent.Materails);
                         ListCuttingGrid(HeaderContent.CuttingDesign);
+                        ListCoilBackGrid(HeaderContent.CoilBacks);
                     }
                     catch (Exception ex)
                     {
@@ -635,10 +689,6 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-        private void dgvMaterial_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
         private void tbutNewCutting_Click(object sender, EventArgs e)
         {
             CutDesignModel model = new CutDesignModel();
@@ -646,6 +696,8 @@ namespace Epicoil.Appl.Presentations.Planning
             if (HeaderContent.Materails.ToList().Count == 0)
             {
                 model.Status = "S";
+                model.Stand = 1;
+                model.CutDivision = 1;
                 model.DeliveryDate = DateTime.Now;
                 model.BussinessType = string.IsNullOrEmpty(HeaderContent.BussinessType.GetString()) ? "" : HeaderContent.BussinessType;
             }
@@ -709,6 +761,23 @@ namespace Epicoil.Appl.Presentations.Planning
             string lineId = dgvCutting.Rows[e.RowIndex].Cells["lineid"].Value.GetString();
             string code = dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
 
+            if (!string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["soline"].Value.GetString()))
+            {
+                //Set grid after select S/O Line.
+                if (!string.IsNullOrEmpty(dgvCutting.Rows[e.RowIndex].Cells["norno"].Value.GetString()))
+                {
+                    dgvCutting.Rows[e.RowIndex].Cells["norno"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["customer"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["commodity1"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["spec1"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["coating1"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["thick1"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["width1"].ReadOnly = true;
+                    dgvCutting.Rows[e.RowIndex].Cells["length1"].ReadOnly = true;
+                }
+                return;
+            }
+
             switch (colName)
             {
                 case "sono":
@@ -729,24 +798,24 @@ namespace Epicoil.Appl.Presentations.Planning
                             {
                                 frm.ShowDialog();
                                 result = frm._selected;
-
-                                if (result == null) 
+                                if (result == null)
                                 {
                                     dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = string.Empty;
                                     dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = string.Empty;
-                                    return; 
+                                    return;
                                 }
                             }
                         }
 
                         //Set header value.
-                        HeaderContent.OrderType = result.OrderType;                        
+                        HeaderContent.OrderType = result.OrderType;
                         dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = result.OrderNumber;
                         dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
 
                         OrderDetailModel resultLine = new OrderDetailModel();
+                        IEnumerable<OrderDetailModel> resultParam = new List<OrderDetailModel>();
                         SetDirectionPatter();
-                        var resultParam = _repoSale.GetOrderDtlByFilter(rowData.SONo, HeaderContent);
+                        resultParam = _repoSale.GetOrderDtlByFilter(rowData.SONo, HeaderContent);
                         using (OrderLineDialog frm = new OrderLineDialog(epiSession, resultParam))
                         {
                             frm.ShowDialog();
@@ -762,6 +831,7 @@ namespace Epicoil.Appl.Presentations.Planning
                         HeaderContent.MaterialPattern = new MaterialModel();
                         HeaderContent.ClassID = resultLine.ClassID;
                         HeaderContent.Possession = Convert.ToString(resultLine.Possession);
+                        HeaderContent.BussinessType = resultLine.BussinessType;
                         HeaderContent.MaterialPattern.CommodityCode = resultLine.CommodityCode;
                         HeaderContent.MaterialPattern.SpecCode = resultLine.SpecCode;
                         HeaderContent.MaterialPattern.CoatingCode = resultLine.CoatingCode;
@@ -802,6 +872,8 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvCutting.Rows[e.RowIndex].Cells["width1"].ReadOnly = true;
                 dgvCutting.Rows[e.RowIndex].Cells["length1"].ReadOnly = true;
             }
+
+            HeaderContent.CalculationHeader(HeaderContent);
             SetHeadContent(HeaderContent);
         }
 
@@ -980,6 +1052,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             string riskFlag = string.Empty;
             string msg = string.Empty;
+
             //var rows = from DataGridViewRow row in dgvCutting.Rows
             //           where row.Selected
             //           select row;
@@ -1050,7 +1123,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     , p.RemainWeight, p.LengthM
                     , (p.Length == 0) ? 1 : p.QuantityPack, (p.UsingQuantity == 0) ? ((p.Length == 0) ? 1 : p.QuantityPack) : p.UsingQuantity
                     , p.RemainQuantity, p.CBSelect
-                    , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
+                    , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
@@ -1079,7 +1152,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvCutting.Rows.Add(p.LineID, i + 1, p.SONo, (p.SOLine == 0) ? "" : p.SOLine.ToString(), p.NORNum, p.CustID, p.CommodityCode, p.SpecCode
                                     , p.CoatingCode, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDivision, p.Note
                                     , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack
-                                    , p.BussinessTypeName, Enum.GetName(typeof(Possession), p.Possession), true);
+                                    , p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(Possession), p.Possession), true);
 
                 //Fill color rows for even number.
                 if (i % 2 == 1)
@@ -1099,6 +1172,25 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
+        private void ListCoilBackGrid(IEnumerable<CoilBackModel> item)
+        {
+            int i = 0;
+            if (dgvCoilBack.Rows.Count != 0) dgvCoilBack.Rows.Clear();
+            foreach (var p in item)
+            {
+                dgvCoilBack.Rows.Add(p.TransactionLineID, p.Serial, p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName
+                                    , p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length, p.Weight, p.LengthM, p.MCSSNo
+                                    , "", Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note);
+
+                //Fill color rows for even number.
+                if (i % 2 == 1)
+                {
+                    this.dgvCoilBack.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
+        }
+
         public bool ValidateUsing(decimal usingVal, decimal baseVal, bool weightValid, out string col, out string msg)
         {
             bool valid = true;
@@ -1114,5 +1206,65 @@ namespace Epicoil.Appl.Presentations.Planning
         }
 
         #endregion Method
+
+        private void dgvMaterial_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgvMaterial.Columns[e.ColumnIndex].Name == "SelectCB")//set your checkbox column index instead of 2
+            {
+                string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
+
+                var result = (from item in HeaderContent.Materails
+                              where item.TransactionLineID == Convert.ToInt32(transId)
+                              select item).First();
+
+                var coilExist = HeaderContent.CoilBacks.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList();
+
+                bool chk = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].EditedFormattedValue);
+
+                if (chk && result.RemainWeight > 0)
+                {
+                    bool strVal = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
+                    result.CBSelect = true;
+                    CoilBackModel CBack = new CoilBackModel();
+                    CBack.WorkOrderID = HeaderContent.WorkOrderID;
+                    CBack.TransactionLineID = result.TransactionLineID;
+                    CBack.CommodityCode = result.CommodityCode;
+                    CBack.SpecCode = result.SpecCode;
+                    CBack.CoatingCode = result.CoatingCode;
+                    CBack.Thick = result.Thick;
+                    CBack.Width = result.Width;
+                    CBack.Length = result.Length;
+                    CBack.Weight = result.RemainWeight;
+                    CBack.Qty = result.RemainQuantity;
+                    CBack.MCSSNo = result.MCSSNo;
+                    CBack.OldSerial = result.SerialNo;
+                    CBack.Gravity = result.Gravity;
+                    CBack.FrontPlate = result.FrontPlate;
+                    CBack.BackPlate = result.BackPlate;
+                    CBack.Status = result.Status;
+                    CBack.BussinessType = result.BussinessType;
+                    CBack.Possession = result.Possession;
+                    CBack.ProductStatus = Convert.ToInt32(result.ProductStatus);
+                    CBack.Note = "Add manual";
+
+                    HeaderContent.CoilBacks = _repo.SaveCoilBack(epiSession, CBack).ToList();
+                }
+                else if (coilExist.Count > 0)
+                {
+                    DialogResult diaResult = MessageBox.Show("Are you sure to delete coilback.", "Row validate error!.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (diaResult == DialogResult.Yes)
+                    {
+                        HeaderContent.CoilBacks = _repo.DeleteCoilBack(epiSession, HeaderContent.WorkOrderID, result.TransactionLineID).ToList();
+                    }
+                }
+
+                result.CBSelect = chk;
+
+                var res = _repo.SaveMaterial(epiSession, result);
+                HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                SetHeadContent(HeaderContent);
+                ListCoilBackGrid(HeaderContent.CoilBacks);
+            }
+        }
     }
 }

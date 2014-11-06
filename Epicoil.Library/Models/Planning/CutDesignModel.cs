@@ -249,7 +249,7 @@ namespace Epicoil.Library.Models.Planning
                 if (string.IsNullOrEmpty(SONo) || SOLine == 0)
                 {
                     risk = "ERROR";
-                    msg = "This line is status = 'F' required S/O.";
+                    msg = "This line status = 'F' required S/O.";
                     return false;
                 }
             }
@@ -264,6 +264,29 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
+            if (!string.IsNullOrEmpty(NORNum))
+            {
+                if (Status != "F")
+                {
+                    risk = "ERROR";
+                    msg = "Please change status = 'F' for S/O line.";
+                    return false;
+                }
+            }
+
+            if (Stand == 0)
+            {
+                risk = "ERROR";
+                msg = "Stand value must be more than zero.";
+                return false;
+            }
+
+            if (CutDivision == 0)
+            {
+                risk = "ERROR";
+                msg = "Cut Division value must be more than zero.";
+                return false;
+            }
             return valid;
         }
     }

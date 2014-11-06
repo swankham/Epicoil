@@ -65,7 +65,7 @@ namespace Epicoil.Library.Models.Sales
             this.Term = (string)row["TermsCode"].GetString();
             //this.BussinessType = (string)row["BussinessType"].GetString();
             //this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
-            //this.OrderType = (string)row["OrderType"].GetString();
+            this.OrderType = (string)row["ShortChar04"].GetString();
             this.PIC = (string)row["EntryPerson"].GetString();
             this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
             this.TotalAmount = (decimal)row["TotalAmount"].GetDecimal();
