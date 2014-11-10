@@ -1135,7 +1135,7 @@ namespace Epicoil.Library.Repositories.Planning
         public IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head)
         {
             int iRow = 0;
-            foreach (var item in head.CuttingDesign.OrderBy(i => i.LineID))
+            foreach (var item in head.CuttingDesign.Where(i => i.Status != "S").OrderBy(i => i.LineID))
             {
                 for (int j = 1; j <= item.CutDivision; j++)
                 {
@@ -1159,7 +1159,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                    ,CreationDate
                                                    ,LastUpdateDate
                                                    ,CreatedBy
-                                                   ,UpdatedBy)
+                                                   ,UpdatedBy
+                                                   ,UsingLengthM)
                                              VALUES
                                                    ( N'{0}' --<Plant, nvarchar(8),>
                                                    , {1} --<WorkOrderID, bigint,>
@@ -1180,6 +1181,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                    , GETDATE() --<LastUpdateDate, datetime,>
                                                    , N'{15}' --<CreatedBy, nvarchar(45),>
                                                    , N'{15}' --<UpdatedBy, nvarchar(45),>
+                                                   , {16} 
                                                     )" + Environment.NewLine
                                                        , _session.PlantID
                                                        , head.WorkOrderID
@@ -1189,20 +1191,20 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , item.Thick //{5}
                                                        , item.Width
                                                        , item.Length
-                                                       , 0              //item.TotalLength
+                                                       , item.TotalLength
                                                        , item.Status
                                                        , item.Stand     //{10}
-                                                       , j   
+                                                       , j
                                                        , item.UnitWeight
-                                                       , item.TotalWeight
+                                                       , item.UnitWeight * item.Stand
                                                        , 0
-                                                       , _session.UserID);
+                                                       , _session.UserID
+                                                       , 0);
                     Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
                 }
             }
-            return null;
+            return GetSimulateAll(head.WorkOrderID);
         }
-
 
         public bool ClearSimulateLines(int workOrderID)
         {
@@ -1218,10 +1220,24 @@ namespace Epicoil.Library.Repositories.Planning
             }
         }
 
-
         public IEnumerable<SimulateModel> GetSimulateAll(int workOrderID)
         {
-            throw new NotImplementedException();
+            string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine
+	                                            , cut.NORNum, 1 as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                            , sim.*
+                                            FROM ucc_pln_Simulate sim
+	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
+	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
+                                            WHERE sim.WorkOrderID = {0}
+                                            ORDER BY sim.CutDiv, sim.SimSeq ASC", workOrderID);
+            return Repository.Instance.GetMany<SimulateModel>(sql);
         }
     }
 }

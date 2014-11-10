@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 
 namespace Epicoil.Library.Models.Planning
 {
@@ -31,14 +32,16 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal Length { get; set; }
 
-        public decimal LengthM
-        {
-            get
-            {
-                return (Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate)
-                    : Math.Round((Length / 1000), 2);
-            }
-        }
+        public decimal UsingLengthM { get; set; }
+
+        public decimal LengthM { get; set; }
+
+        //{
+        //    get
+        //    {
+        //        return (Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 2);
+        //    }
+        //}
 
         public string Status { get; set; }
 
@@ -62,7 +65,7 @@ namespace Epicoil.Library.Models.Planning
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.CuttingLineID = (int)row["CuttingLineID"].GetInt();
             this.TransactionLineID = (int)row["MaterialTransLineID"].GetInt();
-            this.MCSSNum = (string)row["MCSSNum"].GetString();
+            this.MCSSNum = (string)row["MCSSNo"].GetString();
             this.MaterialSerialNo = (string)row["MaterialSerialNo"].GetString();
             this.SimSeq = (int)row["SimSeq"].GetInt();
             this.SONo = (string)row["SONo"].GetString();
@@ -78,6 +81,7 @@ namespace Epicoil.Library.Models.Planning
             this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
             this.Quantity = (decimal)row["Quantity"].GetDecimal();
             this.CalculatedFlag = Convert.ToBoolean((int)row["CalculatedFlag"].GetInt());
+            this.LengthM = (decimal)row["LengthM"].GetDecimal();
         }
 
         public decimal CalLengthMeter(decimal weight, decimal width, decimal thick, decimal gravity, decimal frontPlate, decimal backPlate)
@@ -96,6 +100,70 @@ namespace Epicoil.Library.Models.Planning
 
             //Convert mm to M.
             return Math.Round(result / 1000, 2);
+        }
+
+        public void CalculateRow(SimulateActionModel head, MaterialModel mat)
+        {
+            //Fix bug in case Materials is null.
+            //if (head.SimulateOption == 0)
+            //{
+            decimal widthMat = 0;
+            decimal cutMax = 0;
+            widthMat = mat.Width;
+            cutMax = head.Cuttings.Max(i => i.CutDiv);
+            UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.Expected, widthMat, Width), 2);
+            TotalWeight = UnitWeight * Stand;
+            LengthM = (Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 1);
+            //}
+            //else if (head.SimulateOption == 1)
+            //{
+            //    LengthM = mat.UsingLengthM;
+            //    UnitWeight = (mat.Weight * LengthM) / mat.LengthM;
+            //}
+
+            CalculatedFlag = true;
+            MCSSNum = mat.MCSSNo;
+            MaterialSerialNo = mat.SerialNo;
+        }
+
+        public decimal CalculateUnitWeightOptionLM(MaterialModel mat)
+        {
+            return (mat.Weight * LengthM) / mat.LengthM;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="UsingWgt">Unit is Kg.</param>
+        /// <param name="WidthMaterial">Unit is MM.</param>
+        /// <param name="WidthFG">Unit is MM.</param>
+        /// <returns></returns>
+        private decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
+        {
+            decimal CalWeightFG = 0.0M;
+            if (UsingWgt > 0 && WidthMaterial > 0 && WidthFG > 0)
+            {
+                CalWeightFG = Math.Round((UsingWgt / WidthMaterial * WidthFG), 2);
+            }
+            return CalWeightFG;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="MaterialLengthM">Unit is Meter</param>
+        /// <param name="MaterialWeight">Unit is Kg.</param>
+        /// <param name="MaterialUsingWeight">Unit is Kg.</param>
+        /// <param name="CutDiv">Value of cut</param>
+        /// <returns></returns>
+        private static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
+        {
+            decimal ActualLength = 0.0M;
+            if (MaterialWeight > 0 && MaterialUsingWeight > 0 && MaterialLengthM > 0 && CutDiv > 0)
+            {
+                ActualLength = MaterialUsingWeight * MaterialLengthM / MaterialWeight;
+            }
+            return ActualLength;
         }
     }
 }

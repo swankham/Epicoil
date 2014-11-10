@@ -52,7 +52,7 @@ namespace Epicoil.Library
     public enum GenerateSNStatus
     {
         Generate = 0,
-        Generated = 1
+        SN_Generated = 1
     }
 
     public enum OperationState

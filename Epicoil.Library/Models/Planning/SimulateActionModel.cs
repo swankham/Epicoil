@@ -46,5 +46,125 @@ namespace Epicoil.Library.Models.Planning
             get { return this.CuttingLines.ToList(); }
             set { this.CuttingLines = value; }
         }
+
+        public void CalculateRowForWeightOption(MaterialModel mat)
+        {
+            foreach (var m in Materials.Where(i => i.TransactionLineID.Equals(mat.TransactionLineID)))
+            {
+                var line = Cuttings.Where(i => i.CutDiv.Equals(CutSeleted) && i.MaterialSerialNo.GetString() == m.SerialNo && i.CalculatedFlag.GetBoolean() == true);
+                if (m.UsedFlag && line.ToList().Count == 0)
+                {
+                    m.UsingWeight = m.UsingWeight + Expected;
+                }
+                else
+                {
+                    m.UsingWeight = Expected;
+                }
+                m.UsedFlag = true;
+            }
+
+            foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
+            {
+                item.CalculateRow(this, mat);
+            }
+
+            SumProductWeight();
+            SumMaterialWeight();
+            SumYeild();
+        }
+
+        public void CalculateRowForLegnthOption(MaterialModel mat)
+        {
+            foreach (var m in Materials.Where(i => i.TransactionLineID.Equals(mat.TransactionLineID)))
+            {
+                var line = Cuttings.Where(i => i.CutDiv.Equals(CutSeleted) && i.MaterialSerialNo.GetString() == m.SerialNo && i.CalculatedFlag.GetBoolean() == true);
+                if (m.UsedFlag && line.ToList().Count == 0)
+                {
+                    m.UsingLengthM = m.UsingLengthM + Expected;
+                }
+                else
+                {
+                    m.UsingLengthM = Expected;
+                }
+                m.UsedFlag = true;
+            }
+
+            foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
+            {
+                item.CalculateRow(this, mat);
+            }
+
+            SumProductWeight();
+            SumMaterialWeight();
+            SumYeild();
+        }
+
+        public void SumProductWeight()
+        {
+            if (Cuttings.ToList().Count != 0)
+            {
+                ProductWeight = Math.Round(Cuttings.Sum(i => i.TotalWeight), 0);
+            }
+            else
+            {
+                ProductWeight = 0;
+            }
+        }
+
+        public void SumMaterialWeight()
+        {
+            if (Materials.ToList().Count != 0)
+            {
+                MaterialWeight = Math.Round(Materials.Sum(p => p.Weight), 0);
+            }
+            else
+            {
+                MaterialWeight = 0;
+            }
+        }
+
+        public void SumTrimmingWeight(PlanningHeadModel plnHead)
+        {
+            decimal d1 = Materials.Sum(i => i.UsingWeight);
+            decimal w1 = plnHead.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.Width);
+            decimal mw = Materials.Max(i => i.Width);
+
+            decimal result = (d1 / mw) * w1 ;
+            TrimWeight = result;
+        }
+
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial)
+        {
+            decimal YieldPer = 0;
+            WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0)) * 100, 2);
+            return YieldPer;
+        }
+
+        /// <summary>
+        /// Sum Yield percent on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumYeild()
+        {
+            Yield = CalYeildPercent(Math.Round(ProductWeight, 0), Math.Round(MaterialWeight, 0));
+        }
+
+        public bool CheckYeild(PlanningHeadModel head, decimal YeildValue)
+        {
+            decimal YieldMin = head.ProcessLineDetail.YieldPercentMin;
+            decimal YieldMax = head.ProcessLineDetail.YieldPercentMax;
+
+            bool FlagYield = true;
+            if (YeildValue < YieldMin)
+            {
+                FlagYield = false;
+            }
+            if (YeildValue > YieldMax)
+            {
+                FlagYield = false;
+            }
+            return FlagYield;
+        }
     }
 }

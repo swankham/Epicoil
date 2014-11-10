@@ -43,6 +43,8 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
+        public decimal UsingLengthM { get; set; }
+
         public decimal LengthM
         {
             get
@@ -52,7 +54,13 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
-        public decimal UsingLengthM { get; set; }
+        public decimal RemainLengthM//  { get; set; }
+        {
+            get
+            {
+                return LengthM - UsingLengthM;
+            }
+        }
 
         public decimal QuantityPack { get; set; }
 
@@ -93,6 +101,8 @@ namespace Epicoil.Library.Models.Planning
         public string MillCode { get; set; }
 
         public string MillName { get; set; }
+
+        public bool UsedFlag { get; set; }
 
         public override void DataBind(DataRow row)
         {

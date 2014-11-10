@@ -1,5 +1,11 @@
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Library.pdb
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.UD35.dll
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IUD35.dll
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.UI.UD107Entry.dll
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Progress.o4glrt.dll
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Lib.BOUpdateExt.dll
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.Core.CallContext.dll
@@ -183,11 +189,5 @@ D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.GLCTEntitySearch.x
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.GLCntrl.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.TaxExemptSearch.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IEduLicense.xml
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache
-D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.UD35.dll
-D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IUD35.dll
-D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.UI.UD107Entry.dll
