@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.FileTransfer</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.FileTransfer">
+            <summary>
+            Summary description for FileTransfer.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.FileTransferImpl">
+            <summary>
+            Class that handles file transfers from the AppServer machine to the client
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.DownloadFile(System.String,System.Boolean)">
+            <summary>
+            Get a file's content from the server
+            </summary>
+            <param name="serverPath">The path of the file to get the content for</param>
+            <param name="encodeData">Whether to base64 encode the data (needed for binary files)</param>
+            <returns>File data</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.UploadFile(System.String,System.Boolean,Epicor.Mfg.Lib.FileTransferDataSet)">
+            <summary>
+            Set a file's content on the server
+            </summary>
+            <param name="serverPath">The path of the file to set the content to</param>
+            <param name="binaryData">Whether to base64 encode the data (needed for binary files)</param>
+            <param name="ds">File data</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.FileExists(System.String)">
+             <summary>
+            
+             </summary>
+             <param name="serverPath"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.FileDelete(System.String)">
+            <summary>
+            Deletes the specified file.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.FileTransferImpl.FileMove(System.String,System.String)">
+            <summary>
+            Renames the specified file.
+            </summary>
+            <param name="sourcePath"></param>
+            <param name="destPath"></param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.FileTransferImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.FileTransfer.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.FileTransfer.DownloadFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Download a file from the server and save it to a given path
+            </summary>
+            <param name="serverPath">Source. Where the file is stored on the server. Full name eg. "\\server\dir\file.txt"</param>
+            <param name="clientPath">Destination. Where file is to be copied to on the client. Full name eg, "C:\Temp\file.txt"</param>
+            <param name="binary">Is file encoded</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.FileTransfer.DownloadFile(System.String)">
+            <summary>
+            Download a file from the server
+            </summary>
+            <param name="serverPath">Source. Where the file is stored on the server. Full name eg. "\\server\dir\file.txt"</param>
+            <returns>File content is returned as byte array</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.FileTransfer.UploadFile(System.String,System.String,System.Boolean)">
+            <summary>
+            Upload File to the server
+            </summary>
+            <param name="clientPath">Destination. Where file is to be copied to on the client. Full name eg, "C:\Temp\file.txt"</param>
+            <param name="serverPath">Source. Where the file is stored on the server. Full name eg. "\\server\dir\file.txt"</param>
+            <param name="binary">Is file encoded</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.FileTransfer.UploadFile(System.Byte[],System.String)">
+            <summary>
+            Upload File to the Server
+            </summary>
+            <param name="filebytes">FileContent</param>
+            <param name="serverPath">Source. Where the file is stored on the server. Full name eg. "\\server\dir\file.txt"</param>
+        </member>
+    </members>
+</doc>

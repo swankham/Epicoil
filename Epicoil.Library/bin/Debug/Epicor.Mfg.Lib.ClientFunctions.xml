@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.ClientFunctions</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.ClientFunctions">
+            <summary>
+            Summary description for ClientFunctions.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.ClientFunctionsImpl">
+            <summary>
+            Modifies session state
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ClientFunctionsImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ClientFunctionsImpl.GetTaxConnect(System.Boolean@)">
+            <summary>
+            This method returns TaxSvcConfig.TaxConnectEnabled for the currrent Company
+            otherwise it returns false.
+            </summary>
+            <param name="compTaxConnectEnabled">The only TaxSvcConfig.TaxConnectEnabled for the company </param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ClientFunctionsImpl.GetWorkstationMethod(System.String)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.ClientFunctionsImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ClientFunctions.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

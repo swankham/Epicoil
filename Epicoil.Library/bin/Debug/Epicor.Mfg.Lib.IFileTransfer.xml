@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.IFileTransfer</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.FileTransferDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.FileTransferDataSet.FileTransferDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.FileTransferDataSet.FileTransferRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.FileTransferDataSet.FileTransferRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.IFileTransfer">
+            <summary>
+            Class that handles file transfers from the AppServer machine to the client
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.DownloadFile(System.String,System.Boolean)">
+            <summary>
+            Get a file's content from the server
+            </summary>
+            <param name="serverPath">The path of the file to get the content for</param>
+            <param name="encodeData">Whether to base64 encode the data (needed for binary files)</param>
+            <returns>File data</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.DownloadFile(System.String)">
+            <summary>
+            Get a file's content from the server
+            </summary>
+            <param name="serverPath">The path of the file to get the content for</param>
+            <returns>File binary data</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.UploadFile(System.String,System.Boolean,Epicor.Mfg.Lib.FileTransferDataSet)">
+            <summary>
+            Set a file's content on the server
+            </summary>
+            <param name="serverPath">The path of the file to set the content to</param>
+            <param name="binaryData">Whether to base64 encode the data (needed for binary files)</param>
+            <param name="ds">File data</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.UploadFile(System.Byte[],System.String)">
+            <summary>
+            Set a file's content on the server
+            </summary>
+            <param name="filebytes">File data</param>
+            <param name="serverPath">The path of the file to set the content to</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.FileExists(System.String)">
+             <summary>
+            
+             </summary>
+             <param name="serverPath"></param>
+             <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.FileDelete(System.String)">
+            <summary>
+            Deletes the specified file.
+            </summary>
+            <param name="path"></param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IFileTransfer.FileMove(System.String,System.String)">
+            <summary>
+            Renames the specified file.
+            </summary>
+            <param name="sourcePath"></param>
+            <param name="destPath"></param>
+        </member>
+    </members>
+</doc>

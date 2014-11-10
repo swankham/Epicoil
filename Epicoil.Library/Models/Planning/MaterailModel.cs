@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Epicoil.Library.Models.Planning
 {
-    public class MaterialModel
+    public class MaterialModel : BaseSerial
     {
         public string MCSSNo { get; set; }
 
@@ -20,24 +20,6 @@ namespace Epicoil.Library.Models.Planning
         public int Seq { get; set; }
 
         public string SerialNo { get; set; }
-
-        public string CommodityCode { get; set; }
-
-        public string CommodityName { get; set; }
-
-        public string SpecCode { get; set; }
-
-        public string SpecName { get; set; }
-
-        public decimal Gravity { get; set; }
-
-        public string CoatingCode { get; set; }
-
-        public string CoatingName { get; set; }
-
-        public decimal FrontPlate { get; set; }
-
-        public decimal BackPlate { get; set; }
 
         public string CategoryCode { get; set; }
 
@@ -76,7 +58,7 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal UsingQuantity { get; set; }
 
-        public decimal RemainQuantity //{ get; set; }
+        public decimal RemainQuantity 
         {
             get
             {
@@ -91,20 +73,6 @@ namespace Epicoil.Library.Models.Planning
         public string Status { get; set; }
 
         public string Note { get; set; }
-
-        public int Possession { get; set; }
-
-        public string PossessionName
-        {
-            get
-            {
-                return Enum.GetName(typeof(Possession), Possession);
-            }
-        }
-
-        public string BussinessType { get; set; }
-
-        public string BussinessTypeName { get; set; }
 
         public string ProductStatus { get; set; }
 
@@ -126,39 +94,26 @@ namespace Epicoil.Library.Models.Planning
 
         public string MillName { get; set; }
 
-        public virtual void DataBind(DataRow row)
+        public override void DataBind(DataRow row)
         {
+            base.DataBind(row);
+
             this.MCSSNo = (string)row["PartNum"].GetString();
             this.TransactionLineID = (int)row["TransactionLineID"].GetInt();
             this.SerialNo = (string)row["LotNum"].GetString();
-            this.CommodityCode = (string)row["CommodityCode"].GetString();
-            this.CommodityName = (string)row["CommodityName"].GetString();
-            this.SpecCode = (string)row["SpecCode"].GetString();
-            this.SpecName = (string)row["SpecName"].GetString();
-            this.Gravity = (decimal)row["Gravity"].GetDecimal();
-            this.CoatingCode = string.IsNullOrEmpty(row["CoatingCode"].GetString()) ? "" : row["CoatingCode"].GetString();
-            this.CoatingName = (string)row["CoatingName"].GetString();
-            this.FrontPlate = (decimal)row["FrontPlate"].GetDecimal();
-            this.BackPlate = (decimal)row["BackPlate"].GetDecimal();
             this.Thick = (decimal)row["Number01"].GetDecimal();
             this.Width = (decimal)row["Number02"].GetDecimal();
             this.Length = (decimal)row["Number03"].GetDecimal();
             this.Weight = (decimal)row["Number04"].GetDecimal();
             this.UsingWeight = (decimal)row["UsingWeight"].GetDecimal();
-            //this.RemainWeight = (decimal)row["RemainWeight"].GetDecimal();
             this.UsingLengthM = (decimal)row["UsingLM"].GetDecimal();
             this.UsingQuantity = (decimal)row["Quantity"].GetDecimal();
-            //this.RemainQuantity = (decimal)row["RemainQty"].GetDecimal();
             this.QuantityPack = (decimal)row["QuantityPack"].GetDecimal();
             this.CBSelect = Convert.ToBoolean((int)row["CBSelect"].GetInt());
             this.CBalready = Convert.ToBoolean((int)row["CBalready"].GetInt());
             this.Status = (string)row["Status"].GetString();
             this.Note = (string)row["Note"].GetString();
-            this.Possession = (int)row["Possession"].GetInt();
-            this.BussinessType = string.IsNullOrEmpty(row["BussinessType"].GetString()) ? "" : row["BussinessType"].GetString();
-            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.ProductStatus = (string)row["ProductStatus"].GetString();
-
             this.SupplierCode = (string)row["SupplierCode"].GetString();
             this.SupplierName = (string)row["SupplierName"].GetString();
             this.CustID = (string)row["CustID"].GetString();

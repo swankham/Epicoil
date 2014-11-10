@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IGLCTEntitySearch</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.GLCTEntitySearchDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntitySearchDataSet.GLCTEntityDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntitySearchDataSet.GLCTEntityRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntitySearchDataSet.GLCTEntityRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IGLCTEntitySearch">
+            <summary>
+            Search object against the GLCTEntity table.
+            </summary>
+            <example>
+            <code>
+            Add how this object is used (or syntax)
+            </code>
+            </example>
+            <remarks>
+            Add any remarks (notes)
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.GetNewGLCTEntity(Epicor.Mfg.BO.GLCTEntitySearchDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.DeleteByID(System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.GetByID(System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.GetRows(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.Update(Epicor.Mfg.BO.GLCTEntitySearchDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.UpdateExt(Epicor.Mfg.BO.UpdExtGLCTEntitySearchDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCTEntitySearch.ChangeTypeOnEntity(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String@)">
+            <summary>
+            Method to call to retrieve the GL Control Type description for an entity.
+            This method is called when adding types to entities to validate the type
+            does not already exist for the entity and to return the description
+            for display purposes.
+            </summary>
+            <param name="inGLControlType"> GL Control Type </param>
+            <param name="inRelatedToFile"> Related To File </param>
+            <param name="inKey1"> Key1 </param>
+            <param name="inKey2"> Key2 </param>
+            <param name="inKey3"> Key3 </param>
+            <param name="inKey4"> Key4 </param>
+            <param name="inKey5"> Key5 </param>
+            <param name="inKey6"> Key6 </param>
+            <param name="outDescription"> Description </param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntityListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntityListDataSet.GLCTEntityListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntityListDataSet.GLCTEntityListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCTEntityListDataSet.GLCTEntityListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCTEntitySearchDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCTEntitySearchDataSet.GLCTEntityDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCTEntitySearchDataSet.GLCTEntityRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCTEntitySearchDataSet.GLCTEntityRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

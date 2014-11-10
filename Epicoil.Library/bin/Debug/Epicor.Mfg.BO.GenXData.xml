@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.BO.GenXData</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.GenXData">
+            <summary>
+            Client side business object for GenXData.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.GenXDataImpl">
+            <summary>
+            This business object is designed to store the data for the Customization/Personalization process
+            which is usually contained within XML files. The tables are "generic" and would allow for
+            other processes with large data to use these, not only customization/personalization.
+            The data will be "chunked" into data blocks of 30K (Progress Limit) or less.
+            Each "chunk" will become an individual record with XXXDef as the parent record. This BO
+            Will have a custom "update" called StoreData and will not allow the base "update" method to
+            function.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetNewXXXDef(Epicor.Mfg.BO.GenXDataDataSet,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetNewXXXChunk(Epicor.Mfg.BO.GenXDataDataSet,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.DeleteByID(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetByID(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetRows(System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.Update(Epicor.Mfg.BO.GenXDataDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.UpdateExt(Epicor.Mfg.BO.UpdExtGenXDataDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.DeleteByIDEx(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            This method deletes a XXXDef record and possibly XXXChunk records for a specific
+            Company
+            </summary>
+            <param name="ipCompany">The Company.</param>
+            <param name="ipProductID">The Product id.</param>
+            <param name="ipTypeCode">The type code.</param>
+            <param name="ipCGCCode">The CSF Code.</param>
+            <param name="ipKey1">The Key1.</param>
+            <param name="ipKey2">The Key2.</param>
+            <param name="ipKey3">The Key3.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetByIDEx(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            This method returns a dataset representing a XXXDEF with a blank CompanyID
+            </summary>
+            <param name="ipProductID">The company id.</param>
+            <param name="ipTypeCode">The type code.</param>
+            <param name="ipCGCCode">The CSF Code.</param>
+            <param name="ipKey1">The Key1.</param>
+            <param name="ipKey2">The Key2.</param>
+            <param name="ipKey3">The Key3.</param>
+            <returns>GenXData DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetListEx(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns a list of XXXDef, including those with blank Company ID
+            </summary>
+            <param name="whereClause">The criteria</param>
+            <returns>Returns the list of XXXDef</returns>
+            <param name="pageSize">Size of a page</param>
+            <param name="absolutePage">The absolute page</param>
+            <param name="morePages">Indicating if there are more pages after this batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetRowsEx(System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns XXXDef, including those with blank Company ID
+            </summary>
+            <param name="whereClauseXXXDef">The criteria XXX Def</param>
+            <param name="whereClauseXXXChunk">The criteria XXX Chunk</param>
+            <returns>GenXData DataSet.</returns>
+            <param name="pageSize">Size of a page</param>
+            <param name="absolutePage">The absolute page</param>
+            <param name="morePages">Indicating if there are more pages after this batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.GetVersion(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String@,System.Boolean@)">
+            <summary>
+            This method will require the primary unique index fields
+            locate the xxxdef record and return the "version" field value.
+            </summary>
+            <param name="ipCompanyID">The company id value to return version for. </param>
+            <param name="ipProductID">The product id value to return version for. </param>
+            <param name="ipTypeCode">The type code value to return version for. </param>
+            <param name="ipCGCCode">The CSF Code.</param>
+            <param name="ipKey1">The key1 value to return version for. </param>
+            <param name="ipKey2">The key2 value to return version for. </param>
+            <param name="ipKey3">The key3 value to return version for. </param>
+            <param name="opVersion">The returned version value. </param>
+            <param name="opRecordExists">Logical to state whether the XXXDef record exists.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.StoreData(Epicor.Mfg.BO.GenXDataDataSet)">
+            <summary>
+            This methods should be ran instead of the base Update method.
+            This method will require the dataset to come in, next it will delete all XXXChunk
+            records associated with each ttXXXDef in the dataset while also deleting
+            the XXXDef records in the database. Next the ttXXXDef table will be the driving force behind
+            the creation of new XXXDef and XXXChunk records in the database.
+            The values for the fields in these records will come from what is in the dataset.
+            This 'StoreData' process is basically a complete 'overlay' of the Generic Large Data data.
+            This method will require that all dataset records have a value of 'A' in the corresponding
+            rowident field/column.
+            </summary>
+            <param name="ds">GenXData DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.GenXDataImpl.StoreDataComp(Epicor.Mfg.BO.GenXDataDataSet)">
+            <summary>
+            This methods should be ran instead of the base Update method.
+            This method will require the dataset to come in, next it will delete all XXXChunk
+            records associated with each ttXXXDef in the dataset while also deleting
+            the XXXDef records in the database. Next the ttXXXDef table will be the driving force behind
+            the creation of new XXXDef and XXXChunk records in the database.
+            The values for the fields in these records will come from what is in the dataset.
+            This 'StoreData' process is basically a complete 'overlay' of the Generic Large Data data.
+            This method will require that all dataset records have a value of 'A' in the corresponding
+            rowident field/column.
+            </summary>
+            <param name="ds">GenXData DataSet.</param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.GenXDataImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.BO.GenXData.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

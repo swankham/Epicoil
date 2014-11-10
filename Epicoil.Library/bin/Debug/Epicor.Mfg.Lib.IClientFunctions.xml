@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.IClientFunctions</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.IClientFunctions">
+            <summary>
+            Modifies session state
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IClientFunctions.GetTaxConnect(System.Boolean@)">
+            <summary>
+            This method returns TaxSvcConfig.TaxConnectEnabled for the currrent Company
+            otherwise it returns false.
+            </summary>
+            <param name="compTaxConnectEnabled">The only TaxSvcConfig.TaxConnectEnabled for the company </param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IClientFunctions.GetWorkstationMethod(System.String)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            </remarks>
+        </member>
+    </members>
+</doc>

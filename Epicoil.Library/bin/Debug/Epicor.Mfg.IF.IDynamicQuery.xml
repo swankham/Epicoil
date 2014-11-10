@@ -1,0 +1,1079 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IDynamicQuery</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.ASPExportFieldDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ASPExportFieldDataSet.ASPExportFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ASPExportFieldDataSet.ASPExportFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ASPExportFieldDataSet.ASPExportFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.AvailableTableListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.AvailableTableListDataSet.AvailableTableListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.AvailableTableListDataSet.AvailableTableListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.AvailableTableListDataSet.AvailableTableListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQRequestDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQRequestDataSet.BAQRequestDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQRequestDataSet.BAQRequestRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQRequestDataSet.BAQRequestRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FieldListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FieldListDataSet.FieldListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FieldListDataSet.FieldListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FieldListDataSet.FieldListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FiscalPeriodListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FiscalPeriodListDataSet.FiscalPeriodListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FiscalPeriodListDataSet.FiscalPeriodListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FiscalPeriodListDataSet.FiscalPeriodListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.DynamicQueryDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCalcFldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlValuesDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCustomActionDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryParameterDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QuerySortByDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryTableDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryUpdateFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryValueSetItemsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryWhereItemDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.SelectedFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.DynamicQueryRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCalcFldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlValuesRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCustomActionRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryParameterRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QuerySortByRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryTableRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryUpdateFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryValueSetItemsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryWhereItemRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.SelectedFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.DynamicQueryRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCalcFldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCtrlValuesRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryCustomActionRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryParameterRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryRelationFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QuerySortByRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryTableRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.KeyFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryUpdateFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryValueSetItemsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.QueryWhereItemRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryDesignDataSet.SelectedFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IDynamicQuery">
+            <summary>
+            This is the DynamicQuery object. It has two methods for executing a
+            query: ExecuteByID and Execute. The first one is used to run an existing
+            query while the second one is called to execute a query on the fly.
+            The DynamicQuery object also has methods that support creating and designing
+            a query, possibly through a query wizard interface.
+            Author(s) : Jia Lizhi
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetTableExecutionOrder(Epicor.Mfg.BO.QueryDesignDataSet,System.String@)">
+            <summary>
+            This method returns comma delimited query table list in order of execution.
+            </summary>
+            <param name="ds">Query design dataset</param>
+            <param name="tableList">List of tables</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddCalculatedField(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            This method adds a calculated field to a query. The data type of a calculated field
+            is always character.
+            </summary>
+            <param name="ds">Query design dataset</param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcName">The name of this calculated field</param>
+            <param name="pcDataType">The data type of this calculated field</param>
+            <param name="pcFormat">The format of this calculated field</param>
+            <param name="pcLabel">The label of this calculated field</param>
+            <param name="pcExpression">The expression</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddQueryField(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String)">
+            <summary>
+            This method adds (selects) a field the list of a query's selected fields
+            </summary>
+            <param name="ds">Query design dataset</param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcTableID">The DataTable ID</param>
+            <param name="pcField">The field name</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddQueryFields(Epicor.Mfg.BO.QueryDesignDataSet,System.String)">
+            <summary>
+            This method adds a list of QueryFields to a BAQ
+            </summary>
+            <param name="ds">The dataset representing the current query</param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddQueryRelation(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+             <summary>
+             This method adds a relation(a join) to a query
+            
+             If the pcKey is a valid key then a default matching of fields based on the
+             field name is returned in the QueryRelationField table. If a matching field cannot be
+             found in the child table then the ChildFieldName is left blank. If pcKey is blank, then
+             no default matching is returned. The AddQueryRelationField method should be called
+             in this case to compeletely define the relation.
+             </summary>
+             <param name="ds">Query design dataset</param>
+             <param name="pcQueryID">The current Query(Exports) ID</param>
+             <param name="pcRelationID">The name of the relation</param>
+             <param name="pcParentAlias">The alias of parent DataTable ID</param>
+             <param name="pcKey">The key(index) of the parent DataTable</param>
+             <param name="pcChildAlias">The alias of the child table</param>
+             <param name="pcWhichItem">Specify "each", "first" or "last"</param>
+             <param name="isOuterJoin">true if is an outer-join</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddQueryRelationField(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.String)">
+            <summary>
+            This method adds a relation field mapping (parentField = childField) to a query
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcRelationID">The name of the relation</param>
+            <param name="pcParentField">The parent field name</param>
+            <param name="pcChildField">The child field name</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddQueryTable(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.Boolean)">
+            <summary>
+            This method adds a valid table to the list of a query's selected tables
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcTableID">The Table ID</param>
+            <param name="pbIsSummary">yes = this is a summary table</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddRelatedTable(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+             <summary>
+             This method adds a related table to a query
+            
+             This method adds a new table to another table that is already in the query(pcMainTable).
+             If a predefined relation can be found between these two tables then a relation and relation fields
+             for that relation will be returned. The new relation ID is the combination of the MainTable
+             and the relatedTable. Otherwise this method is the same as AddQueryTable.
+             NOT IMPLEMENTED YET
+             </summary>
+             <param name="ds">Returns the updated dataset </param>
+             <param name="pcQueryID">The current Query(Exports) ID</param>
+             <param name="pcMainTable">The name of the table that this new table relates to</param>
+             <param name="pcRelatedTable">The related table</param>
+             <param name="pcWhichItem">Specify "each", "first" or "last"</param>
+             <param name="isSummary">true if should add as a summary table</param>
+             <param name="isOuterJoin">true if is an outer-join</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddSortBy(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            This method adds a sortby clause to a query.
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcTable">The table of this sort by field</param>
+            <param name="pcField">The field name of this sort by</param>
+            <param name="pbAscending">true = ascending, false = descending</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AddWhereItem(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean)">
+            <summary>
+            This method adds a QueryWhereItem to a query.
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcTable">The table of this sort by field</param>
+            <param name="pcField">The field name of this sort by</param>
+            <param name="pcCondition">comparison operator</param>
+            <param name="pbIsConst">true = right side of comparison is a constant
+            false = right side of comparison is another field</param>
+            <param name="pcValue">The value to compare to</param>
+            <param name="pcToTable">The table name of a field to compare to</param>
+            <param name="pcToField">The field to compare to</param>
+            <param name="pcLeftParentheses">number of left parentheses</param>
+            <param name="pcRightParentheses">number of right parentheses</param>
+            <param name="pcAndOr">"and" or "or"</param>
+            <param name="pbNeg">apply "Not"</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.Analyze(Epicor.Mfg.BO.QueryDesignDataSet,System.Boolean@,System.String@)">
+            <summary>
+            This method verifies a query and returns true if it is valid. False otherwise.
+            </summary>
+            <param name="ds">The dataset represents the current
+            query</param>
+            <param name="bSuccess">true = query syntax is correct, false = there is a syntax error </param>
+            <param name="pcMessage">Returns the error message if there is an error </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.AnalyzeEx(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.Boolean@,System.String@)">
+            <summary>
+            This method verifies a query and returns true if it is valid. False otherwise.
+            </summary>
+            <param name="ds">The dataset represents the current query</param>
+            <param name="cBOSource">Specifies whether the bo represents a business entity (BL) or a DB table</param>
+            <param name="cBOName">Name of business object which defines the temp-tables used in the query</param>
+            <param name="bSuccess">true if query syntax is correct, false if there is a syntax error</param>
+            <param name="pcMessage">Returns the error message if there is an error</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.CheckFields(Epicor.Mfg.BO.QueryDesignDataSet,System.String@)">
+            <summary>
+            This method verifies a query and returns true if it is valid. False otherwise.
+            </summary>
+            <param name="ds">The dataset represents the current query</param>
+            <param name="errFieldList">Returns the list of missed fields if there are any.
+            format is
+            DF:AbcCode:f1,AbcCode.f2;SF:AbcCode:f1,AbcCode.f2;RF:AbcCode:f1,AbcCode.f2;WF:AbcCode:f1,AbcCode.f2;FF:AbcCode:f1,AbcCode.f2
+            where
+            DF - display fields,
+            SF - sorting fields,
+            RF - relation fields,
+            WF - where clause fields,
+            FF - fields, where field format was not actual (i.e. not equal to db table field format).These formats also are fixed during check,
+            so this list is for information purposes only
+            </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ChangeAuthor(System.String,System.String)">
+            <summary>
+            This method change the Author of a Dynamic Query to a different one
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <param name="pcNewAuthor">The new author</param>
+            <returns>Returns the dataset representing the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.CopyQuery(System.String,System.String,System.Boolean@)">
+            <summary>
+            This method makes a copy of an existing query
+            </summary>
+            <param name="pcSourceQueryID">The source Query(Exports) ID</param>
+            <param name="pcDestQueryID">The target Query(Exports) ID</param>
+            <param name="pbSucceed">yes = save secceeded, no = failed </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.DeleteByID(System.String)">
+            <summary>
+            This method deletes an existing query
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.DeleteUnapprovedByID(System.String)">
+            <summary>
+            This method deletes an unapproved query
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.Execute(Epicor.Mfg.BO.QueryDesignDataSet)">
+            <summary>
+            This method runs a query based on default settings.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <returns>Returns the result dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExecuteByID(System.String)">
+            <summary>
+            This method run an existing query and returns an untyped dataset
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <returns>Returns the result of the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExecuteByIDParametrized(System.String,Epicor.Mfg.BO.QueryExecutionDataSet,System.String,System.Int32,System.Boolean@)">
+            <summary>
+            This method run an existing query and returns an untyped dataset
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="ds">The Query execution parameters (named parameter values, filtering and etc.)</param>
+            <returns>Returns the result of the query</returns>
+            <param name="resultFieldList">Comma delimited list of fields in result dataset. List is subset of query's SelectedField table content</param>
+            <param name="topNRecords">Number of first records in result set to be returned</param>
+            <param name="hasMoreRecords">Flag indicating if there are more records</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExecuteDashBoardQuery(Epicor.Mfg.BO.QueryDesignDataSet)">
+            <summary>
+            This method runs a dash board query.
+            </summary>
+            <param name="ds">The dataset represents a Dash Board Query</param>
+            <returns>Returns the result dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExecuteDashBoardQueryPaged(Epicor.Mfg.BO.QueryDesignDataSet,System.Int32,System.Boolean@)">
+            <summary>
+            This method runs a dash board query.
+            </summary>
+            <param name="ds">The dataset represents a Dash Board Query</param>
+            <returns>Returns the result dataset</returns>
+            <param name="piPageSize">The size of page</param>
+            <param name="pbMorePage">Flag indicating if there are more pages</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetDropDownListValues(System.String,System.String)">
+            <summary>
+            This method runs a query based on default settings and return lists of distinct values of specified fields.
+            </summary>
+            <param name="queryID">The Query ID</param>
+            <param name="distinctFields">Comma delimited list of query display fields distinct values of should be returned</param>
+            <returns>Returns the result dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetDropDownListValuesParametrized(System.String,Epicor.Mfg.BO.QueryExecutionDataSet,System.String)">
+            <summary>
+            This method runs a query based on default settings and passed execution parameters and return lists of distinct values of specified fields.
+            </summary>
+            <param name="queryID">The Query ID</param>
+            <param name="ds">The Query execution parameters (named parameter values, filtering and etc.)</param>
+            <param name="distinctFields">Comma delimited list of query display fields distinct values of should be returned</param>
+            <returns>Returns the result dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.BeginPagingParametrized(Epicor.Mfg.BO.QueryDesignDataSet,Epicor.Mfg.BO.QueryExecutionDataSet,System.String,System.Int32,System.String@,System.Int32@)">
+            <summary>
+            This method prepare a query for paged access by using additional query's parameters.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <returns>Returns the result dataset where Results table is filled with data only if pageSize parameter is not null</returns>
+            <param name="ds1">The Query parameters dataset</param>
+            <param name="pageSize">Size of first page of result set to be returned. Initially is null that means no query results should be returned</param>
+            <param name="resultFieldList">Comma delimited list of fields in result dataset. List is subset of query's SelectedField table content</param>
+            <param name="pagedQueryToken">Paged query token which is used in subsequent calls. Can be null if pageSize is set to value and result set fits that page</param>
+            <param name="totalRowCount">Total count of result rows</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.BeginPaging(Epicor.Mfg.BO.QueryDesignDataSet,System.Int32,System.String@,System.Int32@)">
+            <summary>
+            This method prepare a query for paged acess.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <returns>Returns the result dataset where Results table is filled with data only if pageSize parameter is not null</returns>
+            <param name="pageSize">Size of first page of result set to be returned. Initially is null that means no query results should be returned</param>
+            <param name="pagedQueryToken">Paged query token which is used in subsequent calls. Can be null if pageSize is set to value and result set fits that page</param>
+            <param name="totalRowCount">Total count of result rows</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.BeginPagingForQueryID(System.String,System.Int32,System.String@,System.Int32@)">
+            <summary>
+            This method prepare a query for paged acess.
+            </summary>
+            <param name="queryID">The Query ID</param>
+            <returns>Returns the result dataset where Results table is filled with data only if pageSize parameter is not null</returns>
+            <param name="pageSize">Size of first page of result set to be returned. Initially is null that means no query results should be returned</param>
+            <param name="pagedQueryToken">Paged query token which is used in subsequent calls. Can be null if pageSize is set to value and result set fits that page</param>
+            <param name="totalRowCount">Total count of result rows</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.BeginPagingForQueryIDParametrized(System.String,Epicor.Mfg.BO.QueryExecutionDataSet,System.String,System.Int32,System.String@,System.Int32@)">
+            <summary>
+            This method prepare a query for paged access by using additional query parameters.
+            </summary>
+            <returns>Returns the result dataset where Results table is filled with data only if pageSize parameter is not null</returns>
+            <param name="queryID">The Query ID</param>
+            <param name="ds">The Query parameters dataset</param>
+            <param name="resultFieldList">Comma delimited list of fields in result dataset. List is subset of query's SelectedField table content</param>
+            <param name="pageSize">Size of first page of result set to be returned. Initially is null that means no query results should be returned</param>
+            <param name="pagedQueryToken">Paged query token</param>
+            <param name="totalRowCount">Total count of result rows</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetPage(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns a requested page of the query.
+            </summary>
+            <param name="pagedQueryToken">The paged query token.</param>
+            <param name="pageNumber">Number of the page</param>
+            <param name="pageSize">Number of records in the page</param>
+            <param name="hasMorePages">Whether is more pages left</param>
+            <returns>Returns the requested page of the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.EndPaging(System.String)">
+            <summary>
+            This method ends paged access to the query and discards all related temporary data.
+            </summary>
+            <param name="pagedQueryToken">The paged query token.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExecuteParametrized(Epicor.Mfg.BO.QueryDesignDataSet,Epicor.Mfg.BO.QueryExecutionDataSet,System.String,System.Int32,System.Boolean@)">
+            <summary>
+            This method runs a query based on selected tables, fields, joins, etc and on passed execution parameters.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <param name="ds1">The dataset contains Query execution parameters</param>
+            <returns>Returns the result dataset</returns>
+            <param name="resultFieldList">Comma delimited list of fields in result dataset. List is subset of query's SelectedField table content</param>
+            <param name="topNRecords">Number of first records in result set to be returned</param>
+            <param name="hasMoreRecords">Flag indicating if there are more records</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.Export(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String,System.String,System.Boolean,System.Boolean@)">
+            <summary>
+            This method exports a query's result to a file.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <param name="pcFile">The file name</param>
+            <param name="pcFileType">The type of export </param>
+            <param name="pcTextDelim">The delimiter to use for delimited export formats. If blank the format in the query definition will be used. Ignored for XML exports.</param>
+            <param name="pbOutputLabels">Output results labels file. Ignored for XML exports.</param>
+            <param name="pbSuccess">indicating if the method finished successfully</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ExportByID(System.String,System.String,System.String,System.String,System.Boolean,System.String@,System.Boolean@,System.String@)">
+            <summary>
+            This method export an existing query to a file
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcExportFormatOverride">Type of export to perform. Currently only "XML" is supported and this parameter is ignored.</param>
+            <param name="pcFilenameOverride">The filename to use for the export. If blank the filename in the query definition will be used.</param>
+            <param name="pcTextDelim">The delimiter to use for delimited export formats. If blank the format in the query definition will be used. Ignored for XML exports.</param>
+            <param name="pbOutputLabels">Output results labels file. Ignored for XML exports.</param>
+            <param name="pcFile">The file created</param>
+            <param name="pbSuccess">indicating if the method finished successfully</param>
+            <param name="pbMessage">indicating if the method finished successfully</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GenerateASP(System.String,System.String,Epicor.Mfg.BO.ASPExportFieldDataSet)">
+            <summary>
+            Generate an ASP file with the given .
+            The ASP file is used in conjunction with an XML export to display exported
+            information in a web browser.
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <param name="pcFilename">File name</param>
+            <param name="ds">ASP Export field dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetASPFields(System.String)">
+            <summary>
+            Get the fields that would be used to generate an ASP file.
+            The ASP file is used in conjunction with an XML export to display exported
+            information in a web browser.
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Epicor.Mfg.BO.ASPExportFieldDataSet</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetAvailableTableList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns a list of available tables that can be added to a query
+            </summary>
+            <param name="whereClause">The criteria</param>
+            <returns>Epicor.Mfg.BO.AvailableTableListDataSet</returns>
+            <param name="pageSize">Size of a page</param>
+            <param name="absolutePage">The absolute page</param>
+            <param name="morePages">Indicating if there are more pages after this batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetByID(System.String)">
+            <summary>
+            This method returns a dataset representing an existing query
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns the dataset representing the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetDashBoardQueries(Epicor.Mfg.BO.BAQRequestDataSet)">
+            <summary>
+            This method returns a dataset representing a list of dash board queries
+            </summary>
+            <param name="ds">The list of queries</param>
+            <returns>Returns the dataset representing the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetDashBoardQuery(System.String)">
+            <summary>
+            This method returns a dataset representing a list of dash board queries
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID List</param>
+            <returns>Epicor.Mfg.BO.QueryDesignDataSet</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetDBQueryByID(System.String,System.Boolean,System.String@)">
+            <summary>
+            This method returns the query procedure file which can be run outside the BAQ engine
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pbPrepareOnly">When true, portions of the query will contain placeholders
+            and caller must modify results to provide them before use.</param>
+            <param name="pcProcedure">Returns the procedure or SQL batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetFieldList(System.String)">
+            <summary>
+            This method returns a list of available tables that can be added to a query
+            </summary>
+            <param name="pcTable">The TableID</param>
+            <returns>The list of fields that in the table</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetFiscalPeriods(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            This method returns a list of fiscal periods between pdBeginDate and pdEndDate
+            </summary>
+            <param name="pdBeginDate">The begin date</param>
+            <param name="pdEndDate"> The end date</param>
+            <returns>The list of fiscal periods</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns a list of existing queries
+            </summary>
+            <param name="whereClause">The criteria</param>
+            <returns>Epicor.Mfg.BO.DynamicQueryListDataSet</returns>
+            <param name="pageSize">Size of a page</param>
+            <param name="absolutePage">The absolute page</param>
+            <param name="morePages">Indicating if there are more pages after this batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetListFromLike(System.String,System.String)">
+            <summary>
+            This method returns a list of BAQs that have a specific like field
+            </summary>
+            <param name="pcLikeTable">The table name of the like field</param>
+            <param name="pcLikeField">The field name of the like field</param>
+            <returns>The list of queries that meet the criteria</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetNewQuery(Epicor.Mfg.BO.QueryDesignDataSet)">
+            <summary>
+            This method createa a new DynamicQuery object with a blank query ID.
+            The query object is not saved until the Update method is called
+            </summary>
+            <param name="ds">Returns the newly created query</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetNewQueryRelation(Epicor.Mfg.BO.QueryDesignDataSet,System.String)">
+            <summary>
+            This method creates a new query relation row
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetNewQueryRelationField(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String)">
+            <summary>
+            This method creates a new query relation field row
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcRelationID">The relation ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetNewWhereItem(Epicor.Mfg.BO.QueryDesignDataSet,System.String,System.String)">
+            <summary>
+            This method creates a new QueryWhereItemRow.
+            </summary>
+            <param name="ds">Returns the updated dataset </param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcTable">The table of this sort by field</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetProgressDBQueryByID(System.String,System.String@)">
+            <summary>
+            This method run an existing query and returns an untyped dataset
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pcProcedure">Returns the procedure or SQL batch</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetQueryByID(System.String)">
+            <summary>
+            This method returns a dataset representing an existing query
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns the dataset representing the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetQueryExecutionParameters(Epicor.Mfg.BO.QueryDesignDataSet)">
+            <summary>
+            This method returns a dataset representing an query's execution parameters information
+            </summary>
+            <param name="ds">The query design dataset</param>
+            <returns>Returns the dataset representing the query execution parameters</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetQueryExecutionParametersByID(System.String)">
+            <summary>
+            This method returns a dataset representing an query's execution parameters information
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns the dataset representing the query execution parameters</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetRelatedTables(System.String)">
+            <summary>
+            This method returns a list of tables that are related to a list of tables
+            </summary>
+            <param name="pcTable">The name of a table you want to get the related tables for</param>
+            <returns>The list of tables that are related to pcTable</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetRows(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method returns a set of queries based on the criteria
+            </summary>
+            <param name="whereClauseDynamicQuery">Criteria for the Query</param>
+            <param name="whereClauseQueryTable">Criteria for the QueryTable</param>
+            <param name="whereClauseQueryField">Criteria for the QueryField</param>
+            <param name="whereClauseQueryWhereItem">Criteria for the QueryWhereItem</param>
+            <param name="whereClauseQueryCalcFld">Criteria for the QueryCalcFld</param>
+            <param name="whereClauseQueryRelation">Criteria for the QueryRelation</param>
+            <param name="whereClauseQueryRelationField">Criteria for the QueryRelationField</param>
+            <param name="whereClauseQuerySortBy">Criteria for the QuerySortBy</param>
+            <returns>the returned set of wueries</returns>
+            <param name="pageSize">size of page</param>
+            <param name="absolutePage">absolutePage</param>
+            <param name="morePages">true = more pages yet to be retrieved, false = end of result</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.GetUnapprovedByID(System.String)">
+            <summary>
+            This method returns a dataset representing an unapproved query
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns the dataset representing the query</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ImportDynamicQuery(Epicor.Mfg.BO.QueryDesignDataSet,System.Boolean@)">
+            <summary>
+            This method imports a query from the passed in dataset.
+            </summary>
+            <param name="ds">The dataset represents a Query</param>
+            <param name="bOK">Import result</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.ParseTables(System.String)">
+             <summary>
+             This method parse a query string and return the list of tables in the query string
+             and fields in those tables
+             </summary>
+             <param name="pcQueryPhrase">The criteria</param>
+             <returns>The list of tables that are in the query string
+            and available fields in those tables</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.RemoveQueryFields(Epicor.Mfg.BO.QueryDesignDataSet,System.String)">
+            <summary>
+            This method removes a list of QueryFields to a BAQ. The caller should also remove any
+            QuerySortBy before this method is called
+            </summary>
+            <param name="ds">The dataset representing the current query</param>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.SaveQuery(System.String,System.Boolean@)">
+            <summary>
+            This method save a query to the database
+            </summary>
+            <param name="pcQueryID">The current Query(Exports) ID</param>
+            <param name="pbSucceed">yes = save secceeded, no = failed </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IDynamicQuery.Update(Epicor.Mfg.BO.QueryDesignDataSet)">
+            <summary>
+            This method persists a dataset that representing a query to the database
+            </summary>
+            <param name="ds">The dataset representing the current query</param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ParsedTableDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ParsedTableDataSet.ParsedTableDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ParsedTableDataSet.ParsedTableRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.ParsedTableDataSet.ParsedTableRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.RelatedTableDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.RelatedTableDataSet.RelatedTableDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.RelatedTableDataSet.RelatedTableRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.RelatedTableDataSet.RelatedTableRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionFilterDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionParameterDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionValueSetItemsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionFilterRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionParameterRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionValueSetItemsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionFilterRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionParameterRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionDataSet.ExecutionValueSetItemsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryResultFieldDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryArgumentsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryResultFieldRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryArgumentsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryResultFieldRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.QueryExecutionParametersDataSet.QueryArgumentsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

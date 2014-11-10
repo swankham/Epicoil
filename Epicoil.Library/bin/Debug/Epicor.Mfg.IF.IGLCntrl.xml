@@ -1,0 +1,235 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IGLCntrl</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctBookDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlJrnlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctBookRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlJrnlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlAcctBookRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlDataSet.GLCntrlJrnlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IGLCntrl">
+            <summary>
+            This entity should be universally used to assign sets of accounts to business entities.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetNewGLCntrl(Epicor.Mfg.BO.GLCntrlDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetNewGLCntrlAcct(Epicor.Mfg.BO.GLCntrlDataSet,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetNewGLCntrlJrnl(Epicor.Mfg.BO.GLCntrlDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.DeleteByID(System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetByID(System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetRows(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.Update(Epicor.Mfg.BO.GLCntrlDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.UpdateExt(Epicor.Mfg.BO.UpdExtGLCntrlDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.GetGLControlCodeDesc(System.String,System.String,System.String@)">
+            <summary>
+            Method to call to retrieve the GL Control Code description.
+            </summary>
+            <param name="inGLControlType"> GL Control Type </param>
+            <param name="inGLControlCode"> GL Control Code </param>
+            <param name="outDescription"> Description </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IGLCntrl.ValidateAcctsJrnlCodes(System.String,System.String,System.Boolean@,System.String@)">
+            <summary>
+            Validates an account has been entered for account contexts that are required.
+            Validate all journal contexts have a journal code selected.
+            </summary>
+            <param name="inGLControlType"> GL Control Type </param>
+            <param name="inGLControlCode"> GL Control Code </param>
+            <param name="outShowMsg"> Show the message to the user </param>
+            <param name="outMessage"> Message text </param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlListDataSet.GLCntrlListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlListDataSet.GLCntrlListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.GLCntrlListDataSet.GLCntrlListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctBookDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlJrnlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctBookRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlJrnlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlAcctBookRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtGLCntrlDataSet.GLCntrlJrnlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

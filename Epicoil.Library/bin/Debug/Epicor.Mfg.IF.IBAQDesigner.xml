@@ -1,0 +1,803 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IBAQDesigner</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.BAQABTQueryLstDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQABTQueryLstDataSet.BAQABTQueryLstDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQABTQueryLstDataSet.BAQABTQueryLstRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQABTQueryLstDataSet.BAQABTQueryLstRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQBOTablesDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQBOTablesDataSet.BAQBOtablesDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQBOTablesDataSet.BAQBOtablesRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQBOTablesDataSet.BAQBOtablesRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQPcDynListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQPcDynListDataSet.PcDynLstDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQPcDynListDataSet.PcDynLstRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQPcDynListDataSet.PcDynLstRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynQueryDiagramDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynQueryDiagramDataSet.DynQueryDiagramDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynQueryDiagramDataSet.DynQueryDiagramRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynQueryDiagramDataSet.DynQueryDiagramRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.DynamicQueryDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryTableDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCalcFldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlValuesDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCustomActionDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryParameterDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QuerySortByDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryUpdateFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryWhereItemDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryValueSetItemsDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.SelectedFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.DynamicQueryDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryTableDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCalcFldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlValuesDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCustomActionDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryParameterDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QuerySortByDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryUpdateFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryWhereItemDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryValueSetItemsDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.SelectedFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.DynamicQueryDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryTableDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCalcFldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCtrlValuesDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryCustomActionDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryParameterDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryRelationFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QuerySortByDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryUpdateFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryWhereItemDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.QueryValueSetItemsDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerDataSet.SelectedFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FullTableListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FullTableListDataSet.FullTableListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FullTableListDataSet.FullTableListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FullTableListDataSet.FullTableListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IBAQDesigner">
+            <summary>
+            Code for new BAQ designer
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewDynamicQueryDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryTableDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryFieldDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryCalcFldDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryCtrlDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryCtrlValuesDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryCustomActionDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryParameterDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryRelationDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryRelationFieldDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQuerySortByDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryUpdateFieldDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.String,System.String,System.Boolean,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryWhereItemDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetNewQueryValueSetItemsDesigner(Epicor.Mfg.BO.BAQDesignerDataSet,System.Boolean,System.String,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.DeleteByID(System.Boolean,System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetByID(System.Boolean,System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetRows(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.Update(Epicor.Mfg.BO.BAQDesignerDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.UpdateExt(Epicor.Mfg.BO.UpdExtBAQDesignerDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.CreateUBAQ(System.String,System.String)">
+            <summary>
+            Create files for updatable query
+            </summary>
+            <param name="dcdUserID">UserID, to which the query belongs</param>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns PcDynLst</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetPcDynLst(System.String)">
+            <summary>
+            Get list from PcDynLst where specified query is used
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns PcDynLst</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetABTQueryLst(System.String)">
+            <summary>
+            Get list from ABTQuery where specified query BAQID is used
+            </summary>
+            <param name="baQID">The Query(Exports) ID</param>
+            <returns>Returns ABTQueryLst</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetUsedInBAQList(System.String)">
+            <summary>
+            Get list from of BAQs where specified query is used
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <returns>Returns UsedInBAQListDataSet dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetTableList">
+            <summary>
+            Get full list of tables from zDataTable for palette and code editor
+            </summary>
+            <returns>Returns list from zDataTable</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.LoadQueryDiagram(System.String,System.String,System.String)">
+            <summary>
+            This method returns serialized query diagram
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <param name="companyID">The Company) ID</param>
+            <param name="dcdUserID">The User ID</param>
+            <returns>Returns the dataset with diagram</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.DeleteQueryDiagram(System.String,System.String,System.String)">
+            <summary>
+            This method returns serialized query diagram
+            </summary>
+            <param name="pcQueryID">The Query(Exports) ID</param>
+            <param name="companyID">The Company) ID</param>
+            <param name="dcdUserID">The User ID</param>
+            <returns>Returns the dataset with diagram</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.SaveQueryDiagram(Epicor.Mfg.BO.DynQueryDiagramDataSet)">
+            <summary>
+            This method saves SOAP-serialized query diagram
+            </summary>
+            <param name="ds">The dataset representing the current diagram</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.ValidQueryName(System.String@,System.Boolean@,System.String@)">
+            <summary>
+            Check if query name entered is valid
+            </summary>
+            <param name="pcQueryID">The proposed Query(Exports) ID</param>
+            <param name="queryFound">true, if such query exists</param>
+            <param name="cUser">The User ID, who created query</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.PossibleBONames(System.String,System.String@)">
+            <summary>
+            returns list of BOs where query tables are used
+            </summary>
+            <param name="tableNames">comma delimeted table name list</param>
+            <param name="boNames">comma delimeted BO name list</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IBAQDesigner.GetBOTableList(System.String,System.String@)">
+            <summary>
+            This method returns the list of tables, belonging to specified business object
+            </summary>
+            <param name="boName">Business Object Name</param>
+            <param name="topTableID">comma delimeted BO name list</param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerListDataSet.DynamicQueryDesignerListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerListDataSet.DynamicQueryDesignerListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.BAQDesignerListDataSet.DynamicQueryDesignerListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.DynamicQueryDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryTableDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCalcFldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlValuesDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCustomActionDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryParameterDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QuerySortByDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryUpdateFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryWhereItemDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryValueSetItemsDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.SelectedFieldDesignerDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.DynamicQueryDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryTableDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCalcFldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlValuesDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCustomActionDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryParameterDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QuerySortByDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryUpdateFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryWhereItemDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryValueSetItemsDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.SelectedFieldDesignerRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.DynamicQueryDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryTableDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCalcFldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCtrlValuesDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryCustomActionDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryParameterDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryRelationFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QuerySortByDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryUpdateFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryWhereItemDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.QueryValueSetItemsDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtBAQDesignerDataSet.SelectedFieldDesignerRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UsedInBAQListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UsedInBAQListDataSet.UsedInBAQListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UsedInBAQListDataSet.UsedInBAQListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UsedInBAQListDataSet.UsedInBAQListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

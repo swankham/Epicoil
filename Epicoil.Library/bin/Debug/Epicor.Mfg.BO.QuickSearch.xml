@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.BO.QuickSearch</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.QuickSearch">
+            <summary>
+            Client side business object for QuickSearch.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.QuickSearchImpl">
+            <summary>
+            Provide a way to define and run a user-defined search
+            </summary>
+            <example>
+            <code>
+            </code>
+            </example>
+            <remarks>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetNewQuickSearch(Epicor.Mfg.BO.QuickSearchDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetNewQuickSearchCriteria(Epicor.Mfg.BO.QuickSearchDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetNewQuickSearchValueList(Epicor.Mfg.BO.QuickSearchDataSet,System.String,System.String,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.DeleteByID(System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetByID(System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetRows(System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.Update(Epicor.Mfg.BO.QuickSearchDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.UpdateExt(Epicor.Mfg.BO.UpdExtQuickSearchDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.BAQExists(System.String,System.String,System.Boolean@)">
+            <summary>
+            This method returns a list of quick searches for this user
+            </summary>
+            <param name="pcGlbComp">The ID of the global company</param>
+            <param name="pcQuickSearchID">The ID of the quick search</param>
+            <param name="pbExists">Returns true if the BAQ in this quick search exists</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.BAQsExist(System.String,Epicor.Mfg.BO.QuickSearchBAQsExistDataSet)">
+            <summary>
+            This method returns a dataset of quick searches indicating if a BAQ exists
+            for each Quick Search
+            </summary>
+            <param name="pcGlbComp">The ID of the global company</param>
+            <param name="ds">Returns the list of Quick Searches</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.CopyQuickSearch(System.String,System.String,System.Boolean@)">
+            <summary>
+            This method copies a quick search
+            </summary>
+            <param name="pcSourceQuickSearchID">The ID of source quick search</param>
+            <param name="pcTargetQuickSearchID">The ID of target quick search</param>
+            <param name="pbSucceeded">Returns true if copy operation is successful</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetBaseDefault(System.String,System.String,System.String@)">
+            <summary>
+            This method returns a quick search dataset with the given like field and call from name.
+            </summary>
+            <param name="pcLikeField">The Like Field</param>
+            <param name="pcCallFrom">The name of the call from</param>
+            <param name="pcBaseSearchID">Returns the quick search ID which is the BaseDefault</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetContextDefault(System.String,System.String,System.String@)">
+            <summary>
+            This method returns a quick search dataset with the given like field and call from name.
+            </summary>
+            <param name="pcLikeField">The Like Field</param>
+            <param name="pcCallFrom">The name of the call from</param>
+            <param name="pcContextSearchID">Returns the quick search ID which is the ContextDefault</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetLikeFieldSearches(System.String)">
+            <summary>
+            This method returns a list of quick searches for a like field
+            A like field has a format of table.field
+            </summary>
+            <param name="pcLikeField">The name of the like field</param>
+            <returns>Returns the list of Quick Searches</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetListForBAQ(System.String)">
+            <summary>
+            This method returns a list of quick searches that use a given BAQ
+            </summary>
+            <param name="pcBAQID">The BAQ ID</param>
+            <returns>The returned list</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetUserQuickSearches">
+            <summary>
+            This method returns a list of quick searches for this user
+            </summary>
+            <returns>Returns the list of Quick Searches</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.GetVersion(System.String,System.String,System.String@)">
+            <summary>
+            This method returns the version code of a quick searches
+            </summary>
+            <param name="pcGlbComp">The ID of the global company</param>
+            <param name="pcQuickSearchID">The ID of the quick search</param>
+            <param name="pcVersion">Returns the version code</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.RunQuickSearch(Epicor.Mfg.BO.QuickSearchDataSet)">
+            <summary>
+            This method runs a quick search based on a QuickSearchDataSet.
+            </summary>
+            <param name="ds">The dataset represents a QuickSearch</param>
+            <returns>Returns the result dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.QuickSearchImpl.RunQuickSearchPaged(Epicor.Mfg.BO.QuickSearchDataSet,System.Int32,System.Boolean@)">
+            <summary>
+            This method runs a quick search based on a QuickSearchDataSet.
+            </summary>
+            <param name="ds">The dataset represents a QuickSearch</param>
+            <returns>Returns the result dataset</returns>
+            <param name="piPageSize">The size of page</param>
+            <param name="pbMorePage">Flag indicating if there are more pages</param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.QuickSearchImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.BO.QuickSearch.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

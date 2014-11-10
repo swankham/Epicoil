@@ -1,0 +1,674 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.ISubConShipEntry</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipHDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipDDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.ShipCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SelectedSerialNumbersDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SerialNumberSearchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SNFormatDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipHRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipDRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.ShipCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SelectedSerialNumbersRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SerialNumberSearchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SNFormatRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipHRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipDRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.ShipCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SubShipUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SelectedSerialNumbersRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SerialNumberSearchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubConShipEntryDataSet.SNFormatRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.ISubConShipEntry">
+            <summary>
+            Add your summary for this object here
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetNewSubShipH(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetNewSubShipD(Epicor.Mfg.BO.SubConShipEntryDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetNewShipCOO(Epicor.Mfg.BO.SubConShipEntryDataSet,System.String,System.Int32,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetNewSubShipUPS(Epicor.Mfg.BO.SubConShipEntryDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.DeleteByID(System.Int32)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetByID(System.Int32)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetRows(System.String,System.String,System.String,System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.Update(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.UpdateExt(Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetAvailTranDocTypes(System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.AssignLegalNumber(System.Int32,Epicor.Mfg.BO.LegalNumGenOptsDataSet,System.String@)">
+            <summary>
+            Assigns a legal number to the subcontract shipment.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ds" type="Epicor.Mfg.BO.LegalNumGenOptsDataSet"></param>
+            <param name="opLegalNumMsg">Legal number </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The Subcontract Shipment data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CalculateWeight(System.Int32,System.Decimal@)">
+            <param name="cartonNumber">Carton Number</param>
+            <param name="calculatedWeight">Shipment weight based upon part values</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CancelVoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton void can be cancelled and re-opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The Subcontract Ship data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipDAssemblySeq(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This methods updates associated fields.
+            This method should run when the SubShipD.AssemblySeq field changes.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipDJobNum(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This methods updates associated fields.
+            This method should run when the SubShipD.JobNum field changes.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipDOprSeq(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This methods validates the SubShipD.OprSeq and updates associated fields.
+            This method should run when the SubShipD.OprSeq field changes.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipDPONum(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.PONum field.
+            This method should run when the SubShipD.PONum chages.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipHPurPoint(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This methods validates the SubShipH.PurPoint and updates some variables and DspShipAddr.
+            This method should run when the SubShipH.PurPoint field changes.
+            </summary>
+            <param name="cProposedPurPoint">The new proposed SubShipH.PurPoint value</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ChangeSubShipHVendorNumVendorID(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This methods updates the vendornum and purpoint fields based on validating the
+            SubShipH.VendorNumVendorID field.
+            This method should run when the SubShipH.VendorNumVendorID field changes.
+            </summary>
+            <param name="cProposedVendorNumVendorID">The new proposed SubShipH.VendorNumVendorID value</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckCOOPercents(System.Int32,System.Int32)">
+            <summary>
+            Checks to see if the Qty percent and value percent fields total 100 percent.
+            </summary>
+            <param name="iPackNum">The current PackNum </param>
+            <param name="iPackLine">The current PackLine </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckShipCOOOrigCountry(System.Int32,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the ShipCOO.OrigCountry field.
+            This method should run before changing the ShipCOO.OrigCountry field.
+            </summary>
+            <param name="ipProposedCountry">The new proposed ShipCOO.OrigCountry value </param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDAssemblySeq(System.Int32,System.String@,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.AssemblySeq field.
+            This method should run before changing the SubShipD.AssemblySeq field.
+            </summary>
+            <param name="ipProposedAssemblySeq">The new proposed SubShipD.AssemblySeq value </param>
+            <param name="serialWarning">Warning message if the shipdtl line contains serial numbers</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDJobNum(System.String,System.String@,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.JobNum field.
+            This method should run before changing the SubShipD.JobNum field.
+            </summary>
+            <param name="ipProposedJobNum">The new proposed SubShipD.JobNum value </param>
+            <param name="serialWarning">Warning message if the shipdtl line contains serial numbers</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDOprSeq(System.Int32,System.String@,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.OprSeq field.
+            This method should run before changing the SubShipD.OprSeq field.
+            </summary>
+            <param name="ipProposedOprSeq">The new proposed SubShipD.OprSeq value </param>
+            <param name="serialWarning">Warning message if the shipdtl line contains serial numbers</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDPOLine(System.Int32,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.POLine field.
+            This method should run before changing the SubShipD.POLine field.
+            </summary>
+            <param name="ipProposedPOLine">The new proposed SubShipD.POLine value </param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDPONum(System.Int32,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.PONum field.
+            This method should run before changing the SubShipD.PONum field.
+            </summary>
+            <param name="ipProposedPONum">The new proposed SubShipD.PONum value </param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntryDataSet dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipDPORelNum(System.Int32,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipD.PORelNum field.
+            This method should run before changing the SubShipD.PORelNum field.
+            </summary>
+            <param name="ipProposedPORelNum">The new proposed SubShipD.PORelNum value </param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CheckSubShipHDispatchReason(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            This method validates the SubShipH.DisptachReason field.
+            This method should run before changing the SubShipH.DisptachReason field.
+            </summary>
+            <param name="ipDispatchReason">Dispatch Reason</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ClearConvertedManifest(System.Int32)">
+            <param name="ipPackNum">Pack Num to clear Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.CloseCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be closed and closes it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to close </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ConvertToManifestUOM(System.Int32)">
+            <param name="ipPackNum">Pack Num to populate Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetLegalNumGenOpts(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the legal number generation options.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="opPromptForNum">Prompt for the number</param>
+            <returns type="Epicor.Mfg.BO.LegalNumGenOptsDataSet">The Legal Number Generation Options dataset </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetPackageClass(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ipPkgClass">package class to validate</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">Subcontract shipment dataset </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetPackaging(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ipPkgCode">package code</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">Sub Contractor Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetPayBTFlagDefaults(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The subcontract shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetScale(System.String,System.String@)">
+            <param name="workstationID">workstation ID</param>
+            <param name="scaleID">Scale ID</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetSelectSerialNumbersParams(Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            Gets parameters required for launching Select Serial Numbers
+            </summary>:
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubShipD dataSet</param>
+            <returns>The SelectSerialNumbersParams dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.GetTranDocTypeID(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <summary>
+            Sets default values when the TranDocTypeID changes
+            </summary>
+            <param name="ipTranDocTypeID">TranDocTypeID supplied</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">Subcontract Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.OpenCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be opened and opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.PreSubShipDUpdate(Epicor.Mfg.BO.SubConShipEntryDataSet,System.String@,System.String@)">
+            <summary>
+            This method is to be run before update of SubShipD to ask the user any question that need to be
+            answered before the record can be saved. If the user answers no to any one of
+            the questions, then the update method should not be called.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">SubConShipEntry data set </param>
+            <param name="lotMessage">If the lot doesn't exist, ask the user if they'd like to create it </param>
+            <param name="qtyMessage">Qty message </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.RebuildShipUPS(System.Int32,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ipPackNum">Packnum to update</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry dataSet</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.SetUPSQVEnable(System.Boolean,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ipQVEnable">logical indicating if the quantum view is to enabled/disabled</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The subcontract shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.SetUPSQVShipStatus(System.String,Epicor.Mfg.BO.SubConShipEntryDataSet)">
+            <param name="ipShipStatus">shipment status</param>
+            <param name="ds" type="Epicor.Mfg.BO.SubConShipEntryDataSet">The subcontract shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.StageCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to Stage </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SubConShipEntry data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.ValidateSN(Epicor.Mfg.BO.SubConShipEntryDataSet,System.String,System.Boolean@)">
+            <summary>
+            Validates that a single serial number is valid for this transaction
+            </summary>
+            <param name="ds">SubContract Shipment Entry data set</param>
+            <param name="serialNumber">Serial number to validate.</param>
+            <param name="isVoided">Serial Number Voided flag</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.VoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to void </param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ISubConShipEntry.VoidLegalNumber(System.Int32,System.String)">
+            <summary>
+            Voids the legal number.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ipVoidedReason">Reason for the void</param>
+            <returns type="Epicor.Mfg.BO.SubConShipEntryDataSet">The Subcontract Shipment data set </returns>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubShipHListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubShipHListDataSet.SubShipHListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubShipHListDataSet.SubShipHListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SubShipHListDataSet.SubShipHListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.PackOutDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSelectedSerialNumbersDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSerialNumberSearchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSNFormatDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.PackOutRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSelectedSerialNumbersRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSerialNumberSearchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSNFormatRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.PackOutRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSelectedSerialNumbersRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSerialNumberSearchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.PackOutDataSet.POSNFormatRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SelectSerialNumbersParamsDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SelectSerialNumbersParamsDataSet.SelectSerialNumbersParamsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SelectSerialNumbersParamsDataSet.SelectSerialNumbersParamsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.SelectSerialNumbersParamsDataSet.SelectSerialNumbersParamsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipHDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipDDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.ShipCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SelectedSerialNumbersDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SerialNumberSearchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SNFormatDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipHRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipDRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.ShipCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SelectedSerialNumbersRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SerialNumberSearchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SNFormatRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipHRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipDRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.ShipCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SubShipUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SelectedSerialNumbersRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SerialNumberSearchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtSubConShipEntryDataSet.SNFormatRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -57,6 +57,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkEntry));
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -133,11 +138,6 @@
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.rowValidated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -200,6 +200,10 @@
             this.tbutCancelWorkOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.tlbClear = new System.Windows.Forms.ToolStripButton();
             this.tlbDelete = new System.Windows.Forms.ToolStripButton();
+            this.butSimulate = new System.Windows.Forms.Button();
+            this.butGenSN = new System.Windows.Forms.Button();
+            this.butConfirm = new System.Windows.Forms.Button();
+            this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -217,7 +221,6 @@
             this.panel2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).BeginInit();
-            this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -243,10 +246,49 @@
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nextProcessStepToolStripMenuItem,
+            this.processingThisLineToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.deleteLineToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(195, 76);
+            // 
+            // nextProcessStepToolStripMenuItem
+            // 
+            this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
+            this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
+            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
+            // 
+            // processingThisLineToolStripMenuItem
+            // 
+            this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
+            this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
+            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.processingThisLineToolStripMenuItem.Text = "Processing this line";
+            this.processingThisLineToolStripMenuItem.Click += new System.EventHandler(this.processingThisLineToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(191, 6);
+            // 
+            // deleteLineToolStripMenuItem
+            // 
+            this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
+            this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
+            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
+            this.deleteLineToolStripMenuItem.Text = "Delete line";
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 198);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 210);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -258,8 +300,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer1.Size = new System.Drawing.Size(1258, 552);
-            this.splitContainer1.SplitterDistance = 253;
+            this.splitContainer1.Size = new System.Drawing.Size(1258, 540);
+            this.splitContainer1.SplitterDistance = 247;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -277,7 +319,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1258, 253);
+            this.splitContainer2.Size = new System.Drawing.Size(1258, 247);
             this.splitContainer2.SplitterDistance = 889;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -290,7 +332,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(889, 253);
+            this.groupBox2.Size = new System.Drawing.Size(889, 247);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Material";
@@ -340,7 +382,7 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(881, 206);
+            this.dgvMaterial.Size = new System.Drawing.Size(881, 200);
             this.dgvMaterial.TabIndex = 17;
             this.dgvMaterial.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellContentClick);
             this.dgvMaterial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellEndEdit);
@@ -556,7 +598,6 @@
             // 
             // txtMCSSNo
             // 
-            this.txtMCSSNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMCSSNo.Dock = System.Windows.Forms.DockStyle.Right;
             this.txtMCSSNo.Location = new System.Drawing.Point(541, 2);
             this.txtMCSSNo.Margin = new System.Windows.Forms.Padding(4);
@@ -586,7 +627,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(365, 253);
+            this.groupBox3.Size = new System.Drawing.Size(365, 247);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Coil Back / Sheet Back";
@@ -630,7 +671,7 @@
             this.dgvCoilBack.RowHeadersVisible = false;
             this.dgvCoilBack.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCoilBack.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCoilBack.Size = new System.Drawing.Size(357, 206);
+            this.dgvCoilBack.Size = new System.Drawing.Size(357, 200);
             this.dgvCoilBack.TabIndex = 18;
             // 
             // transactionlineid1
@@ -781,7 +822,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(1258, 294);
+            this.groupBox4.Size = new System.Drawing.Size(1258, 288);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Cutting Design";
@@ -838,7 +879,7 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(1250, 250);
+            this.dgvCutting.Size = new System.Drawing.Size(1250, 244);
             this.dgvCutting.TabIndex = 18;
             this.dgvCutting.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellEndEdit);
             this.dgvCutting.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvCutting_CellValidating);
@@ -1071,49 +1112,10 @@
             this.rowValidated.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.rowValidated.Width = 91;
             // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nextProcessStepToolStripMenuItem,
-            this.processingThisLineToolStripMenuItem,
-            this.toolStripMenuItem5,
-            this.deleteLineToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(195, 76);
-            // 
-            // nextProcessStepToolStripMenuItem
-            // 
-            this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
-            this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
-            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
-            // 
-            // processingThisLineToolStripMenuItem
-            // 
-            this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
-            this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
-            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.processingThisLineToolStripMenuItem.Text = "Processing this line";
-            this.processingThisLineToolStripMenuItem.Click += new System.EventHandler(this.processingThisLineToolStripMenuItem_Click);
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(191, 6);
-            // 
-            // deleteLineToolStripMenuItem
-            // 
-            this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
-            this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
-            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
-            this.deleteLineToolStripMenuItem.Text = "Delete line";
-            // 
             // panel3
             // 
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(4, 268);
+            this.panel3.Location = new System.Drawing.Point(4, 262);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1250, 22);
@@ -1127,7 +1129,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1258, 159);
+            this.groupBox1.Size = new System.Drawing.Size(1258, 171);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
@@ -1145,7 +1147,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox5);
-            this.splitContainer3.Size = new System.Drawing.Size(1250, 137);
+            this.splitContainer3.Size = new System.Drawing.Size(1250, 149);
             this.splitContainer3.SplitterDistance = 687;
             this.splitContainer3.TabIndex = 22;
             // 
@@ -1166,7 +1168,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer4.Size = new System.Drawing.Size(687, 137);
+            this.splitContainer4.Size = new System.Drawing.Size(687, 149);
             this.splitContainer4.SplitterDistance = 110;
             this.splitContainer4.TabIndex = 41;
             // 
@@ -1229,13 +1231,12 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
-            this.splitContainer5.Size = new System.Drawing.Size(573, 137);
+            this.splitContainer5.Size = new System.Drawing.Size(573, 149);
             this.splitContainer5.SplitterDistance = 128;
             this.splitContainer5.TabIndex = 0;
             // 
             // txtWorkOrderNum
             // 
-            this.txtWorkOrderNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtWorkOrderNum.Location = new System.Drawing.Point(4, 12);
             this.txtWorkOrderNum.Margin = new System.Windows.Forms.Padding(4);
             this.txtWorkOrderNum.Name = "txtWorkOrderNum";
@@ -1245,7 +1246,6 @@
             // 
             // txtProcessStep
             // 
-            this.txtProcessStep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProcessStep.Location = new System.Drawing.Point(4, 69);
             this.txtProcessStep.Margin = new System.Windows.Forms.Padding(4);
             this.txtProcessStep.Name = "txtProcessStep";
@@ -1291,7 +1291,7 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
-            this.splitContainer6.Size = new System.Drawing.Size(441, 137);
+            this.splitContainer6.Size = new System.Drawing.Size(441, 149);
             this.splitContainer6.SplitterDistance = 77;
             this.splitContainer6.TabIndex = 0;
             // 
@@ -1336,7 +1336,7 @@
             this.splitContainer7.Panel2.Controls.Add(this.dptDueDate);
             this.splitContainer7.Panel2.Controls.Add(this.label7);
             this.splitContainer7.Panel2.Controls.Add(this.label5);
-            this.splitContainer7.Size = new System.Drawing.Size(360, 137);
+            this.splitContainer7.Size = new System.Drawing.Size(360, 149);
             this.splitContainer7.SplitterDistance = 120;
             this.splitContainer7.TabIndex = 0;
             // 
@@ -1355,7 +1355,6 @@
             // 
             // txtPICName
             // 
-            this.txtPICName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPICName.Location = new System.Drawing.Point(4, 16);
             this.txtPICName.Margin = new System.Windows.Forms.Padding(4);
             this.txtPICName.Name = "txtPICName";
@@ -1377,7 +1376,6 @@
             // 
             // txtUsingWeight
             // 
-            this.txtUsingWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtUsingWeight.Location = new System.Drawing.Point(93, 68);
             this.txtUsingWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsingWeight.Name = "txtUsingWeight";
@@ -1434,6 +1432,9 @@
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.butConfirm);
+            this.groupBox5.Controls.Add(this.butGenSN);
+            this.groupBox5.Controls.Add(this.butSimulate);
             this.groupBox5.Controls.Add(this.chkLVTrim);
             this.groupBox5.Controls.Add(this.txtTotalWidth);
             this.groupBox5.Controls.Add(this.label15);
@@ -1456,7 +1457,7 @@
             this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(557, 137);
+            this.groupBox5.Size = new System.Drawing.Size(557, 149);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             // 
@@ -1473,7 +1474,6 @@
             // 
             // txtTotalWidth
             // 
-            this.txtTotalWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtTotalWidth.Location = new System.Drawing.Point(395, 72);
             this.txtTotalWidth.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalWidth.Name = "txtTotalWidth";
@@ -1517,7 +1517,7 @@
             // txtTotalMaterialAmount
             // 
             this.txtTotalMaterialAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(395, 108);
+            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(395, 93);
             this.txtTotalMaterialAmount.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalMaterialAmount.Name = "txtTotalMaterialAmount";
             this.txtTotalMaterialAmount.Size = new System.Drawing.Size(145, 21);
@@ -1527,7 +1527,6 @@
             // 
             // txtYield
             // 
-            this.txtYield.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtYield.Location = new System.Drawing.Point(395, 41);
             this.txtYield.Margin = new System.Windows.Forms.Padding(4);
             this.txtYield.Name = "txtYield";
@@ -1538,7 +1537,6 @@
             // 
             // txtLossWeight
             // 
-            this.txtLossWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtLossWeight.Location = new System.Drawing.Point(395, 12);
             this.txtLossWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtLossWeight.Name = "txtLossWeight";
@@ -1550,7 +1548,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(258, 110);
+            this.label12.Location = new System.Drawing.Point(258, 95);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(133, 15);
@@ -1580,7 +1578,6 @@
             // 
             // txtOutputWeight
             // 
-            this.txtOutputWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtOutputWeight.Location = new System.Drawing.Point(111, 69);
             this.txtOutputWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtOutputWeight.Name = "txtOutputWeight";
@@ -1591,7 +1588,6 @@
             // 
             // txtRewindWeight
             // 
-            this.txtRewindWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtRewindWeight.Location = new System.Drawing.Point(111, 40);
             this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtRewindWeight.Name = "txtRewindWeight";
@@ -1602,7 +1598,6 @@
             // 
             // txtInputWeight
             // 
-            this.txtInputWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtInputWeight.Location = new System.Drawing.Point(111, 11);
             this.txtInputWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtInputWeight.Name = "txtInputWeight";
@@ -1807,6 +1802,7 @@
             this.tbutCancelWorkOrder.Name = "tbutCancelWorkOrder";
             this.tbutCancelWorkOrder.Size = new System.Drawing.Size(204, 26);
             this.tbutCancelWorkOrder.Text = "Cancel Work Order";
+            this.tbutCancelWorkOrder.Click += new System.EventHandler(this.tbutCancelWorkOrder_Click);
             // 
             // tlbClear
             // 
@@ -1830,6 +1826,32 @@
             this.tlbDelete.Text = "toolStripButton1";
             this.tlbDelete.Click += new System.EventHandler(this.tlbDelete_Click);
             // 
+            // butSimulate
+            // 
+            this.butSimulate.Location = new System.Drawing.Point(330, 118);
+            this.butSimulate.Name = "butSimulate";
+            this.butSimulate.Size = new System.Drawing.Size(102, 28);
+            this.butSimulate.TabIndex = 17;
+            this.butSimulate.UseVisualStyleBackColor = true;
+            // 
+            // butGenSN
+            // 
+            this.butGenSN.Location = new System.Drawing.Point(438, 118);
+            this.butGenSN.Name = "butGenSN";
+            this.butGenSN.Size = new System.Drawing.Size(102, 28);
+            this.butGenSN.TabIndex = 18;
+            this.butGenSN.UseVisualStyleBackColor = true;
+            // 
+            // butConfirm
+            // 
+            this.butConfirm.Location = new System.Drawing.Point(222, 118);
+            this.butConfirm.Name = "butConfirm";
+            this.butConfirm.Size = new System.Drawing.Size(102, 28);
+            this.butConfirm.TabIndex = 19;
+            this.butConfirm.Tag = "";
+            this.butConfirm.UseVisualStyleBackColor = true;
+            this.butConfirm.Visible = false;
+            // 
             // WorkEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1845,6 +1867,7 @@
             this.Text = "Work Order Entry [Slitter]";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.WorkEntrySlitter_Load);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -1863,7 +1886,6 @@
             this.panel2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
-            this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -2045,5 +2067,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn yield;
         private System.Windows.Forms.DataGridViewTextBoxColumn statusCB;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn16;
+        private System.Windows.Forms.Button butGenSN;
+        private System.Windows.Forms.Button butSimulate;
+        private System.Windows.Forms.Button butConfirm;
     }
 }

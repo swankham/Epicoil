@@ -570,7 +570,11 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,UpdatedBy
                                                        ,TotalWidth
                                                        ,ClassID
-                                                       ,Completed)
+                                                       ,Completed
+                                                       ,SimulateFlag
+                                                       ,GenSerialFlag
+                                                       ,OpenFlag
+                                                       ,OperationState)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -601,6 +605,10 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , {23} --<TotalWidth, decimal(20,9),>
                                                        , {24} --<ClassID, int,>
                                                        , {25} --<Completed, tinyint>
+                                                       , {26} --<SimulateFlag, tinyint>
+                                                       , {27} --<GenSerialFlag, tinyint>
+                                                       , {28} --<OpenFlag, tinyint>
+                                                       , {29} --<OperationState, int>
 		                                               )
                                             END
                                         ELSE
@@ -632,6 +640,11 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,UpdatedBy = N'{22}' --<UpdatedBy, varchar(45),>
                                                       ,TotalWidth = {23} --<TotalWidth, decimal(20,9),>
                                                       ,ClassID = {24} --<TotalWidth, decimal(20,9),>
+                                                      ,Completed = {25} --<Completed, tinyint,>
+                                                      ,SimulateFlag = {26} --<SimulateFlag, tinyint,>
+                                                      ,GenSerialFlag = {27} --<GenSerialFlag, tinyint,>
+                                                      ,OpenFlag = {28} --<OpenFlag, tinyint,>
+                                                      ,OperationState = {29} --<OperationState, int>
                                                  WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
                                             END" + Environment.NewLine
                                               , _session.CompanyID
@@ -659,7 +672,11 @@ namespace Epicoil.Library.Repositories.Planning
                                               , _session.UserID
                                               , model.TotalWidth.GetDecimal()
                                               , model.ClassID.GetInt()
-                                              , 0
+                                              , model.Completed.GetInt()            //{25}
+                                              , model.SimulateFlag.GetInt()
+                                              , model.GenSerialFlag.GetInt()
+                                              , model.OpenFlag.GetInt()
+                                              , model.OperationState.GetInt()       //{29}
                                               );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
             //if (model.Materails.ToList().Count != 0)
@@ -1113,6 +1130,98 @@ namespace Epicoil.Library.Repositories.Planning
 
             Repository.Instance.ExecuteWithTransaction(sql, "Add Material");
             return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
+        }
+
+        public IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head)
+        {
+            int iRow = 0;
+            foreach (var item in head.CuttingDesign.OrderBy(i => i.LineID))
+            {
+                for (int j = 1; j <= item.CutDivision; j++)
+                {
+                    iRow = iRow + j;
+                    string sql = string.Format(@"INSERT INTO ucc_pln_Simulate
+                                                   (Plant
+                                                   ,WorkOrderID
+                                                   ,CuttingLineID
+                                                   ,MaterialTransLineID
+                                                   ,SimSeq
+                                                   ,Thick
+                                                   ,Width
+                                                   ,Length
+                                                   ,LengthM
+                                                   ,Status
+                                                   ,Stand
+                                                   ,CutDiv
+                                                   ,UnitWeight
+                                                   ,TotalWeight
+                                                   ,CalculatedFlag
+                                                   ,CreationDate
+                                                   ,LastUpdateDate
+                                                   ,CreatedBy
+                                                   ,UpdatedBy)
+                                             VALUES
+                                                   ( N'{0}' --<Plant, nvarchar(8),>
+                                                   , {1} --<WorkOrderID, bigint,>
+                                                   , {2} --<CuttingLineID, bigint,>
+                                                   , {3} --<MaterialTransLineID, bigint,>
+                                                   , {4} --<SimSeq, int,>
+                                                   , {5} --<Thick, decimal(20,9),>
+                                                   , {6} --<Width, decimal(20,9),>
+                                                   , {7} --<Length, decimal(20,9),>
+                                                   , {8} --<LengthM, decimal(20,9),>
+                                                   , N'{9}' --<Status, nvarchar(10),>
+                                                   , {10} --<Stand, decimal(20,9),>
+                                                   , {11} --<CutDiv, decimal(20,9),>
+                                                   , {12} --<UnitWeight, decimal(20,9),>
+                                                   , {13} --<TotalWeight, decimal(20,9),>
+                                                   , {14} --<CalculatedFlag, tinyint,>
+                                                   , GETDATE() --<CreationDate, datetime,>
+                                                   , GETDATE() --<LastUpdateDate, datetime,>
+                                                   , N'{15}' --<CreatedBy, nvarchar(45),>
+                                                   , N'{15}' --<UpdatedBy, nvarchar(45),>
+                                                    )" + Environment.NewLine
+                                                       , _session.PlantID
+                                                       , head.WorkOrderID
+                                                       , item.LineID
+                                                       , item.TransactionLineID
+                                                       , iRow
+                                                       , item.Thick //{5}
+                                                       , item.Width
+                                                       , item.Length
+                                                       , 0              //item.TotalLength
+                                                       , item.Status
+                                                       , item.Stand     //{10}
+                                                       , j   
+                                                       , item.UnitWeight
+                                                       , item.TotalWeight
+                                                       , 0
+                                                       , _session.UserID);
+                    Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
+                }
+            }
+            return null;
+        }
+
+
+        public bool ClearSimulateLines(int workOrderID)
+        {
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_Simulate WHERE WorkOrderID = {0}", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Simulate");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        public IEnumerable<SimulateModel> GetSimulateAll(int workOrderID)
+        {
+            throw new NotImplementedException();
         }
     }
 }

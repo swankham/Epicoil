@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Sec.ISecRights</name>
+    </assembly>
+    <members>
+        <member name="M:Epicor.Mfg.Sec.ISecRights.CheckExecutionRights(System.String,System.String,System.Boolean@,System.String@,System.String@,System.String@)">
+            <summary>
+            Check whether the specified security token can be accessed.
+            </summary>
+            <param name="token">Main token to be checked</param>
+            <param name="additionalTokens">Any other tokens to check</param>
+            <param name="objectAccess">Whether access to the main token is granted</param>
+            <param name="restrictedColumns">List of restricted columns for the main token</param>
+            <param name="restrictedMethods">List of restricted methods for the main token</param>
+            <param name="additionalTokenAccess">List of values indicating whether access to the additional tokens is granted</param>
+        </member>
+        <member name="M:Epicor.Mfg.Sec.ISecRights.CheckSecRights(Epicor.Mfg.Sec.SecRightsDataSet)">
+            <summary>
+            Check whether the specified security token can be accessed.
+            </summary>
+            <param name="ds">the input/output dataset</param>
+        </member>
+        <member name="M:Epicor.Mfg.Sec.ISecRights.GetReadOrWriteDeniedColumns(System.String,System.String,System.String)">
+            <summary>
+            Gets a list of columns that are either read-only or write-only
+            </summary>
+            <returns>Returns the dataset representing sec rights request</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Sec.SecRightsDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Sec.SecRightsDataSet.SecRightDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Sec.SecRightsDataSet.SecRightRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Sec.SecRightsDataSet.SecRightRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IEpiSearch</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DynamicQueryListDataSet.DynamicQueryListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdDefDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdBAQDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdChunkDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdLikeDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdDefRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdBAQRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdChunkRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdLikeRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdDefRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdBAQRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdChunkRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBoardDataSet.DashBdLikeRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IEpiSearch">
+            <summary>
+            Do a combined search that returns BAQs, Dashboards and Named Searches.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IEpiSearch.DoBAQSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a BAQ search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IEpiSearch.DoDashboardSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a dashboard search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IEpiSearch.DoNamedSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a named search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IEpiSearch.DoSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a combined search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.NamedSearchDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.ControlSettingDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.WhereClauseDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.NamedSearchRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.ControlSettingRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.WhereClauseRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.NamedSearchRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.ControlSettingRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.NamedSearchDataSet.WhereClauseRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBdDefListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBdDefListDataSet.DashBdDefListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBdDefListDataSet.DashBdDefListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.DashBdDefListDataSet.DashBdDefListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,239 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.ILangTran</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.LangTranDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranDataSet.LangTranDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranDataSet.LangTranRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranDataSet.LangTranRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.ILangTran">
+            <summary>
+            LangTran Object
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetNewLangTran(Epicor.Mfg.BO.LangTranDataSet,System.Int32,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.DeleteByID(System.Int32,System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetByID(System.Int32,System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetRows(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.Update(Epicor.Mfg.BO.LangTranDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.UpdateExt(Epicor.Mfg.BO.UpdExtLangTranDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.DeleteTranslation(System.String,System.String,System.String,System.Boolean@)">
+            <summary>
+            Deletes Translation
+            </summary>
+            <param name="pcLanguageID">The language ID</param>
+            <param name="pcProgramID">The program ID</param>
+            <param name="pcText">Text</param>
+            <param name="bSucceed">Deleted YES/NO</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.DeleteTranRecords(System.String,System.String,System.Int32,System.Boolean@)">
+            <summary>
+            Deletes Translation
+            </summary>
+            <param name="pcLanguageID">The language ID</param>
+            <param name="pcProgramID">The program ID</param>
+            <param name="pcOrgTextID">ID</param>
+            <param name="bSucceed">Deleted YES/NO</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetProgTrans(System.String,System.Int32)">
+            <summary>
+            This method returns a list of program specific translations for a original text
+            and language
+            </summary>
+            <param name="pcLangID">The language ID</param>
+            <param name="piOrigTextID">The original text ID</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetTransByProgramID(System.String,System.String)">
+            <summary>
+            This method returns a list of translations from a start at program id
+            </summary>
+            <param name="pcLangID">The language ID</param>
+            <param name="pcProgID">The start at program ID</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetTransByText(System.String,System.String)">
+            <summary>
+            This method returns a list of translations from a start at text
+            </summary>
+            <param name="pcLangID">The language ID</param>
+            <param name="pcText">The start at text</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetTransByTextID(System.String,System.Int32)">
+            <summary>
+            This method returns a list of translations from a start at text id
+            </summary>
+            <param name="pcLangID">The language ID</param>
+            <param name="piTextID">The start at text ID</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.GetTransByTranslation(System.String,System.String)">
+            <summary>
+            This method returns a list of translations from a start at translated text
+            </summary>
+            <param name="pcLangID">The language ID</param>
+            <param name="pcTranslation">The start at translated text</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.ImportXml(Epicor.Mfg.BO.TranTextDataSet,System.Boolean)">
+            <summary>
+            Translate procedure
+            </summary>
+            <param name="ds">Translation Text data set</param>
+            <param name="bCustomization">If True and record is missing in LangOrg, it will be added</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.Translate(Epicor.Mfg.BO.TranTextDataSet,System.Boolean,System.Boolean)">
+            <summary>
+            Translate procedure
+            </summary>
+            <param name="ds">Translation Text data set</param>
+            <param name="bAddIfMissing">If True and record is missing in LangOrg, it will be added</param>
+            <param name="bFindSimilar">If True search for similar record when exact unmatched</param>
+            <returns>Translation Text data set</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.UpdateAll(Epicor.Mfg.BO.LangTranDataSet)">
+            <summary>
+            This method update LangTran table
+            </summary>
+            <param name="ds">Language Translation data set</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.UpdateSingleTranslation(System.String,System.String,System.String,System.String,System.String,System.Boolean@)">
+            <summary>
+            Updates single translation.
+            </summary>
+            <param name="pcLanguage">Language</param>
+            <param name="pcProgram">Program</param>
+            <param name="pcText">Text</param>
+            <param name="pcTranslation">Translation</param>
+            <param name="pcProgTranslation">ProgTranslation</param>
+            <param name="bSeccess">Updated YES/NO</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.ILangTran.UpdateTranslations(Epicor.Mfg.BO.TranTextDataSet,System.Boolean,System.Boolean@)">
+            <summary>
+            This method update translations and also LangOrg, LangXref if necessary
+            </summary>
+            <param name="ds">Translation Text data set</param>
+            <param name="pbUpdateLangOrg">Flag indicating if a LangOrg should be created if not exists</param>
+            <returns>Translation Text data set</returns>
+            <param name="bReturn">Not used</param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranListDataSet.LangTranListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranListDataSet.LangTranListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LangTranListDataSet.LangTranListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.TranTextDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.TranTextDataSet.TranTextDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.TranTextDataSet.TranTextRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.TranTextDataSet.TranTextRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtLangTranDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtLangTranDataSet.LangTranDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtLangTranDataSet.LangTranRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtLangTranDataSet.LangTranRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

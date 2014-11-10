@@ -1,0 +1,2018 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MfgSys</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentAssemblyAttribute">
+            <summary>
+            Specifies any additional assemblies that need to be deployed with this assembly.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentAssemblyAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentAssemblyAttribute"/> class.
+            </summary>
+            <param name="fileName">The name of the assembly.</param>
+            <remarks>
+            If the file is in a sub-directory then specify the relative path, not the full path. For example
+            "subdir\Assembly.dll".
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentAssemblyAttribute.FileName">
+            <summary>
+            Gets the name of the file.
+            </summary>
+            <value>The name of the file.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentFileAttribute">
+            <summary>
+            Specifies any additional files that need to be deployed with this assembly.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentFileAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentFileAttribute"/> class.
+            </summary>
+            <param name="fileName">The name of the file.</param>
+            <remarks>
+            If the file is in a sub-directory then specify the relative path, not the full path. For example
+            "res\icons\Epicor.ico".
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentFileAttribute.FileName">
+            <summary>
+            Gets the name of the file.
+            </summary>
+            <value>The name of the file.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever">
+            <summary>
+            Retrieves assemblies from the local directory if already deployed or downloads them from the deployment server.
+            </summary>
+            <remarks>
+            Uses the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest"/> class to maintain a list of files that are currently deployed. If a file
+            is not flagged as deployed, then it will be downloaded even if it is already in the local directory.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever">
+            <summary>
+            Provides a mechanism for finding and loading an <see cref="T:System.Reflection.Assembly"/> by an identifier.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever.RetrieveAssembly(System.String)">
+            <summary>
+            Retrieves the assembly.
+            </summary>
+            <param name="assemblyIdentifier">The assembly identifier.</param>
+            <returns>The assembly if found, <c>null</c> otherwise.</returns>
+            <remarks>
+            The identifier depends on how the assembly is being retrieved. Usually it will be a file name or a menu identifier.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.#ctor(System.String,System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/> class.
+            </summary>
+            <param name="localDeployment">The local deployment directory.</param>
+            <param name="serverDeployment">The server deployment directory.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="localDeployment"/> or <paramref name="serverDeployment"/> are <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="localDeployment"/> is an empty trimmed string.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown if the <paramref name="serverDeployment"/> is not a supported <see cref="T:System.Uri"/> scheme.</exception>
+            <remarks>
+            Supports the URI scheme's that <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperFactory"/> supports.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.#ctor(System.String,System.Uri,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/> class.
+            </summary>
+            <param name="localDeployment">The local deployment directory.</param>
+            <param name="serverDeployment">The server deployment directory.</param>
+            <param name="customizationName">Name of the customization.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="localDeployment"/> or <paramref name="serverDeployment"/> are <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="localDeployment"/> is an empty trimmed string.</exception>
+            <exception cref="T:System.NotSupportedException">Thrown if the <paramref name="serverDeployment"/> is not a supported <see cref="T:System.Uri"/> scheme.</exception>
+            <remarks>
+            Supports the URI scheme's that <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperFactory"/> supports.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.GetAssociatedAssemblyNames(System.Reflection.Assembly)">
+            <summary>
+            Gets the associated assembly file names for the specified assembly.
+            </summary>
+            <param name="assembly">The assembly to get the associated assembly file names for.</param>
+            <returns>The assemblies associated assembly file names.</returns>
+            <remarks>
+            The associated assembly file names are all the assembly references for the specified assembly as well as any
+            assemblies specified in the <see cref="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentAssemblyAttribute"/> attributes in the specified assembly.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.GetAssociatedFileNames(System.Reflection.Assembly)">
+            <summary>
+            Gets the associated file names for the specified assembly.
+            </summary>
+            <param name="assembly">The assembly to get the associated file names for.</param>
+            <returns>The assemblies associated files.</returns>
+            <remarks>
+            The associated file names are any files specified by the <see cref="T:Epicor.Mfg.Lib.Deployment.AssociatedDeploymentFileAttribute"/> in
+            the specified assembly.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.RetrieveAssembly(System.String)">
+            <summary>
+            Retrieves the assembly and all associated assemblies and files.
+            </summary>
+            <param name="assemblyIdentifier">The assembly identifier.</param>
+            <returns>
+            The assembly if found, <c>null</c> otherwise.
+            </returns>
+            <remarks>
+            The identifier must be the file name without path of the assembly to retrieve.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.RetrieveAssociatedFilesWithWaitDialog(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Retrieves the list of associated files.
+            </summary>
+            <param name="associatedFiles">The associated file names.</param>
+            <remarks>
+            The caller must have called <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate"/> and must call <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate"/>
+            when done.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.CustomizationName">
+            <summary>
+            Gets the name of the customization.
+            </summary>
+            <value>The name of the customization.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.LocalDeployment">
+            <summary>
+            Gets the local deployment.
+            </summary>
+            <value>The local deployment.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.Manifest">
+            <summary>
+            Gets the manifest being used.
+            </summary>
+            <value>The manifest being used.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.ServerDeployment">
+            <summary>
+            Gets the server deployment.
+            </summary>
+            <value>The server deployment.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState">
+            <summary>
+            Shows the state of a specific auto deployed assembly.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState.None">
+            <summary>
+            The file hasn't been checked yet.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState.Deployed">
+            <summary>
+            The file has been deployed.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState.NeedsAssociatedFiles">
+            <summary>
+            The assembly needs associated files to be deployed with it.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState.NotInDeployment">
+            <summary>
+            The assembly/file is not in the deployment.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AutoDeployFileState">
+            <summary>
+            Shows the state of a specific auto deployed file.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployFileState.None">
+            <summary>
+            The file hasn't been checked yet.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployFileState.Deployed">
+            <summary>
+            The file has been deployed.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployFileState.NotInDeployment">
+            <summary>
+            The file is not in the deployment.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest">
+            <summary>
+            Holds the collection of files, usually assemblies, that have already been downloaded to the client deployment directory.
+            </summary>
+            <remarks>
+            <para>The AutoDeployManifest.xml file can only be written to by one process at a time. It can be read by any number
+            of users. The file is only read when necessary and is read as quickly as possibly. This is both for performance and
+            so a writer can get an exclusive lock on it.</para>
+            <para>The manifest file name uses the customization name if one is given. For the name "CUST", the manifest
+            file name will be AutoDeployManifest_CUST.xml.</para>
+            <para>To update the collection, you must call <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate"/>. After you make your changes you have to
+            call <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate"/>. You can call <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.CancelUpdate"/> if you don't want to save your changes.</para>
+            </remarks>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.AutoDeployCoreManifestFileName">
+            <summary>
+            The name of the manifest file that lists core files that need to be deployed in all deployments.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest"/> class.
+            </summary>
+            <param name="deploymentPath">The deployment path.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest"/> class.
+            </summary>
+            <param name="deploymentPath">The deployment path.</param>
+            <param name="customizationName">Name of the customization. This may be <c>null</c> but can't be an empty or empty trimmed string.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest"/> class.
+            </summary>
+            <param name="manifestStream">The manifest <see cref="T:System.IO.Stream"/>.</param>
+            <remarks>
+            The manifest cannot be updated when opened this way.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.Finalize">
+            <summary>
+            Finalizes an instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployManifest"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate">
+            <summary>
+            Flags that this manifest will be updated.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">Thrown if already in update mode.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.CancelUpdate">
+            <summary>
+            Cancels the update.
+            </summary>
+            <remarks>
+            The state of this class is reset so it will be forced to reread the manifest next time it is queried.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.Clear">
+            <summary>
+            Clears the manifest.
+            </summary>
+            <remarks>
+            Must be called after <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate"/> and before <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate"/>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+            <remarks>
+            If inside an update (<see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate"/> has been called but <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate"/> hasn't been yet)
+            then this will cancel the updates.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate">
+            <summary>
+            Writes out any changes to the manifest and releases locks.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.GetAssemblyState(System.String)">
+            <summary>
+            Gets the deployment state of the assembly.
+            </summary>
+            <param name="fileName">The name of the file.</param>
+            <returns>The deployment state of the assembly.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.GetFileState(System.String)">
+            <summary>
+            Gets or sets the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployFileState"/> for the specified file name.
+            </summary>
+            <value>The <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployFileState"/> for the specified file name.</value>
+            <returns>The <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployFileState"/> for the specified file name.</returns>
+            <param name="fileName">The file to get or set the information for.</param>
+            <remarks>
+            <para>To set the value, you need to have called <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.BeginUpdate"/>. When you are done making changes you have
+            to call <see cref="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.EndUpdate"/>.</para>
+            <para>Setting the value to <see cref="F:Epicor.Mfg.Lib.Deployment.AutoDeployFileState.None"/> will remove the entry from the manifest.</para>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.SetAssemblyState(System.String,Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyState)">
+            <summary>
+            Sets the deployment state of the assembly.
+            </summary>
+            <param name="fileName">The name of the file.</param>
+            <param name="state">The new deployment state.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.SetFileState(System.String,Epicor.Mfg.Lib.Deployment.AutoDeployFileState)">
+            <summary>
+            Sets the deployment state of the file.
+            </summary>
+            <param name="fileName">The name of the file.</param>
+            <param name="state">The new deployment state.</param>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.Changed">
+            <summary>
+            Gets a value indicating whether changes have been made.
+            </summary>
+            <value><c>true</c> if changed.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.CoreManifestHasBeenDeployed">
+            <summary>
+            Gets or sets a value indicating whether the core manifest has been deployed.
+            </summary>
+            <value><c>true</c> if the core manifest has been deployed.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.Count">
+            <summary>
+            Gets the number of files in the manifest.
+            </summary>
+            <value>The number of files in the manifest.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.CustomizationName">
+            <summary>
+            Gets the name of the customization.
+            </summary>
+            <value>The name of the customization.</value>
+            <remarks>The value is <c>null</c> if this is not a customization.</remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.DeployedAssemblies">
+            <summary>
+            Gets the list of deployed assemblies.
+            </summary>
+            <value>The deployed assemblies.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.DeployedFiles">
+            <summary>
+            Gets the list of deployed files.
+            </summary>
+            <value>The deployed files.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.DeploymentPath">
+            <summary>
+            Gets the deployment path.
+            </summary>
+            <value>The deployment path.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.InUpdate">
+            <summary>
+            Gets a value indicating whether we are in update mode.
+            </summary>
+            <value><c>true</c> if we are in update mode.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.LastManifestWriteTimeUtc">
+            <summary>
+            Gets the last manifest write time in UTC.
+            </summary>
+            <value>The last manifest write time in UTC.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.AutoDeployManifest.ManifestFileName">
+            <summary>
+            Gets the name of the manifest file.
+            </summary>
+            <value>The name of the manifest file.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever">
+            <summary>
+            Retrieves assemblies trying any number of <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/>s until one works.
+            </summary>
+            <remarks>
+            The <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/>s are registered in the constructor.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever.#ctor(Epicor.Mfg.Lib.Deployment.IAssemblyRetriever[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever"/> class.
+            </summary>
+            <param name="assemblyRetrievers">The assembly retrievers.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever.#ctor(System.Collections.Generic.IEnumerable{Epicor.Mfg.Lib.Deployment.IAssemblyRetriever})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever"/> class.
+            </summary>
+            <param name="assemblyRetrievers">The assembly retrievers.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever.RetrieveAssembly(System.String)">
+            <summary>
+            Retrieves the assembly.
+            </summary>
+            <param name="assemblyIdentifier">The assembly identifier.</param>
+            <returns>
+            The assembly if found, <c>null</c> otherwise.
+            </returns>
+            <remarks>
+            Tries each registered <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/> until the assembly is retrieved, an exception is thrown,
+            or there are no more IAssemblyRetriever's.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever.AssemblyRetrievers">
+            <summary>
+            Gets the assembly retrievers.
+            </summary>
+            <value>The assembly retrievers.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.ConfigurationUpdater">
+            <summary>
+            Handles updating the local configuration file.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.ConfigurationUpdater.HandleCorruptConfigurationFile(System.Boolean,System.String,System.Exception)">
+            <summary>
+            Handles the exception from loading a XML configuration file.
+            </summary>
+            <param name="isLocal"><c>true</c> if this is the local file.</param>
+            <param name="fileName">The name of the configuration file. Only the file's name is used, not the path.</param>
+            <param name="exception">The exception from loading the XML.</param>
+            <remarks>
+            If the file that got the load exception was the configuration file we are running than a
+            <see cref="T:System.Configuration.ConfigurationErrorsException"/> is raised. Otherwise, a warning is displayed to the user.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.ConfigurationUpdater.IsRunningConfigurationFile(System.String)">
+            <summary>
+            Determines whether the specified file name is the name of the configuration file we are running.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+            <returns><c>true</c> if the specified file name is the name of the configuration file we are running.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.ConfigurationUpdater.UpdateLocalConfigurationXml(System.Xml.XmlDocument,System.IO.Stream,System.String)">
+            <summary>
+            Updates the local configuration with the data in the specified configuration stream.
+            </summary>
+            <param name="localConfiguration">The local configuration.</param>
+            <param name="configurationStream">The configuration stream.</param>
+            <param name="fileName">Name of the file.</param>
+            <returns>The updated XML.</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.DeploymentResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.AlreadyInUpdateMode">
+            <summary>
+              Looks up a localized string similar to The AutoDeployManifist is already in update mode..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.AssemblyNotFound">
+            <summary>
+              Looks up a localized string similar to The assembly &apos;{0}&apos; could not be found..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.AutoDeployingFile">
+            <summary>
+              Looks up a localized string similar to Downloading {0}.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.ConfigurationFileCorrupt">
+             <summary>
+               Looks up a localized string similar to The configuration file &apos;{0}&apos; is corrupt:
+            {1}.
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.DeployedAssemblyMissing">
+            <summary>
+              Looks up a localized string similar to The assembly {0} was previously deployed but couldn&apos;t be found..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.LaunchError">
+            <summary>
+              Looks up a localized string similar to Launch Error.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.LocalConfigFileCorruptMustFix">
+             <summary>
+               Looks up a localized string similar to The local configuration file &apos;{0}&apos; is corrupt and must be fixed before running again:
+            {1}.
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.ManifestFromStreamCannotBeWrittenTo">
+            <summary>
+              Looks up a localized string similar to The manifest was read from a Stream and therefore cannot be written to..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.NotInUpdateMode">
+            <summary>
+              Looks up a localized string similar to The AutoDeployManifest is not in update mode..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.ServerConfigFileCorrupt">
+             <summary>
+               Looks up a localized string similar to The server configuration file &apos;{0}&apos; is corrupt:
+            {1}.
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.ServerConfigFileCorruptMustFix">
+             <summary>
+               Looks up a localized string similar to The server configuration file &apos;{0}&apos; is corrupt and must be fixed before running again:
+            {1}.
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.UsupportedUriScheme">
+            <summary>
+              Looks up a localized string similar to The given path&apos;s format is not supported..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.DeploymentResources.WaitingForManifestFile">
+            <summary>
+              Looks up a localized string similar to Another user is deploying. Please wait while they finish..
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever">
+            <summary>
+            Retrieves an assembly from the file system.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever.AssemblyReflectorTag">
+            <summary>
+            The name of the trace and the default category.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever.FileNamesToTry(System.String)">
+            <summary>
+            Enumerates the file names to try when the specified name is ambigous.
+            </summary>
+            <param name="assemblyFileName">The name of the assembly file. Possibly without the extension.</param>
+            <returns>The file names to try.</returns>
+            <remarks>
+            If the <paramref name="assemblyFileName"/> doesn't have the a .dll or .exe extension then the file name with
+            each of those extensions is returned. If it does have a valid extension then the specified file name is returned.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever.HasAssemblyExtension(System.String)">
+            <summary>
+            Determines whether file name has a .dll or .exe extension.
+            </summary>
+            <param name="assemblyFileName">The name of the assembly file.</param>
+            <returns><c>true</c> if the file name has a .dll or .exe extension.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.FileNameBasedAssemblyRetriever.RetrieveAssembly(System.String)">
+            <summary>
+            Retrieves the assembly.
+            </summary>
+            <param name="assemblyIdentifier">The assembly identifier.</param>
+            <returns>
+            The assembly if found, <c>null</c> otherwise.
+            </returns>
+            <remarks>
+            The <paramref name="assemblyIdentifier"/> should be a file name. The extension and path are optional. If the
+            extention is not .dll or .exe then .dll and .exe are tried.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Deployment.LocalDirectoryAssemblyRetriever">
+            <summary>
+            Scans the local directory and loads the assembly if it is found.
+            </summary>
+            <remarks>
+            If the assembly identifier has a path then no processing is done.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.LocalDirectoryAssemblyRetriever.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Deployment.LocalDirectoryAssemblyRetriever"/> class.
+            </summary>
+            <param name="searchDirectory">The search directory.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown if <paramref name="searchDirectory"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentException">Thrown if <paramref name="searchDirectory"/> is an empty string.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Deployment.LocalDirectoryAssemblyRetriever.RetrieveAssembly(System.String)">
+            <summary>
+            Retrieves the assembly.
+            </summary>
+            <param name="assemblyIdentifier">The assembly identifier.</param>
+            <returns>The assembly if found, <c>null</c> otherwise.</returns>
+            <remarks>
+            The identifier should be the file name without the path. If there isn't a .dll or .exe, both are tried.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Deployment.LocalDirectoryAssemblyRetriever.SearchDirectory">
+            <summary>
+            Gets the search directory.
+            </summary>
+            <value>The search directory.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.CommandArguments">
+            <summary>
+            Parses the command line.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.CommandArguments.IgnoreCommandLineCharacters">
+            <summary>
+            The characters to ignore at the start of a command line argument.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.CommandArguments.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.CommandArguments"/> class.
+            </summary>
+            <param name="args">The command line arguments.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.CommandArguments.RebuildCommandLine">
+            <summary>
+            Rebuilds the command line.
+            </summary>
+            <returns>The rebuilt command line.</returns>
+            <remarks>
+            The arguments may have to be rebuilt because they might have been change. Also, the arguments get parsed a
+            before they are sent to us. Specifically, double quotes may have been removed.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.ConfigurationFileName">
+            <summary>
+            Gets or sets the configuration file name if one was specified.
+            </summary>
+            <value>The configuration file name if one was specified.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.ForceUpdate">
+            <summary>
+            Gets or sets a value indicating whether updates should be done even if the version numbers are the same.
+            </summary>
+            <value><b>true</b> if updates should be done even if the version numbers are the same.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.LaunchType">
+            <summary>
+            Gets the <see cref="T:Epicor.Mfg.Lib.MfgSys.LaunchType"/>.
+            </summary>
+            <value>The <see cref="T:Epicor.Mfg.Lib.MfgSys.LaunchType"/>.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.LaunchTypeText">
+            <summary>
+            Gets the text used on the command line for the launch type.
+            </summary>
+            <value>The text used on the command line for the launch type.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.Optimize">
+            <summary>
+            Gets a value indicating whether a full optimize should be done.
+            </summary>
+            <value><b>true</b> if a full optimize should be done.</value>
+            <remarks>
+            If this is set to <b>true</b> then only the optimize is done, nothing else.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.SkipCheck">
+            <summary>
+            Gets or sets a value indicating whether version checking should be skipped.
+            </summary>
+            <value><b>true</b> if version checking should be skipped.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.CommandArguments.Unoptimize">
+            <summary>
+            Gets a value indicating whether a full unoptimize should be done.
+            </summary>
+            <value><b>true</b> if a full unoptimize should be done.</value>
+            <remarks>
+            If this is set to <b>true</b> then only the unoptimize is done, nothing else.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Configuration">
+            <summary>
+            Reads the configuration file.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Configuration"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.#ctor(System.IO.Stream,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Configuration"/> class.
+            </summary>
+            <param name="configurationStream">The <see cref="T:System.IO.Stream"/> to read the configuration data from.</param>
+            <param name="fileName">The file name of the configuration file. This is used in exception messages.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Configuration"/> class.
+            </summary>
+            <param name="configurationFileName">Path to configuration file.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.VersionsAreTheSame(Epicor.Mfg.Lib.Configuration,Epicor.Mfg.Lib.Configuration)">
+            <summary>
+            Compares two deployment versions.
+            </summary>
+            <param name="localConfiguration">The first configuration.</param>
+            <param name="serverConfiguration">The second configuration.</param>
+            <returns><b>true</b> if all the version numbers are the same.</returns>
+            <remarks>
+            The application version numbers are compared and then each customization version number
+            is compared. If all of these version numbers are the same then <b>true</b> is returned.
+            Customizations are matched by their name. If a named customization exists in the sever
+            configuration but not the local configuration then <b>false</b> is returned.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.VersionsAreTheSame(Epicor.Mfg.Lib.Customization,Epicor.Mfg.Lib.Configuration)">
+            <summary>
+            Determines if the customization is different than what is in the configuration.
+            </summary>
+            <param name="customization">The customization to check.</param>
+            <param name="configuration">The configuration to check.</param>
+            <returns><b>true</b> if a matching customization is found in the configuration.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Configuration.VersionsAreTheSame(System.String,System.String)">
+            <summary>
+            Compares two version numbers.
+            </summary>
+            <param name="version1">The first version number.</param>
+            <param name="version2">The second version number.</param>
+            <returns><b>true</b> if the version numbers are the same.</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.AlternateCacheFolder">
+            <summary>
+            Gets or sets the directory to use instead of Documents and Setting.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.AppServerUrl">
+            <summary>
+            Gets the application server's URL.
+            </summary>
+            <value>The application server's URL.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.ClearClientDir">
+            <summary>
+            Gets or sets whether we clear out the client install directory before doing deployment.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.ClearDocAndSettings">
+            <summary>
+            Gets or sets whether we clear out the Documents And Settings\All Users\Application Data\Epicor\Product folder
+            before doing the deployment.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.Customizations">
+            <summary>
+            Gets or sets an array of <see cref="T:Epicor.Mfg.Lib.Customization"/>s representing customizations that need to be installed on the
+            client system.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.DeploymentPackage">
+            <summary>
+            Gets the name of the deployment package. Typically this will be 'client.zip'. Only used when DeployMethod is Zip.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.DeploymentPath">
+            <summary>
+            Gets the URI of the deployment server.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.DeploymentType">
+            <summary>
+            Gets the method of deployment.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.DoDateComparison">
+            <summary>
+            Gets a value indicating whether we do date comparisons on the files or just copy everything.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.FileName">
+            <summary>
+            Gets the configuration file name.
+            </summary>
+            <value>The configuration file name.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.GacFileList">
+            <summary>
+            Gets or sets the list of files (wildcards allowed) to add to the GAC.
+            </summary>
+            <value>The list of files (wildcards allowed) to add to the GAC.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.GacIfLargerThan">
+            <summary>
+            Gets or sets the size to add assemblies to the GAC if they are larger than.
+            </summary>
+            <value>The size to add assemblies to the GAC if they are larger than.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.ImagePath">
+            <summary>
+            Gets the path to an override image for the downloads splash screen.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.IsShortcutFile">
+            <summary>
+            Gets a value indicating whether we were launched with a short cut file.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.NGenFileList">
+            <summary>
+            Gets or sets the list of files (wildcards allowed) to add to the native assembly cache.
+            </summary>
+            <value>The list of files (wildcards allowed) to add to the native assembly cache.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.NGenIfLargerThan">
+            <summary>
+            Gets or sets the size to add assemblies to the native assembly cache if they are larger than.
+            </summary>
+            <value>The size to add assemblies to the native assembly cache if they are larger than.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.NoGacFileList">
+            <summary>
+            Gets or sets the list of files (wildcards allowed) that shouldn't be added to the GAC.
+            </summary>
+            <value>The list of files (wildcards allowed) that shouldn't be added to the GAC.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.NoNGenFileList">
+            <summary>
+            Gets or sets the list of files (wildcards allowed) that shouldn't be added to the native assembly cache.
+            </summary>
+            <value>The list of files (wildcards allowed) that shouldn't be added to the native assembly cache.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.OptimizeAssemblies">
+            <summary>
+            Gets or sets a value indicating whether we optimize assemblies or not in AutoUpdate.
+            </summary>
+            <value><b>true</b> if we optimize assemblies or not in AutoUpdate.</value>
+            <remarks>
+            The default is <b>false</b>.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.ProductId">
+            <summary>
+            Gets or sets the product identifier as specified in the config file.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.SessionManagerUri">
+            <summary>
+            Gets the <see cref="T:System.Uri"/> to use for the Session Manager.
+            </summary>
+            <value>The <see cref="T:System.Uri"/> to use for the Session Manager.</value>
+            <remarks>
+            The Session Manager <see cref="T:System.Uri"/> can be set in the appSettings or userSettings in the configuration file.
+            The setting in userSettings is used over the one in appSettings.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Configuration.Version">
+            <summary>
+            Gets or sets the product version stored in the local configuration file.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Configuration.ClearDirOption">
+            <summary>
+            What are our options for clearing the directories?
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.ClearDirOption.Always">
+            <summary>Always clear the directory.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.ClearDirOption.Never">
+            <summary>Never clear the directory.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.ClearDirOption.Prompt">
+            <summary>Prompt the user.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Configuration.DeployType">
+            <summary>
+            How is deployment being done.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.DeployType.Unknown">
+            <summary>The deployment type couldn't be determined.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.DeployType.XCopy">
+            <summary>Deploy by copying files from a directory.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.DeployType.Zip">
+            <summary>Deploy from a zip file.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Configuration.DeployType.Auto">
+            <summary>The server deployment directory is the same as XCopy but files are only downloaded when they are needed.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Customization">
+            <summary>
+            Wrapper class for information about any customizations that need to be installed.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Customization.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Customization"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Customization.#ctor(System.Xml.XmlElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Customization"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Customization.#ctor(System.String,System.String,System.String,Epicor.Mfg.Lib.Configuration.DeployType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Customization"/> class.
+            </summary>
+            <param name="name">Customization name.</param>
+            <param name="version">Version.</param>
+            <param name="directory">Deployment server directory were customization is stored.</param>
+            <param name="deployMethod">XCopy or Zip</param>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Customization.DeployMethod">
+            <summary>
+            XCopy or Zip
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Customization.DirectoryName">
+            <summary>
+            Deployment server directory were customization is stored.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Customization.Name">
+            <summary>
+            Customization name.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Customization.Version">
+            <summary>
+            Version.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.IOHelper">
+            <summary>
+            A helper utility class for IO operations.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IOHelper.DeleteFile(System.IO.FileInfo)">
+            <summary>
+            Deletes the specified file if it exists.
+            </summary>
+            <param name="fileInfo">The file to delete.</param>
+            <remarks>
+            Using <see cref="M:System.IO.File.Delete(System.String)"/> doesn't work if the file is read-only. This method
+            ensures that the file is writable before deleting it.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IOHelper.DeleteFile(System.String)">
+            <summary>
+            Deletes the specified file if it exists.
+            </summary>
+            <param name="fileName">The file to delete.</param>
+            <remarks>
+            Using <see cref="M:System.IO.File.Delete(System.String)"/> doesn't work if the file is read-only. This method
+            ensures that the file is writable before deleting it.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IOHelper.MakeWritable(System.String)">
+            <summary>
+            Clears the ReadOnly flag of the specified file or directory.
+            </summary>
+            <param name="fileName">The file or directory to check.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IOHelper.MakeWritable(System.IO.FileSystemInfo)">
+            <summary>
+            Clears the ReadOnly flag of the specified file or directory.
+            </summary>
+            <param name="info">The file or directory to check.</param>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.MfgSys">
+            <summary>
+            Launches Epicor.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.DefaultConfigurationFileName">
+            <summary>
+            The default file name for the configuration file.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.DefaultProductId">
+            <summary>
+            The default product identifier.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.IsAutoUpdateIsRunning">
+            <summary>
+            Checks if AutoUpdate is currently running.
+            </summary>
+            <returns><b>true</b> if AutoUpdate is currently running.</returns>
+            <remarks>
+            Determines if AutoUpdate is running by checking the <see cref="T:System.Threading.Mutex"/> that it will lock
+            while it is running.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.Main(System.String[])">
+            <summary>
+            The main entry point for the application.
+            </summary>
+            <param name="args">The command line arguments.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.ShouldShowApplicationUsage(System.String[])">
+            <summary>
+            Determines if the application usage MessageBox should be shown.
+            </summary>
+            <param name="args">The command line arguments.</param>
+            <returns><b>true</b> if usage should be shown, <b>false</b> otherwise.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.AllAutoDeployAssemblyRetrievers(Epicor.Mfg.Lib.Deployment.IAssemblyRetriever)">
+            <summary>
+            Enumerates all the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/>s.
+            </summary>
+            <param name="startRetriever">The retriever to look at. This should be an appropriate value for <see cref="P:Epicor.Mfg.Lib.MfgSys.AutoDeployAssemblyRetriever"/>.</param>
+            <returns>All the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/>.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.BuildAutoDeployAssemblyRetriever(Epicor.Mfg.Lib.Configuration)">
+            <summary>
+            Builds the <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/> based on the specified configuration.
+            </summary>
+            <param name="configuration">The configuration to use.</param>
+            <returns>The <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/> based on the specified configuration.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.BuildSessionlessAssemblyRetriever(Epicor.Mfg.Lib.Deployment.IAssemblyRetriever)">
+            <summary>
+            Builds the sessionless assembly retriever.
+            </summary>
+            <param name="autoDeployRetriever">The <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/>, if any.</param>
+            <returns>The sessionless assembly retriever.</returns>
+            <remarks>
+            When there is no session or the retrieving is done without a session the <see cref="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever"/>
+            should be used.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.DetermineLocalConfigurationFileName(Epicor.Mfg.Lib.CommandArguments)">
+            <summary>
+            Determines the name of the local configuration file.
+            </summary>
+            <param name="arguments">The arguments.</param>
+            <returns>The name of the local configuration file.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.DownloadRequiredComponents">
+            <summary>
+            Copies the AutoUpdate.exe and ICSharpCode.SharpZipLib.dll files to a temporary directory
+            so they can be ran. In MS Vista, you can't copy files under Program Files.
+            </summary>
+            <returns>The temporary directory that was created.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.PrimaryAutoDeployAssemblyRetriever(Epicor.Mfg.Lib.Deployment.IAssemblyRetriever)">
+            <summary>
+            Gets the primary <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/>.
+            </summary>
+            <param name="startRetriever">The retriever to look at. This should be an appropriate value for <see cref="P:Epicor.Mfg.Lib.MfgSys.AutoDeployAssemblyRetriever"/>.</param>
+            <returns>The primary <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/>.</returns>
+            <remarks>
+            The primary retriever is the one for the main deployment. The other retrievers, if any, are for customizations.
+            The primary retriever has a <see cref="P:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever.CustomizationName"/> of <c>null</c>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.RunTempAutoUpdate">
+            <summary>
+            Copies the server's AutoUpdate.exe and ICSharpCode.SharpZipLib.dll to a temporary directory and runs AutoUpdate.
+            </summary>
+            <remarks>
+            <para>In Microsoft Vista, Microsoft added UAC (User Account Control) which defaults to running processes with
+            lower securtity if you are an administrator. This has the effect of not allowing programs to update files under
+            the Program Files directory. To work around this, we copy the two files to a new temporary directory and run them
+            from there. We run them from a batch file so that the batch file can delete the temporary directory and itself
+            when it is done since there is no easy way of deleting an EXE that is running.</para>
+            <para>Part of UAC is that any EXE with the work "update" in it will automatically trigger escalating the
+            programs security to an administrator. Since "AutoUpdate" has the word "update" in it, Vista will
+            automatically ask the user to escalate to an administrator. This allows AutoUpdate to update files under
+            the Program Files directory.</para>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.SetUpAssemblyRetrieversAndPossiblyGetNewConfiguration(Epicor.Mfg.Lib.Configuration@,Epicor.Mfg.Lib.Deployment.IAssemblyRetriever@,Epicor.Mfg.Lib.Deployment.IAssemblyRetriever@)">
+            <summary>
+            Sets up assembly retrievers and gets an updated <see cref="P:Epicor.Mfg.Lib.MfgSys.Configuration"/> if needed.
+            </summary>
+            <param name="configuration">The current local configuration.</param>
+            <param name="autoDeployRetriever">The auto deployment assembly retriever.</param>
+            <param name="sessionlessAssemblyRetriever">The sessionless assembly retriever.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.MfgSys.TryCopyStream(System.Uri,System.String,System.Exception@)">
+            <summary>
+            Copies the "from" stream if it exists.
+            </summary>
+            <param name="fromUri">The <see cref="T:System.Uri"/> to copy from.</param>
+            <param name="toFileName">The file to copy to.</param>
+            <param name="exception">The exception if one occurred.</param>
+            <returns><b>false</b> if the file couldn't be copied or the "to" file doesn't exist.</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.AutoDeployAssemblyRetriever">
+            <summary>
+            Gets or sets the <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/> that handles retrieving assemblies as they are needed.
+            </summary>
+            <value>The <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/> that handles retrieving assemblies as they are needed.</value>
+            <remarks>
+            This properties value will be <c>null</c> if auto deployment isn't turned on. If auto deployment is turned on
+            for a single deployment or customization then the value will be a
+            <see cref="T:Epicor.Mfg.Lib.Deployment.AutoDeployAssemblyRetriever"/>. If it is turned on for multiple deployments
+            then it will be a <see cref="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever"/>.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.AutoUpdateMutexName">
+            <summary>
+            Gets the <see cref="T:System.Threading.Mutex"/> name used by AutoUpdate to signal that it is running.
+            </summary>
+            <value>The <see cref="T:System.Threading.Mutex"/> name used by AutoUpdate to signal that it is running.</value>
+            <remarks>
+            The <see cref="T:System.Threading.Mutex"/> name is "global" to the computer.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.CommandArguments">
+            <summary>
+            Gets the command arguments.
+            </summary>
+            <value>The command arguments.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.Configuration">
+            <summary>
+            Gets the local configuration.
+            </summary>
+            <value>The local configuration.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.ServerConfigurationFileName">
+            <summary>
+            Gets the file name of the server configuration file.
+            </summary>
+            <value>The file name of the server configuration file.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.MfgSys.SessionlessAssemblyRetriever">
+            <summary>
+            Gets or sets the <see cref="T:Epicor.Mfg.Lib.Deployment.IAssemblyRetriever"/> to use to retrieve assemblies not associated with a specific session.
+            </summary>
+            <value>The sessionless assembly retriever.</value>
+            <remarks>
+            When there is no session or the retrieving is done without a session the <see cref="T:Epicor.Mfg.Lib.Deployment.CompositeAssemblyRetriever"/>
+            should be used. If the Epicor.Mfg.UI.EpiClientLib.dll assembly has been loaded already then you should use
+            the <c>ClientAssemblyRetriever</c> specifying a <c>null</c> session instead.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.MfgSys.LaunchType">
+            <summary>
+            The launch types.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.LaunchType.MainMenu">
+            <summary>Launches the main menu.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.LaunchType.DashBoard">
+            <summary>Launches a Dashboard.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.LaunchType.MESMenu">
+            <summary>Launches the MES menu.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.LaunchType.HandHeld">
+            <summary>Launches the Handheld menu.</summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.MfgSys.LaunchType.ObjectDesigner">
+            <summary>Launches the Object designer.</summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.AutoUpdateIsRunning">
+            <summary>
+              Looks up a localized string similar to The AutoUpdate program is running. Please try again after it has completed..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.ClientRunningSoCanNotUpdateClient">
+            <summary>
+              Looks up a localized string similar to An instance of this client is already running. To update the client, close any existing clients..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.ConfigurationFileCorruptNodeMissing">
+            <summary>
+              Looks up a localized string similar to The configuration file &apos;{0}&apos; is corrupt - the &apos;{1}&apos; node missing or invalid..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.CouldNotFindAutoUpdateExe">
+            <summary>
+              Looks up a localized string similar to Could not find &apos;AutoUpdate.exe&apos; file..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.CouldNotFindSharpZibFile">
+            <summary>
+              Looks up a localized string similar to Could not find &apos;ICSharpCode.SharpZipLib.dll&apos; file..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.LaunchError">
+            <summary>
+              Looks up a localized string similar to Launch Error.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.LaunchWarning">
+            <summary>
+              Looks up a localized string similar to Launch Warning.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.MfgSysOptions">
+            <summary>
+              Looks up a localized string similar to MfgSys Options.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.MfgSysUsage">
+            <summary>
+              Looks up a localized string similar to Usage: MfgSys.exe [options]
+            Options for launching:
+            	/SKIPCHECK			Skips version check. No updates performed.
+            	/UPDATE			Skips version check and runs update.
+            	/CONFIG=&lt;file name&gt;		Specify alternate configuration file to load.
+            	/DB				Launch the Dashboard instead of the Main Menu.
+            	/MES				Launch the MES Menu instead of the Main Menu.
+            	/AUTOLOADSUPPRESS		Skips the Automatic Load of UI Applications.
+            	/MENUID=&lt;menuID&gt;		Starting Menu ID.
+            	/? or /HELP			Shows the available command line arguments. [rest of string was truncated]&quot;;.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.Prefer32Bit">
+             <summary>
+               Looks up a localized string similar to Please be aware that the 64 bit client executable (MfgSys64.exe) is provided for
+            instances where it is necessary to have custom code that references other 64 bit
+            3rd party dlls. This is not a common occurrence. In general, the 64 bit client
+            executable uses more system resources than the 32 bit client executable (MfgSys.exe)
+            and may run slower on your machine. The 32 bit client is compiled for both 32
+            and 64 bit windows operating systems and is recommended in most cases..
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.RunningVersionAfter35">
+             <summary>
+               Looks up a localized string similar to For best results, this program requires at least .NET 3.5 SP 1.
+            You are currently running a newer version of .NET.
+            Consider running .NET 3.5 SP 1 instead..
+             </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.UnableToUpdateClient">
+            <summary>
+              Looks up a localized string similar to Unable to Update Client.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Properties.Resources.Version35SP1NotInstalled">
+             <summary>
+               Looks up a localized string similar to For best results, this program requires at least .NET 3.5 SP 1.
+            Please install the latest version of .NET 3.5..
+             </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.CheckedMessageBox">
+            <summary>
+            Shows MessageBox that resizes based on the size of the text and allows the user check the CheckBox if they don't want
+            to see the message again.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.CheckedMessageBox"/> class from being created.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.Show(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.CheckedMessageBox"/> class.
+            </summary>
+            <param name="text">The message text.</param>
+            <param name="caption">The form caption.</param>
+            <returns><c>true</c> if the do not show again check box was checked.</returns>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.CheckedMessageBox.IsChecked">
+            <summary>
+            Gets or sets a value indicating whether this instance is checked.
+            </summary>
+            <value><c>true</c> if this instance is checked.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.ProgressIndicator">
+            <summary>
+            A control that shows text for the action being done as well as an optional progress indicator.
+            </summary>
+            <remarks>
+            <para>This control has three different modes. The first is to show progress as a <see cref="T:System.Windows.Forms.ProgressBar"/>. Set
+            <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Maximum"/> to a positive value and <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.ShowProgress"/> to <c>true</c> for this mode. The second
+            is to show progress as text. Set <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Maximum"/> to -1 and <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.ShowProgress"/> to <c>true</c> for this
+            mode. You can also set the <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.TextProgressFormat"/> to specify how the text is formatted. The third way is
+            to not show progress at all. Only the action text is displayed. Set <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.ShowProgress"/> to <c>false</c>
+            for this mode.</para>
+            <para>Use the <see cref="P:System.Windows.Forms.UserControl.AutoSize"/> property to determin if the control should grow to fit the text
+            whenever it is changed. Use the <see cref="P:System.Windows.Forms.UserControl.AutoSizeMode"/> property to determine how the control grows.
+            Use <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Value"/> and <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Maximum"/> to set the current position, if any.</para>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.ProgressIndicator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.ProgressIndicator"/> class.
+            </summary>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Utilities.ProgressIndicator.components">
+            <summary> 
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.ProgressIndicator.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Maximum">
+            <summary>
+            Gets or sets the maximum value.
+            </summary>
+            <value>The maximum value.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.ShowProgress">
+            <summary>
+            Gets or sets a value indicating whether to show progress.
+            </summary>
+            <value><c>true</c> if progress should be shown.</value>
+            <remarks>
+            If this value is <c>false</c> then only the current action text is shown.
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Text">
+            <summary>
+            Gets or sets the text associated with this control.
+            </summary>
+            <value>The text associated with this control.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.TextProgressFormat">
+            <summary>
+            Gets or sets the format to use when showing progress as text.
+            </summary>
+            <value>The text progress format.</value>
+            <remarks>
+            The value should be format used in a <c>string.Format</c> call. There should be one replacable parameter that
+            will get replaced with the <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Value"/> property converted to a string. The default is "{0}".
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Value">
+            <summary>
+            Gets or sets the value.
+            </summary>
+            <value>The value.</value>
+            <remarks>
+            The value must be less than the <see cref="P:Epicor.Mfg.Lib.Utilities.ProgressIndicator.Maximum"/> value.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.UtilitiesResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.AskCredentialsNotSupported">
+            <summary>
+              Looks up a localized string similar to Asking the user for credentials is not supported..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.Cancel">
+            <summary>
+              Looks up a localized string similar to Cancel.
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.TestingForExistanceIsNotSupported">
+            <summary>
+              Looks up a localized string similar to Testing for Uri existance is not supported..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.UriNotSupported">
+            <summary>
+              Looks up a localized string similar to The given path&apos;s format is not supported..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.UsupportedUriScheme">
+            <summary>
+              Looks up a localized string similar to The given path&apos;s format is not supported..
+            </summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.UtilitiesResources.WaitingMessage">
+            <summary>
+              Looks up a localized string similar to Working....
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.WaitHandleHelper">
+            <summary>
+            A helper utility for working with <see cref="T:System.Threading.WaitHandle"/>s.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitHandleHelper.DoAction(System.Threading.WaitHandle,System.Windows.Forms.MethodInvoker,Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel,System.Windows.Forms.MethodInvoker)">
+            <summary>
+            Does the action while locking on the specified <see cref="T:System.Threading.WaitHandle"/>.
+            </summary>
+            <param name="waitHandle">The <see cref="T:System.Threading.WaitHandle"/> to use.</param>
+            <param name="action">The action to do.</param>
+            <param name="queryCancel">A function that returns if the action has been canceled.</param>
+            <param name="releaseWaitHandle">The action to release the wait handle.</param>
+            <returns><c>true</c> if the action was run.</returns>
+            <remarks>
+            This method waits for the specified handle to be "set" or to have "ownership" of it. At that point the specified
+            action is run. After the action is run, the <paramref name="releaseWaitHandle"/> is run to clean up the wait
+            handle. This is necessary because different wait handles are released in different ways. See if there is an
+            override of this method for that wait handle type. If the <paramref name="queryCancel"/> function returns
+            <c>true</c> before we "own" the wait handle then this method returns without running the action and without
+            running the <paramref name="releaseWaitHandle"/> action.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitHandleHelper.DoAction(System.Threading.EventWaitHandle,System.Windows.Forms.MethodInvoker,Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel)">
+            <summary>
+            Does the action while locking on the specified <see cref="T:System.Threading.EventWaitHandle"/>.
+            </summary>
+            <param name="waitHandle">The <see cref="T:System.Threading.EventWaitHandle"/> to use.</param>
+            <param name="action">The action to do.</param>
+            <param name="queryCancel">A function that returns if the action has been canceled.</param>
+            <returns><c>true</c> if the action was run.</returns>
+            <remarks>
+            This method waits to have ownership of the specified <see cref="T:System.Threading.EventWaitHandle"/>. At that point the specified
+            action is run. After the action is run, the <see cref="T:System.Threading.EventWaitHandle"/> is released. If the
+            <paramref name="queryCancel"/> function returns <c>true</c> before we own the <see cref="T:System.Threading.EventWaitHandle"/>
+            then this method returns without running the action.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitHandleHelper.DoAction(System.Threading.Mutex,System.Windows.Forms.MethodInvoker,Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel)">
+            <summary>
+            Does the action while locking on the specified <see cref="T:System.Threading.Mutex"/>.
+            </summary>
+            <param name="mutex">The <see cref="T:System.Threading.Mutex"/> to use.</param>
+            <param name="action">The action to do.</param>
+            <param name="queryCancel">A function that returns if the action has been canceled.</param>
+            <returns><c>true</c> if the action was run.</returns>
+            <remarks>
+            This method waits to have ownership of the specified <see cref="T:System.Threading.Mutex"/>. At that point the specified
+            action is run. After the action is run, the <see cref="T:System.Threading.Mutex"/> is released. If the <paramref name="queryCancel"/>
+            function returns <c>true</c> before we own the <see cref="T:System.Threading.Mutex"/> then this method returns without running the
+            action.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.RtlAwareMessageBox">
+            <summary>
+            Displays a message box that can contain text, buttons, and symbols that inform and instruct the user.
+            </summary>
+            <remarks>
+            This simply calls <see cref="M:System.Windows.Forms.MessageBox.Show(System.String)"/> with the <see cref="T:System.Windows.Forms.MessageBoxOptions"/> settings for
+            RtlReading and RightAlign set correctly.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.RtlAwareMessageBox.Show(System.String,System.String)">
+            <summary>
+            Displays a message box with specified text, caption, OK button, and no icon.
+            </summary>
+            <param name="text">The text to display in the message box.</param>
+            <param name="caption">The text to display in the title bar of the message box.</param>
+            <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"/> values.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.RtlAwareMessageBox.Show(System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon)">
+            <summary>
+            Displays a message box with specified text, caption, buttons, and icon.
+            </summary>
+            <param name="text">The text to display in the message box.</param>
+            <param name="caption">The text to display in the title bar of the message box.</param>
+            <param name="buttons">One of the System.Windows.Forms.MessageBoxButtons values that specifies which buttons to display in the message box.</param>
+            <param name="icon">One of the System.Windows.Forms.MessageBoxIcon values that specifies which icon to display in the message box.</param>
+            <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"/> values.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.RtlAwareMessageBox.Show(System.Windows.Forms.IWin32Window,System.String,System.String,System.Windows.Forms.MessageBoxButtons,System.Windows.Forms.MessageBoxIcon,System.Windows.Forms.MessageBoxDefaultButton,System.Windows.Forms.MessageBoxOptions)">
+            <summary>
+            Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, default button, and options.
+            </summary>
+            <param name="owner">The parent window, if any.</param>
+            <param name="text">The text to display in the message box.</param>
+            <param name="caption">The text to display in the title bar of the message box.</param>
+            <param name="buttons">One of the System.Windows.Forms.MessageBoxButtons values that specifies which buttons to display in the message box.</param>
+            <param name="icon">One of the System.Windows.Forms.MessageBoxIcon values that specifies which icon to display in the message box.</param>
+            <param name="defaultButton">One of the System.Windows.Forms.MessageBoxDefaultButton values that specifies the default button for the message box.</param>
+            <param name="options">One of the System.Windows.Forms.MessageBoxOptions values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
+            <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"/> values.</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.WebStreamHelper">
+            <summary>
+            A helper class for working with http streams.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase">
+            <summary>
+            Helps work with streams from different sources.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> class.
+            </summary>
+            <param name="uri">The <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> to use.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.BuildUri(System.String,System.String)">
+            <summary>
+            Builds the <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> from the specified parts.
+            </summary>
+            <param name="baseUri">The base Uri.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> from the specified parts.</returns>
+            <remarks>
+            If the <paramref name="baseUri"/> is more than just the host name than the absolute part of the <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/>
+            is would be lost if you use <c>new Uri(uri, string)</c>. For example 'http://epicor/ServerDirectory' for a
+            Url and 'myFileName.txt' for a path would produce 'http://epicor/myFileName.txt', losing the 'ServerDirectory'
+            part. This method correctly builds the Uri of 'http://epicor/ServerDirectory/myFileName.txt'.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.BuildUri(System.Uri,System.String)">
+            <summary>
+            Builds the <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> from the specified parts.
+            </summary>
+            <param name="baseUri">The base <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/>.</param>
+            <param name="path">The path.</param>
+            <returns>The <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> from the specified parts.</returns>
+            <remarks>
+            If the <paramref name="baseUri"/> is more than just the host name than the absolute part of the <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/>
+            is would be lost if you use <c>new Uri(uri, string)</c>. For example 'http://epicor/ServerDirectory' for a
+            Url and 'myFileName.txt' for a path would produce 'http://epicor/myFileName.txt', losing the 'ServerDirectory'
+            part. This method correctly builds the Uri of 'http://epicor/ServerDirectory/myFileName.txt'.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.AskUserForCredentials">
+            <summary>
+            Asks the user for credentials.
+            </summary>
+            <returns><see cref="F:System.Windows.Forms.DialogResult.OK"/> if successfull, <see cref="F:System.Windows.Forms.DialogResult.Cancel"/> if the user canceled and <see cref="F:System.Windows.Forms.DialogResult.Ignore"/> otherwise.</returns>
+            <remarks>
+            Before calling this method, you should query <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.CanAskUserForCredentials"/>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.CopyFile(System.String)">
+            <summary>
+            Copies the file.
+            </summary>
+            <param name="toFileName">Name of file to copy to.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.IsAccessViolationException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the user not having access.
+            </summary>
+            <param name="exception">The exception.</param>
+            <returns><c>true</c> the exception was caused by the user not having access.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.IsFileNotFoundException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the file not being found.
+            </summary>
+            <param name="exception">The exception to check.</param>
+            <returns><c>true</c> the exception was caused by the file not being found.</returns>
+            <remarks>
+            Different file stream helpers throw different exceptions. For the file system you do get the
+            <see cref="T:System.IO.FileNotFoundException"/> but for web you get <see cref="T:System.Net.WebException"/>s.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.OpenReadOnlyStream">
+            <summary>
+            Opens the specified <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> as a read-only stream.
+            </summary>
+            <returns>The stream if it could be opened.</returns>
+            <remarks>
+                <para>You must close the <see cref="T:System.IO.Stream"/> when you are done.</para>
+                <para>The minimum you can expect from the stream is that you can read it forward only.</para>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.OpenReadOnlyStream(System.Int32,System.Boolean)">
+            <summary>
+            Opens the read only stream.
+            </summary>
+            <param name="millisecondsForWaitingDialog">The number of milliseconds before showing the waiting dialog.</param>
+            <param name="askForCredentialsIfNeeded">If <c>true</c> then ask for credentials if needed.</param>
+            <returns>The stream if it could be opened. <c>null</c> if the user canceled or credentials couldn't</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperBase.CopyFile(System.String,System.Action{System.String})">
+            <summary>
+            Copies the file to a temporary file and overwrites the specified file if successful.
+            </summary>
+            <param name="toFileName">Name of the file to copy to.</param>
+            <param name="copyFileAction">The action the copies a file.</param>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.CanAskUserForCredentials">
+            <summary>
+            Gets a value indicating whether this instance can ask user for credentials.
+            </summary>
+            <value><c>true</c> if this instance can ask user for credentials.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Credentials">
+            <summary>
+            Gets or sets the credentials.
+            </summary>
+            <value>The credentials.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Exists">
+            <summary>
+            Gets a value indicating whether this <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> exists.
+            </summary>
+            <value><c>true</c> if exists.</value>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri">
+            <summary>
+            Gets the <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/>.
+            </summary>
+            <value>The <see cref="P:Epicor.Mfg.Lib.Utilities.StreamHelperBase.Uri"/> to use.</value>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.WebStreamHelper"/> class.
+            </summary>
+            <param name="uri">The <see cref="T:System.Uri"/> work with.</param>
+            <exception cref="T:System.NotSupportedException">Thrown if the <paramref name="uri"/> is not a ftp or http uri.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.AskUserForCredentials">
+            <summary>
+            Not supported.
+            </summary>
+            <returns><see cref="F:System.Windows.Forms.DialogResult.OK"/> if successfull, <see cref="F:System.Windows.Forms.DialogResult.Cancel"/> if the user canceled and <see cref="F:System.Windows.Forms.DialogResult.Ignore"/> otherwise.</returns>
+            <exception cref="T:System.NotSupportedException">Always thrown.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.CopyFile(System.String)">
+            <summary>
+            Copies the file.
+            </summary>
+            <param name="toFileName">Name of file to copy to.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.IsAccessViolationException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the user not having access.
+            </summary>
+            <param name="exception">The exception.</param>
+            <returns><c>true</c> the exception was caused by the user not having access.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.IsFileNotFoundException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the file not being found.
+            </summary>
+            <param name="exception">The exception to check.</param>
+            <returns><c>true</c> the exception was caused by the file not being found.</returns>
+            <remarks>
+            Returns <c>true</c> if the exception is of type <see cref="T:System.Net.WebException"/> and...
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WebStreamHelper.OpenReadOnlyStream">
+            <summary>
+            Opens the specified <see cref="T:System.Uri"/> as a read-only stream.
+            </summary>
+            <returns>The stream if it could be opened.</returns>
+            <remarks>
+                <para>You must close the <see cref="T:System.IO.Stream"/> when you are done.</para>
+                <para>The minimum you can expect from the stream is that you can read it forward only.</para>
+            </remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.WebStreamHelper.CanAskUserForCredentials">
+            <summary>
+            Gets a value indicating whether this instance can ask user for credentials.
+            </summary>
+            <value><c>true</c> if this instance can ask user for credentials.</value>
+            <remarks>Always <c>false</c>.</remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.WebStreamHelper.Exists">
+            <summary>
+            Not supported.
+            </summary>
+            <value><c>true</c> if exists.</value>
+            <exception cref="T:System.NotSupportedException">Always thrown.</exception>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.StreamHelperFactory">
+            <summary>
+            This is a utility class that helps creates <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> classes.
+            </summary>
+            <remarks>
+            Use the <see cref="M:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.Create(System.Uri)"/> method to create the appropriate <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> for the
+            specified <see cref="T:System.Uri"/>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.Create(System.Uri)">
+            <summary>
+            Creates a <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> based on the <see cref="T:System.Uri"/> specified.
+            </summary>
+            <param name="uri">The <see cref="T:System.Uri"/> to use.</param>
+            <returns>A <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> based on the <see cref="T:System.Uri"/> specified.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.IsSupportedScheme(System.String)">
+            <summary>
+            Determines whether scheme is supported.
+            </summary>
+            <param name="scheme">The scheme to check.</param>
+            <returns><c>true</c> if the scheme is supported.</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.StreamHelpers">
+            <summary>
+            Gets the collection of <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/>s.
+            </summary>
+            <value>The stream helper collection.</value>
+            <remarks>
+            This is used by the <see cref="M:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.Create(System.Uri)"/> method to determine which <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> to use.
+            </remarks>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.StreamHelperFactory.StreamHelperCreator">
+            <summary>
+            Creates a <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/>.
+            </summary>
+            <param name="uri">The <see cref="T:System.Uri"/> to use.</param>
+            <returns>The <see cref="T:Epicor.Mfg.Lib.Utilities.StreamHelperBase"/> to use.</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.TraceProvider">
+            <summary>
+            Summary description for TraceProvider.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.TraceProvider.WriteTraceInfoMsg(System.String)">
+            <summary>
+            Writes out a trace message if the trace switch is set to
+            a tracelevel of Verbose.
+            </summary>
+            <param name="msg">Message to write.</param>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.TraceProvider.DeployLogSwitch">
+            <summary>Deployment trace switch.</summary>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.TraceProvider.LogID">
+            <summary>
+            Which log to use.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.FileStreamHelper">
+            <summary>
+            A helper class for working with file or UNC streams.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.FileStreamHelper"/> class.
+            </summary>
+            <param name="uri">The <see cref="T:System.Uri"/> to use.</param>
+            <exception cref="T:System.NotSupportedException">Thrown if the <paramref name="uri"/> is not a file uri.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.AskUserForCredentials">
+            <summary>
+            Asks the user for credentials.
+            </summary>
+            <returns><see cref="F:System.Windows.Forms.DialogResult.OK"/> if successfull, <see cref="F:System.Windows.Forms.DialogResult.Cancel"/> if the user canceled and <see cref="F:System.Windows.Forms.DialogResult.Ignore"/> otherwise.</returns>
+            <remarks>
+            Before calling this method, you should query <see cref="P:Epicor.Mfg.Lib.Utilities.FileStreamHelper.CanAskUserForCredentials"/>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.CopyFile(System.String)">
+            <summary>
+            Copies the file.
+            </summary>
+            <param name="toFileName">Name of file to copy to.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.IsAccessViolationException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the user not having access.
+            </summary>
+            <param name="exception">The exception.</param>
+            <returns><c>true</c> the exception was caused by the user not having access.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.IsFileNotFoundException(System.Exception)">
+            <summary>
+            Determines whether the exception was caused by the file not being found.
+            </summary>
+            <param name="exception">The exception to check.</param>
+            <returns><c>true</c> the exception was caused by the file not being found.</returns>
+            <remarks>
+            Returns <c>true</c> if the exception is of type <see cref="T:System.IO.FileNotFoundException"/> or <see cref="T:System.IO.DirectoryNotFoundException"/>.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.OpenReadOnlyStream">
+            <summary>
+            Opens the specified <see cref="T:System.Uri"/> as a read-only stream.
+            </summary>
+            <returns>The stream if it could be opened.</returns>
+            <remarks>
+                <para>You must close the <see cref="T:System.IO.Stream"/> when you are done.</para>
+                <para>The minimum you can expect from the stream is that you can read it forward only.</para>
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.FileStreamHelper.AddNetworkConnection(System.String)">
+            <summary>
+            Adds the network connection.
+            </summary>
+            <param name="path">The file path.</param>
+            <returns>
+            <see cref="F:System.Windows.Forms.DialogResult.OK"/> if set up network connection. <see cref="F:System.Windows.Forms.DialogResult.Cancel"/> if the
+            user canceled. <see cref="F:System.Windows.Forms.DialogResult.Ignore"/> otherwise.
+            </returns>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.FileStreamHelper.CanAskUserForCredentials">
+            <summary>
+            Gets a value indicating whether this instance can ask user for credentials.
+            </summary>
+            <value><c>true</c> if this instance can ask user for credentials.</value>
+            <remarks>Always <c>true</c>.</remarks>
+        </member>
+        <member name="P:Epicor.Mfg.Lib.Utilities.FileStreamHelper.Exists">
+            <summary>
+            Gets a value indicating whether this <see cref="T:System.Uri"/> exists.
+            </summary>
+            <value><c>true</c> if exists.</value>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.WaitDialog">
+            <summary>
+            A "waiting" dialog form that is shown if a specific task doesn't complete in a specified amount of time.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.#ctor(System.Threading.EventWaitHandle)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.WaitDialog"/> class.
+            </summary>
+            <param name="waitHandle">The wait handle.</param>
+            <remarks>
+            If <paramref name="waitHandle"/> is <c>null</c> then there is no cancel button and the user can't cancel the
+            action. In this mode, you have to close the form yourself. If you want to allow the user to cancel then use
+            one the <see cref="M:Epicor.Mfg.Lib.Utilities.WaitDialog.DoAction(System.Int32,System.Action{Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel})"/> method.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.Utilities.WaitDialog"/> class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.DoAction(System.Int32,System.Action{Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel})">
+            <summary>
+            Does the action and shows the waiting dialog if it doesn't complete in the specified time.
+            </summary>
+            <param name="millisecondsBeforeDialog">How many milliseconds to wait before showing the waiting dialog.</param>
+            <param name="action">The action to do.</param>
+            <returns><c>true</c> if the action completed. <c>false</c> if the action was canceled.</returns>
+            <exception cref="T:System.Reflection.TargetInvocationException">Thrown if the action caused an exception.</exception>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.DoAction(System.Int32,System.Action{Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel},Epicor.Mfg.Lib.Utilities.WaitDialog.CreateWaitDialog)">
+            <summary>
+            Does the action and shows the waiting dialog if it doesn't complete in the specified time.
+            </summary>
+            <param name="millisecondsBeforeDialog">How many milliseconds to wait before showing the waiting dialog.</param>
+            <param name="action">The action to do.</param>
+            <param name="dialogCreator">Called to create the wait dialog if it is needed.</param>
+            <returns><c>true</c> if the action completed. <c>false</c> if the action was canceled.</returns>
+            <exception cref="T:System.Reflection.TargetInvocationException">Thrown if the action caused an exception.</exception>
+            <remarks>
+            If the <paramref name="dialogCreator"/> throws an exception, it is not handled here.
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.UpdateText(System.String)">
+            <summary>
+            Updates the UI text.
+            </summary>
+            <param name="text">The text to display.</param>
+        </member>
+        <member name="F:Epicor.Mfg.Lib.Utilities.WaitDialog.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.Utilities.WaitDialog.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.WaitDialog.CreateWaitDialog">
+            <summary>
+            Creates the wait form.
+            </summary>
+            <param name="waitHandle">The <see cref="T:System.Threading.EventWaitHandle"/> to use.</param>
+            <returns>The wait form that was created.</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.Utilities.WaitDialog.QueryCancel">
+            <summary>
+            A delegate used to query if the action has been canceled or not.
+            </summary>
+            <returns><c>true</c> if the action has been canceled.</returns>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.WarnedVersionInformation">
+            <summary>
+            Handles keeping track of which .Net versions the user has been warned about.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.WarnedVersionInformation.VerifyDotNetVersion">
+            <summary>
+            Verifies the .Net version the application is being ran under.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.WarnedVersionInformation.VerifyProcessorBits">
+            <summary>
+            Verifies the processor bits and warns the user if necessary.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.WarnedVersionInformation.GetWarnedVersionDocument(System.String)">
+            <summary>
+            Gets the warned version document.
+            </summary>
+            <param name="fileName">The file name of the warned version document.</param>
+            <returns>The warned version document if there were no errors loading it.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.WarnedVersionInformation.UpdateWarnedVersionFile(System.Func{System.Xml.XmlElement,System.Boolean})">
+            <summary>
+            Updates the XML file.
+            </summary>
+            <param name="updateXml">The action to update the XML.</param>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.XmlHelper">
+            <summary>
+            An Xml helper utility class.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.XmlHelper.TryGetBooleanSetting(System.Xml.XmlNode,System.String,System.Boolean@)">
+            <summary>
+            Gets a <see cref="T:System.Boolean"/> attribute value.
+            </summary>
+            <param name="node">The node to look in.</param>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="value">The value if the attribute is found.</param>
+            <returns><b>true</b> if the value was found, <b>false</b> otherwise.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.XmlHelper.TryGetEnumSetting``1(System.Xml.XmlNode,System.String,``0@)">
+            <summary>
+            Gets an enumeration attribute value.
+            </summary>
+            <param name="node">The node to look in.</param>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="value">The value if the attribute is found.</param>
+            <returns><b>true</b> if the value was found, <b>false</b> otherwise.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.XmlHelper.TryGetInt32Setting(System.Xml.XmlNode,System.String,System.Int32@)">
+            <summary>
+            Gets an <see cref="T:System.Int32"/> attribute value.
+            </summary>
+            <param name="node">The node to look in.</param>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="value">The value if the attribute is found.</param>
+            <returns><b>true</b> if the value was found, <b>false</b> otherwise.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.XmlHelper.TryGetStringSetting(System.Xml.XmlNode,System.String,System.String@)">
+            <summary>
+            Gets an <see cref="T:System.String"/> attribute value.
+            </summary>
+            <param name="node">The node to look in.</param>
+            <param name="attributeName">The name of the attribute.</param>
+            <param name="value">The value if the attribute is found.</param>
+            <returns><b>true</b> if the value was found, <b>false</b> otherwise.</returns>
+        </member>
+    </members>
+</doc>

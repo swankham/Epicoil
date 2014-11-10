@@ -95,7 +95,7 @@ namespace Epicoil.Library.Models.Planning
         /// </summary>
         public int FormState { get; set; }
 
-        public bool SimulateFlag { get; set; }
+        //public bool SimulateFlag { get; set; }
 
         public MaterialModel matSet = new MaterialModel();
         public ClassMasterModel CurrentClass = new ClassMasterModel();
@@ -145,7 +145,6 @@ namespace Epicoil.Library.Models.Planning
         public IEnumerable<CoilBackModel> CoilBackList = new List<CoilBackModel>();
 
         public IEnumerable<CoilBackRuleModel> CoilBackRoleList = new List<CoilBackRuleModel>();
-        
 
         public List<CutDesignModel> CuttingDesign
         {
@@ -166,6 +165,48 @@ namespace Epicoil.Library.Models.Planning
         }
 
         public int ClassID { get; set; }
+
+        public int Completed { get; set; }
+
+        public string CompletedStr
+        {
+            get
+            {
+                return Enum.GetName(typeof(CompleteStatus), Completed);
+            }
+        }
+
+        public int SimulateFlag { get; set; }
+
+        public string SimulateFlagStr
+        {
+            get
+            {
+                return Enum.GetName(typeof(SimulateStatus), SimulateFlag);
+            }
+        }
+
+        public int GenSerialFlag { get; set; }
+
+        public string GenSerialFlagStr
+        {
+            get
+            {
+                return Enum.GetName(typeof(GenerateSNStatus), GenSerialFlag);
+            }
+        }
+
+        public int OpenFlag { get; set; }
+
+        public int OperationState { get; set; }
+
+        public string OperationStateName
+        {
+            get
+            {
+                return Enum.GetName(typeof(OperationState), OperationState);
+            }
+        }
 
         #endregion Attribute
 
@@ -202,12 +243,16 @@ namespace Epicoil.Library.Models.Planning
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
             this.ClassID = (int)row["ClassID"].GetInt();
+            this.Completed = (int)row["Completed"].GetInt();
+            this.SimulateFlag = (int)row["SimulateFlag"].GetInt();
+            this.OpenFlag = (int)row["OpenFlag"].GetInt();
+            this.OperationState = (int)row["OperationState"].GetInt();
         }
 
         public void PreLoad() //0 = Nothing.
         {
             this.FormState = 0;
-            this.SimulateFlag = false;
+            this.SimulateFlag = 0;
             this.IssueDate = DateTime.Now;
             this.DueDate = DateTime.Now;
             this.ResourceList = new List<ResourceModel>();
@@ -361,7 +406,7 @@ namespace Epicoil.Library.Models.Planning
             return FlagYield;
         }
 
-        public bool ValidateToSave(IEnumerable<MaterialModel> materialList, out string invalidObject, out string msg)
+        public bool ValidateToSave(PlanningHeadModel model, out string invalidObject, out string msg)
         {
             invalidObject = "";
             msg = "";
@@ -419,15 +464,41 @@ namespace Epicoil.Library.Models.Planning
                                         ProcessLineDetail.WidthMin.ToString("#,##0.00"), valmax.ToString("#,##0.00"));
                     return false;
                 }
+
+                var resSumUsingWgt = Materails.Sum(i => i.UsingWeight);
+                var resSumRem = Materails.Sum(i => i.RemainWeight);
+                if (Math.Round((resSumUsingWgt + resSumRem), 0) != Math.Round(InputWeight, 0))
+                {
+                    invalidObject = "InputWeight";
+                    msg = @"Input weight invalid.";
+                    return false;
+                }
             }
 
-            //Validate OrderType Selected.
-            if (OrderType == null)
+            //Cutting line dose existing.
+            if (CuttingDesign.ToList().Count > 0)
             {
-                invalidObject = "OrderType";
-                msg = "Please select Order Type.";
-                return false;
+                //Line from Sale Order
+                if (CuttingDesign.Where(i => i.SONo != "").ToList().Count > 0)
+                {
+                    //Validate OrderType Selected.
+                    if (OrderType == null)
+                    {
+                        invalidObject = "OrderType";
+                        msg = "Please select Order Type.";
+                        return false;
+                    }
+                }
+
+                var resSumTotalWgt = CuttingDesign.Where(i => i.Status != "S").Sum(i => i.TotalWeight);
+                if (Math.Round(OutputWeight, 0) != Math.Round(resSumTotalWgt, 0))
+                {
+                    invalidObject = "OutputWeight";
+                    msg = @"Output weight invalid.";
+                    return false;
+                }
             }
+
 
             //Compare date between Issue date and Due date.
             if (IssueDate > DueDate)

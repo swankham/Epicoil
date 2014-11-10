@@ -281,7 +281,6 @@
             // 
             // txtMillCode
             // 
-            this.txtMillCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMillCode.Location = new System.Drawing.Point(335, 90);
             this.txtMillCode.Name = "txtMillCode";
             this.txtMillCode.Size = new System.Drawing.Size(124, 21);
@@ -316,7 +315,6 @@
             // 
             // txtMakerCode
             // 
-            this.txtMakerCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMakerCode.Location = new System.Drawing.Point(114, 89);
             this.txtMakerCode.Name = "txtMakerCode";
             this.txtMakerCode.Size = new System.Drawing.Size(124, 21);
@@ -351,7 +349,6 @@
             // 
             // txtBT
             // 
-            this.txtBT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtBT.Location = new System.Drawing.Point(335, 64);
             this.txtBT.Name = "txtBT";
             this.txtBT.Size = new System.Drawing.Size(124, 21);
@@ -377,7 +374,6 @@
             // 
             // txtCategory
             // 
-            this.txtCategory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCategory.Location = new System.Drawing.Point(335, 40);
             this.txtCategory.Name = "txtCategory";
             this.txtCategory.Size = new System.Drawing.Size(124, 21);
@@ -394,7 +390,6 @@
             // 
             // txtCoatingCode
             // 
-            this.txtCoatingCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCoatingCode.Location = new System.Drawing.Point(335, 15);
             this.txtCoatingCode.Name = "txtCoatingCode";
             this.txtCoatingCode.Size = new System.Drawing.Size(124, 21);
@@ -411,7 +406,6 @@
             // 
             // txtSpecCode
             // 
-            this.txtSpecCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpecCode.Location = new System.Drawing.Point(114, 64);
             this.txtSpecCode.Name = "txtSpecCode";
             this.txtSpecCode.Size = new System.Drawing.Size(124, 21);
@@ -428,7 +422,6 @@
             // 
             // txtCommodityCode
             // 
-            this.txtCommodityCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCommodityCode.Location = new System.Drawing.Point(114, 39);
             this.txtCommodityCode.Name = "txtCommodityCode";
             this.txtCommodityCode.Size = new System.Drawing.Size(124, 21);
@@ -445,7 +438,6 @@
             // 
             // txtCustID
             // 
-            this.txtCustID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCustID.Location = new System.Drawing.Point(114, 15);
             this.txtCustID.Name = "txtCustID";
             this.txtCustID.Size = new System.Drawing.Size(124, 21);

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.IClassAttribute</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.ClassAttributeDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.ClassAttributeDataSet.ClassAttributeDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.ClassAttributeDataSet.ClassAttributeRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.ClassAttributeDataSet.ClassAttributeRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.IClassAttribute">
+            <summary>
+            Add your summary for this object here
+            </summary>
+            <example>
+            <code>
+            Add how this object is used (or syntax)
+            </code>
+            </example>
+            <remarks>
+            Add any remarks (notes)
+            </remarks>
+        </member>
+    </members>
+</doc>

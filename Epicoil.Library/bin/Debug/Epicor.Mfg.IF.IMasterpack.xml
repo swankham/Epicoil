@@ -1,0 +1,444 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IMasterpack</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseTrackingDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseTrackingRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.FreightInfoResponseDataSet.FreightCartonResponseTrackingRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackDtlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.CartonDetailDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackDtlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.CartonDetailRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackDtlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.MasterpackUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackDataSet.CartonDetailRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IMasterpack">
+            <summary>
+            Add your summary for this object here
+            </summary>
+            <example>
+            <code>
+            Add how this object is used (or syntax)
+            </code>
+            </example>
+            <remarks>
+            Add any remarks (notes)
+            </remarks>
+            05/19/06 nzirbes job 3026 - implemented scale and freight methods.
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetNewMasterpack(Epicor.Mfg.BO.MasterpackDataSet)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetNewMasterpackDtl(Epicor.Mfg.BO.MasterpackDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetNewMasterpackUPS(Epicor.Mfg.BO.MasterpackDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.DeleteByID(System.Int32)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetByID(System.Int32)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetRows(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.Update(Epicor.Mfg.BO.MasterpackDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.UpdateExt(Epicor.Mfg.BO.UpdExtMasterpackDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetCodeDescList(System.String,System.String)">
+            <summary>
+            To return the CodeDescriptionList values of a given table.field.
+            </summary>
+            <param name="tableName"></param>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetAvailTranDocTypes(System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.AssignLegalNumber(System.Int32,Epicor.Mfg.BO.LegalNumGenOptsDataSet,System.String@)">
+            <summary>
+            Assigns a legal number to the miscellaneous shipment.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ds" type="Epicor.Mfg.BO.LegalNumGenOptsDataSet"></param>
+            <param name="opLegalNumMsg">Legal number message</param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The Master Pack data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.CalculateWeight(Epicor.Mfg.BO.MasterpackDataSet,System.Decimal@)">
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">MasterpackDataSet</param>
+            <param name="weight">Pack Weight</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.CancelVoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton void can be cancelled and re-opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.ClearConvertedManifest(System.Int32)">
+            <param name="ipPackNum">Pack Num to clear Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.CloseCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be closed and closes it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to close </param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.ConvertToManifestUOM(System.Int32)">
+            <param name="ipPackNum">Pack Num to populate Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetCustPayBTFlagDefaults(System.String)">
+            <param name="ipPayFlag"> Pay Flag to retrieve defaults</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetLegalNumGenOpts(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the legal number generation options.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="opPromptForNum">Prompt for the number</param>
+            <returns type="Epicor.Mfg.BO.LegalNumGenOptsDataSet">The Legal Number Generation Options dataset </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetMiscPayBTFlagDefaults(System.String)">
+            <param name="ipPayFlag"> Pay Flag to retrieve defaults</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetPackaging(System.String,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipPkgCode">package code</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">Masterpack Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetPackClass(System.String,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipPkgClass">package class</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">Masterpack Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetPayBTFlagDefaults(System.String,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipPayFlag"> Pay Flag to retrieve defaults</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetScale(System.String,System.String@)">
+            <param name="workstationID">Workstation ID to retrieve scale settings </param>
+            <param name="scaleID">Workstation default scale</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetShipDetails(Epicor.Mfg.BO.MasterpackDataSet,System.Int32,System.Int32,System.String)">
+            <summary>
+            This method displays the shipto address information when the ShipToNum field changes
+            Should only be called on new Shipments or if the Shipment has no lines and if
+            the MultipleShippers flag is yes
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">Master Pack Shipment data set </param>
+            <param name="packNum">Master Pack ID </param>
+            <param name="dtlPackNum">Detail Pack ID</param>
+            <param name="shipmentType">Shipment type:Sales,Misc,Sub or Transfer</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetSubPayBTFlagDefaults(System.String)">
+            <param name="ipPayFlag"> Pay Flag to retrieve defaults</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetTranDocTypeID(System.String,Epicor.Mfg.BO.MasterpackDataSet)">
+            <summary>
+            Sets default values when the TranDocTypeID changes
+            </summary>
+            <param name="ipTranDocTypeID">TranDocTypeID supplied</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">Masterpack Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.GetTransferPayBTFlagDefaults(System.String)">
+            <param name="ipPayFlag"> Pay Flag to retrieve defaults</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.OpenCarton(System.Int32,System.Boolean,System.Boolean,System.String@)">
+            <summary>
+            Checks to see if the carton can be opened and opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <param name="ipResetCODCharges">Indicates if the CODAmount is to be reset to zero</param>
+            <param name="ipResetInsCharges">Indicates if the DeclaredAmt is to be reset to zero</param>
+            <param name="opWarnMsg">Warning message the UI is to display to the user</param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.ProcessFreightInfo(System.Int32,Epicor.Mfg.BO.FreightInfoResponseDataSet)">
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <param name="ds" type="Epicor.Mfg.BO.FreightInfoResponseDataSet">Freight Response data set</param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.ProcessUnFreightInfo(System.Int32,System.String@)">
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <param name="opWarnMsg">Warning message the UI is to present to the user</param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.SetUPSQVEnable(System.Boolean,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipQVEnable">logical indicating if the quantum view is to enabled/disabled</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.SetUPSQVShipStatus(System.String,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipShipStatus">Shipment status</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.StageCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to Stage </param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The Masterpack data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.UpdateManifestChargeAmts(System.String,System.Boolean,Epicor.Mfg.BO.MasterpackDataSet)">
+            <param name="ipAmountType">COD or DeclaredAmt</param>
+            <param name="ipAction">Yes = recalculate No = reset to zero</param>
+            <param name="ds" type="Epicor.Mfg.BO.MasterpackDataSet">Masterpack Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.VoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to void </param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.VoidLegalNumber(System.Int32,System.String)">
+            <summary>
+            Voids the legal number.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ipVoidedReason">Reason for the void</param>
+            <returns type="Epicor.Mfg.BO.MasterpackDataSet">The Master Pack data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMasterpack.CheckShipStatus(System.Int32,System.String)">
+            <param name="packNum">PackID</param>
+            <param name="shipmentType">Sales,Sub,Transfer or Misc</param>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackListDataSet.MasterpackListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackListDataSet.MasterpackListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MasterpackListDataSet.MasterpackListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackDtlDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.CartonDetailDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackDtlRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.CartonDetailRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackDtlRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.MasterpackUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMasterpackDataSet.CartonDetailRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

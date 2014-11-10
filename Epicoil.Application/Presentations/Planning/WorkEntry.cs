@@ -162,6 +162,22 @@ namespace Epicoil.Appl.Presentations.Planning
             chkPackingPlan.DataBindings.Add("Checked", model, "PackingPlan", false, DataSourceUpdateMode.OnPropertyChanged);
             chkLVTrim.DataBindings.Add("Checked", model, "LVTrim", false, DataSourceUpdateMode.OnPropertyChanged);
 
+            butSimulate.Enabled = Convert.ToBoolean(model.SimulateFlag);
+            butSimulate.Text = model.SimulateFlagStr;
+            butGenSN.Enabled = Convert.ToBoolean(model.GenSerialFlag);
+            butGenSN.Text = model.GenSerialFlagStr;
+            butConfirm.Visible = Convert.ToBoolean(model.Completed);
+            butConfirm.Text = model.CompletedStr;
+            if (!Convert.ToBoolean(model.Completed))
+            {
+                butConfirm.BackColor = Color.Green;
+                //butConfirm
+            }
+            else
+            {
+                butConfirm.BackColor = SystemColors.Control;
+            }
+
             //DatePicker
             dptIssueDate.Value = model.IssueDate;
             dptDueDate.Value = model.DueDate;
@@ -309,7 +325,7 @@ namespace Epicoil.Appl.Presentations.Planning
             IEnumerable<MaterialModel> model = new List<MaterialModel>();
             HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, HeaderContent.ProcessLineId);
 
-            var result = HeaderContent.ValidateToSave(model, out objectValid, out messageValid);
+            var result = HeaderContent.ValidateToSave(HeaderContent, out objectValid, out messageValid);
 
             if (!result)
             {
@@ -345,7 +361,8 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
             //Simulated Complate.
-            HeaderContent.SimulateFlag = true;
+            var result = _repo.InsertSimulate(epiSession, HeaderContent);
+            HeaderContent.SimulateFlag = 1;
             SetFormState();
         }
 
@@ -363,11 +380,19 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutCalculate_Click(object sender, EventArgs e)
         {
             //Simulated Complate.
+            RecheckCuttingByRow();
             HeaderContent.CalculationHeader(HeaderContent);
             SetHeadContent(HeaderContent);
-            ListCuttingGrid(HeaderContent.CuttingDesign);
-            HeaderContent.FormState = 4;
-            SetFormState();
+            ListCuttingGrid(HeaderContent.CuttingDesign);            
+
+            string objectValid;
+            string messageValid;
+            var result = HeaderContent.ValidateToSave(HeaderContent, out objectValid, out messageValid);
+            if (result)
+            {
+                HeaderContent.FormState = 4;
+                SetFormState();
+            }
         }
 
         private void butAddMaterial_Click(object sender, EventArgs e)
@@ -564,7 +589,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
                     var coilExist = HeaderContent.CoilBacks.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList();
 
-                    if (result.ValidateToCoilBackAuto(HeaderContent.CoilBackRoles, out risk, out msg))
+                    if (result.ValidateToCoilBackAuto(HeaderContent.CoilBackRoles, out risk, out msg) || coilExist.Count > 0)
                     {
                         MessageBox.Show("The remain weight to matched the coil back rule, and then we will Create/Update coil back.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         result.CBSelect = true;
@@ -600,8 +625,7 @@ namespace Epicoil.Appl.Presentations.Planning
                         MessageBox.Show("The RemainWeight = 0 still have CoilBack then system will delete coilback!", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         HeaderContent.CoilBacks = _repo.DeleteCoilBack(epiSession, HeaderContent.WorkOrderID, result.TransactionLineID).ToList();
                     }
-
-
+                    
                     break;
 
                 case "quantity":
@@ -1205,6 +1229,15 @@ namespace Epicoil.Appl.Presentations.Planning
             return valid;
         }
 
+        private void RecheckCuttingByRow()
+        {
+            int i = 0;
+            foreach (DataGridViewRow row in dgvCutting.Rows)
+            {
+                dgvCutting.CurrentCell = dgvCutting[1, i];
+                i++;
+            }
+        }
         #endregion Method
 
         private void dgvMaterial_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -1226,7 +1259,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     bool strVal = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
                     result.CBSelect = true;
                     CoilBackModel CBack = new CoilBackModel();
-                    CBack.WorkOrderID = HeaderContent.WorkOrderID;
+                    CBack.WorkOrderID = HeaderContent.WorkOrderID;                    
                     CBack.TransactionLineID = result.TransactionLineID;
                     CBack.CommodityCode = result.CommodityCode;
                     CBack.SpecCode = result.SpecCode;
@@ -1259,12 +1292,17 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
 
                 result.CBSelect = chk;
-
+                result.WorkDate = HeaderContent.IssueDate;
                 var res = _repo.SaveMaterial(epiSession, result);
                 HeaderContent.SumUsingWeight(HeaderContent.Materails);
                 SetHeadContent(HeaderContent);
                 ListCoilBackGrid(HeaderContent.CoilBacks);
             }
+        }
+
+        private void tbutCancelWorkOrder_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

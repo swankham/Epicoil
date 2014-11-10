@@ -134,6 +134,7 @@
     <Compile Include="Frameworks\Repository.cs" />
     <Compile Include="Models\Billing\InvcHeadModel.cs" />
     <Compile Include="Models\Common\BaseEntity.cs" />
+    <Compile Include="Models\Common\BaseSerial.cs" />
     <Compile Include="Models\Common\BussinessTypeModel.cs" />
     <Compile Include="Models\Common\CategoryGroupModel.cs" />
     <Compile Include="Models\Common\ClassMasterModel.cs" />
@@ -162,6 +163,8 @@
     <Compile Include="Models\Planning\DiePatternModel.cs" />
     <Compile Include="Models\Planning\MaterailModel.cs" />
     <Compile Include="Models\Planning\PlanningHeadModel.cs" />
+    <Compile Include="Models\Planning\SimulateActionModel.cs" />
+    <Compile Include="Models\Planning\SimulateModel.cs" />
     <Compile Include="Models\Sales\OrderDetailModel.cs" />
     <Compile Include="Models\Sales\OrderHeadModel.cs" />
     <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />

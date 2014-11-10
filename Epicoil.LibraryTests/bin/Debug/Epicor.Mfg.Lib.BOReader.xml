@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.BOReader</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.BOReader">
+            <summary>
+            Summary description for BOReader.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.BOReaderImpl">
+            <summary>
+            Provides generic access to the GetList and GetRows methods of any
+            Business Object
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.BOReaderImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.BOReaderImpl.GetCodeDescList(System.String,System.String)">
+            <summary>
+            To return the CodeDescriptionList values of a given table.field.
+            </summary>
+            <param name="tableName"></param>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.BOReaderImpl.GetList(System.String,System.String,System.String)">
+            <summary>
+            Get rows from any Business Object using its GetList method
+            </summary>
+            <param name="boName">Business Object to retrieve the rows from</param>
+            <param name="whereClause">Where clause</param>
+            <param name="columnList">The list of columns to get or blank to get all columns</param>
+            <returns>An untyped dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.BOReaderImpl.GetRows(System.String,System.String,System.String)">
+            <summary>
+            Get rows from any Business Object using its GetRows method
+            </summary>
+            <param name="boName">Business Object to retrieve the rows from</param>
+            <param name="whereClause">Where clause</param>
+            <param name="columnList">The list of columns to get or blank to get all columns</param>
+            <returns>An untyped dataset</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.BOReaderImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.BOReader.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Epicor.Mfg.Lib.BOReader"/> class.
+            </summary>
+            <param name="connPool">The connection pool.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.BOReader.GetCodeDescListCached(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Retrieves a code desc list.  First checks to see if there is a cached copy of the list.
+            </summary>
+            <param name="sessionCompanyID">User's company from session.</param>
+            <param name="sessionUserID">User ID from session.</param>
+            <param name="sessionSessionID">The Session ID of the current sesssion.</param>
+            <param name="tableName">Table name.</param>
+            <param name="fieldName">Field name.</param>
+            <returns>A string list.</returns>
+        </member>
+    </members>
+</doc>

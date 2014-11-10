@@ -1,0 +1,455 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.IF.IMiscShip</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpHdDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpDtDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.ShipCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpHdRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpDtRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.ShipCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpHdRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpDtRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.ShipCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MiscShipDataSet.MscShpUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.IF.IMiscShip">
+            <summary> Miscellaneous Shipment Maintenance
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetNewMscShpHd(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetNewMscShpDt(Epicor.Mfg.BO.MiscShipDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetNewShipCOO(Epicor.Mfg.BO.MiscShipDataSet,System.String,System.Int32,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetNewMscShpUPS(Epicor.Mfg.BO.MiscShipDataSet,System.Int32)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.DeleteByID(System.Int32)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetByID(System.Int32)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetRows(System.String,System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.Update(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.UpdateExt(Epicor.Mfg.BO.UpdExtMiscShipDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetCodeDescList(System.String,System.String)">
+            <summary>
+            To return the CodeDescriptionList values of a given table.field.
+            </summary>
+            <param name="tableName"></param>
+            <param name="fieldName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetAvailTranDocTypes(System.String@)">
+            <remarks>
+            &amp;QTableName - MANDATORY - Name of table to find
+            &amp;QLock - type of lock to put on record NO-LOCK (default) or EXCLUSIVE-LOCK
+            &amp;QWhere - MANDATORY - criteria to find record
+            &amp;QFind - type of find to perform, unique, first, next or last
+            &amp;Columns - List of columns
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.AssignLegalNumber(System.Int32,Epicor.Mfg.BO.LegalNumGenOptsDataSet,System.String@)">
+            <summary>
+            Assigns a legal number to the miscellaneous shipment.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ds" type="Epicor.Mfg.BO.LegalNumGenOptsDataSet"></param>
+            <param name="opLegalNumMsg">Legal number message</param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The Miscellaneous Shipment data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CalculateWeight(System.Int32,System.Decimal@)">
+            <param name="cartonNumber">Carton Number</param>
+            <param name="calculatedWeight">Shipment weight based upon part values</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CancelVoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton void can be cancelled and re-opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CheckCOOPercents(System.Int32,System.Int32)">
+            <summary>
+            Checks to see if the Qty percent and value percent fields total 100 percent.
+            </summary>
+            <param name="iPackNum">The current PackNum </param>
+            <param name="iPackLine">The current PackLine </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CheckMscShpHdDispatchReason(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            This method validates the MscShpHd.DisptachReason field.
+            This method should run before changing the MscShpHd.DisptachReason field.
+            </summary>
+            <param name="ipDispatchReason">Dispatch Reason</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The MiscShip data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.ClearConvertedManifest(System.Int32)">
+            <param name="ipPackNum">Pack Num to clear Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CloseCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be closed and closes it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to close </param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.ConvertToManifestUOM(System.Int32)">
+            <param name="ipPackNum">Pack Num to populate Manifest fields</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.CreateMiscShipRecsFromDMR(System.Int32)">
+            <summary>
+            Creates Miscellaneous Shipment Records from DRM Entries. Header and details.
+            </summary>
+            <param name="ipDMRNum"> DMR number supplied</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetAddrInfo(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            This method updates the address information from either the Vendor or Customer
+            table when the Shipto or PurPoint field has been changed. If custID and VendorID fields are
+            both blank this procedure assumes that the user is entering the information in free form and
+            there is nothing to default (or no need to call this method).
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The MiscShip data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetAvailTranDocTypes_TR(System.Boolean,System.String@)">
+            <summary>
+            GetAvailTranDocTypes CSF Turkey
+            </summary>
+            <param name="isReturns"></param>
+            <param name="listAvailTranDocTypes"></param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetCallInfo(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            This method defaults the Call Number and shipto fields when the Job, PO or Order
+            number fields change
+            </summary>
+            <param name="updatedField">Name of the field that changed, Order, Job, or PO</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The MiscShip data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetDefaultUOM(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Gets the default UOM from Part or XaSyst
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet"></param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetDMRSupplierInfo(System.Int32,Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Gets DRM Supplier's info
+            </summary>
+            <param name="ipDMRNum">IPDMRNum DMR number supplied</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">FAssetImportExportDataSet Dataset of candidates for import.</param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetIsDMR(System.Boolean@)">
+             <summary>
+            
+             </summary>
+             <param name="isDMR"> If customer is on credit hold an error message will be returned. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetLegalNumGenOpts(System.Int32,System.Boolean@)">
+            <summary>
+            Returns the legal number generation options.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="opPromptForNum">Prompt for the number</param>
+            <returns type="Epicor.Mfg.BO.LegalNumGenOptsDataSet">The Legal Number Generation Options dataset </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetMtlInfo(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            This method defaults the Quantity, Part and Line description fields
+            when the MtlSeq field has been updated
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The MiscShip data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetPackageClass(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <param name="ipPkgClass">package class to validate</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">Miscellaneaous shipment dataset </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetPackaging(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <param name="ipPkgCode">package code</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">Miscellaneaous shipment dataset </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetPOSupplierInfo(System.Int32,Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Gets PO Supplier's info
+            </summary>
+            <param name="ipPONum">IPPONum PO number supplied</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet"></param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetScale(System.String,System.String@)">
+             <summary>
+            
+             </summary>
+             <param name="workstationID"> Proposed change to OrderNum </param>
+             <param name="scaleID"> If customer is on credit hold an error message will be returned. </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.GetTranDocTypeID(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Sets default values when the TranDocTypeID changes
+            </summary>
+            <param name="ipTranDocTypeID">TranDocTypeID supplied</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet"></param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.OpenCarton(System.Int32,System.Boolean,System.Boolean)">
+            <summary>
+            Checks to see if the carton can be opened and opens it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to open </param>
+            <param name="ipResetCODCharges">Indicates if the CODAmount is to be reset to zero</param>
+            <param name="ipResetInsCharges">Indicates if the DeclaredAmt is to be reset to zero</param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The Miscellaneous shipment data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.PrintSlip(System.Int32)">
+            <summary>
+            This method prints the Miscellaneous Packing Slip
+            </summary>
+            <param name="packNum">Packing Slip number </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.SetDMR(Epicor.Mfg.BO.MiscShipDataSet)">
+            <summary>
+            Set DMR Misc Ship (CSF Turkey)
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet"></param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.SetUPSQVEnable(System.Boolean,Epicor.Mfg.BO.MiscShipDataSet)">
+            <param name="ipQVEnable">logical indicating if the quantum view is to enabled/disabled</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The miscellaneous data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.SetUPSQVShipStatus(System.String,Epicor.Mfg.BO.MiscShipDataSet)">
+            <param name="ipShipStatus">Shipment status</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">The Miscellaneous shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.StageCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to Stage </param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The MscShpHd data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.UpdateManifestChargeAmts(System.String,System.Boolean,Epicor.Mfg.BO.MiscShipDataSet)">
+            <param name="ipAmountType">COD or DeclaredAmt</param>
+            <param name="ipAction">Yes = recalculate No = reset to zero</param>
+            <param name="ds" type="Epicor.Mfg.BO.MiscShipDataSet">Miscellaneous Shipment data set </param>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.VoidCarton(System.Int32)">
+            <summary>
+            Checks to see if the carton can be voided and voids it if it is allowed.
+            </summary>
+            <param name="iPackNum">The carton number of the carton to void </param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The SalesOrder data set </returns>
+        </member>
+        <member name="M:Epicor.Mfg.IF.IMiscShip.VoidLegalNumber(System.Int32,System.String)">
+            <summary>
+            Voids the legal number.
+            </summary>
+            <param name="ipPackNum">Packing Slip number</param>
+            <param name="ipVoidedReason">Reason for the void</param>
+            <returns type="Epicor.Mfg.BO.MiscShipDataSet">The Miscellaneous Shipment data set </returns>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.LegalNumGenOptsDataSet.LegalNumGenOptsRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MscShpHdListDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MscShpHdListDataSet.MscShpHdListDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MscShpHdListDataSet.MscShpHdListRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.MscShpHdListDataSet.MscShpHdListRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet">
+             <summary>
+            Represents a strongly typed in-memory cache of data.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpHdDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpDtDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.ShipCOODataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpUPSDataTable">
+             <summary>
+            Represents the strongly named DataTable class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpHdRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpDtRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.ShipCOORow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpUPSRow">
+             <summary>
+            Represents strongly named DataRow class.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpHdRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpDtRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.ShipCOORowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.BO.UpdExtMiscShipDataSet.MscShpUPSRowChangeEvent">
+             <summary>
+            Row event argument class
+            </summary>
+        </member>
+    </members>
+</doc>

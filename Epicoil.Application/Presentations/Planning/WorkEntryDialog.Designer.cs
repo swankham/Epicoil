@@ -110,7 +110,6 @@
             // 
             // txtProcessStep
             // 
-            this.txtProcessStep.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtProcessStep.Location = new System.Drawing.Point(115, 45);
             this.txtProcessStep.Name = "txtProcessStep";
             this.txtProcessStep.Size = new System.Drawing.Size(115, 21);
@@ -207,7 +206,6 @@
             // 
             // txtPIC
             // 
-            this.txtPIC.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPIC.Location = new System.Drawing.Point(345, 72);
             this.txtPIC.Name = "txtPIC";
             this.txtPIC.Size = new System.Drawing.Size(100, 21);
@@ -215,7 +213,6 @@
             // 
             // txtWONo
             // 
-            this.txtWONo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtWONo.Location = new System.Drawing.Point(115, 16);
             this.txtWONo.Name = "txtWONo";
             this.txtWONo.Size = new System.Drawing.Size(115, 21);

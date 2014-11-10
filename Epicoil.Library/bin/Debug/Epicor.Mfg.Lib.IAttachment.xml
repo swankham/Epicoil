@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.IAttachment</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.IAttachment">
+            <summary>
+            Attachment, is an object which provides common methods which are used by all
+            attachments. This is incorporated by the Client Lib routines instead of being
+            created within every bo that has attachment.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IAttachment.OnChangeOfDocType(System.String,System.String@)">
+            <summary>
+            Call when DocTypeID is changed.
+            Will reset the path portion of the file name with the BaseURL of the DocType.
+            Note: It will not overlay a fully qualified filename.
+            </summary>
+            <param name="ipDocTypeID">
+            The Document Type ID (tablenameAttch.DocTypeID) that has been entered.
+            </param>/// <param name="iOFileName">
+            The fully qualified file name that the user is referencing for this attachment.
+            </param>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.IAttachment.OnChangeOfFileName(System.String,System.Int32@,System.String@,System.String@,System.String@)">
+            <summary>
+            Call when FileName is changed.
+            The purpose of this method is to find out if a given FileName is already
+            known in the database. That is, does a XFileRef record exist.
+            Client program should pass the current values from the dataset for the given parameters.
+            The returned parameter values should unconditionally moved to the corresponding fields in the dataset.
+            </summary>
+            <param name="ipFileName">
+            The fully qualified file name (tablenameAttch.FileName) that the user is referencing for this attachment.
+            </param>
+            <param name="iOXFileRefNum">
+            External File Reference Number (tablenameAttch.XFileRefNum).
+            </param>
+            <param name="iOXFileDesc">
+            File Descripttion (tablenameAttch.DrawDesc).
+            </param>
+            <param name="iODocTypeID">
+            Document Type ID (tablenameAttch.DocTypeID).
+            </param>
+            <param name="iOPDMDocID"> PDM Document ID (tablenameAttch.PDMDocID).</param>
+        </member>
+    </members>
+</doc>

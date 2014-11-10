@@ -53,5 +53,11 @@ namespace Epicoil.Library.Repositories.Planning
         IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data);
 
         MaterialModel SaveMaterial(SessionInfo _session, MaterialModel model);
+
+        IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head);
+
+        bool ClearSimulateLines(int workOrderID);
+
+        IEnumerable<SimulateModel> GetSimulateAll(int workOrderID);
     }
 }

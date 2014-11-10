@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.BO.EpiSearch</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.EpiSearch">
+            <summary>
+            Client side business object for EpiSearch.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.EpiSearchImpl">
+            <summary>
+            Do a combined search that returns BAQs, Dashboards and Named Searches.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.EpiSearchImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.EpiSearchImpl.DoBAQSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a BAQ search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.EpiSearchImpl.DoDashboardSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a dashboard search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.EpiSearchImpl.DoNamedSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a named search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.EpiSearchImpl.DoSearch(System.String,System.String,System.String,Epicor.Mfg.BO.DashBdDefListDataSet,System.String,System.String,Epicor.Mfg.BO.DynamicQueryListDataSet,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method does a combined search
+            </summary>
+            <param name="nswNamedSearch">Where clause for NamedSearch table</param>
+            <param name="nswControlSetting">Where clause for ControlSetting table</param>
+            <param name="nswWhereClause">Where clause for WhereClause table</param>
+            <param name="ds">Returns the dashboards with the specified like field</param>
+            <param name="pcProdID">Product ID</param>
+            <param name="pcLike">Like field in format of (table).(field)</param>
+            <param name="ds1">Returns the BAQs with the specified like field</param>
+            <param name="piPage">Page number</param>
+            <param name="piAbsolutePage">Absolute page number</param>
+            <param name="pbMore">Flag indicating if there are more pages</param>
+            <returns>Returns the NamedSearch dataset</returns>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.EpiSearchImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.BO.EpiSearch.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

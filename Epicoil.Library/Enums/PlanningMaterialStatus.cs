@@ -35,4 +35,39 @@ namespace Epicoil.Library
         ME = 5,
         MF = 6
     }
+
+    public enum SimulateOpt
+    {
+        Weight = 0,
+        Length = 1,
+        Division = 2
+    }
+
+    public enum SimulateStatus
+    {
+        Simulate = 0,
+        Simulated = 1
+    }
+
+    public enum GenerateSNStatus
+    {
+        Generate = 0,
+        Generated = 1
+    }
+
+    public enum OperationState
+    {
+        Sale = 0,
+        Planning = 1,
+        Production1 = 2,
+        Production2 = 3,
+        FinishJob = 4,
+        Logistic = 5
+    }
+
+    public enum CompleteStatus
+    {
+        Confirm = 0,
+        Confirmed = 1
+    }
 }

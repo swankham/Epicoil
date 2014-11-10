@@ -175,7 +175,7 @@ namespace Epicoil.Library.Models.Planning
         /// <param name="WidthMaterial">Unit is MM.</param>
         /// <param name="WidthFG">Unit is MM.</param>
         /// <returns></returns>
-        public decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
+        private decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
         {
             decimal CalWeightFG = 0.0M;
             if (UsingWgt > 0 && WidthMaterial > 0 && WidthFG > 0)

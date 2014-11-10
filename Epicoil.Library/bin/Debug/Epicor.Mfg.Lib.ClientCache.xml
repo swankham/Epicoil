@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.ClientCache</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.ClientCache">
+            <summary>
+            Summary description for ClientCache.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ClientCacheImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.ClientCacheImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ClientCache.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

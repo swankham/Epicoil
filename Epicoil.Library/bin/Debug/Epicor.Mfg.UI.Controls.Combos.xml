@@ -1,0 +1,224 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.UI.Controls.Combos</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.BAQSelectedFieldsCombo">
+            <summary>
+            Provides a list of fields selected from the BAQ Designer given an ExportID
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.BAQQueryParamSearchCombo">
+            <summary>
+            Provides a list of fields selected from the BAQ Designer given an ExportID
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.UI.Controls.Combos.MaintResourceCombo.#ctor">
+            <summary>
+             An alternative combo to ResourceCombo. This combo uses a MaintResource bo.
+             This bo does not filter Resources by current plant.
+             It is intended to return Resources of a specific ResourceGroup
+             Intially created for use in MaintJobEntry
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.AltMetCombo">
+            <summary>
+            This combo will return all alternate methods filtered by Part And revision from PartRevSearch BO.  Displays AltMethod and AltMethodDesc in DropDown.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.AlcHedTgtStampCombo">
+            <summary>
+            Summary description for AlcHedTgtMarkCombo.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.AutoRptCombo">
+            <summary>
+            Combo provides a list of reports from AutoRpt BO, displays ReportRptDescription in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.BankPayMethodCombo">
+            <summary>
+            Combo provides a list of reports from AutoRpt BO, displays ReportRptDescription in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.cboTaxRgnSalesTax">
+            <summary>
+            Combo provides a list of Sales Types in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COAAcctCatCombo">
+            <summary>
+            Combo provides a list of COA Account Categories in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COAMapConsCombo">
+            <summary>
+            Combo provides a list of maps valid for a consolidation source definition
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COASegAcctCurrencyCombo">
+            <summary>
+            Combo provides a list of valid currencies from CoaSegAcctSearch BO, displays currency Description in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COASegmentNACombo">
+            <summary>
+            Combo provides a list of COASegments where the entry control is natural account in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COASegmentSearchCombo">
+            <summary>
+            Combo provides a list of COASegments in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.COASegmentValCombo">
+            <summary>
+            Combo provides a list of COASegments in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ContactType">
+            <summary>
+            Enumeration used by cboContact.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.cboContact">
+            <summary>
+            Combo provides a list of Bill To or Ship To contacts from CustCnt BO.  Displays Name in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.DBFieldSearchCombo">
+            <summary>
+            Summary description for DBFieldSearchCombo.
+            This combo display the Fields existing on the System Schema
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.DBTableSearchCombo">
+            <summary>
+            Summary description for DBTableSearchCombo.
+            This combo display the tables existing on the System Schema
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ElectronicInterfaceCombo">
+            <summary>
+            This combo will return all Banks to be setup Electronically in PayMethodEntry.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ElectronicInterfaceTypeCombo">
+            <summary>
+            Combo provides a list of reports from AutoRpt BO, displays ReportRptDescription in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ElectronicInterfaceNameCombo">
+            <summary>
+            Provides a list of EFTHead records.  ValueMember is the EFTHead Name.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ExtCompanyPlusAllCombo">
+            <summary>
+            Summary description for ExtCompanyCombo.
+            This combo is identical to the ExtCompanyCombo except that it
+            adds an additional combo selection of All Companies (translated text) 
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ExtPlantCombo">
+            <summary>
+            Combo provides a list of companies from the ExtPlantSearch BO.  Displays plant name in drop down.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.GLCOARefTypeCombo">
+            <summary>
+            Combo provides a list of COA Account Categories in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.JobAsmSearchCombo">
+            <summary>
+            Combo provides a list of assembly sequences filtered by job number.
+            Displays AssemblySeq, PartNum and Description from JobAsmSearch BO.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.JobMtlSearchCombo">
+            <summary>
+            Combo displays MtlSeq, PartNum and Description from JobMtlSearch BO filtered by 
+            job number and assembly seq.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.JobOperSearchCombo">
+            <summary>
+            JobOprSearchCombo displays OprSeq, OpCode and OpCodeDesc JobOprSearch BO filtered by 
+            job number and assembly seq.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.JobPartSearchCombo">
+            <summary>
+            jobPartSearchCombo displays a list of parts from JobPartSearch BO filtered by job number.
+            Displays Part, Revison and PartDescription.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ECOOprSearchCombo">
+            <summary>
+            ECOOprSearchCombo displays OprSeq, OpCode and OpCodeDesc ECOOprSearch BO filtered by 
+            job number and assembly seq.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.KanbanPartCombo">
+            <summary>
+            KanbanPartComb displays the part description from KanBarPart BO filtered by InvalidReason.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.LotSelectCombo">
+            <summary>
+            LotSelectCombo provides list of lots filtered by part number.  LotSelect BO displays LotNum.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.MfgQualifiedCombo">
+            <summary>
+            Manufacturers qualified for a PartNum
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.MfgPartsCombo">
+            <summary>
+            Manufacturer Parts of Qualified Manufacturer for a given PartNum
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.MktgCampaignEventCombo">
+            <summary>
+            MktgCampaignEventCombo provides a list of marketing events filtered by campaign id.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.PartAltRevisionCombo">
+            <summary> 
+            This combo will return all revisions, including those with alternate methods.
+            For a filtered listing of revs not including alternate methods use the PartRevisionCombo.
+            Uses PartRevSearch BO and displays RevisionNum in DropDown.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.WhseGroupEmpSearchCombo">
+            <summary>
+            WhseGroupEmpSearchCombo displays a list of user from WhseGroupEmpSearch.WhseGroupEmp filtered by Whse Group code.
+            Displays User Name.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.SelectedSalesTRCCombo">
+            <summary>
+            Combo provides a list of selected Tax Rates in a drop down
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.RptDefReportsCombo">
+            <summary>
+            Similar to the existing ReportCombo, except that this shows Reports
+            that have Styles that use a given Report Data Definition
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.ReportStyleCombo">
+            <summary>
+            Shows Report Styles for a given Report
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.UI.Controls.Combos.SupplierPartsCombo">
+            <summary>
+            Supplier Parts Combo
+            </summary>
+        </member>
+    </members>
+</doc>

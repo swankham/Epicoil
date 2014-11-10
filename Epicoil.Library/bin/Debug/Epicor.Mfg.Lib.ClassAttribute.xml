@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.ClassAttribute</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.ClassAttribute">
+            <summary>
+            Summary description for ClassAttribute.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.ClassAttributeImpl">
+            <summary>
+            Add your summary for this object here
+            </summary>
+            <example>
+            <code>
+            Add how this object is used (or syntax)
+            </code>
+            </example>
+            <remarks>
+            Add any remarks (notes)
+            </remarks>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ClassAttributeImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.ClassAttributeImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Lib.ClassAttribute.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

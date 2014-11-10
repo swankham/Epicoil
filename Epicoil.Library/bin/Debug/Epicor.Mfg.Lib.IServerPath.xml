@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.IServerPath</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Lib.IServerPath">
+            <summary>
+            Retrieve a list of paths from the server
+            </summary>
+        </member>
+    </members>
+</doc>

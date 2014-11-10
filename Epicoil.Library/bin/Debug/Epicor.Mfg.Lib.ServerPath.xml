@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.Lib.ServerPath</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.Proxy.ServerPathImpl">
+            <summary>
+            Retrieve a list of paths from the server
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.ServerPathImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.ServerPathImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Lib.ServerPath">
+            <summary>
+            Summary description for ServerPath.
+            </summary>
+        </member>
+    </members>
+</doc>
