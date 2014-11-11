@@ -1251,7 +1251,6 @@
             this.txtProcessStep.Location = new System.Drawing.Point(4, 69);
             this.txtProcessStep.Margin = new System.Windows.Forms.Padding(4);
             this.txtProcessStep.Name = "txtProcessStep";
-            this.txtProcessStep.ReadOnly = true;
             this.txtProcessStep.Size = new System.Drawing.Size(117, 21);
             this.txtProcessStep.TabIndex = 40;
             // 
@@ -1472,6 +1471,7 @@
             this.butConfirm.Tag = "";
             this.butConfirm.UseVisualStyleBackColor = true;
             this.butConfirm.Visible = false;
+            this.butConfirm.Click += new System.EventHandler(this.butConfirm_Click);
             // 
             // butGenSN
             // 

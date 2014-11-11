@@ -34,6 +34,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Epicor.Mfg.BO.LotSelectUpdate">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.LotSelectUpdate.dll</HintPath>
+    </Reference>
     <Reference Include="Epicor.Mfg.BO.Part">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.Part.dll</HintPath>
     </Reference>
@@ -75,6 +78,9 @@
     </Reference>
     <Reference Include="Epicor.Mfg.Core.Session">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+    </Reference>
+    <Reference Include="Epicor.Mfg.IF.ILotSelectUpdate">
+      <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.ILotSelectUpdate.dll</HintPath>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IPart">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IPart.dll</HintPath>

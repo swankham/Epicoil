@@ -245,6 +245,7 @@ namespace Epicoil.Library.Models.Planning
             this.ClassID = (int)row["ClassID"].GetInt();
             this.Completed = (int)row["Completed"].GetInt();
             this.SimulateFlag = (int)row["SimulateFlag"].GetInt();
+            this.GenSerialFlag = (int)row["GenSerialFlag"].GetInt();
             this.OpenFlag = (int)row["OpenFlag"].GetInt();
             this.OperationState = (int)row["OperationState"].GetInt();
         }

@@ -191,3 +191,7 @@ D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.TaxExemptSearch.xm
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IEduLicense.xml
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.LotSelectUpdate.dll
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.ILotSelectUpdate.dll
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.LotSelectUpdate.xml
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.ILotSelectUpdate.xml

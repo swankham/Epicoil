@@ -172,7 +172,7 @@ namespace Epicoil.Appl.Presentations.Planning
             {
                 butConfirm.BackColor = Color.Green;
                 butGenSN.Enabled = true;
-                butGenSN.Text = model.GenSerialFlagStr;
+                butGenSN.Text = model.GenSerialFlagStr.Replace("_", " ");
             }
             else if (model.Completed == 0)
             {
@@ -1404,14 +1404,43 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butGenSN_Click(object sender, EventArgs e)
         {
+            string msg = string.Empty;
             IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
             if (HeaderContent.GenSerialFlag == 0)
             {
                 var simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
                 serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
-
+                _repo.ImportSerialToEpicor(epiSession, HeaderContent, out msg);
+                HeaderContent.GenSerialFlag = 1;
+            }
+            else
+            {
+                serialLines = _repo.GetSerialAllByWorkOrder(HeaderContent.WorkOrderID);
             }
 
+            using (SerialList frm = new SerialList(epiSession, serialLines))
+            {
+                frm.ShowDialog();                
+                SetHeadContent(HeaderContent);
+            }
+
+        }
+
+        private void butConfirm_Click(object sender, EventArgs e)
+        {
+            if (HeaderContent.Completed == 1 && HeaderContent.SimulateFlag == 1 && HeaderContent.GenSerialFlag == 0)
+            {
+                DialogResult diaResulta = MessageBox.Show("Are you sure to unconfirm.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (diaResulta == DialogResult.Yes)
+                {
+                    if (_repo.UnConfirmWork(HeaderContent.WorkOrderID))
+                    {
+                        MessageBox.Show("Unconfirm Order completed.","Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        HeaderContent = _repo.GetWorkById(HeaderContent.WorkOrderNum, Convert.ToInt32(HeaderContent.ProcessStep), epiSession.PlantID);
+                        SetHeadContent(HeaderContent);
+                    }
+                }
+            }
         }
     }
 }

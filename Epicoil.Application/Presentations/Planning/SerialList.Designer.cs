@@ -34,26 +34,15 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialList));
             this.dgvCutting = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cutseq = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.norno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.serialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thick1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.length1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.stand = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cutdiv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthM1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unitweight1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.totalweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthM1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.calculated = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.MaterialSN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.soline = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sono = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commodity1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.spec1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.coating1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,23 +65,13 @@
             this.dgvCutting.ColumnHeadersHeight = 25;
             this.dgvCutting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvCutting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.seq,
-            this.cutseq,
-            this.norno,
+            this.serialNo,
             this.thick1,
             this.width1,
             this.length1,
-            this.status1,
-            this.stand,
-            this.cutdiv,
+            this.lengthM1,
             this.unitweight1,
             this.totalweight,
-            this.lengthM1,
-            this.calculated,
-            this.MaterialSN,
-            this.soline,
-            this.sono,
             this.commodity1,
             this.spec1,
             this.coating1,
@@ -108,39 +87,18 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(930, 524);
+            this.dgvCutting.Size = new System.Drawing.Size(883, 524);
             this.dgvCutting.TabIndex = 20;
             // 
-            // id
-            // 
-            this.id.HeaderText = "ID";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 43;
-            // 
-            // seq
-            // 
-            this.seq.HeaderText = "Seq.";
-            this.seq.Name = "seq";
-            this.seq.ReadOnly = true;
-            this.seq.Width = 56;
-            // 
-            // cutseq
+            // serialNo
             // 
             dataGridViewCellStyle1.Format = "N0";
             dataGridViewCellStyle1.NullValue = "0";
-            this.cutseq.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cutseq.HeaderText = "Cut Seq.";
-            this.cutseq.Name = "cutseq";
-            this.cutseq.ReadOnly = true;
-            this.cutseq.Width = 77;
-            // 
-            // norno
-            // 
-            this.norno.HeaderText = "NOR No.";
-            this.norno.Name = "norno";
-            this.norno.ReadOnly = true;
-            this.norno.Width = 80;
+            this.serialNo.DefaultCellStyle = dataGridViewCellStyle1;
+            this.serialNo.HeaderText = "Serial No.";
+            this.serialNo.Name = "serialNo";
+            this.serialNo.ReadOnly = true;
+            this.serialNo.Width = 85;
             // 
             // thick1
             // 
@@ -177,34 +135,21 @@
             this.length1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.length1.Width = 69;
             // 
-            // status1
-            // 
-            this.status1.HeaderText = "Status";
-            this.status1.Name = "status1";
-            this.status1.ReadOnly = true;
-            this.status1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.status1.Width = 65;
-            // 
-            // stand
-            // 
-            this.stand.HeaderText = "Stand";
-            this.stand.Name = "stand";
-            this.stand.ReadOnly = true;
-            this.stand.Width = 63;
-            // 
-            // cutdiv
-            // 
-            this.cutdiv.HeaderText = "Cut Div";
-            this.cutdiv.Name = "cutdiv";
-            this.cutdiv.ReadOnly = true;
-            this.cutdiv.Visible = false;
-            this.cutdiv.Width = 67;
-            // 
-            // unitweight1
+            // lengthM1
             // 
             dataGridViewCellStyle5.Format = "N2";
             dataGridViewCellStyle5.NullValue = "0";
-            this.unitweight1.DefaultCellStyle = dataGridViewCellStyle5;
+            this.lengthM1.DefaultCellStyle = dataGridViewCellStyle5;
+            this.lengthM1.HeaderText = "Length(M)";
+            this.lengthM1.Name = "lengthM1";
+            this.lengthM1.ReadOnly = true;
+            this.lengthM1.Width = 88;
+            // 
+            // unitweight1
+            // 
+            dataGridViewCellStyle6.Format = "N2";
+            dataGridViewCellStyle6.NullValue = "0";
+            this.unitweight1.DefaultCellStyle = dataGridViewCellStyle6;
             this.unitweight1.HeaderText = "Unit Weight";
             this.unitweight1.Name = "unitweight1";
             this.unitweight1.ReadOnly = true;
@@ -212,53 +157,10 @@
             // 
             // totalweight
             // 
-            dataGridViewCellStyle6.Format = "N2";
-            dataGridViewCellStyle6.NullValue = "0";
-            this.totalweight.DefaultCellStyle = dataGridViewCellStyle6;
-            this.totalweight.HeaderText = "Total Weight";
+            this.totalweight.HeaderText = "Status";
             this.totalweight.Name = "totalweight";
             this.totalweight.ReadOnly = true;
-            this.totalweight.Width = 99;
-            // 
-            // lengthM1
-            // 
-            dataGridViewCellStyle7.Format = "N2";
-            dataGridViewCellStyle7.NullValue = "0";
-            this.lengthM1.DefaultCellStyle = dataGridViewCellStyle7;
-            this.lengthM1.HeaderText = "Length(M)";
-            this.lengthM1.Name = "lengthM1";
-            this.lengthM1.ReadOnly = true;
-            this.lengthM1.Width = 88;
-            // 
-            // calculated
-            // 
-            this.calculated.HeaderText = "Calculated";
-            this.calculated.Name = "calculated";
-            this.calculated.ReadOnly = true;
-            this.calculated.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.calculated.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.calculated.Width = 89;
-            // 
-            // MaterialSN
-            // 
-            this.MaterialSN.HeaderText = "Material Serial";
-            this.MaterialSN.Name = "MaterialSN";
-            this.MaterialSN.ReadOnly = true;
-            this.MaterialSN.Width = 111;
-            // 
-            // soline
-            // 
-            this.soline.HeaderText = "SO Line";
-            this.soline.Name = "soline";
-            this.soline.ReadOnly = true;
-            this.soline.Width = 75;
-            // 
-            // sono
-            // 
-            this.sono.HeaderText = "SO No.";
-            this.sono.Name = "sono";
-            this.sono.ReadOnly = true;
-            this.sono.Width = 70;
+            this.totalweight.Width = 65;
             // 
             // commodity1
             // 
@@ -299,7 +201,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 524);
+            this.ClientSize = new System.Drawing.Size(883, 524);
             this.Controls.Add(this.dgvCutting);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -308,6 +210,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Serial List";
+            this.Load += new System.EventHandler(this.SerialList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
             this.ResumeLayout(false);
 
@@ -317,22 +220,14 @@
 
         private System.Windows.Forms.DataGridView dgvCutting;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn seq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cutseq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn norno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn MaterialSN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNo;
         private System.Windows.Forms.DataGridViewTextBoxColumn thick1;
         private System.Windows.Forms.DataGridViewTextBoxColumn width1;
         private System.Windows.Forms.DataGridViewTextBoxColumn length1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn status1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn stand;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cutdiv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthM1;
         private System.Windows.Forms.DataGridViewTextBoxColumn unitweight1;
         private System.Windows.Forms.DataGridViewTextBoxColumn totalweight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lengthM1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn calculated;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MaterialSN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn soline;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sono;
         private System.Windows.Forms.DataGridViewTextBoxColumn commodity1;
         private System.Windows.Forms.DataGridViewTextBoxColumn spec1;
         private System.Windows.Forms.DataGridViewTextBoxColumn coating1;

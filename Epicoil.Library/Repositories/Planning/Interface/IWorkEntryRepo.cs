@@ -73,5 +73,9 @@ namespace Epicoil.Library.Repositories.Planning
         string GetSerialByFormat(int StartId);
 
         int RunningLot();
+
+        bool UnConfirmWork(int workOrderID);
+
+        bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
     }
 }

@@ -7,6 +7,8 @@ namespace Epicoil.Library.Models.Planning
     {
         public string Plant { get; set; }
 
+        public string SerialNo { get; set; }        
+
         public int SimLineID { get; set; }
 
         public int WorkOrderID { get; set; }
@@ -14,6 +16,8 @@ namespace Epicoil.Library.Models.Planning
         public int CuttingLineID { get; set; }
 
         public int MaterialTransLineID { get; set; }
+
+        public string MCSSNo { get; set; }
 
         public decimal Thick { get; set; }
 
@@ -46,6 +50,7 @@ namespace Epicoil.Library.Models.Planning
             base.DataBind(row);
 
             this.Plant = (string)row["Plant"].GetString();
+            this.SerialNo = (string)row["SerialNo"].GetString();
             this.SimLineID = (int)row["SimLineID"].GetInt();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.CuttingLineID = (int)row["CuttingLineID"].GetInt();
@@ -63,6 +68,7 @@ namespace Epicoil.Library.Models.Planning
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
+            this.MCSSNo = (string)row["MCSSNo"].GetString();
         }
     }
 }

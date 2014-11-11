@@ -4,6 +4,11 @@ using Epicoil.Library.Models.Planning;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Epicor.Mfg.BO;
+using Epicor.Mfg.Core;
+using Epicoil.Library.Repositories.StoreIn;
+using Epicoil.Library.Models.StoreIn;
+using System.Data;
 
 namespace Epicoil.Library.Repositories.Planning
 {
@@ -13,6 +18,7 @@ namespace Epicoil.Library.Repositories.Planning
         private readonly IResourceRepo _repoResrc;
         private readonly IUserCodeRepo _repoUcode;
         private readonly ICoilBackRuleRepo _repoRule;
+        private readonly IStoreInRepo _repoIn;
 
         public WorkEntryRepo()
         {
@@ -20,6 +26,7 @@ namespace Epicoil.Library.Repositories.Planning
             this._repoResrc = new ResourceRepo();
             this._repoCls = new ClassMasterRepo();
             this._repoRule = new CoilBackRuleRepo();
+            this._repoIn = new StoreInRepo();
         }
 
         public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
@@ -159,7 +166,7 @@ namespace Epicoil.Library.Repositories.Planning
 
             //Verify alway.
             //if (!string.IsNullOrEmpty(model.BussinessType))
-            query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
+            if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
             if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
 
             if (model.Materails.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
@@ -1232,7 +1239,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , sim.*
+	                                            , sim.*, mat.MCSSNo
                                             FROM ucc_pln_Simulate sim
 	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
 	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
@@ -1434,7 +1441,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , gsn.*
+	                                            , gsn.*, mat.MCSSNo
                                             FROM ucc_pln_SerialGenerated gsn
 	                                            LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
 	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
@@ -1536,6 +1543,77 @@ namespace Epicoil.Library.Repositories.Planning
             string sql = "SELECT TOP 1 * FROM ucc_pln_SerialGenerated ORDER BY LotRunning DESC";
 
             return Repository.Instance.GetOne<int>(sql, "LotRunning") + 1;
+        }
+
+        public bool UnConfirmWork(int workOrderID)
+        {
+            try
+            {
+                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 0 WHERE WorkOrderID = {0} ", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        public bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
+        {
+            msg = string.Empty;
+            //bool IsSuccess = false;
+            Session currSession;
+            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList().Where(i => i.Status.Equals("C"));
+            try
+            {
+                currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+
+            foreach (var item in resultContinue)
+            {
+                try
+                {
+                    LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
+                    LotSelectUpdateDataSet dsLot = new LotSelectUpdateDataSet();
+                    lotPart.GetNewPartLot(dsLot, item.MCSSNo);
+
+                    DataRow drLot = dsLot.Tables[0].Rows[0];
+                    drLot.BeginEdit();
+
+                    drLot["LotNum"] = item.SerialNo;
+                    drLot["PartLotDescription"] = item.SerialNo;
+                    drLot["Number01"] = item.Thick;
+                    drLot["Number02"] = item.Width;
+                    drLot["Number03"] = item.Length;
+                    drLot["Number04"] = item.UnitWeight;
+                    drLot["Number05"] = 1;
+                    drLot["Number08"] = 0;
+                    drLot["Character02"] = item.WorkOrderID.ToString();
+                    drLot["Character02"] = item.WorkOrderID.ToString();
+                    //drLot[""] = item.Thick;
+                    //drLot[""] = item.Thick;
+                    //drLot[""] = item.Thick;
+                    //drLot[""] = item.Thick;
+                    //drLot[""] = item.Thick;
+
+                    drLot.EndEdit();
+                    lotPart.Update(dsLot);
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
