@@ -319,6 +319,12 @@ namespace Epicoil.Appl.Presentations.Planning
             }
 
             var result = _repo.UpdateSimulateByWorkOrder(epiSession, SimModel.Cuttings, workComplete);
+            HeadModel.Completed = workComplete;
+            HeadModel.WorkOrderID = SimModel.WorkOrderID;
+            HeadModel.WorkOrderNum = SimModel.WorkOrderNum;
+            HeadModel.InputWeight = SimModel.MaterialWeight;
+            HeadModel.OutputWeight = SimModel.ProductWeight;
+            HeadModel.Yield = SimModel.Yield;
             HeadModel.CuttingDesign = _repo.UpdateCuttingByWorkOrder(epiSession, SimModel.Cuttings, HeadModel.WorkOrderID).ToList();
             HeadModel.Materails = _repo.UpdateMaterialByWorkOrder(epiSession, SimModel.Materials, HeadModel.WorkOrderID);
             this.Close();

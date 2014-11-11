@@ -420,7 +420,13 @@ namespace Epicoil.Appl.Presentations.Planning
             using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
             {
                 frm.ShowDialog();
+                HeaderContent = frm.HeadModel;
             }
+            ListMaterialGrid(HeaderContent.Materails);
+            ListCuttingGrid(HeaderContent.CuttingDesign);
+            tbutCalculate_Click(sender, e);
+            SetHeadContent(HeaderContent);
+            tbutSave_Click(sender, e);
             HeaderContent.SimulateFlag = 1;
             SetFormState();
         }
@@ -1392,6 +1398,7 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             ListMaterialGrid(HeaderContent.Materails);
             ListCuttingGrid(HeaderContent.CuttingDesign);
+            SetHeadContent(HeaderContent);
             tbutSave_Click(sender, e);
         }
 

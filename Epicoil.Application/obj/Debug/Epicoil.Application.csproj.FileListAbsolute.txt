@@ -84,3 +84,4 @@ D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.IF.ISysConfig.xml
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.SerialList.resources
