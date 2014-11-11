@@ -14,7 +14,7 @@ namespace Epicoil.Appl.Presentations.Planning
     {
         private readonly IWorkEntryRepo _repo;
 
-        private PlanningHeadModel HeadModel;
+        public PlanningHeadModel HeadModel;
         private SimulateActionModel SimModel;
 
         public SimulateEntry(SessionInfo _session = null, PlanningHeadModel model = null, SimulateActionModel simModel = null)
@@ -119,7 +119,7 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvCutting.Rows.Clear();
             foreach (var p in item)
             {
-                dgvCutting.Rows.Add(p.SimSeq, i + 1, p.CutDiv, p.NORNum, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDiv, p.UnitWeight, p.TotalWeight, p.LengthM
+                dgvCutting.Rows.Add(p.SimLineID, i + 1, p.CutDiv, p.NORNum, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDiv, p.UnitWeight, p.TotalWeight, p.LengthM
                                    , p.CalculatedFlag, p.MaterialSerialNo, p.SOLine, p.SONo, p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName
                                    , p.CoatingCode + " - " + p.CoatingName, p.BussinessType + " - " + p.BussinessTypeName, p.PossessionName);
                 //Fill color rows for even number.
@@ -154,8 +154,8 @@ namespace Epicoil.Appl.Presentations.Planning
                         return;
                     }
 
-                    decimal decVal;
-                    if (!decimal.TryParse(cmbCutSeq.Text, out decVal))
+                    int decVal;
+                    if (!int.TryParse(cmbCutSeq.Text, out decVal))
                     {
                         MessageBox.Show("Data type invalid.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         cmbCutSeq.Focus();
@@ -176,6 +176,16 @@ namespace Epicoil.Appl.Presentations.Planning
                         MessageBox.Show("Data type invalid.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         txtExpected.Focus();
                         txtExpected.SelectAll();
+                        return;
+                    }
+
+                    SimModel.CutSeleted = Convert.ToInt32(cmbCutSeq.Text.GetString());
+                    string msg = string.Empty;
+                    if (!SimModel.ValidateToCal(out msg))
+                    {
+                        MessageBox.Show(msg, "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        cmbCutSeq.Focus();
+                        cmbCutSeq.SelectAll();
                         return;
                     }
 
@@ -217,7 +227,8 @@ namespace Epicoil.Appl.Presentations.Planning
                         }
 
                         decimal d = Convert.ToDecimal(txtExpected.Text.GetString());
-                        SimModel.Expected = (mat.Weight * d) / mat.LengthM;
+                        SimModel.CalculateRowForLegnthOption(mat);
+                        SimModel.Expected = (mat.Weight * d) / mat.LengthM;                        
                     }
                     
                     if (rdoWeight.Checked)
@@ -257,6 +268,21 @@ namespace Epicoil.Appl.Presentations.Planning
                 else if (rdoDivision.Checked)
                 {
                     SimModel.SimulateOption = 2;
+                    SimModel.Expected = Convert.ToDecimal(txtExpected.Text.GetString());
+                    if (_repo.ClearSimulateLines(HeadModel.WorkOrderID))
+                    {
+                        SimulateActionModel simModel = new SimulateActionModel();
+                        simModel.WorkOrderID = HeadModel.WorkOrderID;
+                        simModel.WorkOrderNum = HeadModel.WorkOrderNum;
+                        simModel.MaterialWeight = HeadModel.InputWeight;
+                        simModel.ProductWeight = HeadModel.OutputWeight;
+                        simModel.Yield = HeadModel.Yield;
+                        simModel.TrimWeight = HeadModel.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
+                        simModel.Cuttings.Where(i => i.WorkOrderID.Equals(HeadModel.WorkOrderID));
+
+                        SimModel.Cuttings = _repo.InsertSimulate(epiSession, HeadModel, Convert.ToInt32(SimModel.Expected)).ToList();
+                        SimModel.Materials = HeadModel.Materails.ToList();
+                    }
                 }
 
                 ListMaterialGrid(SimModel.Materials);
@@ -271,11 +297,31 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butConfirm_Click(object sender, EventArgs e)
         {
+            int workComplete = 1;
             if (!SimModel.CheckYeild(HeadModel, SimModel.Yield))
             {
-                MessageBox.Show("Cannot confirm becuase Yield invalid.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult diaResult = MessageBox.Show("Yield invalid, are you sure to hold work order.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (diaResult == DialogResult.No)
+                {
+                    return;
+                }
+                else
+                {
+                    workComplete = 2;
+                }
+            }
+
+            string msg = string.Empty;
+            if (!SimModel.ValidateToConfirm(out msg))
+            {
+                MessageBox.Show(msg, "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            var result = _repo.UpdateSimulateByWorkOrder(epiSession, SimModel.Cuttings, workComplete);
+            HeadModel.CuttingDesign = _repo.UpdateCuttingByWorkOrder(epiSession, SimModel.Cuttings, HeadModel.WorkOrderID).ToList();
+            HeadModel.Materails = _repo.UpdateMaterialByWorkOrder(epiSession, SimModel.Materials, HeadModel.WorkOrderID);
+            this.Close();
         }
     }
 }

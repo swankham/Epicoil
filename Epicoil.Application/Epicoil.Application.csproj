@@ -192,6 +192,12 @@
     <Compile Include="Presentations\Planning\MaterialSelecting.Designer.cs">
       <DependentUpon>MaterialSelecting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Planning\SerialList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\SerialList.Designer.cs">
+      <DependentUpon>SerialList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Planning\SimulateEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -348,6 +354,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\MaterialSelecting.resx">
       <DependentUpon>MaterialSelecting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\SerialList.resx">
+      <DependentUpon>SerialList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\SimulateEntry.resx">
       <DependentUpon>SimulateEntry.cs</DependentUpon>

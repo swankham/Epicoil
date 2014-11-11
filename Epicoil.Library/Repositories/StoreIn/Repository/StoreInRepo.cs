@@ -147,10 +147,10 @@ namespace Epicoil.Library.Repositories.StoreIn
         {
             try
             {
-                Part myPart = new Part(epiSession.ConnectionPool);
+                Part myPart = new Part(epiSession.ConnectionPool);                
 
                 PartDataSet dsPart = new PartDataSet();
-                myPart.GetNewPart(dsPart);
+                myPart.GetNewPart(dsPart);                
 
                 DataRow drPart = dsPart.Tables[0].Rows[0];
                 drPart.BeginEdit();

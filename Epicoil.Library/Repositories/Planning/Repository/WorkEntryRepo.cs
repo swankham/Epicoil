@@ -1089,7 +1089,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                   ,SelectCB = {19} --<SelectCB, tinyint,>
                                                   ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
                                                   ,UpdatedBy = N'{28}' --<UpdatedBy, varchar(45),>
-                                             WHERE  TransactionLineID = {29}
+                                             WHERE TransactionLineID = {29}
                                         END" + Environment.NewLine
                                               , _session.CompanyID
                                               , _session.PlantID
@@ -1132,12 +1132,14 @@ namespace Epicoil.Library.Repositories.Planning
             return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
         }
 
-        public IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head)
+        public IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head, int cutDiv = 0)
         {
             int iRow = 0;
             foreach (var item in head.CuttingDesign.Where(i => i.Status != "S").OrderBy(i => i.LineID))
             {
-                for (int j = 1; j <= item.CutDivision; j++)
+                int cutDivision = (cutDiv == 0) ? item.CutDivision : cutDiv;
+
+                for (int j = 1; j <= cutDivision; j++)
                 {
                     iRow = iRow + j;
                     string sql = string.Format(@"INSERT INTO ucc_pln_Simulate
@@ -1181,7 +1183,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                    , GETDATE() --<LastUpdateDate, datetime,>
                                                    , N'{15}' --<CreatedBy, nvarchar(45),>
                                                    , N'{15}' --<UpdatedBy, nvarchar(45),>
-                                                   , {16} 
+                                                   , {16}
                                                     )" + Environment.NewLine
                                                        , _session.PlantID
                                                        , head.WorkOrderID
@@ -1200,6 +1202,9 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , 0
                                                        , _session.UserID
                                                        , 0);
+
+                    sql += string.Format(@"UPDATE ucc_pln_PlanHead SET SimulateFlag = 1 WHERE WorkOrderID = {0} ", item.WorkOrderID);
+
                     Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
                 }
             }
@@ -1238,6 +1243,299 @@ namespace Epicoil.Library.Repositories.Planning
                                             WHERE sim.WorkOrderID = {0}
                                             ORDER BY sim.CutDiv, sim.SimSeq ASC", workOrderID);
             return Repository.Instance.GetMany<SimulateModel>(sql);
+        }
+
+        public IEnumerable<SimulateModel> UpdateSimulateByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workComplete)
+        {
+            foreach (var item in model)
+            {
+                string sql = string.Format(@"UPDATE ucc_pln_Simulate
+                                               SET Plant =  N'{0}' --<Plant, nvarchar(8),>
+                                                  ,CuttingLineID =  {2} --<CuttingLineID, bigint,>
+                                                  ,MaterialTransLineID =  {3} --<MaterialTransLineID, bigint,>
+                                                  ,SimSeq =  {4} --<SimSeq, int,>
+                                                  ,Thick =  {5} --<Thick, decimal(20,9),>
+                                                  ,Width =  {6} --<Width, decimal(20,9),>
+                                                  ,Length =  {7} --<Length, decimal(20,9),>
+                                                  ,UsingLengthM =  {8} --<UsingLengthM, decimal(20,9),>
+                                                  ,LengthM =  {9} --<LengthM, decimal(20,9),>
+                                                  ,Status =  N'{10}' --<Status, nvarchar(10),>
+                                                  ,Stand =  {11} --<Stand, decimal(20,9),>
+                                                  ,CutDiv =  {12} --<CutDiv, decimal(20,9),>
+                                                  ,UnitWeight =  {13} --<UnitWeight, decimal(20,9),>
+                                                  ,TotalWeight =  {14} --<TotalWeight, decimal(20,9),>
+                                                  ,CalculatedFlag =  {15} --<CalculatedFlag, tinyint,>
+                                                  ,LastUpdateDate =  GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy =  N'{16}' --<UpdatedBy, nvarchar(45),>
+                                             WHERE SimLineID = {1}" + Environment.NewLine
+                                                   , _session.PlantID
+                                                   , item.SimLineID
+                                                   , item.CuttingLineID
+                                                   , item.TransactionLineID
+                                                   , item.SimSeq
+                                                   , item.Thick //{5}
+                                                   , item.Width
+                                                   , item.Length
+                                                   , item.UsingLengthM
+                                                   , item.LengthM
+                                                   , item.Status        //{10}
+                                                   , item.Stand
+                                                   , item.CutDiv
+                                                   , item.UnitWeight
+                                                   , item.TotalWeight
+                                                   , Convert.ToInt32(item.CalculatedFlag).GetInt()  //{15}
+                                                   , _session.UserID);
+
+                Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
+            }
+
+            var workOrderId = (from item in model
+                               select item.WorkOrderID).First();
+
+            string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = {1} WHERE WorkOrderID = {0} ", workOrderId, workComplete);
+            Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+
+            return null;
+        }
+
+        public IEnumerable<CutDesignModel> UpdateCuttingByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID)
+        {
+            var cutLines = GetCuttingLines(workOrderID).Where(i => i.Status != "S");
+            foreach (var item in cutLines)
+            {
+                var lineGrpSum = (from sim in model.Where(i => i.CuttingLineID.Equals(item.LineID))
+                                  group sim by sim.CuttingLineID into simgrp
+                                  select new
+                                  {
+                                      UnitWeight = (simgrp.Sum(x => x.TotalWeight) / simgrp.Max(x => x.CutDiv)) / simgrp.Max(x => x.Stand)
+                                  ,
+                                      TotalWeight = simgrp.Sum(x => x.TotalWeight)
+                                  ,
+                                      TotalLength = simgrp.Max(x => x.LengthM)
+                                  ,
+                                      TransactionLineID = simgrp.Max(x => x.TransactionLineID)
+                                  }).FirstOrDefault();
+
+                string sql = string.Format(@"UPDATE ucc_pln_CuttingDesign
+                                                   SET Company = N'{0}'  --<Company, nvarchar(8),>
+                                                      ,Plant = N'{1}'  --<Plant, nvarchar(8),>
+                                                      ,WorkOrderID = {2}  --<WorkOrderID, bigint,>
+                                                      ,TransactionLineID = {3}  --<TransactionLineID, bigint,>
+                                                      ,CutSeq = {4}  --<CutSeq, int,>
+                                                      ,SONo = N'{5}'  --<SONo, nvarchar(30),>
+                                                      ,SOLine = {6}  --<SOLine, int,>
+                                                      ,NORNum = N'{7}'  --<NORNum, nvarchar(100),>
+                                                      ,CommodityCode = N'{8}'  --<CommodityCode, nvarchar(30),>
+                                                      ,SpecCode = N'{9}'  --<SpecCode, nvarchar(30),>
+                                                      ,CoatingCode = N'{10}'  --<CoatingCode, nvarchar(30),>
+                                                      ,Thick = {11}  --<Thick, decimal(20,9),>
+                                                      ,Width = {12}  --<Width, decimal(20,9),>
+                                                      ,Length = {13}  --<Length, decimal(20,9),>
+                                                      ,Status = N'{14}'  --<Status, nvarchar(20),>
+                                                      ,Stand = {15}  --<Stand, int,>
+                                                      ,CutDivision = {16}  --<CutDivision, int,>
+                                                      ,UnitWeight = {17}  --<UnitWeight, decimal(20,9),>
+                                                      ,TotalWeight = {18}  --<TotalWeight, decimal(20,9),>
+                                                      ,CustID = N'{19}'  --<CustID, nvarchar(20),>
+                                                      ,EndUserCode = N'{20}'  --<EndUserCode, nvarchar(20),>
+                                                      ,DestinationCode = N'{21}'  --<DestinationCode, nvarchar(20),>
+                                                      ,QtyPack = {22}  --<QtyPack, decimal(20,9),>
+                                                      ,Pack = {23}  --<Pack, decimal(20,9),>
+                                                      ,SOWeight = {24}  --<SOWeight, decimal(20,9),>
+                                                      ,SOQuantity = {25}  --<SOQuantity, decimal(20,9),>
+                                                      ,CalQuantity = {26}  --<CalQuantity, decimal(20,9),>
+                                                      ,DeliveryDate = CONVERT(DATETIME, '{27}',103)  --<DeliveryDate, datetime,>
+                                                      ,BussinessType = N'{28}'  --<BussinessType, nvarchar(50),>
+                                                      ,Possession = {29}  --<Procession, int,>
+                                                      ,ProductStatus = {30}  --<ProductStatus, int,>
+                                                      ,Description = N'{31}'  --<Description, varchar(max),>
+                                                      ,Note = N'{32}'  --<Note, varchar(max),>
+                                                      ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
+                                                      ,CreatedBy = N'{33}'  --<CreatedBy, varchar(45),>
+                                                      ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
+                                                      ,TotalLength = {35}  --<TotalLength, decimal(20,9),>
+                                                 WHERE LineID = {34}" + Environment.NewLine
+                                                              , _session.CompanyID
+                                                              , _session.PlantID
+                                                              , item.WorkOrderID
+                                                              , lineGrpSum.TransactionLineID.GetDecimal()         //Update Simulate
+                                                              , item.CutSeq.GetString()
+                                                              , item.SONo.GetString()           //{5}
+                                                              , item.SOLine.GetInt()
+                                                              , item.NORNum.GetString()
+                                                              , item.CommodityCode.GetString()
+                                                              , item.SpecCode.GetString()
+                                                              , item.CoatingCode.GetString()    //{10}
+                                                              , item.Thick
+                                                              , item.Width
+                                                              , item.Length
+                                                              , item.Status.GetString()
+                                                              , item.Stand      //{15}
+                                                              , item.CutDivision
+                                                              , lineGrpSum.UnitWeight.GetDecimal()       //Update Simulate
+                                                              , lineGrpSum.TotalWeight.GetDecimal()       //Update Simulate
+                                                              , item.CustID.GetString()
+                                                              , item.EndUserCode.GetString()    //{20}
+                                                              , item.DestinationCode.GetString()
+                                                              , item.QtyPack
+                                                              , item.Pack
+                                                              , item.SOWeight
+                                                              , item.SOQuantity     //{25}
+                                                              , item.CalQuantity
+                                                              , item.DeliveryDate.ToString("dd/MM/yyyy hh:mm:ss")
+                                                              , item.BussinessType.GetString()
+                                                              , item.Possession
+                                                              , item.ProductStatus.GetInt()      //{30}
+                                                              , item.Description.GetString()
+                                                              , item.Note.GetString()
+                                                              , _session.UserID
+                                                              , item.LineID.GetInt()
+                                                              , lineGrpSum.TotalLength.GetDecimal()       //Update Simulate
+                                                              );
+
+                Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
+            }
+
+            return GetCuttingLines(workOrderID);
+        }
+
+        public IEnumerable<MaterialModel> UpdateMaterialByWorkOrder(SessionInfo _session, IEnumerable<MaterialModel> model, int workOrderID)
+        {
+            foreach (var item in model)
+            {
+                string sql = string.Format(@"UPDATE ucc_pln_Material
+                                               SET UsingWgt = {1} --<UsingWgt, decimal(20,9),>
+                                                  ,RemainWgt = {2} --<RemainWgt, decimal(20,9),>
+                                                  ,LenghtM = {3} --<LenghtM, decimal(20,9),>
+                                                  ,UsingLM = {4} --<UsingLM, decimal(20,9),>
+                                                  ,SelectCB = {5} --<SelectCB, tinyint,>
+                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{6}' --<UpdatedBy, varchar(45),>
+                                             WHERE TransactionLineID = {0}" + Environment.NewLine
+                                                                            , item.TransactionLineID
+                                                                            , item.UsingWeight
+                                                                            , item.RemainWeight
+                                                                            , item.LengthM
+                                                                            , item.UsingLengthM
+                                                                            , 0 //(item.RemainWeight > 0) ? 1 : 0
+                                                                            , _session.UserID
+                                                                            );
+
+                Repository.Instance.ExecuteWithTransaction(sql, "Update Material");
+            }
+
+            return GetAllMaterial(_session.PlantID, workOrderID);
+        }
+
+        public IEnumerable<GeneratedSerialModel> GetSerialAllByWorkOrder(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine
+	                                            , cut.NORNum, 1 as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                            , gsn.*
+                                            FROM ucc_pln_SerialGenerated gsn
+	                                            LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
+	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
+                                            WHERE gsn.WorkOrderID = {0}", workOrderID);
+
+            return Repository.Instance.GetMany<GeneratedSerialModel>(sql);
+        }
+
+        public IEnumerable<GeneratedSerialModel> GenerateSerial(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID)
+        {
+            foreach (var item in model)
+            {
+                for (int j = 1; j <= item.Stand; j++)
+                {
+                    int iRunning = RunningLot();
+                    string LotNum = GetSerialByFormat(iRunning);
+                    string sql = string.Format(@"INSERT INTO ucc_pln_SerialGenerated
+                                                       (Plant
+                                                       ,SimLineID
+                                                       ,WorkOrderID
+                                                       ,CuttingLineID
+                                                       ,MaterialTransLineID
+                                                       ,Thick
+                                                       ,Width
+                                                       ,Length
+                                                       ,LengthM
+                                                       ,Status
+                                                       ,UnitWeight
+                                                       ,Quantity
+                                                       ,TotalWeight
+                                                       ,GeneratedFlag
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy
+                                                       ,LotRunning
+                                                       ,SerialNo)
+                                                 VALUES
+                                                       (N'{0}'  --<Plant, nvarchar(8),>
+                                                       ,{1}  --<SimLineID, bigint,>
+                                                       ,{2}  --<WorkOrderID, bigint,>
+                                                       ,{3}  --<CuttingLineID, bigint,>
+                                                       ,{4}  --<MaterialTransLineID, bigint,>
+                                                       ,{5}  --<Thick, decimal(20,9),>
+                                                       ,{6}  --<Width, decimal(20,9),>
+                                                       ,{7}  --<Length, decimal(20,9),>
+                                                       ,{8}  --<LengthM, decimal(20,9),>
+                                                       ,N'{9}'  --<Status, nvarchar(10),>
+                                                       ,{10}  --<UnitWeight, decimal(20,9),>
+                                                       ,{11}  --<Quantity, decimal(20,9),>
+                                                       ,{12}  --<TotalWeight, decimal(20,9),>
+                                                       ,{13}  --<GeneratedFlag, tinyint,>
+                                                       ,GETDATE()  --<CreationDate, datetime,>
+                                                       ,GETDATE()  --<LastUpdateDate, datetime,>
+                                                       ,N'{14}'  --<CreatedBy, nvarchar(45),>
+                                                       ,N'{14}'  --<UpdatedBy, nvarchar(45),>
+                                                       ,{15}  --<LotRunning, bigint,>
+                                                       ,N'{16}'
+                                                       )" + Environment.NewLine
+                                                      , _session.PlantID
+                                                      , item.SimLineID
+                                                      , item.WorkOrderID
+                                                      , item.CuttingLineID
+                                                      , item.TransactionLineID
+                                                      , item.Thick          //{5}
+                                                      , item.Width
+                                                      , item.Length
+                                                      , item.LengthM
+                                                      , item.Status
+                                                      , item.UnitWeight     //{10}
+                                                      , item.Quantity
+                                                      , item.TotalWeight
+                                                      , 0
+                                                      , _session.UserID
+                                                      , iRunning
+                                                      , LotNum
+                                                      );
+
+                    Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
+                }
+            }
+            string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 1 WHERE WorkOrderID = {0} ", workOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+
+            return GetSerialAllByWorkOrder(workOrderID);
+        }
+
+        public string GetSerialByFormat(int StartId)
+        {
+            return (DateTime.Now.ToString("yy") + Enum.GetName(typeof(Month), int.Parse(DateTime.Now.ToString("MM"))) + StartId.ToString("00000"));
+        }
+
+        public int RunningLot()
+        {
+            string sql = "SELECT TOP 1 * FROM ucc_pln_SerialGenerated ORDER BY LotRunning DESC";
+
+            return Repository.Instance.GetOne<int>(sql, "LotRunning") + 1;
         }
     }
 }

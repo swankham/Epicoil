@@ -68,6 +68,7 @@ namespace Epicoil.Library
     public enum CompleteStatus
     {
         Confirm = 0,
-        Confirmed = 1
+        Confirmed = 1,
+        Hold = 2
     }
 }

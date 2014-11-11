@@ -86,17 +86,17 @@ namespace Epicoil.Library.Models.Planning
                 {
                     m.UsingLengthM = Expected;
                 }
-                m.UsedFlag = true;
+                //m.UsedFlag = true;
             }
 
-            foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
-            {
-                item.CalculateRow(this, mat);
-            }
+            //foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
+            //{
+            //    item.CalculateRow(this, mat);
+            //}
 
-            SumProductWeight();
-            SumMaterialWeight();
-            SumYeild();
+            //SumProductWeight();
+            //SumMaterialWeight();
+            //SumYeild();
         }
 
         public void SumProductWeight()
@@ -165,6 +165,36 @@ namespace Epicoil.Library.Models.Planning
                 FlagYield = false;
             }
             return FlagYield;
+        }
+
+        public bool ValidateToCal(out string msg)
+        {
+            bool valid = true;
+            msg = "";
+
+            var result1 = Cuttings.Where(i => i.CutDiv.Equals(CutSeleted) && i.CalculatedFlag == true).ToList();
+            if (result1.Count > 0)
+            {
+                msg = @"This Cut Division has already calculated.";
+                return false;
+            }
+
+            return valid;
+        }
+
+        public bool ValidateToConfirm(out string msg)
+        {
+            bool valid = true;
+            msg = "";
+
+            var result2 = Cuttings.Where(i => i.CalculatedFlag == false).ToList();
+            if (result2.Count > 0)
+            {
+                msg = @"Please Calculate all line to complete.";
+                return false;
+            }
+
+            return valid;
         }
     }
 }

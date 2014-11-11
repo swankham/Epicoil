@@ -54,10 +54,24 @@ namespace Epicoil.Library.Repositories.Planning
 
         MaterialModel SaveMaterial(SessionInfo _session, MaterialModel model);
 
-        IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head);
+        IEnumerable<SimulateModel> InsertSimulate(SessionInfo _session, PlanningHeadModel head, int cutDiv = 0);
 
         bool ClearSimulateLines(int workOrderID);
 
         IEnumerable<SimulateModel> GetSimulateAll(int workOrderID);
+
+        IEnumerable<SimulateModel> UpdateSimulateByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workComplete);
+
+        IEnumerable<CutDesignModel> UpdateCuttingByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID);
+
+        IEnumerable<MaterialModel> UpdateMaterialByWorkOrder(SessionInfo _session, IEnumerable<MaterialModel> model, int workOrderID);
+
+        IEnumerable<GeneratedSerialModel> GetSerialAllByWorkOrder(int workOrderID);
+
+        IEnumerable<GeneratedSerialModel> GenerateSerial(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID);
+
+        string GetSerialByFormat(int StartId);
+
+        int RunningLot();
     }
 }

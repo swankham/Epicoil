@@ -168,14 +168,19 @@ namespace Epicoil.Appl.Presentations.Planning
             butGenSN.Text = model.GenSerialFlagStr;
             butConfirm.Visible = Convert.ToBoolean(model.Completed);
             butConfirm.Text = model.CompletedStr;
-            if (!Convert.ToBoolean(model.Completed))
+            if (model.Completed == 1)
             {
                 butConfirm.BackColor = Color.Green;
-                //butConfirm
+                butGenSN.Enabled = true;
+                butGenSN.Text = model.GenSerialFlagStr;
+            }
+            else if (model.Completed == 0)
+            {
+                butConfirm.BackColor = Color.Yellow;
             }
             else
             {
-                butConfirm.BackColor = SystemColors.Control;
+                butConfirm.BackColor = Color.Red;
             }
 
             //DatePicker
@@ -199,9 +204,13 @@ namespace Epicoil.Appl.Presentations.Planning
                 {
                     butConfirm.BackColor = Color.Green;
                 }
-                else
+                else if (model.Completed == 0)
                 {
                     butConfirm.BackColor = Color.Yellow;
+                }
+                else
+                {
+                    butConfirm.BackColor = Color.Red;
                 }
             }
             else
@@ -1316,32 +1325,31 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
                 if (chk && result.RemainWeight > 0)
                 {
+                    bool strVal = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
+                    result.CBSelect = true;
+                    CoilBackModel CBack = new CoilBackModel();
+                    CBack.WorkOrderID = HeaderContent.WorkOrderID;
+                    CBack.TransactionLineID = result.TransactionLineID;
+                    CBack.CommodityCode = result.CommodityCode;
+                    CBack.SpecCode = result.SpecCode;
+                    CBack.CoatingCode = result.CoatingCode;
+                    CBack.Thick = result.Thick;
+                    CBack.Width = result.Width;
+                    CBack.Length = result.Length;
+                    CBack.Weight = result.RemainWeight;
+                    CBack.Qty = result.RemainQuantity;
+                    CBack.MCSSNo = result.MCSSNo;
+                    CBack.OldSerial = result.SerialNo;
+                    CBack.Gravity = result.Gravity;
+                    CBack.FrontPlate = result.FrontPlate;
+                    CBack.BackPlate = result.BackPlate;
+                    CBack.Status = result.Status;
+                    CBack.BussinessType = result.BussinessType;
+                    CBack.Possession = result.Possession;
+                    CBack.ProductStatus = Convert.ToInt32(result.ProductStatus);
+                    CBack.Note = "Add manual";
 
-                        bool strVal = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
-                        result.CBSelect = true;
-                        CoilBackModel CBack = new CoilBackModel();
-                        CBack.WorkOrderID = HeaderContent.WorkOrderID;
-                        CBack.TransactionLineID = result.TransactionLineID;
-                        CBack.CommodityCode = result.CommodityCode;
-                        CBack.SpecCode = result.SpecCode;
-                        CBack.CoatingCode = result.CoatingCode;
-                        CBack.Thick = result.Thick;
-                        CBack.Width = result.Width;
-                        CBack.Length = result.Length;
-                        CBack.Weight = result.RemainWeight;
-                        CBack.Qty = result.RemainQuantity;
-                        CBack.MCSSNo = result.MCSSNo;
-                        CBack.OldSerial = result.SerialNo;
-                        CBack.Gravity = result.Gravity;
-                        CBack.FrontPlate = result.FrontPlate;
-                        CBack.BackPlate = result.BackPlate;
-                        CBack.Status = result.Status;
-                        CBack.BussinessType = result.BussinessType;
-                        CBack.Possession = result.Possession;
-                        CBack.ProductStatus = Convert.ToInt32(result.ProductStatus);
-                        CBack.Note = "Add manual";
-
-                        HeaderContent.CoilBacks = _repo.SaveCoilBack(epiSession, CBack).ToList();
+                    HeaderContent.CoilBacks = _repo.SaveCoilBack(epiSession, CBack).ToList();
                 }
                 else if (coilExist.Count > 0)
                 {
@@ -1358,6 +1366,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 HeaderContent.SumUsingWeight(HeaderContent.Materails);
                 SetHeadContent(HeaderContent);
                 ListCoilBackGrid(HeaderContent.CoilBacks);
+                tbutCalculate_Click(sender, e);
             }
         }
 
@@ -1379,7 +1388,23 @@ namespace Epicoil.Appl.Presentations.Planning
             using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
             {
                 frm.ShowDialog();
+                HeaderContent = frm.HeadModel;
             }
+            ListMaterialGrid(HeaderContent.Materails);
+            ListCuttingGrid(HeaderContent.CuttingDesign);
+            tbutSave_Click(sender, e);
+        }
+
+        private void butGenSN_Click(object sender, EventArgs e)
+        {
+            IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
+            if (HeaderContent.GenSerialFlag == 0)
+            {
+                var simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
+                serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
+
+            }
+
         }
     }
 }

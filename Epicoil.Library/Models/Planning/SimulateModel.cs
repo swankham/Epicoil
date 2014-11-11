@@ -8,6 +8,7 @@ namespace Epicoil.Library.Models.Planning
     {
         public string Plant { get; set; }
 
+        public int SimLineID { get; set; }
         public int WorkOrderID { get; set; }
 
         public int CuttingLineID { get; set; }
@@ -61,6 +62,7 @@ namespace Epicoil.Library.Models.Planning
         {
             base.DataBind(row);
 
+            this.SimLineID = (int)row["SimLineID"].GetInt();
             this.Plant = (string)row["Plant"].GetString();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.CuttingLineID = (int)row["CuttingLineID"].GetInt();
@@ -123,6 +125,7 @@ namespace Epicoil.Library.Models.Planning
 
             CalculatedFlag = true;
             MCSSNum = mat.MCSSNo;
+            TransactionLineID = mat.TransactionLineID;
             MaterialSerialNo = mat.SerialNo;
         }
 
