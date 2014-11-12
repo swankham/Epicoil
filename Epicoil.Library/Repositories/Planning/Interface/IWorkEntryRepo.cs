@@ -77,5 +77,7 @@ namespace Epicoil.Library.Repositories.Planning
         bool UnConfirmWork(int workOrderID);
 
         bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
+
+        int GetStepByWorkOrder(int workOrderID);
     }
 }

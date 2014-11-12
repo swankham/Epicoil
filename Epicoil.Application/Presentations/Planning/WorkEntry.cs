@@ -1399,7 +1399,7 @@ namespace Epicoil.Appl.Presentations.Planning
             ListMaterialGrid(HeaderContent.Materails);
             ListCuttingGrid(HeaderContent.CuttingDesign);
             SetHeadContent(HeaderContent);
-            tbutSave_Click(sender, e);
+            //tbutSave_Click(sender, e);
         }
 
         private void butGenSN_Click(object sender, EventArgs e)
@@ -1418,7 +1418,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 serialLines = _repo.GetSerialAllByWorkOrder(HeaderContent.WorkOrderID);
             }
 
-            using (SerialList frm = new SerialList(epiSession, serialLines))
+            using (SerialList frm = new SerialList(epiSession, serialLines, HeaderContent))
             {
                 frm.ShowDialog();                
                 SetHeadContent(HeaderContent);
@@ -1441,6 +1441,16 @@ namespace Epicoil.Appl.Presentations.Planning
                     }
                 }
             }
+        }
+
+        private void dgvCutting_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void nextProcessStepToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

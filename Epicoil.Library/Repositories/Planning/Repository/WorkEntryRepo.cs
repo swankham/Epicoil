@@ -1,14 +1,13 @@
 ﻿using Epicoil.Library.Frameworks;
 using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Epicoil.Library.Repositories.StoreIn;
 using Epicor.Mfg.BO;
 using Epicor.Mfg.Core;
-using Epicoil.Library.Repositories.StoreIn;
-using Epicoil.Library.Models.StoreIn;
+using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Epicoil.Library.Repositories.Planning
 {
@@ -1456,12 +1455,13 @@ namespace Epicoil.Library.Repositories.Planning
 
         public IEnumerable<GeneratedSerialModel> GenerateSerial(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID)
         {
+            int iRunning = 1;
             foreach (var item in model)
             {
                 for (int j = 1; j <= item.Stand; j++)
                 {
-                    int iRunning = RunningLot();
-                    string LotNum = GetSerialByFormat(iRunning);
+                    //int iRunning = RunningLot();
+                    string LotNum = item.MaterialSerialNo + '-' + iRunning.ToString();//GetSerialByFormat(iRunning);
                     string sql = string.Format(@"INSERT INTO ucc_pln_SerialGenerated
                                                        (Plant
                                                        ,SimLineID
@@ -1525,6 +1525,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       );
 
                     Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
+                    iRunning++;
                 }
             }
             string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 1 WHERE WorkOrderID = {0} ", workOrderID);
@@ -1558,7 +1559,6 @@ namespace Epicoil.Library.Repositories.Planning
                 return false;
             }
         }
-
 
         public bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
         {
@@ -1614,6 +1614,13 @@ namespace Epicoil.Library.Repositories.Planning
             }
 
             return true;
+        }
+
+        public int GetStepByWorkOrder(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT TOP 1 * FROM ucc_pln_PlanHead WHERE WorkOrderID = {0} ORDER BY ProcessStep DESC", workOrderID);
+
+            return Repository.Instance.GetOne<int>(sql, "ProcessStep") + 1;
         }
     }
 }

@@ -263,6 +263,7 @@
             this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
             this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
+            this.nextProcessStepToolStripMenuItem.Click += new System.EventHandler(this.nextProcessStepToolStripMenuItem_Click);
             // 
             // processingThisLineToolStripMenuItem
             // 
@@ -284,6 +285,7 @@
             this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
             this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.deleteLineToolStripMenuItem.Text = "Delete line";
+            this.deleteLineToolStripMenuItem.Visible = false;
             // 
             // splitContainer1
             // 
@@ -300,8 +302,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer1.Size = new System.Drawing.Size(1258, 540);
-            this.splitContainer1.SplitterDistance = 245;
+            this.splitContainer1.Size = new System.Drawing.Size(1258, 531);
+            this.splitContainer1.SplitterDistance = 240;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -319,7 +321,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1258, 245);
+            this.splitContainer2.Size = new System.Drawing.Size(1258, 240);
             this.splitContainer2.SplitterDistance = 889;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -332,7 +334,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(889, 245);
+            this.groupBox2.Size = new System.Drawing.Size(889, 240);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Material";
@@ -382,7 +384,7 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(881, 198);
+            this.dgvMaterial.Size = new System.Drawing.Size(881, 193);
             this.dgvMaterial.TabIndex = 17;
             this.dgvMaterial.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellContentClick);
             this.dgvMaterial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellEndEdit);
@@ -627,7 +629,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(365, 245);
+            this.groupBox3.Size = new System.Drawing.Size(365, 240);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Coil Back / Sheet Back";
@@ -671,7 +673,7 @@
             this.dgvCoilBack.RowHeadersVisible = false;
             this.dgvCoilBack.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCoilBack.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCoilBack.Size = new System.Drawing.Size(357, 198);
+            this.dgvCoilBack.Size = new System.Drawing.Size(357, 193);
             this.dgvCoilBack.TabIndex = 18;
             // 
             // transactionlineid1
@@ -822,7 +824,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(1258, 290);
+            this.groupBox4.Size = new System.Drawing.Size(1258, 286);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Cutting Design";
@@ -879,8 +881,9 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(1250, 246);
+            this.dgvCutting.Size = new System.Drawing.Size(1250, 242);
             this.dgvCutting.TabIndex = 18;
+            this.dgvCutting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellContentClick);
             this.dgvCutting.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellEndEdit);
             this.dgvCutting.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvCutting_CellValidating);
             // 
@@ -1117,7 +1120,7 @@
             // panel3
             // 
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(4, 264);
+            this.panel3.Location = new System.Drawing.Point(4, 260);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1250, 22);
@@ -1860,7 +1863,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1258, 750);
+            this.ClientSize = new System.Drawing.Size(1258, 741);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.toolStrip2);

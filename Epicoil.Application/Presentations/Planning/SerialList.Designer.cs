@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -36,19 +37,26 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialList));
             this.dgvCutting = new System.Windows.Forms.DataGridView();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thick1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.length1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lengthM1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.unitweight1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.totalweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commodity1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.spec1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.coating1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mcssno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvCutting
@@ -71,12 +79,14 @@
             this.length1,
             this.lengthM1,
             this.unitweight1,
-            this.totalweight,
+            this.status,
             this.commodity1,
             this.spec1,
             this.coating1,
             this.bt1,
-            this.possession});
+            this.possession,
+            this.mcssno});
+            this.dgvCutting.ContextMenuStrip = this.contextMenuStrip1;
             this.dgvCutting.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCutting.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvCutting.EnableHeadersVisualStyles = false;
@@ -89,6 +99,48 @@
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCutting.Size = new System.Drawing.Size(883, 524);
             this.dgvCutting.TabIndex = 20;
+            this.dgvCutting.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellClick);
+            this.dgvCutting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellContentClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nextProcessStepToolStripMenuItem,
+            this.processingThisLineToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.deleteLineToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 76);
+            // 
+            // nextProcessStepToolStripMenuItem
+            // 
+            this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
+            this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
+            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
+            this.nextProcessStepToolStripMenuItem.Click += new System.EventHandler(this.nextProcessStepToolStripMenuItem_Click);
+            // 
+            // processingThisLineToolStripMenuItem
+            // 
+            this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
+            this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
+            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.processingThisLineToolStripMenuItem.Text = "Refresh";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(164, 6);
+            // 
+            // deleteLineToolStripMenuItem
+            // 
+            this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
+            this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
+            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.deleteLineToolStripMenuItem.Text = "Delete line";
+            this.deleteLineToolStripMenuItem.Visible = false;
             // 
             // serialNo
             // 
@@ -97,7 +149,6 @@
             this.serialNo.DefaultCellStyle = dataGridViewCellStyle1;
             this.serialNo.HeaderText = "Serial No.";
             this.serialNo.Name = "serialNo";
-            this.serialNo.ReadOnly = true;
             this.serialNo.Width = 85;
             // 
             // thick1
@@ -155,12 +206,12 @@
             this.unitweight1.ReadOnly = true;
             this.unitweight1.Width = 94;
             // 
-            // totalweight
+            // status
             // 
-            this.totalweight.HeaderText = "Status";
-            this.totalweight.Name = "totalweight";
-            this.totalweight.ReadOnly = true;
-            this.totalweight.Width = 65;
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 65;
             // 
             // commodity1
             // 
@@ -197,6 +248,13 @@
             this.possession.ReadOnly = true;
             this.possession.Width = 94;
             // 
+            // mcssno
+            // 
+            this.mcssno.HeaderText = "MCSS No";
+            this.mcssno.Name = "mcssno";
+            this.mcssno.ReadOnly = true;
+            this.mcssno.Width = 85;
+            // 
             // SerialList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -212,6 +270,7 @@
             this.Text = "Serial List";
             this.Load += new System.EventHandler(this.SerialList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -233,5 +292,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
         private System.Windows.Forms.DataGridViewTextBoxColumn possession;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem nextProcessStepToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem processingThisLineToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem deleteLineToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn status;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mcssno;
     }
 }
