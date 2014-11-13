@@ -1,12 +1,9 @@
-﻿using System;
+﻿using Epicoil.Library.Frameworks;
+using Epicoil.Library.Models.Planning;
+using Epicoil.Library.Models.Sales;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Epicoil.Library.Frameworks;
-using Epicoil.Library.Models;
-using Epicoil.Library.Models.Sales;
-using Epicoil.Library.Models.Planning;
 
 namespace Epicoil.Library.Repositories.Sales
 {
@@ -18,6 +15,7 @@ namespace Epicoil.Library.Repositories.Sales
         {
             this._repoCls = new ClassMasterRepo();
         }
+
         public IEnumerable<OrderHeadModel> GetOrderHeadAll()
         {
             string sql = @"SELECT soh.OrderNum, soh.OrderDate, soh.RequestDate, cust.CustID, cust.Name as CustomerName
@@ -78,7 +76,7 @@ namespace Epicoil.Library.Repositories.Sales
 	                                        INNER JOIN UD12 nor ON(sol.PartNum = nor.Key1)
 	                                        LEFT JOIN UD25 busi ON(sol.ShortChar10 = busi.Key1)
 	                                        LEFT JOIN Customer cust ON(sol.Character01 = cust.CustID)
-                                        WHERE sol.OpenLine = 1 AND sol.VoidLine = 0 
+                                        WHERE sol.OpenLine = 1 AND sol.VoidLine = 0
 	                                        AND sol.CheckBox06 = 0 AND sol.OrderNum = {0} ORDER BY sol.OrderLine", OrderId);
 
             return Repository.Instance.GetMany<OrderDetailModel>(sql);
@@ -101,17 +99,16 @@ namespace Epicoil.Library.Repositories.Sales
 	                                        INNER JOIN UD12 nor ON(sol.PartNum = nor.Key1)
 	                                        LEFT JOIN UD25 busi ON(sol.ShortChar10 = busi.Key1)
 	                                        LEFT JOIN Customer cust ON(sol.Character01 = cust.CustID)
-                                        WHERE sol.OpenLine = 1 AND sol.VoidLine = 0 
-	                                        AND sol.CheckBox06 = 0 
-                                            AND sol.OrderNum = {0} 
+                                        WHERE sol.OpenLine = 1 AND sol.VoidLine = 0
+	                                        AND sol.CheckBox06 = 0
+                                            AND sol.OrderNum = {0}
                                             AND sol.OrderLine = {1}", orderId, lineId);
 
             var result = Repository.Instance.GetOne<OrderDetailModel>(sql);
-            if(result != null)
+            if (result != null)
             {
                 result.ClassDetail = _repoCls.GetByID("MfgSys", result.ClassID);
             }
-
             return result;
         }
 

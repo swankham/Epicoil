@@ -244,15 +244,16 @@ namespace Epicoil.Library.Models.Planning
             //    return false;
             //}
 
-            if (Status == "F")
-            {
-                if (string.IsNullOrEmpty(SONo) || SOLine == 0)
-                {
-                    risk = "ERROR";
-                    msg = "This line status = 'F' required S/O.";
-                    return false;
-                }
-            }
+            //****Cacel validate S/O
+            //if (Status == "F")
+            //{
+            //    if (string.IsNullOrEmpty(SONo) || SOLine == 0)
+            //    {
+            //        risk = "ERROR";
+            //        msg = "This line status = 'F' required S/O.";
+            //        return false;
+            //    }
+            //}
 
             if (!string.IsNullOrEmpty(SONo) && SOLine == 0)
             {
@@ -266,7 +267,7 @@ namespace Epicoil.Library.Models.Planning
 
             if (!string.IsNullOrEmpty(NORNum))
             {
-                if (Status != "F")
+                if (Status == "S")
                 {
                     risk = "ERROR";
                     msg = "Please change status = 'F' for S/O line.";

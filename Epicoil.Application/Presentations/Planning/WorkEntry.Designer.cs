@@ -263,7 +263,6 @@
             this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
             this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(194, 22);
             this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
-            this.nextProcessStepToolStripMenuItem.Click += new System.EventHandler(this.nextProcessStepToolStripMenuItem_Click);
             // 
             // processingThisLineToolStripMenuItem
             // 
@@ -883,9 +882,10 @@
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvCutting.Size = new System.Drawing.Size(1250, 242);
             this.dgvCutting.TabIndex = 18;
-            this.dgvCutting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellContentClick);
             this.dgvCutting.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellEndEdit);
             this.dgvCutting.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvCutting_CellValidating);
+            this.dgvCutting.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_RowLeave);
+            this.dgvCutting.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_RowValidated);
             // 
             // lineid
             // 

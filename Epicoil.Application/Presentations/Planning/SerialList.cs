@@ -49,6 +49,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvCutting_CellContentClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1) return;
+
             string status = dgvCutting.Rows[e.RowIndex].Cells["status"].Value.GetString();
 
             if (status == "C")
@@ -63,6 +65,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvCutting_CellClick(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1) return;
+
             string status = dgvCutting.Rows[e.RowIndex].Cells["status"].Value.GetString();
 
             if (status == "C")

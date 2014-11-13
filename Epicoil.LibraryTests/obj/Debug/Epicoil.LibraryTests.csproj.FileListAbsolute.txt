@@ -253,3 +253,7 @@ D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.Lib.BOReader.xml
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.dll
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.pdb
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.BO.LotSelectUpdate.dll
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.IF.ILotSelectUpdate.dll
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.BO.LotSelectUpdate.xml
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.IF.ILotSelectUpdate.xml

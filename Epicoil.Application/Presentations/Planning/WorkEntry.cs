@@ -170,7 +170,7 @@ namespace Epicoil.Appl.Presentations.Planning
             butConfirm.Text = model.CompletedStr;
             if (model.Completed == 1)
             {
-                butConfirm.BackColor = Color.Green;
+                butConfirm.BackColor = Color.FromArgb(161, 205, 95);
                 butGenSN.Enabled = true;
                 butGenSN.Text = model.GenSerialFlagStr.Replace("_", " ");
             }
@@ -202,7 +202,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
                 if (model.Completed == 1)
                 {
-                    butConfirm.BackColor = Color.Green;
+                    butConfirm.BackColor = Color.FromArgb(161, 205, 95);
                 }
                 else if (model.Completed == 0)
                 {
@@ -692,7 +692,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     }
 
                     break;
-
+                /*
                 case "quantity":
                     decimal val = (Convert.ToDecimal(strVal) / Convert.ToDecimal(qtyPack)) * 100;
 
@@ -702,12 +702,10 @@ namespace Epicoil.Appl.Presentations.Planning
                     HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                         .ForEach(i => i.UsingWeight = (Convert.ToDecimal(weight) / 100) * val);
                     break;
+                 */
 
-                //case "SelectCB":
-                //    result.CBSelect = Convert.ToBoolean(dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value);
-                //    break;
             }
-
+            /*
             dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
             dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
             dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
@@ -718,6 +716,8 @@ namespace Epicoil.Appl.Presentations.Planning
             HeaderContent.SumUsingWeight(HeaderContent.Materails);
             SetHeadContent(HeaderContent);
             ListCoilBackGrid(HeaderContent.CoilBacks);
+             */
+            
         }
 
         private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)
@@ -1443,12 +1443,11 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-        private void dgvCutting_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvCutting_RowLeave(object sender, DataGridViewCellEventArgs e)
         {
-
         }
 
-        private void nextProcessStepToolStripMenuItem_Click(object sender, EventArgs e)
+        private void dgvCutting_RowValidated(object sender, DataGridViewCellEventArgs e)
         {
 
         }

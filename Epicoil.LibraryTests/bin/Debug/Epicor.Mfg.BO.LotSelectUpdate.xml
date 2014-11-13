@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Epicor.Mfg.BO.LotSelectUpdate</name>
+    </assembly>
+    <members>
+        <member name="T:Epicor.Mfg.BO.LotSelectUpdate">
+            <summary>
+            Client side business object for LotSelectUpdate.
+            </summary>
+        </member>
+        <member name="T:Epicor.Mfg.Proxy.LotSelectUpdateImpl">
+            <summary>
+            Generic Lot Number Selection and Update Business Object
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Proxy constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetNewPartLot(Epicor.Mfg.BO.LotSelectUpdateDataSet,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetNewPartLotAttch(Epicor.Mfg.BO.LotSelectUpdateDataSet,System.String,System.String)">
+            <summary>
+            Inserts a new row in the DataSet with defaults populated.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.DeleteByID(System.String,System.String)">
+            <summary>
+            Deletes a row given its ID.
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetByID(System.String,System.String)">
+            <summary>
+            Returns a DataSet given the primary key.
+            </summary>
+            <returns>The DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetList(System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a list of rows that satisfy the where clause.
+            </summary>
+            <param name="whereClause">An expression used to filter the rows. Can be left blank for all rows.</param>
+            <param name="pageSize">The maximum number of rows to return. Leave as zero for no maximum.</param>
+            <param name="absolutePage">Page of rows to return.</param>
+            <param name="morePages">Whether there are more pages of rows available.</param>
+            <returns>The list DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetRows(System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            Returns a dataset containing all rows that satisfy the where clauses.
+            </summary>
+            <returns>The full DataSet.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.Update(Epicor.Mfg.BO.LotSelectUpdateDataSet)">
+            <summary>
+            Commits the DataSet changes to the data store.
+            </summary>
+            <param name="ds">The full DataSet.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.UpdateExt(Epicor.Mfg.BO.UpdExtLotSelectUpdateDataSet,System.Boolean,System.Boolean,System.Boolean@)">
+            <summary>
+            Apply input data to BO by calling GetByID/GetNew/Update methods.
+            </summary>
+            <returns>The dataset with list of errors occured during update process.</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.CheckDupLotNum(System.String,System.String,System.String,System.String@)">
+            <summary>
+            This method checks the Lot Number to see if there is any duplicate lot number used
+            by another part number. A warning message will be returned to the user asking
+            if the user wants to continue creating a duplicate lot number. This needs to be run
+            before Update method. If the user answers yes to the question then the update method can be run.
+            </summary>
+            <param name="vLotNum">The Lot Number to be checked for duplicate</param>
+            <param name="vPartNum">Part Number associated with the current Lot Number</param>
+            <param name="vRowid">RowIdent field of the PartLot</param>
+            <param name="vMessage">Returns a warning message for duplicate lot number</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GenerateNewLotNum(System.String,System.String@)">
+            <summary>
+            This method
+            </summary>
+            <param name="vPartNum">Part Number associated with the current Lot Number</param>
+            <param name="vNewLotNum">Returns the next valid lot number</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetListByBinNum(System.String,System.String,System.String,System.Int32,System.Int32,System.Boolean@)">
+            <summary>
+            This method finds lots for Parts by WarehouseCode and BinNum for PackOut Tab in CustShipEntry.
+            </summary>
+            <param name="ipWarehouseCode">Warehouse Code.</param>
+            <param name="ipBinNum">Bin number.</param>
+            <param name="whereclause">WhereClause.</param>
+            <returns type="Epicor.Mfg.BO.PartLotListDataSet">Epicor.Mfg.BO.PartLotListDataSet</returns>
+            <param name="pageSize">Page size.</param>
+            <param name="absolutePage">Absolute page.</param>
+            <param name="morePages">More pages.</param>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.GetListByWarehouse(System.String,System.String,System.String)">
+            <summary>
+            This method finds lots for Parts by WarehouseCode.
+            </summary>
+            <param name="ipWarehouseCode">Warehouse Code.</param>
+            <param name="ipPartNum">PartNum.</param>
+            <param name="ipUOMCode">UOMCode.</param>
+            <returns type="Epicor.Mfg.BO.PartLotListDataSet">Epicor.Mfg.BO.PartLotListDataSet</returns>
+        </member>
+        <member name="M:Epicor.Mfg.Proxy.LotSelectUpdateImpl.ValidateLotAttributes(Epicor.Mfg.BO.LotSelectUpdateDataSet)">
+            <summary>
+            Validate the attributes information introduced by the user.
+            </summary>
+            <param name="ds" type="Epicor.Mfg.BO.LotSelectUpdateDataSet">The LotSelectUpdate DataSet </param>
+        </member>
+        <member name="P:Epicor.Mfg.Proxy.LotSelectUpdateImpl.CallContext">
+            <summary>
+            Call context dataset
+            </summary>
+        </member>
+        <member name="M:Epicor.Mfg.BO.LotSelectUpdate.#ctor(Epicor.Mfg.Core.BLConnectionPool)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="connPool">Connection pool</param>
+        </member>
+    </members>
+</doc>

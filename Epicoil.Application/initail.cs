@@ -18,7 +18,7 @@ namespace Epicoil.Appl
         {
             f.Font = new Font("Microsoft Sans Serif", 9f);
             //f.ForeColor = Color.White;
-            f.BackColor = Color.FromArgb(222, 235, 250);            
+            f.BackColor = Color.FromArgb(222, 239, 254);            
         }
 
         public static void UseTheme(Form form)
