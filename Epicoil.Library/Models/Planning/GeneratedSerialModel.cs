@@ -13,6 +13,8 @@ namespace Epicoil.Library.Models.Planning
 
         public int WorkOrderID { get; set; }
 
+        public string WorkOrderNum { get; set; }
+
         public int CuttingLineID { get; set; }
 
         public int MaterialTransLineID { get; set; }
@@ -53,6 +55,7 @@ namespace Epicoil.Library.Models.Planning
             this.SerialNo = (string)row["SerialNo"].GetString();
             this.SimLineID = (int)row["SimLineID"].GetInt();
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
+            this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
             this.CuttingLineID = (int)row["CuttingLineID"].GetInt();
             this.MaterialTransLineID = (int)row["MaterialTransLineID"].GetInt();
             this.Thick = (decimal)row["Thick"].GetDecimal();

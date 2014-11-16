@@ -152,6 +152,12 @@ namespace Epicoil.Library.Models.Planning
             return Math.Round(result / 1000, 2);
         }
 
+        public void CalculateUsingLength()
+        {
+            UsingLengthM = (Length == 0) ? CalculateLengthMeter(UsingWeight, Width, Thick, Gravity, FrontPlate, BackPlate)
+                    : Math.Round((Length / 1000), 2);
+        }
+
         public void SetUsingWeight()
         {
             UsingWeight = (UsingWeight == 0) ? Weight : UsingWeight;

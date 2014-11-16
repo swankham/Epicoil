@@ -18,6 +18,7 @@ namespace Epicoil.Library.Repositories.Planning
         private readonly IResourceRepo _repoResrc;
         private readonly ICoilBackRuleRepo _repoRule;
         private readonly IUserCodeRepo _repoUcode;
+
         public WorkEntryRepo()
         {
             this._repoUcode = new UserCodeRepo();
@@ -145,7 +146,42 @@ namespace Epicoil.Library.Repositories.Planning
                     newCut.Status = "S";
                     newCut.Width = rowData.Width - cutTotalWidth;
                     newCut.Stand = 1;
-                    newCut.CalculateRow(head);
+                    newCut.CalculateRows(head);
+                    if (newCut.ValidateByRow(head, out risk, out msg))
+                    {
+                        var result = SaveLineCutting(_session, head, newCut);
+                    }
+                }
+            }
+
+            return GetCuttingLines(head.WorkOrderID);
+        }
+
+        public IEnumerable<CutDesignModel> GenerateCuttingLineForLeveller(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg)
+        {
+            risk = "";
+            msg = "";
+            if (head.Materails.ToList().Count > 0)
+            {
+                var cutLines = GetCuttingLines(head.WorkOrderID);
+                var rowData = (from item in head.Materails
+                               select item).First();
+
+                risk = string.Empty;
+                msg = string.Empty;
+                decimal cutTotalWidth = cutLines.Sum(i => i.Width * i.Stand);
+
+                if (rowData.Width > cutTotalWidth)
+                {
+                    var newCut = cutLines.First();
+                    newCut.SONo = "";
+                    newCut.SOLine = 0;
+                    newCut.NORNum = "";
+                    newCut.LineID = 0;
+                    newCut.Status = "S";
+                    newCut.Width = rowData.Width - cutTotalWidth;
+                    newCut.Stand = 1;
+                    newCut.CalculateRows(head);
                     if (newCut.ValidateByRow(head, out risk, out msg))
                     {
                         var result = SaveLineCutting(_session, head, newCut);
@@ -164,7 +200,7 @@ namespace Epicoil.Library.Repositories.Planning
                 for (int j = 1; j <= item.Stand; j++)
                 {
                     //int iRunning = RunningLot();
-                    string LotNum = item.MaterialSerialNo + '-' + iRunning.ToString();//GetSerialByFormat(iRunning);
+                    string LotNum = item.MaterialSerialNo + '0' + iRunning.ToString();//GetSerialByFormat(iRunning);
                     string sql = string.Format(@"INSERT INTO ucc_pln_SerialGenerated
                                                        (Plant
                                                        ,SimLineID
@@ -325,8 +361,8 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
-	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
-	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
+	                                        , pl.Number06 as Quantity, pl.Number06 as QuantityPack, 0 as CBSelect
+                                            , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
 	                                        , cust.CustID, ISNULL(cust.Name, '') as CustomerName
@@ -339,9 +375,9 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
 	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
 	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
-	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
-				                                        GROUP BY PartNum, LotNum, DimCode) oh
-				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        ---INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                            ---            GROUP BY PartNum, LotNum, DimCode) oh
+				                            ---            ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
 	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
@@ -367,7 +403,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
-	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, SelectCB as CBSelect
+	                                        , mat.Qty as Quantity, pl.Number06 as QuantityPack, SelectCB as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -382,9 +418,9 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
 	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
 	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
-	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
-				                                        GROUP BY PartNum, LotNum, DimCode) oh
-				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        ---INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                            ---            GROUP BY PartNum, LotNum, DimCode) oh
+				                            ---            ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
 	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
@@ -434,18 +470,24 @@ namespace Epicoil.Library.Repositories.Planning
 
         public CutDesignModel GetCuttingByID(int LineID)
         {
-            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName, spec.Number01 as Gravity, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
                                             FROM ucc_pln_CuttingDesign cut
                                                 LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
                                             WHERE cut.LineID = {0}", LineID);
             return Repository.Instance.GetOne<CutDesignModel>(sql);
         }
 
         public IEnumerable<CutDesignModel> GetCuttingLines(int workOrderID)
         {
-            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName
+            string sql = string.Format(@"SELECT cut.*, busi.Character01 as BussinessTypeName, spec.Number01 as Gravity, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
                                             FROM ucc_pln_CuttingDesign cut
                                                 LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
                                             WHERE cut.WorkOrderID = {0} ORDER BY LineID ASC", workOrderID);
             return Repository.Instance.GetMany<CutDesignModel>(sql);
         }
@@ -480,6 +522,14 @@ namespace Epicoil.Library.Repositories.Planning
             return Convert.ToInt32(id) + 1;
         }
 
+        public IEnumerable<LevellerSimulateModel> GetLevellerSimAll(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT * FROM dbo.ucc_pln_LevellerSimulateTmp
+                                            WHERE WorkOrderID = {0}
+                                            ORDER BY CuttingLineID, MaterialTransLineID ASC", workOrderID);
+            return Repository.Instance.GetMany<LevellerSimulateModel>(sql);
+        }
+
         /// <summary>
         /// Get one row from selecting material from transaction data [WorkOrder => ucc_pln_Material].
         /// </summary>
@@ -494,7 +544,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
-	                                        , mat.Qty as Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        , mat.Qty as Quantity, mat.Qty as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -509,9 +559,9 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
 	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
 	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
-	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
-				                                        GROUP BY PartNum, LotNum, DimCode) oh
-				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        ---INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                            ---            GROUP BY PartNum, LotNum, DimCode) oh
+				                            ---            ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
 	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
@@ -537,7 +587,8 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
-	                                        , oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+	                                        --, oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
+                                            , pl.OnHand as Quantity, pl.Number06 as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -551,14 +602,14 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        LEFT JOIN UD30 spec ON(p.ShortChar01 = spec.Key2 and p.ShortChar02 = spec.Key1)
 	                                        LEFT JOIN UD31 coat ON(p.ShortChar09 = coat.Key1)
 	                                        LEFT JOIN UD25 busi ON(pl.Character02 = busi.Key1)
-	                                        INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
-				                                        GROUP BY PartNum, LotNum, DimCode) oh
-				                                        ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
+	                                        --INNER JOIN (SELECT PartNum, LotNum, sum(OnhandQty) as Quantity, DimCode FROM PartBin
+				                            --            GROUP BY PartNum, LotNum, DimCode) oh
+				                            --            ON(p.PartNum = oh.PartNum and pl.LotNum = oh.LotNum)
 	                                        LEFT JOIN Vendor ven ON(pl.ShortChar03 = ven.VendorID)
 	                                        LEFT JOIN UD19 maker ON(pl.ShortChar01 = maker.Key1)
 	                                        LEFT JOIN UD14 mill ON(pl.ShortChar01 = mill.Key2 and pl.ShortChar02 = mill.Key1)
 	                                        LEFT JOIN Customer cust ON(p.Character08 = cust.CustID)
-                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1) --AND pl.CheckBox01 = 0
+                                        WHERE pln.Plant = N'{0}' AND pl.Number05 = 1 AND pl.Number08 IN (0, 1) AND pl.CheckBox01 = 0
                                               AND pl.PartNum = N'{1}' AND pl.LotNum = N'{2}'", plant, partNum, lotNum);
 
             return Repository.Instance.GetOne<MaterialModel>(sql);
@@ -571,10 +622,11 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , gsn.*, mat.MCSSNo
+	                                            , gsn.*, mat.MCSSNo, pln.WorkOrderNum
                                             FROM ucc_pln_SerialGenerated gsn
 	                                            LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
 	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN ucc_pln_PlanHead pln ON(gsn.WorkOrderID = pln.WorkOrderID)
 	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
 	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
 	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
@@ -670,7 +722,7 @@ namespace Epicoil.Library.Repositories.Planning
             msg = string.Empty;
             //bool IsSuccess = false;
             Session currSession;
-            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList().Where(i => i.Status.Equals("C"));
+            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
             try
             {
                 currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
@@ -700,9 +752,10 @@ namespace Epicoil.Library.Repositories.Planning
                     drLot["Number04"] = item.UnitWeight;
                     drLot["Number05"] = 1;
                     drLot["Number08"] = 0;
-                    drLot["Character02"] = item.WorkOrderID.ToString();
-                    drLot["Character02"] = item.WorkOrderID.ToString();
-                    //drLot[""] = item.Thick;
+                    drLot["Character02"] = item.BussinessType.GetString();
+                    drLot["ShortChar06"] = item.WorkOrderNum.ToString();
+
+                    drLot["Date05"] = DateTime.Now;
                     //drLot[""] = item.Thick;
                     //drLot[""] = item.Thick;
                     //drLot[""] = item.Thick;
@@ -1108,6 +1161,75 @@ namespace Epicoil.Library.Repositories.Planning
             return GetCoilBackAll(data.WorkOrderID);
         }
 
+        public IEnumerable<LevellerSimulateModel> SaveLevellerSimulate(SessionInfo _session, LevellerSimulateModel model)
+        {
+            //int id = 0;
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_LevellerSimulateTmp (NOLOCK)
+										    WHERE WorkOrderID = {1} AND CuttingLineID = {2} AND MaterialTransLineID = {3}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_LevellerSimulateTmp
+                                                       (Plant
+                                                       ,WorkOrderID
+                                                       ,CuttingLineID
+                                                       ,MaterialTransLineID
+                                                       ,Quantity
+                                                       ,Weight
+                                                       ,LengthM
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy, SOQuantity)
+                                                 VALUES
+                                                       (N'{0}'  --<Plant, nvarchar(8),>
+                                                       ,{1}  --<WorkOrderID, bigint,>
+                                                       ,{2}  --<CuttingLineID, bigint,>
+                                                       ,{3}  --<MaterialTransLineID, bigint,>
+                                                       ,{4}  --<Quantity, int,>
+                                                       ,{5}  --<Weight, decimal(20,9),>
+                                                       ,{6}  --<LengthM, decimal(20,9),>
+                                                       ,GETDATE()  --<CreationDate, datetime,>
+                                                       ,GETDATE()  --<LastUpdateDate, datetime,>
+                                                       ,N'{7}'  --<CreatedBy, nvarchar(45),>
+                                                       ,N'{7}'  --<UpdatedBy, nvarchar(45),>
+                                                       ,{8}
+		                                    )
+                                        END
+                                    ELSE
+                                        BEGIN
+                                            UPDATE ucc_pln_LevellerSimulateTmp
+                                               SET Plant = N'{0}' --<Plant, nvarchar(8),>
+                                                  ,WorkOrderID = {1} --<WorkOrderID, bigint,>
+                                                  ,CuttingLineID = {2} --<CuttingLineID, bigint,>
+                                                  ,MaterialTransLineID = {3} --<MaterialTransLineID, bigint,>
+                                                  ,Quantity = {4} --<Quantity, int,>
+                                                  ,Weight = {5} --<Weight, decimal(20,9),>
+                                                  ,LengthM = {6} --<LengthM, decimal(20,9),>
+                                                  ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{7}' --<UpdatedBy, nvarchar(45),>
+                                                  ,SOQuantity = {8}
+                                             WHERE WorkOrderID = {1} AND CuttingLineID = {2} AND MaterialTransLineID = {3}
+                                        END" + Environment.NewLine
+                                              , _session.PlantID
+                                              , model.WorkOrderID
+                                              , model.CuttingLineID
+                                              , model.MaterialTransLineID
+                                              , model.Quantity
+                                              , model.Weight
+                                              , model.LengthM
+                                              , _session.UserID
+                                              , model.SOQuantity
+                                              );
+
+            //Update PartLot.CheckBox01 = 1 to change status has already used.
+            //sql += @"DELETE FROM ucc_pln_LevellerSimulateTmp WHERE LengthM = 0";
+
+            Repository.Instance.ExecuteWithTransaction(sql, "Add SIM");
+            return GetLevellerSimAll(model.WorkOrderID);
+        }
+
         public IEnumerable<CutDesignModel> SaveLineCutting(SessionInfo _session, PlanningHeadModel head, CutDesignModel data)
         {
             string sql = string.Format(@"IF NOT EXISTS
@@ -1153,7 +1275,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,CreationDate
                                                        ,LastUpdateDate
                                                        ,CreatedBy
-                                                       ,UpdatedBy, TotalLength)
+                                                       ,UpdatedBy, TotalLength, CompletedRow)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -1193,6 +1315,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , N'{33}' --<CreatedBy, varchar(45),>
                                                        , N'{33}' --<UpdatedBy, varchar(45),>
                                                        , {35}  --<TotalLength, Decimal(20,9)>
+                                                       , {36}  --<CompletedRow, int>
 		                                               )
                                             END
                                         ELSE
@@ -1235,6 +1358,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,CreatedBy = N'{33}'  --<CreatedBy, varchar(45),>
                                                       ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
                                                       ,TotalLength = {35}  --<TotalLength, decimal(20,9),>
+                                                      ,CompletedRow = {36}  --<CompletedRow, int,>
                                                  WHERE LineID = {34}
                                             END" + Environment.NewLine
                                   , _session.CompanyID
@@ -1273,6 +1397,7 @@ namespace Epicoil.Library.Repositories.Planning
                                   , _session.UserID
                                   , data.LineID.GetInt()
                                   , data.TotalLength.GetDecimal()
+                                  , Convert.ToInt32(data.CompleteRow.GetInt())
                                   );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Cutting");
 

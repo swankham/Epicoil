@@ -18,6 +18,8 @@ namespace Epicoil.Library.Repositories.Planning
 
         IEnumerable<CutDesignModel> GenerateCuttingLine(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg);
 
+        IEnumerable<CutDesignModel> GenerateCuttingLineForLeveller(SessionInfo _session, PlanningHeadModel head, out string risk, out string msg);
+
         string GenWorkOrderFixFormat(int id);
 
         IEnumerable<MaterialModel> GetAllMatByFilter(string plant, PlanningHeadModel model);
@@ -79,5 +81,9 @@ namespace Epicoil.Library.Repositories.Planning
         bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
 
         int GetStepByWorkOrder(int workOrderID);
+
+        IEnumerable<LevellerSimulateModel> SaveLevellerSimulate(SessionInfo _session, LevellerSimulateModel model);
+
+        IEnumerable<LevellerSimulateModel> GetLevellerSimAll(int workOrderID);
     }
 }

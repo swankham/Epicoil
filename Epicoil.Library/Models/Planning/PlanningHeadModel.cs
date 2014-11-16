@@ -1,4 +1,5 @@
-﻿using Epicoil.Library.Repositories;
+﻿using Epicoil.Library.Models.Sales;
+using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,7 @@ namespace Epicoil.Library.Models.Planning
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
         public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
+        public IEnumerable<LevellerSimulateModel> LevSimulateList = new List<LevellerSimulateModel>();
 
         public MaterialModel MaterialPattern
         {
@@ -138,6 +140,12 @@ namespace Epicoil.Library.Models.Planning
         {
             get { return this.PossessionList.ToList(); }
             set { this.PossessionList = value; }
+        }
+
+        public List<LevellerSimulateModel> LevSimulates
+        {
+            get { return this.LevSimulateList.ToList(); }
+            set { this.LevSimulateList = value; }
         }
 
         public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
@@ -523,6 +531,40 @@ namespace Epicoil.Library.Models.Planning
             return valid;
         }
 
+
+        public List<CutDesignModel> UpdateCuttingByLine(OrderDetailModel ordDtl, int lineID)
+        {
+            for (int i = 0; i < CuttingDesign.Count; i++ )
+            {
+                if (CuttingDesign[i].LineID == lineID)
+                {
+                    CuttingDesign[i].SOLine = ordDtl.OrderLine;
+                    CuttingDesign[i].NORNum = ordDtl.NORNo;
+                    CuttingDesign[i].CommodityCode = ordDtl.CommodityCode;
+                    CuttingDesign[i].SpecCode = ordDtl.SpecCode;
+                    CuttingDesign[i].CoatingCode = ordDtl.CoatingCode;
+                    CuttingDesign[i].Thick = ordDtl.Thick;
+                    CuttingDesign[i].Width = ordDtl.Width;
+                    CuttingDesign[i].Length = ordDtl.Length;
+                    CuttingDesign[i].SOWeight = ordDtl.SOWeight;
+                    CuttingDesign[i].SOQuantity = ordDtl.SOQuantity;
+                    CuttingDesign[i].QtyPack = ordDtl.QtyPack;
+                    CuttingDesign[i].Pack = ordDtl.Pack;
+                    CuttingDesign[i].BussinessType = ordDtl.BussinessType;
+                }
+            }
+
+            return CuttingDesign;
+        }
+
+        public List<CutDesignModel> ReCalculateCuttingLine()
+        {
+            foreach (var v in CuttingDesign)
+            {
+                v.CalculateRows(this);
+            }
+            return CuttingDesign;
+        }
         #endregion Method
     }
 }

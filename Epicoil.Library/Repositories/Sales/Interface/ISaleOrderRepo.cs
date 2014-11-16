@@ -11,11 +11,11 @@ namespace Epicoil.Library.Repositories.Sales
 {
     public interface ISaleOrderRepo
     {
-        IEnumerable<OrderHeadModel> GetOrderHeadAll();
+        IEnumerable<OrderHeadModel> GetOrderHeader(PlanningHeadModel model, string orderNum = null);
 
         OrderHeadModel GetOrderByID(string orderId);
 
-        IEnumerable<OrderHeadModel> GetOrderHeadByFilter(OrderHeadModel data);
+        IEnumerable<OrderHeadModel> GetOrderHeadByFilter(OrderHeadModel data, PlanningHeadModel model);
 
         IEnumerable<OrderDetailModel> GetOrderDtlAll(string OrderId);
 

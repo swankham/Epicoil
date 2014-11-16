@@ -39,7 +39,13 @@ namespace Epicoil.Library.Models.Planning
 
         public string SpecCode { get; set; }
 
+        public decimal Gravity { get; set; }
+
         public string CoatingCode { get; set; }
+
+        public decimal FrontPlate { get; set; }
+
+        public decimal BackPlate { get; set; }
 
         public decimal Thick { get; set; }
 
@@ -111,6 +117,10 @@ namespace Epicoil.Library.Models.Planning
 
         public string MillName { get; set; }
 
+        public bool CompleteRow { get; set; }
+
+        public bool MaterialLineID { get; set; }
+
         public void DataBind(DataRow row)
         {
             this.Plant = (string)row["Plant"].GetString();
@@ -152,20 +162,49 @@ namespace Epicoil.Library.Models.Planning
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
+            this.CompleteRow = Convert.ToBoolean((int)row["CompletedRow"].GetInt());
+            this.Gravity = (decimal)row["Gravity"].GetDecimal();
+            this.FrontPlate = (decimal)row["FrontPlate"].GetDecimal();
+            this.BackPlate = (decimal)row["BackPlate"].GetDecimal();
         }
 
-        public void CalculateRow(PlanningHeadModel head)
+        public void CalculateRows(PlanningHeadModel head)
         {
             //Fix bug in case Materials is null.
-            decimal widthMat = 0;
-            if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
-            UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
-            TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
+            if (head.ProcessLineDetail.ResourceGrpID == "S")
+            {
+                decimal widthMat = 0;
+                if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
+                UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
+                TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
+            }
+            else if (head.ProcessLineDetail.ResourceGrpID == "L")
+            {
+                UnitWeight = CalUnitWgt(Thick, Width, Length / 1000, Gravity, FrontPlate, BackPlate);
+                TotalWeight = UnitWeight * SOQuantity;
+            }
+
 
             decimal matLengthM = head.Materails.Sum(i => i.LengthM);
             decimal matWeight = head.Materails.Sum(i => i.Weight);
             decimal matUsingWeight = head.Materails.Sum(i => i.UsingWeight);
             TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
+        }
+
+
+        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
+        {
+            decimal Ma = 0.0M;
+            decimal Mb = 0.0M;
+            decimal Mc = 0.0M;
+            decimal WgtPerUnit = 0;
+
+            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
+            Mb = (W / 1000) * (L);
+            Mc = (Ma * Mb);
+            WgtPerUnit = Math.Round(Mc, 2);
+            return WgtPerUnit;
+
         }
 
         /// <summary>
@@ -210,50 +249,55 @@ namespace Epicoil.Library.Models.Planning
             msg = string.Empty;
             var r = this.Thick.ToString();
 
+            if (string.IsNullOrEmpty(Status))
+            {
+                risk = "WARNNING";
+                msg = "";
+                return false;
+            }
+
             if (head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
             {
-                risk = "ERROR";
+                risk = "WARNNING";
                 msg = "Status 'S' is already exist in cutting lines.";
                 return false;
             }
 
             if (head.Materails.ToList().Count > 0)
             {
-                decimal totalWidth = (from item in head.CuttingDesign
-                                      select item).Sum(i => i.Width * i.Stand);
-                var totalMatWidth = (from mat in head.Materails
-                                     select mat).First();
-
-                if (totalMatWidth.Width < totalWidth)
+                if (head.ProcessLineDetail.ResourceGrpID == "S")
                 {
-                    risk = "ERROR";
-                    msg = "Total width in cutting line is greater than material width.";
+                    decimal totalWidth = (from item in head.CuttingDesign
+                                          select item).Sum(i => i.Width * i.Stand);
+                    var totalMatWidth = (from mat in head.Materails
+                                         select mat).First();
+
+                    if (totalMatWidth.Width < totalWidth)
+                    {
+                        risk = "ERROR";
+                        msg = "Total width in cutting line is greater than material width.";
+                        return false;
+                    }
+                }
+            }
+
+            if (head.ProcessLineDetail.ResourceGrpID == "L")
+            {
+                if (CalQuantity == 0)
+                {
+                    risk = "WARNNING";
+                    msg = "Calculate quantity invalid.";
+                    return false;
+                }
+
+                if (Pack != (CalQuantity/QtyPack))
+                {
+                    risk = "WARNNING";
+                    msg = "Pack invalid.";
                     return false;
                 }
             }
 
-            //decimal totalWeight = head.CuttingDesign.Sum(i => i.TotalWeight);
-            //decimal totalWeight = (from item in head.CuttingDesign
-            //           where item.LineID != LineID
-            //           select item).Sum(i => i.TotalWeight);
-
-            //if (head.UsingWeight < (totalWeight + TotalWeight))
-            //{
-            //    risk = "ERROR";
-            //    msg = "Total weight in cutting line is greater than material using weight.";
-            //    return false;
-            //}
-
-            //****Cacel validate S/O
-            //if (Status == "F")
-            //{
-            //    if (string.IsNullOrEmpty(SONo) || SOLine == 0)
-            //    {
-            //        risk = "ERROR";
-            //        msg = "This line status = 'F' required S/O.";
-            //        return false;
-            //    }
-            //}
 
             if (!string.IsNullOrEmpty(SONo) && SOLine == 0)
             {

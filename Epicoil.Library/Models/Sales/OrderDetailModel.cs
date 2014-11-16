@@ -67,6 +67,8 @@ namespace Epicoil.Library.Models.Sales
 
         public decimal SOQuantity { get; set; }
 
+        public int QtyPack { get; set; }
+
         public decimal Pack { get; set; }
 
         public decimal Price { get; set; }
@@ -95,8 +97,8 @@ namespace Epicoil.Library.Models.Sales
             this.CoatingCode = (string)row["CoatingCode"].GetString();
             this.CoatingName = (string)row["CoatingName"].GetString();
             this.Possession = (int)row["Possession"].GetInt();
-            this.BussinessType = (string)row["BussinessType"].GetString();
-            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
+            this.BussinessType = string.IsNullOrEmpty(row["BussinessType"].GetString()) ? "" : row["BussinessType"].GetString();
+            this.BussinessTypeName = string.IsNullOrEmpty(row["BussinessTypeName"].GetString()) ? "" : row["BussinessTypeName"].GetString();
             //this.SupplierCode = (string)row[""].GetString();
             //this.SupplierName = (string)row[""].GetString();
             this.CustID = (string)row["CustID"].GetString();
@@ -114,6 +116,7 @@ namespace Epicoil.Library.Models.Sales
             this.Price = (decimal)row["DocUnitPrice"].GetDecimal();
             this.SOAmount = (decimal)row["Number06"].GetDecimal();
             this.ClassID = Convert.ToInt32(row["Number17"].GetDecimal());
+            this.QtyPack = Convert.ToInt32(row["Number10"].GetDecimal());
         }
     }
 }

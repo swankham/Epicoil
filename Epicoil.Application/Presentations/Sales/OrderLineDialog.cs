@@ -26,6 +26,7 @@ namespace Epicoil.Appl.Presentations.Sales
 
         private void SetGrid(IEnumerable<OrderDetailModel> data)
         {
+            if (data.ToList().Count == 0) return;
             dgvList.Rows.Clear();
             int i = 0;
             foreach (var p in data)

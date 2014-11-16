@@ -153,7 +153,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 93);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 99);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -163,7 +163,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView);
-            this.splitContainer1.Size = new System.Drawing.Size(1122, 494);
+            this.splitContainer1.Size = new System.Drawing.Size(1122, 488);
             this.splitContainer1.SplitterDistance = 234;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -176,7 +176,7 @@
             this.trvMenu.Location = new System.Drawing.Point(0, 0);
             this.trvMenu.Name = "trvMenu";
             this.trvMenu.SelectedImageIndex = 0;
-            this.trvMenu.Size = new System.Drawing.Size(234, 494);
+            this.trvMenu.Size = new System.Drawing.Size(234, 488);
             this.trvMenu.TabIndex = 0;
             this.trvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvMenu_NodeMouseClick);
             // 
@@ -191,7 +191,7 @@
             this.listView.LargeImageList = this.imageList1;
             this.listView.Location = new System.Drawing.Point(0, 0);
             this.listView.Name = "listView";
-            this.listView.Size = new System.Drawing.Size(884, 494);
+            this.listView.Size = new System.Drawing.Size(884, 488);
             this.listView.SmallImageList = this.imageList1;
             this.listView.TabIndex = 0;
             this.listView.UseCompatibleStateImageBehavior = false;
@@ -199,7 +199,7 @@
             // 
             // ribbon1
             // 
-            this.ribbon1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(194)))), ((int)(((byte)(224)))), ((int)(((byte)(255)))));
+            this.ribbon1.BackColor = System.Drawing.Color.LightSkyBlue;
             this.ribbon1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.ribbon1.Location = new System.Drawing.Point(0, 0);
             this.ribbon1.Minimized = false;
@@ -213,7 +213,6 @@
             this.ribbon1.OrbDropDown.Size = new System.Drawing.Size(527, 72);
             this.ribbon1.OrbDropDown.TabIndex = 0;
             this.ribbon1.OrbImage = null;
-            this.ribbon1.OrbStyle = System.Windows.Forms.RibbonOrbStyle.Office_2010;
             this.ribbon1.OrbText = "";
             this.ribbon1.OrbVisible = false;
             this.ribbon1.PanelCaptionHeight = 5;
@@ -226,7 +225,7 @@
             this.ribbon1.QuickAcessToolbar.TextAlignment = System.Windows.Forms.RibbonItem.RibbonItemTextAlignment.Center;
             this.ribbon1.QuickAcessToolbar.Visible = false;
             this.ribbon1.RibbonTabFont = new System.Drawing.Font("Trebuchet MS", 10F);
-            this.ribbon1.Size = new System.Drawing.Size(1122, 93);
+            this.ribbon1.Size = new System.Drawing.Size(1122, 99);
             this.ribbon1.TabIndex = 0;
             this.ribbon1.Tabs.Add(this.ribbonTab1);
             this.ribbon1.Tabs.Add(this.ribbonTab2);
