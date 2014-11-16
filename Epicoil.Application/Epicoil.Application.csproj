@@ -204,6 +204,12 @@
     <Compile Include="Presentations\Planning\SimulateEntry.Designer.cs">
       <DependentUpon>SimulateEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Planning\SimulateReShear.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\SimulateReShear.Designer.cs">
+      <DependentUpon>SimulateReShear.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Planning\WorkEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -360,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\SimulateEntry.resx">
       <DependentUpon>SimulateEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\SimulateReShear.resx">
+      <DependentUpon>SimulateReShear.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\WorkEntry.resx">
       <DependentUpon>WorkEntry.cs</DependentUpon>

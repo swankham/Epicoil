@@ -89,3 +89,4 @@ D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Properties.Reso
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.SimulateReShear.resources

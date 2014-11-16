@@ -403,44 +403,55 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
             if (HeaderContent.Completed == 1) return;
-            //Simulated Complate.
-            var resExisting = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
 
-            if (resExisting.ToList().Count > 0)
+            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
             {
-                DialogResult diaResult = MessageBox.Show("Simulate line has already, are you sure to clear all.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (diaResult == DialogResult.Yes)
+                //Simulated Complate.
+                var resExisting = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
+                if (resExisting.ToList().Count > 0)
                 {
-                    _repo.ClearSimulateLines(HeaderContent.WorkOrderID);
+                    DialogResult diaResult = MessageBox.Show("Simulate line has already, are you sure to clear all.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (diaResult == DialogResult.Yes)
+                    {
+                        _repo.ClearSimulateLines(HeaderContent.WorkOrderID);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else
+                SimulateActionModel simModel = new SimulateActionModel();
+                simModel.WorkOrderID = HeaderContent.WorkOrderID;
+                simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
+                simModel.MaterialWeight = HeaderContent.InputWeight;
+                simModel.ProductWeight = HeaderContent.OutputWeight;
+                simModel.RewindWeight = HeaderContent.RewindWeight;
+                simModel.Yield = HeaderContent.Yield;
+                simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
+
+                simModel.Cuttings = _repo.InsertSimulate(epiSession, HeaderContent).ToList();
+                simModel.Materials = HeaderContent.Materails.ToList();
+                using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
                 {
-                    return;
+                    frm.ShowDialog();
+                    HeaderContent = frm.HeadModel;
+                }
+
+                SetHeadContent(HeaderContent);
+                ListMaterialGrid(HeaderContent.Materails);
+                ListCuttingGrid(HeaderContent.CuttingDesign);
+                tbutCalculate_Click(sender, e);
+                //tbutSave_Click(sender, e);
+                HeaderContent.SimulateFlag = 1;
+            }
+            else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "R")
+            {
+                using (SimulateReShear frm = new SimulateReShear(epiSession, HeaderContent))
+                {
+                    frm.ShowDialog();
+                    HeaderContent = frm.HeadModel;
                 }
             }
-            SimulateActionModel simModel = new SimulateActionModel();
-            simModel.WorkOrderID = HeaderContent.WorkOrderID;
-            simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
-            simModel.MaterialWeight = HeaderContent.InputWeight;
-            simModel.ProductWeight = HeaderContent.OutputWeight;
-            simModel.RewindWeight = HeaderContent.RewindWeight;
-            simModel.Yield = HeaderContent.Yield;
-            simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
-
-            simModel.Cuttings = _repo.InsertSimulate(epiSession, HeaderContent).ToList();
-            simModel.Materials = HeaderContent.Materails.ToList();
-            using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
-            {
-                frm.ShowDialog();
-                HeaderContent = frm.HeadModel;
-            }
-            ListMaterialGrid(HeaderContent.Materails);
-            ListCuttingGrid(HeaderContent.CuttingDesign);
-            tbutCalculate_Click(sender, e);
-            SetHeadContent(HeaderContent);
-            tbutSave_Click(sender, e);
-            HeaderContent.SimulateFlag = 1;
-            SetFormState();
         }
 
         private void tlbClear_Click(object sender, EventArgs e)

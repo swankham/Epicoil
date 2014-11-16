@@ -203,7 +203,7 @@ namespace Epicoil.Library.Repositories.Planning
                 for (int j = 1; j <= item.Stand; j++)
                 {
                     //int iRunning = RunningLot();
-                    string LotNum = item.MaterialSerialNo + '0' + iRunning.ToString();//GetSerialByFormat(iRunning);
+                    string LotNum = item.MaterialSerialNo + iRunning.ToString("00");//GetSerialByFormat(iRunning);
                     string sql = string.Format(@"INSERT INTO ucc_pln_SerialGenerated
                                                        (Plant
                                                        ,SimLineID

@@ -115,7 +115,7 @@ namespace Epicoil.Library.Models.Planning
             cutMax = head.Cuttings.Max(i => i.CutDiv);
             UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.Expected, widthMat, Width), 2);
             TotalWeight = UnitWeight * Stand;
-            LengthM = (Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 1);
+            LengthM = Math.Round((Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 1), 0);
             //}
             //else if (head.SimulateOption == 1)
             //{
