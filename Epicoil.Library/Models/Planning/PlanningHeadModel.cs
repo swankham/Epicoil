@@ -200,7 +200,7 @@ namespace Epicoil.Library.Models.Planning
         {
             get
             {
-                return Enum.GetName(typeof(GenerateSNStatus), GenSerialFlag);
+                return (Enum.GetName(typeof(GenerateSNStatus), GenSerialFlag).Replace("_"," "));
             }
         }
 

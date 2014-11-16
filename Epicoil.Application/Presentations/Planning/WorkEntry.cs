@@ -166,22 +166,6 @@ namespace Epicoil.Appl.Presentations.Planning
             butSimulate.Text = model.SimulateFlagStr;
             butGenSN.Enabled = Convert.ToBoolean(model.GenSerialFlag);
             butGenSN.Text = model.GenSerialFlagStr;
-            butConfirm.Visible = Convert.ToBoolean(model.Completed);
-            butConfirm.Text = model.CompletedStr;
-            if (model.Completed == 1)
-            {
-                butConfirm.BackColor = Color.FromArgb(161, 205, 95);
-                butGenSN.Enabled = true;
-                butGenSN.Text = model.GenSerialFlagStr.Replace("_", " ");
-            }
-            else if (model.Completed == 0)
-            {
-                butConfirm.BackColor = Color.Yellow;
-            }
-            else
-            {
-                butConfirm.BackColor = Color.Red;
-            }
 
             //DatePicker
             dptIssueDate.Value = model.IssueDate;
@@ -189,6 +173,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             if (model.CheckYeild(model.Yield))
             {
+                if (model.Completed == 2) model.Completed = Convert.ToInt32(_repo.UnlockHold(HeaderContent.WorkOrderID));
                 txtYield.BackColor = SystemColors.Control;
                 if (model.SimulateFlag == 1)
                 {
@@ -216,6 +201,24 @@ namespace Epicoil.Appl.Presentations.Planning
             else
             {
                 txtYield.BackColor = Color.Yellow;
+            }
+
+            butConfirm.Visible = Convert.ToBoolean(model.Completed);
+            butConfirm.Text = model.CompletedStr;
+
+            if (model.Completed == 1)
+            {
+                butConfirm.BackColor = Color.FromArgb(161, 205, 95);
+                butGenSN.Enabled = true;
+                butGenSN.Text = model.GenSerialFlagStr.Replace("_", " ");
+            }
+            else if (model.Completed == 0)
+            {
+                butConfirm.BackColor = Color.Yellow;
+            }
+            else
+            {
+                butConfirm.BackColor = Color.Red;
             }
         }
 
@@ -343,6 +346,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutSave_Click(object sender, EventArgs e)
         {
+            //if (OrderCompleted()) return;
             string objectValid;
             string messageValid;
 
@@ -363,6 +367,15 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             else
             {
+                if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L" && HeaderContent.SimulateFlag == 1 && HeaderContent.Completed == 0)
+                {
+                    DialogResult diaResult = MessageBox.Show("This Order already simulated. Do you want to confirm.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (diaResult == DialogResult.Yes)
+                    {
+                        HeaderContent.Completed = 1;
+                    }
+                }
+
                 HeaderContent = _repo.Save(epiSession, HeaderContent);
             }
 
@@ -389,6 +402,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
+            if (HeaderContent.Completed == 1) return;
             //Simulated Complate.
             var resExisting = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
 
@@ -409,6 +423,7 @@ namespace Epicoil.Appl.Presentations.Planning
             simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
             simModel.MaterialWeight = HeaderContent.InputWeight;
             simModel.ProductWeight = HeaderContent.OutputWeight;
+            simModel.RewindWeight = HeaderContent.RewindWeight;
             simModel.Yield = HeaderContent.Yield;
             simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
 
@@ -459,6 +474,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butAddMaterial_Click(object sender, EventArgs e)
         {
+            if (OrderCompleted()) return;
             //Initialization
             HeaderContent.FormState = 3;
             SetFormState();
@@ -544,6 +560,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tlbDelete_Click(object sender, EventArgs e)
         {
+            if (OrderCompleted()) return;
             string validateMsg = string.Empty;
 
             //Delete Material list
@@ -614,8 +631,10 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvMaterial_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (OrderCompleted()) return;
             string risk = string.Empty;
             string msg = string.Empty;
+            bool changeState = false;
             string colHeadName = dgvMaterial.Columns[e.ColumnIndex].HeaderText;
             string colName = dgvMaterial.Columns[e.ColumnIndex].Name;
             string strVal = dgvMaterial.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
@@ -646,6 +665,7 @@ namespace Epicoil.Appl.Presentations.Planning
             switch (colName)
             {
                 case "usingweight":
+                    changeState = (result.UsingWeight != Convert.ToDecimal(strVal));
                     HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                         .ForEach(i => i.UsingWeight = Convert.ToDecimal(strVal));
 
@@ -691,6 +711,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     break;
 
                 case "usingLengthM":
+                    changeState = (result.UsingLengthM != Convert.ToDecimal(strVal));
                     string usingLengthM = dgvMaterial.Rows[e.RowIndex].Cells["usingLengthM"].Value.GetString();
                     string LengthM = dgvMaterial.Rows[e.RowIndex].Cells["LengthM"].Value.GetString();
                     decimal val = (Convert.ToDecimal(weight) * Convert.ToDecimal(usingLengthM)) / Convert.ToDecimal(LengthM);
@@ -698,33 +719,24 @@ namespace Epicoil.Appl.Presentations.Planning
                     result.UsingWeight = val;
                     result.UsingLengthM = Convert.ToDecimal(usingLengthM);
                     break;
-                /*
-                case "quantity":
-                    decimal val = (Convert.ToDecimal(strVal) / Convert.ToDecimal(qtyPack)) * 100;
-
-                    HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
-                                                        .ForEach(i => i.UsingQuantity = Convert.ToDecimal(strVal));
-
-                    HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
-                                                        .ForEach(i => i.UsingWeight = (Convert.ToDecimal(weight) / 100) * val);
-                    break;
-                 */
             }
-
-            dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
-            dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
-            dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
-            dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value = result.CBSelect;
-            dgvMaterial.Rows[e.RowIndex].Cells["LengthM"].Value = result.LengthM;
-            dgvMaterial.Rows[e.RowIndex].Cells["usingLengthM"].Value = result.UsingLengthM;
-            dgvMaterial.Rows[e.RowIndex].Cells["remainLengthM"].Value = result.RemainLengthM;
-            result.WorkDate = dptIssueDate.Value;
-            var res = _repo.SaveMaterial(epiSession, result);
-            HeaderContent.SumUsingWeight(HeaderContent.Materails);
-            HeaderContent.CuttingDesign = HeaderContent.ReCalculateCuttingLine();
-            ListCuttingGrid(HeaderContent.CuttingDesign);
-            SetHeadContent(HeaderContent);
-            ListCoilBackGrid(HeaderContent.CoilBacks);
+            if (changeState)
+            {
+                dgvMaterial.Rows[e.RowIndex].Cells["usingweight"].Value = result.UsingWeight;
+                dgvMaterial.Rows[e.RowIndex].Cells["remainWeight"].Value = result.RemainWeight;
+                dgvMaterial.Rows[e.RowIndex].Cells["RemQuantity"].Value = result.RemainQuantity;
+                dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value = result.CBSelect;
+                dgvMaterial.Rows[e.RowIndex].Cells["LengthM"].Value = result.LengthM;
+                dgvMaterial.Rows[e.RowIndex].Cells["usingLengthM"].Value = result.UsingLengthM;
+                dgvMaterial.Rows[e.RowIndex].Cells["remainLengthM"].Value = result.RemainLengthM;
+                result.WorkDate = dptIssueDate.Value;
+                var res = _repo.SaveMaterial(epiSession, result);
+                HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                HeaderContent.CuttingDesign = HeaderContent.ReCalculateCuttingLine();
+                ListCuttingGrid(HeaderContent.CuttingDesign);
+                SetHeadContent(HeaderContent);
+                ListCoilBackGrid(HeaderContent.CoilBacks);
+            }
         }
 
         private void cmbPossession_SelectedValueChanged(object sender, EventArgs e)
@@ -848,6 +860,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvCutting_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (OrderCompleted()) return;
             OrderHeadModel result = new OrderHeadModel();
             int i; decimal d; string riskFlag = string.Empty; string msg = string.Empty;
             string colName = dgvCutting.Columns[e.ColumnIndex].Name;
@@ -1010,6 +1023,11 @@ namespace Epicoil.Appl.Presentations.Planning
                     rowData.Note = resultValue;
                     break;
 
+                case "soqty":
+                    changeState = (rowData.SOQuantity != Convert.ToDecimal(resultValue));
+                    rowData.SOQuantity = Convert.ToDecimal(resultValue);
+                    break;
+
                 case "calqty":
                     changeState = (rowData.CalQuantity != Convert.ToDecimal(resultValue));
                     rowData.CalQuantity = Convert.ToDecimal(resultValue);
@@ -1068,15 +1086,70 @@ namespace Epicoil.Appl.Presentations.Planning
             else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
             {
                 SimulateLeveller();
+                LevellerResetCutting();
+                MaterialReset();
+
+                var result = HeaderContent.CuttingDesign.Where(i => i.CompleteRow == false);
+                if (result.ToList().Count > 0)
+                {
+                    HeaderContent.Completed = 0;
+                    HeaderContent.SimulateFlag = 0;
+                }
+                else
+                {
+                    //HeaderContent.Completed = 0;
+                    HeaderContent.SimulateFlag = 1;
+                }
                 //HeaderContent.CuttingDesign = _repo.GenerateCuttingLineForLeveller(epiSession, HeaderContent, out riskFlag, out msg).ToList();
             }
-
+            HeaderContent.CalculationHeader(HeaderContent);
+            SetHeadContent(HeaderContent);
             ListCuttingGrid(HeaderContent.CuttingDesign);
+            ListMaterialGrid(HeaderContent.Materails);
         }
 
         #endregion Evnet
 
         #region Method
+
+        private void LevellerResetCutting()
+        {
+            string riskFlag = string.Empty; string msg = string.Empty;
+            foreach (var p in HeaderContent.CuttingDesign)
+            {
+                decimal bQty = 0;
+                var result = HeaderContent.LevSimulateList.Where(i => i.CuttingLineID == p.LineID).ToList();
+                if (result.Count != 0)
+                {
+                    bQty = HeaderContent.LevSimulates.Where(i => i.CuttingLineID == p.LineID).Sum(i => i.Quantity).GetDecimal();
+                }
+
+                p.CalQuantity = bQty;
+                p.CalculateRows(HeaderContent);
+                p.CompleteRow = p.ValidateByRow(HeaderContent, out riskFlag, out msg);
+                HeaderContent.CuttingDesign = _repo.SaveLineCutting(epiSession, HeaderContent, p).ToList();
+            }
+        }
+
+        private void MaterialReset()
+        {
+            string riskFlag = string.Empty; string msg = string.Empty;
+            foreach (var m in HeaderContent.Materails)
+            {
+                decimal bQty = 0;
+                var result = HeaderContent.LevSimulateList.Where(i => i.MaterialTransLineID == m.TransactionLineID).ToList();
+                if (result.Count != 0)
+                {
+                    bQty = HeaderContent.LevSimulates.Where(i => i.MaterialTransLineID == m.TransactionLineID).Min(i => i.LengthM);
+                }
+
+                m.WorkDate = HeaderContent.IssueDate;
+                m.UsingLengthM = m.LengthM - bQty;
+                var res = _repo.SaveMaterial(epiSession, m);
+            }
+
+            HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID);
+        }
 
         private void SetDirectionPatter()
         {
@@ -1120,7 +1193,7 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvMaterial.Rows.Clear();
             foreach (var p in item)
             {
-                p.CalculateUsingLength();
+                //p.CalculateUsingLength();
                 dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
                     , p.Weight, p.UsingWeight
                     , p.RemainWeight, p.LengthM, p.UsingLengthM, p.RemainLengthM
@@ -1170,21 +1243,23 @@ namespace Epicoil.Appl.Presentations.Planning
 
                 if (string.IsNullOrEmpty(p.Status) && p.Status != "F")
                 {
-                    this.dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;
+                    //this.dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;
                     this.dgvCutting.Rows[i].Cells["length1"].ReadOnly = false;
                 }
 
                 if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
                 {
+                    dgvCutting.Rows[i].Cells["width1"].ReadOnly = true;
                     if (string.IsNullOrEmpty(p.NORNum))
-                    {
-                        dgvCutting.Rows[i].Cells["calqty"].ReadOnly = false;
+                    {                        
+                        dgvCutting.Rows[i].Cells["soqty"].ReadOnly = false;
+                        //dgvCutting.Rows[i].Cells["calqty"].ReadOnly = false;
                         dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = false;
                     }
                     else
                     {
-                        dgvCutting.Rows[i].Cells["calqty"].ReadOnly = true;
-                        dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = true;
+                        //dgvCutting.Rows[i].Cells["calqty"].ReadOnly = true;
+                        dgvCutting.Rows[i].Cells["soqty"].ReadOnly = true;
                     }
                 }
 
@@ -1312,6 +1387,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void dgvMaterial_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (OrderCompleted()) return;
             if (dgvMaterial.Columns[e.ColumnIndex].Name == "SelectCB")//set your checkbox column index instead of 2
             {
                 string transId = dgvMaterial.Rows[e.RowIndex].Cells["transactionlineid"].Value.GetString();
@@ -1386,23 +1462,27 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butSimulate_Click(object sender, EventArgs e)
         {
-            SimulateActionModel simModel = new SimulateActionModel();
-            simModel.WorkOrderID = HeaderContent.WorkOrderID;
-            simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
-            simModel.MaterialWeight = HeaderContent.InputWeight;
-            simModel.ProductWeight = HeaderContent.OutputWeight;
-            simModel.Yield = HeaderContent.Yield;
-            simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
-            simModel.Cuttings = _repo.GetSimulateAll(HeaderContent.WorkOrderID).ToList();
-            simModel.Materials = HeaderContent.Materails.ToList();
-            using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
+            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
             {
-                frm.ShowDialog();
-                HeaderContent = frm.HeadModel;
+                SimulateActionModel simModel = new SimulateActionModel();
+                simModel.WorkOrderID = HeaderContent.WorkOrderID;
+                simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
+                simModel.MaterialWeight = HeaderContent.InputWeight;
+                simModel.ProductWeight = HeaderContent.OutputWeight;
+                simModel.Yield = HeaderContent.Yield;
+                simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
+                simModel.Cuttings = _repo.GetSimulateAll(HeaderContent.WorkOrderID).ToList();
+                simModel.Materials = HeaderContent.Materails.ToList();
+                using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
+                {
+                    frm.ShowDialog();
+                    HeaderContent = frm.HeadModel;
+                }
             }
+
+            SetHeadContent(HeaderContent);
             ListMaterialGrid(HeaderContent.Materails);
             ListCuttingGrid(HeaderContent.CuttingDesign);
-            SetHeadContent(HeaderContent);
             //tbutSave_Click(sender, e);
         }
 
@@ -1410,12 +1490,24 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             string msg = string.Empty;
             IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
+            IEnumerable<SimulateModel> simResult = new List<SimulateModel>();
             if (HeaderContent.GenSerialFlag == 0)
             {
-                var simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
-                serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
-                _repo.ImportSerialToEpicor(epiSession, HeaderContent, out msg);
-                HeaderContent.GenSerialFlag = 1;
+                if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
+                {
+                    simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
+                }
+                else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
+                {
+                    simResult = _repo.GetSimulateLeveller(HeaderContent.WorkOrderID);
+                }
+                                
+                if (simResult.ToList().Count > 0)
+                {
+                    serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
+                    _repo.ImportSerialToEpicor(epiSession, HeaderContent, out msg);
+                    HeaderContent.GenSerialFlag = 1;
+                }
             }
             else
             {
@@ -1425,7 +1517,8 @@ namespace Epicoil.Appl.Presentations.Planning
             using (SerialList frm = new SerialList(epiSession, serialLines, HeaderContent))
             {
                 frm.ShowDialog();
-                SetHeadContent(HeaderContent);
+                HeaderContent.GenSerialFlag = Convert.ToInt32(frm.GenSNComplete);
+                SetHeadContent(HeaderContent);                
             }
         }
 
@@ -1464,20 +1557,16 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void SimulateLeveller()
         {
+            _repo.ClearSimulateLeveller(HeaderContent.WorkOrderID);
             HeaderContent.LevSimulates = new List<LevellerSimulateModel>();
             decimal matBln = 0;
             foreach (var mat in HeaderContent.Materails)
             {
-                //if (matBln == 0)
-                //{
                 decimal matLength = mat.UsingLengthM * 1000;
 
                 foreach (var item in HeaderContent.CuttingDesign)
                 {
                     decimal bQty = HeaderContent.LevSimulates.Where(p => p.CuttingLineID == item.LineID).Sum(i => i.Quantity);
-                    //decimal bCalQty = result.Where(p => p.CuttingLineID == item.LineID).Sum(i => i.);
-                    //decimal baseSOQty = item.SOQuantity;
-
                     if (item.SOQuantity != bQty && matLength >= item.Length)
                     {
                         decimal calQty = Math.Floor(matLength / item.Length);
@@ -1492,7 +1581,7 @@ namespace Epicoil.Appl.Presentations.Planning
                         {
                             item.CalQuantity = item.SOQuantity;
                             item.CompleteRow = true;
-                            matLength = (calQty - (item.CalQuantity)) * item.Length;
+                            matLength = Math.Floor((calQty - (item.CalQuantity)) * item.Length);
                         }
                         else if (calQty < item.SOQuantity && bQty == 0)
                         {
@@ -1525,12 +1614,26 @@ namespace Epicoil.Appl.Presentations.Planning
                         lev.SOQuantity = Convert.ToInt32(item.SOQuantity);
                         lev.Quantity = Convert.ToInt32(item.CalQuantity);
                         lev.Weight = 0;
-                        lev.LengthM = matLength / 1000;
+                        lev.LengthM = Math.Ceiling(matLength / 1000);
                         matBln = matLength;
                         HeaderContent.LevSimulates = _repo.SaveLevellerSimulate(epiSession, lev).ToList();
+                        item.CalculateRows(HeaderContent);
                     }
                 }
                 //}
+            }
+        }
+
+        private bool OrderCompleted()
+        {
+            if (HeaderContent.Completed == 1)
+            {
+                MessageBox.Show("Work Order has confirmed. if you want to update, please unconfirm before.","Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

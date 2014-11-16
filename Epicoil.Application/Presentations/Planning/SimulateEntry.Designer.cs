@@ -116,6 +116,8 @@
             this.coating1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtRewindWeight = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -137,6 +139,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.txtRewindWeight);
+            this.splitContainer1.Panel1.Controls.Add(this.label10);
             this.splitContainer1.Panel1.Controls.Add(this.cmbCutSeq);
             this.splitContainer1.Panel1.Controls.Add(this.txtExpected);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
@@ -772,7 +776,7 @@
             this.cutdiv.Name = "cutdiv";
             this.cutdiv.ReadOnly = true;
             this.cutdiv.Visible = false;
-            this.cutdiv.Width = 69;
+            this.cutdiv.Width = 67;
             // 
             // unitweight1
             // 
@@ -868,6 +872,26 @@
             this.possession.Name = "possession";
             this.possession.ReadOnly = true;
             this.possession.Width = 94;
+            // 
+            // txtRewindWeight
+            // 
+            this.txtRewindWeight.Location = new System.Drawing.Point(382, 71);
+            this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
+            this.txtRewindWeight.Name = "txtRewindWeight";
+            this.txtRewindWeight.ReadOnly = true;
+            this.txtRewindWeight.Size = new System.Drawing.Size(142, 21);
+            this.txtRewindWeight.TabIndex = 41;
+            this.txtRewindWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(280, 74);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(96, 15);
+            this.label10.TabIndex = 40;
+            this.label10.Text = "Rewind Weight :";
             // 
             // SimulateEntry
             // 
@@ -969,5 +993,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
         private System.Windows.Forms.DataGridViewTextBoxColumn possession;
+        private System.Windows.Forms.TextBox txtRewindWeight;
+        private System.Windows.Forms.Label label10;
     }
 }

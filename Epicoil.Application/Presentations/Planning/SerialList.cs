@@ -14,6 +14,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private IEnumerable<GeneratedSerialModel> snList;
         private PlanningHeadModel workParent;
+        public bool GenSNComplete;
 
         public SerialList(SessionInfo _session = null, IEnumerable<GeneratedSerialModel> model = null, PlanningHeadModel head = null)
         {
@@ -22,6 +23,7 @@ namespace Epicoil.Appl.Presentations.Planning
             epiSession = _session;
             snList = model;
             workParent = head;
+            GenSNComplete = true;
         }
 
         private void ListGrid(IEnumerable<GeneratedSerialModel> item)
@@ -119,7 +121,17 @@ namespace Epicoil.Appl.Presentations.Planning
                     frm.Show();
                 }
                 this.Close();
+            }
+        }
 
+        private void tlbClear_Click(object sender, EventArgs e)
+        {
+            string msg = string.Empty;
+            if (_repo.ClearSerialInEpicor(epiSession, workParent, out msg))
+            {
+                _repo.ClearSerialInEpicor(workParent.WorkOrderID);
+                GenSNComplete = false;
+                this.Close();
             }
         }
     }

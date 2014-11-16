@@ -38,6 +38,8 @@ namespace Epicoil.Appl.Presentations.Planning
             txtTrimingWeight.DataBindings.Clear();
             txtYield.Clear();
             txtYield.DataBindings.Clear();
+            txtRewindWeight.Clear();
+            txtRewindWeight.DataBindings.Clear();
         }
 
         private void SetOption()
@@ -69,6 +71,7 @@ namespace Epicoil.Appl.Presentations.Planning
             txtProductWeight.DataBindings.Add("Text", model, "ProductWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtTrimingWeight.DataBindings.Add("Text", model, "TrimWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
             txtYield.DataBindings.Add("Text", model, "Yield", true, DataSourceUpdateMode.OnPropertyChanged, 1, "##0.00");
+            txtRewindWeight.DataBindings.Add("Text", model, "RewindWeight", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0");
 
             if (model.CheckYeild(HeadModel, model.Yield))
             {
@@ -297,7 +300,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butConfirm_Click(object sender, EventArgs e)
         {
-            int workComplete = 1;
+            int workComplete = 1; string riskFlag = string.Empty; string msg = string.Empty;
             if (!SimModel.CheckYeild(HeadModel, SimModel.Yield))
             {
                 DialogResult diaResult = MessageBox.Show("Yield invalid, are you sure to hold work order.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -311,7 +314,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
-            string msg = string.Empty;
+            //string msg = string.Empty;
             if (!SimModel.ValidateToConfirm(out msg))
             {
                 MessageBox.Show(msg, "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);

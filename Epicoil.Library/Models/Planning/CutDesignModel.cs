@@ -177,18 +177,18 @@ namespace Epicoil.Library.Models.Planning
                 if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
                 UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
                 TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
+                decimal matLengthM = head.Materails.Sum(i => i.LengthM);
+                decimal matWeight = head.Materails.Sum(i => i.Weight);
+                decimal matUsingWeight = head.Materails.Sum(i => i.UsingWeight);
+                TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
             }
             else if (head.ProcessLineDetail.ResourceGrpID == "L")
             {
                 UnitWeight = CalUnitWgt(Thick, Width, Length / 1000, Gravity, FrontPlate, BackPlate);
                 TotalWeight = UnitWeight * SOQuantity;
+                Pack = CalQuantity / ((QtyPack == 0 ? 1 : QtyPack));
+                TotalLength = Length * CalQuantity;
             }
-
-
-            decimal matLengthM = head.Materails.Sum(i => i.LengthM);
-            decimal matWeight = head.Materails.Sum(i => i.Weight);
-            decimal matUsingWeight = head.Materails.Sum(i => i.UsingWeight);
-            TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
         }
 
 
@@ -290,7 +290,7 @@ namespace Epicoil.Library.Models.Planning
                     return false;
                 }
 
-                if (Pack != (CalQuantity/QtyPack))
+                if (Pack != (CalQuantity/((QtyPack == 0) ? 1 : QtyPack)))
                 {
                     risk = "WARNNING";
                     msg = "Pack invalid.";

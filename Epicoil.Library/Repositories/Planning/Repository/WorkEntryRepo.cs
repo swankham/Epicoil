@@ -126,6 +126,9 @@ namespace Epicoil.Library.Repositories.Planning
         {
             risk = "";
             msg = "";
+            //string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE  WorkOrderID = {0} AND Status = 'S' ", head.WorkOrderID);
+            //Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting S");
+
             if (head.Materails.ToList().Count > 0)
             {
                 var cutLines = GetCuttingLines(head.WorkOrderID);
@@ -1654,6 +1657,12 @@ namespace Epicoil.Library.Repositories.Planning
                 Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
             }
 
+            var totalLength = (from item in model
+                               select item.LengthM).Average();
+
+            string sql1 = string.Format(@"UPDATE ucc_pln_CuttingDesign SET TotalLength = {0} WHERE WorkOrderID = {1} ", totalLength, workOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+
             return GetCuttingLines(workOrderID);
         }
 
@@ -1745,6 +1754,108 @@ namespace Epicoil.Library.Repositories.Planning
 
             var result = Repository.Instance.GetOne<int>(sql, "BackStep").GetInt();
             return result;
+        }
+
+        public bool ClearSimulateLeveller(int workOrderID)
+        {
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_LevellerSimulateTmp WHERE WorkOrderID = {0}", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Simulate");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool UnlockHold(int workOrderID)
+        {
+            try
+            {
+                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 1 WHERE WorkOrderID = {0} ", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
+        {
+            msg = string.Empty;
+            //bool IsSuccess = false;
+            Session currSession;
+            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
+            try
+            {
+                currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+
+            foreach (var item in resultContinue)
+            {
+                try
+                {
+                    LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
+                    lotPart.DeleteByID(item.MCSSNo, item.SerialNo);
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                    return false;
+                }
+            }
+
+            string sql1 = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql1, "Delete Serial");
+
+            return true;
+        }
+
+
+        public bool ClearSerialInEpicor(int workOrderID)
+        {
+            try
+            {
+                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 0 WHERE WorkOrderID = {0} ", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+        public IEnumerable<SimulateModel> GetSimulateLeveller(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine, sim.Plant, sim.WorkOrderID
+	                                            , cut.NORNum, cut.QtyPack as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                            , mat.MCSSNo, cut.CutSeq as SimLineID, cut.Thick, cut.Width, cut.Length, cut.CutSeq as SimSeq
+												, cut.Status, cut.Pack as Stand, cut.CutDivision as CutDiv, cut.UnitWeight, cut.TotalWeight
+												, 1 as CalculatedFlag, cut.Length / 1000 as LengthM, sim.CuttingLineID, sim.MaterialTransLineID
+                                            FROM ucc_pln_LevellerSimulateTmp sim
+	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
+	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
+                                            WHERE sim.WorkOrderID = {0}
+                                            ORDER BY sim.CuttingLineID ASC", workOrderID);
+            return Repository.Instance.GetMany<SimulateModel>(sql);
         }
     }
 }

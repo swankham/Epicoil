@@ -62,6 +62,8 @@ namespace Epicoil.Library.Repositories.Planning
 
         IEnumerable<SimulateModel> GetSimulateAll(int workOrderID);
 
+        IEnumerable<SimulateModel> GetSimulateLeveller(int workOrderID);
+
         IEnumerable<SimulateModel> UpdateSimulateByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workComplete);
 
         IEnumerable<CutDesignModel> UpdateCuttingByWorkOrder(SessionInfo _session, IEnumerable<SimulateModel> model, int workOrderID);
@@ -80,10 +82,18 @@ namespace Epicoil.Library.Repositories.Planning
 
         bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
 
+        bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
+
         int GetStepByWorkOrder(int workOrderID);
 
         IEnumerable<LevellerSimulateModel> SaveLevellerSimulate(SessionInfo _session, LevellerSimulateModel model);
 
         IEnumerable<LevellerSimulateModel> GetLevellerSimAll(int workOrderID);
+
+        bool ClearSimulateLeveller(int workOrderID);
+
+        bool UnlockHold(int workOrderID);
+
+        bool ClearSerialInEpicor(int workOrderID);
     }
 }

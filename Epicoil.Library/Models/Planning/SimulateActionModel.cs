@@ -12,6 +12,8 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal MaterialWeight { get; set; }
 
+        public decimal RewindWeight { get; set; }
+
         public decimal ProductWeight { get; set; }
 
         public decimal TrimWeight { get; set; }
@@ -133,11 +135,11 @@ namespace Epicoil.Library.Models.Planning
             TrimWeight = result;
         }
 
-        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial)
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
         {
             decimal YieldPer = 0;
             WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
-            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0)) * 100, 2);
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
             return YieldPer;
         }
 
@@ -147,7 +149,7 @@ namespace Epicoil.Library.Models.Planning
         /// <param name="model"></param>
         public void SumYeild()
         {
-            Yield = CalYeildPercent(Math.Round(ProductWeight, 0), Math.Round(MaterialWeight, 0));
+            Yield = CalYeildPercent(Math.Round(ProductWeight, 0), Math.Round(MaterialWeight, 0), Math.Round(RewindWeight, 0));
         }
 
         public bool CheckYeild(PlanningHeadModel head, decimal YeildValue)

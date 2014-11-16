@@ -260,7 +260,7 @@
             this.deleteLineToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(195, 76);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(195, 98);
             // 
             // nextProcessStepToolStripMenuItem
             // 

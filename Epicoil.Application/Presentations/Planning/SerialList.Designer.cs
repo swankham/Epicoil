@@ -37,11 +37,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialList));
             this.dgvCutting = new System.Windows.Forms.DataGridView();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
-            this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.serialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thick1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -55,8 +50,16 @@
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mcssno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.processingThisLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.deleteLineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tlbClear = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvCutting
@@ -91,56 +94,16 @@
             this.dgvCutting.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.dgvCutting.EnableHeadersVisualStyles = false;
             this.dgvCutting.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvCutting.Location = new System.Drawing.Point(0, 0);
+            this.dgvCutting.Location = new System.Drawing.Point(0, 33);
             this.dgvCutting.Margin = new System.Windows.Forms.Padding(4);
             this.dgvCutting.Name = "dgvCutting";
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(883, 524);
+            this.dgvCutting.Size = new System.Drawing.Size(883, 491);
             this.dgvCutting.TabIndex = 20;
             this.dgvCutting.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellClick);
             this.dgvCutting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellContentClick);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nextProcessStepToolStripMenuItem,
-            this.processingThisLineToolStripMenuItem,
-            this.toolStripMenuItem5,
-            this.deleteLineToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 76);
-            // 
-            // nextProcessStepToolStripMenuItem
-            // 
-            this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
-            this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
-            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
-            this.nextProcessStepToolStripMenuItem.Click += new System.EventHandler(this.nextProcessStepToolStripMenuItem_Click);
-            // 
-            // processingThisLineToolStripMenuItem
-            // 
-            this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
-            this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
-            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.processingThisLineToolStripMenuItem.Text = "Refresh";
-            // 
-            // toolStripMenuItem5
-            // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(164, 6);
-            // 
-            // deleteLineToolStripMenuItem
-            // 
-            this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
-            this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
-            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
-            this.deleteLineToolStripMenuItem.Text = "Delete line";
-            this.deleteLineToolStripMenuItem.Visible = false;
             // 
             // serialNo
             // 
@@ -255,12 +218,85 @@
             this.mcssno.ReadOnly = true;
             this.mcssno.Width = 85;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.nextProcessStepToolStripMenuItem,
+            this.processingThisLineToolStripMenuItem,
+            this.toolStripMenuItem5,
+            this.deleteLineToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(168, 76);
+            // 
+            // nextProcessStepToolStripMenuItem
+            // 
+            this.nextProcessStepToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.filter;
+            this.nextProcessStepToolStripMenuItem.Name = "nextProcessStepToolStripMenuItem";
+            this.nextProcessStepToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.nextProcessStepToolStripMenuItem.Text = "Next Process Step";
+            this.nextProcessStepToolStripMenuItem.Click += new System.EventHandler(this.nextProcessStepToolStripMenuItem_Click);
+            // 
+            // processingThisLineToolStripMenuItem
+            // 
+            this.processingThisLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.edit_refresh1;
+            this.processingThisLineToolStripMenuItem.Name = "processingThisLineToolStripMenuItem";
+            this.processingThisLineToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.processingThisLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.processingThisLineToolStripMenuItem.Text = "Refresh";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(164, 6);
+            // 
+            // deleteLineToolStripMenuItem
+            // 
+            this.deleteLineToolStripMenuItem.Image = global::Epicoil.Appl.Properties.Resources.epicor_delete;
+            this.deleteLineToolStripMenuItem.Name = "deleteLineToolStripMenuItem";
+            this.deleteLineToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
+            this.deleteLineToolStripMenuItem.Text = "Delete line";
+            this.deleteLineToolStripMenuItem.Visible = false;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.AutoSize = false;
+            this.toolStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(235)))), ((int)(((byte)(250)))));
+            this.toolStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(23, 20);
+            this.toolStrip2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tlbClear});
+            this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStrip2.Size = new System.Drawing.Size(883, 33);
+            this.toolStrip2.TabIndex = 40;
+            this.toolStrip2.Text = "Tool Bar";
+            // 
+            // tlbClear
+            // 
+            this.tlbClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tlbClear.Image = global::Epicoil.Appl.Properties.Resources._1401659309_f_cross_256;
+            this.tlbClear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tlbClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tlbClear.Name = "tlbClear";
+            this.tlbClear.Size = new System.Drawing.Size(23, 26);
+            this.tlbClear.Text = "Clear";
+            this.tlbClear.ToolTipText = "Clear Serial All";
+            this.tlbClear.Click += new System.EventHandler(this.tlbClear_Click);
+            // 
             // SerialList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(883, 524);
             this.Controls.Add(this.dgvCutting);
+            this.Controls.Add(this.toolStrip2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -271,6 +307,8 @@
             this.Load += new System.EventHandler(this.SerialList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -299,5 +337,7 @@
         private System.Windows.Forms.ToolStripMenuItem deleteLineToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn mcssno;
+        public System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton tlbClear;
     }
 }

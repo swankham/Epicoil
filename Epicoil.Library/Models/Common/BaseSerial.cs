@@ -56,7 +56,7 @@ namespace Epicoil.Library.Models
             this.SpecName = (string)row["SpecName"].GetString();
             this.Gravity = (decimal)row["Gravity"].GetDecimal();
             this.CoatingCode = string.IsNullOrEmpty(row["CoatingCode"].GetString()) ? "" : row["CoatingCode"].GetString();
-            this.CoatingName = (string)row["CoatingName"].GetString();
+            this.CoatingName = string.IsNullOrEmpty(row["CoatingName"].GetString()) ? "" : row["CoatingName"].GetString(); 
             this.FrontPlate = (decimal)row["FrontPlate"].GetDecimal();
             this.BackPlate = (decimal)row["BackPlate"].GetDecimal();
         }
