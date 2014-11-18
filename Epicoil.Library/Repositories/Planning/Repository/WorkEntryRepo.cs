@@ -314,8 +314,11 @@ namespace Epicoil.Library.Repositories.Planning
                 if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
 
                 if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
-                if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+                if (model.ProcessLineDetail.ResourceGrpID != "R")
+                {
+                    if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
+                    if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+                }
             }
 
             if (model.CuttingDesign.ToList().Count > 0)
@@ -757,12 +760,7 @@ namespace Epicoil.Library.Repositories.Planning
                     drLot["Number08"] = 0;
                     drLot["Character02"] = item.BussinessType.GetString();
                     drLot["ShortChar06"] = item.WorkOrderNum.ToString();
-
                     drLot["Date05"] = DateTime.Now;
-                    //drLot[""] = item.Thick;
-                    //drLot[""] = item.Thick;
-                    //drLot[""] = item.Thick;
-                    //drLot[""] = item.Thick;
 
                     drLot.EndEdit();
                     lotPart.Update(dsLot);
@@ -1856,6 +1854,110 @@ namespace Epicoil.Library.Repositories.Planning
                                             WHERE sim.WorkOrderID = {0}
                                             ORDER BY sim.CuttingLineID ASC", workOrderID);
             return Repository.Instance.GetMany<SimulateModel>(sql);
+        }
+
+
+        public IEnumerable<SimulateReshearModel> GetReshearSimulation(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT * FROM ucc_pln_ReShearSimulation WHERE WorkOrderID = {0} ORDER BY LineID", workOrderID);
+            return Repository.Instance.GetMany<SimulateReshearModel>(sql);
+        }
+
+        public IEnumerable<SimulateReshearModel> SaveReshearSimulation(SessionInfo _session, SimulateReshearModel model)
+        {
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_ReShearSimulation (NOLOCK)
+										    WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_ReShearSimulation
+                                                       (WorkOrderID
+                                                       ,MaterialTransLineID
+                                                       ,CuttingLineID
+                                                       ,OptionNum
+                                                       ,WidthSuggsQty
+                                                       ,WidthActualQty
+                                                       ,WidthSuggsRemain
+                                                       ,WidthActualRemain
+                                                       ,LengthSuggsQty
+                                                       ,LengthActualQty
+                                                       ,LengthSuggsRemain
+                                                       ,LengthActualRemain
+                                                       ,SelectedFlag
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy
+                                                       ,Quantity)
+                                                 VALUES
+                                                       ({0} --<WorkOrderID, bigint,>
+                                                       ,{1} --<MaterialTransLineID, bigint,>
+                                                       ,{2} --<CuttingLineID, bigint,>
+                                                       ,{3} --<OptionNum, int,>
+                                                       ,{4} --<WidthSuggsQty, decimal(20,9),>
+                                                       ,{5} --<WidthActualQty, decimal(20,9),>
+                                                       ,{6} --<WidthSuggsRemain, decimal(20,9),>
+                                                       ,{7} --<WidthActualRemain, decimal(20,9),>
+                                                       ,{8} --<LengthSuggsQty, decimal(20,9),>
+                                                       ,{9} --<LengthActualQty, decimal(20,9),>
+                                                       ,{10} --<LengthSuggsRemain, decimal(20,9),>
+                                                       ,{11} --<LengthActualRemain, decimal(20,9),>
+                                                       ,{12} --<SelectedFlag, int,>
+                                                       ,GETDATE() --<CreationDate, datetime,>
+                                                       ,GETDATE() --<LastUpdateDate, datetime,>
+                                                       ,N'{13}' --<CreatedBy, nvarchar(45),>
+                                                       ,N'{13}' --<UpdatedBy, nvarchar(45),>
+                                                       ,N'{14}' --<Quantity, decimal(20,9),>
+		                                    )
+                                        END
+                                    ELSE
+                                        BEGIN
+                                            UPDATE ucc_pln_ReShearSimulation
+                                               SET WorkOrderID = {0} --<WorkOrderID, bigint,>
+                                                  ,MaterialTransLineID = {1} --<MaterialTransLineID, bigint,>
+                                                  ,CuttingLineID = {2} --<CuttingLineID, bigint,>
+                                                  ,OptionNum = {3} --<OptionNum, int,>
+                                                  ,WidthSuggsQty = {4} --<WidthSuggsQty, decimal(20,9),>
+                                                  ,WidthActualQty = {5} --<WidthActualQty, decimal(20,9),>
+                                                  ,WidthSuggsRemain = {6} --<WidthSuggsRemain, decimal(20,9),>
+                                                  ,WidthActualRemain = {7} --<WidthActualRemain, decimal(20,9),>
+                                                  ,LengthSuggsQty = {8} --<LengthSuggsQty, decimal(20,9),>
+                                                  ,LengthActualQty = {9} --<LengthActualQty, decimal(20,9),>
+                                                  ,LengthSuggsRemain = {10} --<LengthSuggsRemain, decimal(20,9),>
+                                                  ,LengthActualRemain = {11} --<LengthActualRemain, decimal(20,9),>
+                                                  ,SelectedFlag = {12} --<SelectedFlag, int,>
+                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{13}' --<UpdatedBy, nvarchar(45),>
+                                                  ,Quantity = {14} --<Quantity, decimal(20,9),>
+                                             WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
+                                        END" + Environment.NewLine
+                                              , model.WorkOrderID
+                                              , model.MaterialTransLineID
+                                              , model.CuttingLineID
+                                              , model.OptionNum
+                                              , model.WidthSuggsQty
+                                              , model.WidthActualQty
+                                              , model.WidthSuggsRemain
+                                              , model.WidthActualRemain
+                                              , model.LengthSuggsQty
+                                              , model.LengthActualQty
+                                              , model.LengthSuggsRemain
+                                              , model.LengthActualRemain
+                                              , model.SelectedFlag
+                                              , _session.UserID
+                                              , model.Quantity
+                                              );
+
+            //Update PartLot.CheckBox01 = 1 to change status has already used.
+            /*
+            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
+                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
+             */
+
+            Repository.Instance.ExecuteWithTransaction(sql, "Add Sim RS");
+            return GetReshearSimulation(model.WorkOrderID);
         }
     }
 }

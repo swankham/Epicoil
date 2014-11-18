@@ -95,5 +95,9 @@ namespace Epicoil.Library.Repositories.Planning
         bool UnlockHold(int workOrderID);
 
         bool ClearSerialInEpicor(int workOrderID);
+
+        IEnumerable<SimulateReshearModel> GetReshearSimulation(int workOrderID);
+
+        IEnumerable<SimulateReshearModel> SaveReshearSimulation(SessionInfo _session, SimulateReshearModel model);
     }
 }

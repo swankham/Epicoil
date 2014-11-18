@@ -32,7 +32,7 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvCutting.Rows.Clear();
             foreach (var p in item)
             {
-                dgvCutting.Rows.Add(p.SerialNo, p.Thick, p.Width, p.Length, p.LengthM, p.UnitWeight, p.Status
+                dgvCutting.Rows.Add(p.SerialNo, p.Thick, p.Width, p.Length, p.Quantity, p.UnitWeight, p.Status
                                     , p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName
                                     , p.BussinessType + " - " + p.BussinessTypeName, p.PossessionName, p.MCSSNo);
                 //Fill color rows for even number.

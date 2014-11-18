@@ -445,6 +445,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="epicor.ico" />
+    <None Include="Resources\1416190065_quantity_capsule_3.png" />
+    <None Include="Resources\1416189806_cal.png" />
     <None Include="Resources\cal1.png" />
     <None Include="Resources\cal.png" />
     <None Include="Resources\logo.png" />

@@ -9,10 +9,10 @@ namespace Epicoil.Library
     public enum MaterialStatus
     {
         Planning = 0,
-        Possibility = 1,
-        Processing_Plan = 2,
-        Processing_Complete = 3,
-        Stock_Out = 4,
+        Possibility = 1,    
+        Processing_Plan = 2,  //มีของแล้ว
+        Processing_Complete = 3, //Fin Job เรียบร้อยแล้ว
+        Stock_Out = 4,  //ส่งของ ทำ D/O ตัดออกไปแล้ว
         MCSS = 5
     }
 

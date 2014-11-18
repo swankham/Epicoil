@@ -446,7 +446,13 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "R")
             {
-                using (SimulateReShear frm = new SimulateReShear(epiSession, HeaderContent))
+                SimulateReshearHeadModel simModel = new SimulateReshearHeadModel();
+                simModel.Materials = HeaderContent.Materails.ToList();
+                simModel.Cuttings = HeaderContent.CuttingDesign;
+                simModel.WorkOrderID = HeaderContent.WorkOrderID;
+                simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
+
+                using (SimulateReShear frm = new SimulateReShear(epiSession, HeaderContent, simModel))
                 {
                     frm.ShowDialog();
                     HeaderContent = frm.HeadModel;
