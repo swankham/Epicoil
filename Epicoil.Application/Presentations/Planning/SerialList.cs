@@ -127,12 +127,13 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tlbClear_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            if (_repo.ClearSerialInEpicor(epiSession, workParent, out msg))
-            {
-                _repo.ClearSerialInEpicor(workParent.WorkOrderID);
-                GenSNComplete = false;
-                this.Close();
-            }
+            //if (_repo.ClearSerialInEpicor(epiSession, workParent, out msg))
+            //{
+            _repo.ClearSerialInEpicor(epiSession, workParent, out msg);
+            _repo.ClearSerialInEpicor(workParent.WorkOrderID);
+            GenSNComplete = false;
+            this.Close();
+            //}
         }
     }
 }

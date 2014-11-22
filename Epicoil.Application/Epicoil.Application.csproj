@@ -222,6 +222,18 @@
     <Compile Include="Presentations\Planning\WorkEntryDialog.Designer.cs">
       <DependentUpon>WorkEntryDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Production\MaterialTracker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Production\MaterialTracker.Designer.cs">
+      <DependentUpon>MaterialTracker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\Production\ProductionSlitter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Production\ProductionSlitter.Designer.cs">
+      <DependentUpon>ProductionSlitter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Progression.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -376,6 +388,12 @@
     <EmbeddedResource Include="Presentations\Planning\WorkEntryDialog.resx">
       <DependentUpon>WorkEntryDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Production\MaterialTracker.resx">
+      <DependentUpon>MaterialTracker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Production\ProductionSlitter.resx">
+      <DependentUpon>ProductionSlitter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Progression.resx">
       <DependentUpon>Progression.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,6 +463,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="epicor.ico" />
+    <None Include="Resources\1416388107_gtk-media-stop.png" />
+    <None Include="Resources\1416387642_eraser.png" />
+    <None Include="Resources\1416387138_Save.png" />
+    <None Include="Resources\document-new2.png" />
+    <None Include="Resources\1416385063_No.png" />
+    <None Include="Resources\1416384943_minus.png" />
+    <None Include="Resources\1416384873_add.png" />
+    <None Include="Resources\1416384822_stop-red.png" />
+    <None Include="Resources\print.png" />
+    <None Include="Resources\OK.png" />
+    <None Include="Resources\Start.png" />
+    <None Include="Resources\Stop.png" />
     <None Include="Resources\1416190065_quantity_capsule_3.png" />
     <None Include="Resources\1416189806_cal.png" />
     <None Include="Resources\cal1.png" />

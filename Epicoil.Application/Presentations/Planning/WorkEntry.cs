@@ -325,7 +325,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
         #endregion Set Form Properties
 
-        #region Evnet
+        #region Event
 
         private void WorkEntrySlitter_Load(object sender, EventArgs e)
         {
@@ -376,10 +376,11 @@ namespace Epicoil.Appl.Presentations.Planning
                     }
                 }
 
+                HeaderContent.OperationState = 1;
                 HeaderContent = _repo.Save(epiSession, HeaderContent);
             }
 
-            //Validate complated.
+            //Validate completed.
             HeaderContent.Saved();
             SetHeadContent(HeaderContent);
             SetFormState();
@@ -406,7 +407,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
             {
-                //Simulated Complate.
+                //Simulated Complete.
                 var resExisting = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
                 if (resExisting.ToList().Count > 0)
                 {
@@ -1419,7 +1420,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
                 if (chk)
                 {
-                    DialogResult diaResulta = MessageBox.Show("Are you sure to add coilback.", "Row validate.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    DialogResult diaResulta = MessageBox.Show("Are you sure to add coil back.", "Row validate.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (diaResulta == DialogResult.No)
                     {
                         dgvMaterial.Rows[e.RowIndex].Cells["SelectCB"].Value = false;
@@ -1508,6 +1509,7 @@ namespace Epicoil.Appl.Presentations.Planning
             string msg = string.Empty;
             IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
             IEnumerable<SimulateModel> simResult = new List<SimulateModel>();
+            IEnumerable<SimulateModel> coilBack = new List<SimulateModel>();
             if (HeaderContent.GenSerialFlag == 0)
             {
                 if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
@@ -1518,7 +1520,14 @@ namespace Epicoil.Appl.Presentations.Planning
                 {
                     simResult = _repo.GetSimulateLeveller(HeaderContent.WorkOrderID);
                 }
-                                
+
+                coilBack = _repo.GetSimulateCoilBack(HeaderContent.WorkOrderID);
+
+                if (coilBack.ToList().Count > 0)
+                {
+                    var cbResult = _repo.GenerateSerial(epiSession, coilBack, HeaderContent.WorkOrderID);
+                }                    
+
                 if (simResult.ToList().Count > 0)
                 {
                     serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);

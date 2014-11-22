@@ -218,6 +218,7 @@ C:\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
 C:\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.IF.ISysConfig.xml
 C:\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.dll
 C:\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.pdb
+D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.csprojResolveAssemblyReference.cache
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicoil.LibraryTests.dll
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicoil.LibraryTests.pdb
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Library.dll
@@ -254,6 +255,5 @@ D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.BO.LotSelectUpda
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.IF.ILotSelectUpdate.xml
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.Lib.BOReader.xml
 D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
-D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.csprojResolveAssemblyReference.cache
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.dll
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.pdb

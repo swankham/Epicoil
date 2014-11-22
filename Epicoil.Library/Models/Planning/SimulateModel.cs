@@ -50,6 +50,8 @@ namespace Epicoil.Library.Models.Planning
 
         public int CutDiv { get; set; }
 
+        public int CutSeq { get; set; }
+
         public decimal UnitWeight { get; set; }
 
         public decimal TotalWeight { get; set; }
@@ -57,6 +59,8 @@ namespace Epicoil.Library.Models.Planning
         public decimal Quantity { get; set; }
 
         public bool CalculatedFlag { get; set; }
+
+        public string SerialType { get; set; }
 
         public override void DataBind(DataRow row)
         {
@@ -78,12 +82,15 @@ namespace Epicoil.Library.Models.Planning
             this.Length = (decimal)row["Length"].GetDecimal();
             this.Status = (string)row["Status"].GetString();
             this.Stand = (int)row["Stand"].GetInt();
+            this.CutSeq = (int)row["CutSeq"].GetInt();
             this.CutDiv = (int)row["CutDiv"].GetInt();
             this.UnitWeight = (decimal)row["UnitWeight"].GetDecimal();
             this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
             this.Quantity = (decimal)row["Quantity"].GetDecimal();
             this.CalculatedFlag = Convert.ToBoolean((int)row["CalculatedFlag"].GetInt());
             this.LengthM = (decimal)row["LengthM"].GetDecimal();
+            this.SerialType = (string)row["SerialType"].GetString();
+            
         }
 
         public decimal CalLengthMeter(decimal weight, decimal width, decimal thick, decimal gravity, decimal frontPlate, decimal backPlate)

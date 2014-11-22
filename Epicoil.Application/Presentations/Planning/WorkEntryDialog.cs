@@ -20,7 +20,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private IEnumerable<PlanningHeadModel> _model;
         public PlanningHeadModel _selected;
 
-        public WorkEntryDialog(SessionInfo _session)
+        public WorkEntryDialog(SessionInfo _session, PlanningHeadModel param = null)
         {
             InitializeComponent();
             this._repo = new WorkEntryRepo();
@@ -111,11 +111,6 @@ namespace Epicoil.Appl.Presentations.Planning
             foreach (var p in data)
             {
                 dgvWorkOrder.Rows.Add(p.WorkOrderNum, p.ProcessStep, p.ProcessLineId, p.IssueDate, p.DueDate, p.PIC, p.OrderType, p.Possession);
-                if (i % 2 == 1)
-                {
-                    this.dgvWorkOrder.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-                i++;
             }
         }
 

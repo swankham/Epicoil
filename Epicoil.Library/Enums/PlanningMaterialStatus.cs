@@ -59,10 +59,9 @@ namespace Epicoil.Library
     {
         Sale = 0,
         Planning = 1,
-        Production1 = 2,
-        Production2 = 3,
-        FinishJob = 4,
-        Logistic = 5
+        Production = 2,
+        FinishJob = 3,
+        Logistic = 4
     }
 
     public enum CompleteStatus

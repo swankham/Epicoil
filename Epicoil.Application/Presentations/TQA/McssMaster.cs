@@ -32,7 +32,7 @@ namespace Epicoil.Appl.Presentations.TQA
 
         private Dictionary<int, string> specialRef;
 
-        #region Initailize
+        #region Initialize
 
         public McssMaster(MCSS model = null, SessionInfo _session = null)
         {
@@ -89,10 +89,10 @@ namespace Epicoil.Appl.Presentations.TQA
             #endregion
 
             #region Direct form
-            //Initail = _repo.GetInitial();
-            //if (Initail != null)
+            //Initial = _repo.GetInitial();
+            //if (Initial != null)
             //{
-            //    SetMode(Initail);
+            //    SetMode(Initial);
             //}
             //else
             //{

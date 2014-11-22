@@ -56,6 +56,70 @@ namespace Epicoil.Library.Repositories.Planning
             return YieldPer;
         }
 
+        public bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
+        {
+            msg = string.Empty;
+            bool IsSuccess = false;
+            Session currSession;
+            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
+            try
+            {
+                currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+
+            foreach (var item in resultContinue)
+            {
+                try
+                {
+                    LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
+                    lotPart.DeleteByID(item.MCSSNo, item.SerialNo);
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message;
+                    IsSuccess = false;
+                }
+            }
+
+            string sql1 = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql1, "Delete Serial");
+
+            return true;
+        }
+
+        public bool ClearSerialInEpicor(int workOrderID)
+        {
+            try
+            {
+                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 0 WHERE WorkOrderID = {0} ", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool ClearSimulateLeveller(int workOrderID)
+        {
+            try
+            {
+                string sql = string.Format(@"DELETE FROM ucc_pln_LevellerSimulateTmp WHERE WorkOrderID = {0}", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql, "Delete Simulate");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool ClearSimulateLines(int workOrderID)
         {
             try
@@ -203,7 +267,7 @@ namespace Epicoil.Library.Repositories.Planning
                 for (int j = 1; j <= item.Stand; j++)
                 {
                     //int iRunning = RunningLot();
-                    string LotNum = item.MaterialSerialNo + iRunning.ToString("00");//GetSerialByFormat(iRunning);
+                    string LotNum = item.MaterialSerialNo + ((item.SerialType == "FG") ? iRunning.ToString("00") : "");//GetSerialByFormat(iRunning);
                     string sql = string.Format(@"INSERT INTO ucc_pln_SerialGenerated
                                                        (Plant
                                                        ,SimLineID
@@ -224,7 +288,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,CreatedBy
                                                        ,UpdatedBy
                                                        ,LotRunning
-                                                       ,SerialNo)
+                                                       ,SerialNo, CutSeq)
                                                  VALUES
                                                        (N'{0}'  --<Plant, nvarchar(8),>
                                                        ,{1}  --<SimLineID, bigint,>
@@ -245,7 +309,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,N'{14}'  --<CreatedBy, nvarchar(45),>
                                                        ,N'{14}'  --<UpdatedBy, nvarchar(45),>
                                                        ,{15}  --<LotRunning, bigint,>
-                                                       ,N'{16}'
+                                                       ,N'{16}', {17}
                                                        )" + Environment.NewLine
                                                       , _session.PlantID
                                                       , item.SimLineID
@@ -263,11 +327,12 @@ namespace Epicoil.Library.Repositories.Planning
                                                       , 0
                                                       , _session.UserID
                                                       , iRunning
-                                                      , LotNum
+                                                      , LotNum, item.CutSeq
                                                       );
 
                     Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");
-                    iRunning++;
+
+                    if (item.SerialType == "FG") iRunning++;
                 }
             }
             string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 1 WHERE WorkOrderID = {0} ", workOrderID);
@@ -341,11 +406,11 @@ namespace Epicoil.Library.Repositories.Planning
             query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
             query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
 
-            //if machine is not Sliter and Leveller must be filter for "SHEET" only.
+            //if machine is not Slitter and Leveller must be filter for "SHEET" only.
             if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
                 query = query.Where(p => p.Length > 0);
 
-            //if machine is Sliter and Leveller must be filter for "COIL" only.
+            //if machine is Slitter and Leveler must be filter for "COIL" only.
             if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
                 query = query.Where(p => p.Length.Equals(0));
 
@@ -621,23 +686,45 @@ namespace Epicoil.Library.Repositories.Planning
             return Repository.Instance.GetOne<MaterialModel>(sql);
         }
 
+        public IEnumerable<SimulateReshearModel> GetReshearSimulation(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT * FROM ucc_pln_ReShearSimulation WHERE WorkOrderID = {0} ORDER BY LineID", workOrderID);
+            return Repository.Instance.GetMany<SimulateReshearModel>(sql);
+        }
+
         public IEnumerable<GeneratedSerialModel> GetSerialAllByWorkOrder(int workOrderID)
         {
             string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine
-	                                            , cut.NORNum, 1 as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
-	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
-	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
-	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , gsn.*, mat.MCSSNo, pln.WorkOrderNum
-                                            FROM ucc_pln_SerialGenerated gsn
-	                                            LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
-	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
-	                                            LEFT JOIN ucc_pln_PlanHead pln ON(gsn.WorkOrderID = pln.WorkOrderID)
-	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
-	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
-	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
-	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
-                                            WHERE gsn.WorkOrderID = {0}", workOrderID);
+	                                                , cut.NORNum, 1 as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                                , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                                , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                                , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                                , gsn.*, mat.MCSSNo, pln.WorkOrderNum
+                                                FROM ucc_pln_SerialGenerated gsn
+	                                                LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
+	                                                INNER JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
+	                                                LEFT JOIN ucc_pln_PlanHead pln ON(gsn.WorkOrderID = pln.WorkOrderID)
+	                                                LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                                LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                                LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                                LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
+                                                WHERE gsn.WorkOrderID = {0}
+                                            UNION ALL
+                                            SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, '0' as SONo, 0 as SOLine
+	                                                , mat.MCSSNo as NORNum, 1 as Quantity, mat.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                                , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                                , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                                , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                                , gsn.*, mat.MCSSNo, pln.WorkOrderNum
+                                                FROM ucc_pln_SerialGenerated gsn
+	                                                INNER JOIN ucc_pln_CoilBack mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
+	                                                --INNER JOIN ucc_pln_ cut ON(gsn.CuttingLineID = cut.LineID)
+	                                                LEFT JOIN ucc_pln_PlanHead pln ON(gsn.WorkOrderID = pln.WorkOrderID)
+	                                                LEFT JOIN UD25 busi ON(mat.BT = busi.Key1)
+	                                                LEFT JOIN UD29 cmdt ON(mat.Cmdty = cmdt.Key1)
+	                                                LEFT JOIN UD30 spec ON(mat.Cmdty = spec.Key2 and mat.Spec = spec.Key1)
+	                                                LEFT JOIN UD31 coat ON(mat.Coating = coat.Key1)
+                                                WHERE gsn.SimLineID = 0 AND gsn.WorkOrderID = {0}", workOrderID);
 
             return Repository.Instance.GetMany<GeneratedSerialModel>(sql);
         }
@@ -654,7 +741,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , sim.*, mat.MCSSNo
+	                                            , sim.*, mat.MCSSNo, sim.CutDiv as CutSeq, 'FG' as SerialType
                                             FROM ucc_pln_Simulate sim
 	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
 	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
@@ -664,6 +751,49 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
                                             WHERE sim.WorkOrderID = {0}
                                             ORDER BY sim.CutDiv, sim.SimSeq ASC", workOrderID);
+            return Repository.Instance.GetMany<SimulateModel>(sql);
+        }
+
+        public IEnumerable<SimulateModel> GetSimulateCoilBack(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT mat.MCSSNo, sim.Serial as MaterialSerialNo, 0 as SONo, 0 as SOLine
+	                                            , sim.MCSSNo as NORNum, 1 as Quantity, sim.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                            , mat.MCSSNo, 0 as CutSeq, mat.Plant, 0 as SimLineID, sim.WorkOrderID, 0 as CuttingLineID, sim.TransactionLineID as MaterialTransLineID, 0 as SimSeq
+		                                        , sim.Thick, sim.Width, sim.Length, sim.UsingLengthM, sim.LengthM, sim.MCSSNo, sim.Status, 1 as Stand, 0 as CutDiv, sim.Weight as UnitWeight, sim.Weight as TotalWeight
+		                                        , 1 as CalculatedFlag, sim.*, 'CB' as SerialType
+                                            FROM ucc_pln_CoilBack sim
+	                                            LEFT JOIN ucc_pln_Material mat ON(sim.TransactionLineID = mat.TransactionLineID)
+	                                            --LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN UD25 busi ON(mat.BT = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(mat.Cmdty = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(mat.Cmdty = spec.Key2 and mat.Spec = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(mat.Coating = coat.Key1)
+                                                                                    WHERE sim.WorkOrderID = {0}", workOrderID);
+            return Repository.Instance.GetMany<SimulateModel>(sql);
+        }
+
+        public IEnumerable<SimulateModel> GetSimulateLeveller(int workOrderID)
+        {
+            string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine, sim.Plant, sim.WorkOrderID
+	                                            , cut.NORNum, cut.QtyPack as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
+	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
+	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
+	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
+	                                            , mat.MCSSNo, cut.CutSeq as SimLineID, cut.Thick, cut.Width, cut.Length, cut.CutSeq as SimSeq
+												, cut.Status, cut.Pack as Stand, cut.CutDivision as CutDiv, cut.UnitWeight, cut.TotalWeight
+												, 1 as CalculatedFlag, cut.Length / 1000 as LengthM, sim.CuttingLineID, sim.MaterialTransLineID, 'FG' as SerialType
+                                            FROM ucc_pln_LevellerSimulateTmp sim
+	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
+	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
+	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
+	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
+	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
+                                            WHERE sim.WorkOrderID = {0}
+                                            ORDER BY sim.CuttingLineID ASC", workOrderID);
             return Repository.Instance.GetMany<SimulateModel>(sql);
         }
 
@@ -723,10 +853,36 @@ namespace Epicoil.Library.Repositories.Planning
             return result;
         }
 
+        public PlanningHeadModel GetWorkById(string plant, int workOrderID)
+        {
+            string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
+                                            FROM ucc_pln_PlanHead plh (NOLOCK)
+                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+                                            LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
+                                            WHERE plh.WorkOrderID = '{0}' AND plh.Plant = N'{1}'", workOrderID, plant);
+
+            var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
+
+            if (result != null)
+            {
+                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
+                result.OrderTypeList = _repoUcode.GetAll("OrderType");
+                result.PossessionList = _repoUcode.GetAll("Pocessed");
+                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
+                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
+                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
+                result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
+                result.CoilBacks = GetCoilBackAll(result.WorkOrderID).ToList();
+                result.CoilBackRoles = _repoRule.GetAll().ToList();
+            }
+
+            return result;
+        }
+
         public bool ImportSerialToEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
         {
             msg = string.Empty;
-            //bool IsSuccess = false;
+            //boolean IsSuccess = false;
             Session currSession;
             var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
             try
@@ -1543,11 +1699,122 @@ namespace Epicoil.Library.Repositories.Planning
             return GetMaterial(_session.PlantID, model.MCSSNo, model.SerialNo);
         }
 
+        public IEnumerable<SimulateReshearModel> SaveReshearSimulation(SessionInfo _session, SimulateReshearModel model)
+        {
+            string sql = string.Format(@"IF NOT EXISTS
+									    (
+										    SELECT * FROM ucc_pln_ReShearSimulation (NOLOCK)
+										    WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
+									    )
+                                        BEGIN
+                                            INSERT INTO ucc_pln_ReShearSimulation
+                                                       (WorkOrderID
+                                                       ,MaterialTransLineID
+                                                       ,CuttingLineID
+                                                       ,OptionNum
+                                                       ,WidthSuggsQty
+                                                       ,WidthActualQty
+                                                       ,WidthSuggsRemain
+                                                       ,WidthActualRemain
+                                                       ,LengthSuggsQty
+                                                       ,LengthActualQty
+                                                       ,LengthSuggsRemain
+                                                       ,LengthActualRemain
+                                                       ,SelectedFlag
+                                                       ,CreationDate
+                                                       ,LastUpdateDate
+                                                       ,CreatedBy
+                                                       ,UpdatedBy
+                                                       ,Quantity)
+                                                 VALUES
+                                                       ({0} --<WorkOrderID, bigint,>
+                                                       ,{1} --<MaterialTransLineID, bigint,>
+                                                       ,{2} --<CuttingLineID, bigint,>
+                                                       ,{3} --<OptionNum, int,>
+                                                       ,{4} --<WidthSuggsQty, decimal(20,9),>
+                                                       ,{5} --<WidthActualQty, decimal(20,9),>
+                                                       ,{6} --<WidthSuggsRemain, decimal(20,9),>
+                                                       ,{7} --<WidthActualRemain, decimal(20,9),>
+                                                       ,{8} --<LengthSuggsQty, decimal(20,9),>
+                                                       ,{9} --<LengthActualQty, decimal(20,9),>
+                                                       ,{10} --<LengthSuggsRemain, decimal(20,9),>
+                                                       ,{11} --<LengthActualRemain, decimal(20,9),>
+                                                       ,{12} --<SelectedFlag, int,>
+                                                       ,GETDATE() --<CreationDate, datetime,>
+                                                       ,GETDATE() --<LastUpdateDate, datetime,>
+                                                       ,N'{13}' --<CreatedBy, nvarchar(45),>
+                                                       ,N'{13}' --<UpdatedBy, nvarchar(45),>
+                                                       ,N'{14}' --<Quantity, decimal(20,9),>
+		                                    )
+                                        END
+                                    ELSE
+                                        BEGIN
+                                            UPDATE ucc_pln_ReShearSimulation
+                                               SET WorkOrderID = {0} --<WorkOrderID, bigint,>
+                                                  ,MaterialTransLineID = {1} --<MaterialTransLineID, bigint,>
+                                                  ,CuttingLineID = {2} --<CuttingLineID, bigint,>
+                                                  ,OptionNum = {3} --<OptionNum, int,>
+                                                  ,WidthSuggsQty = {4} --<WidthSuggsQty, decimal(20,9),>
+                                                  ,WidthActualQty = {5} --<WidthActualQty, decimal(20,9),>
+                                                  ,WidthSuggsRemain = {6} --<WidthSuggsRemain, decimal(20,9),>
+                                                  ,WidthActualRemain = {7} --<WidthActualRemain, decimal(20,9),>
+                                                  ,LengthSuggsQty = {8} --<LengthSuggsQty, decimal(20,9),>
+                                                  ,LengthActualQty = {9} --<LengthActualQty, decimal(20,9),>
+                                                  ,LengthSuggsRemain = {10} --<LengthSuggsRemain, decimal(20,9),>
+                                                  ,LengthActualRemain = {11} --<LengthActualRemain, decimal(20,9),>
+                                                  ,SelectedFlag = {12} --<SelectedFlag, int,>
+                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                  ,UpdatedBy = N'{13}' --<UpdatedBy, nvarchar(45),>
+                                                  ,Quantity = {14} --<Quantity, decimal(20,9),>
+                                             WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
+                                        END" + Environment.NewLine
+                                              , model.WorkOrderID
+                                              , model.MaterialTransLineID
+                                              , model.CuttingLineID
+                                              , model.OptionNum
+                                              , model.WidthSuggsQty
+                                              , model.WidthActualQty
+                                              , model.WidthSuggsRemain
+                                              , model.WidthActualRemain
+                                              , model.LengthSuggsQty
+                                              , model.LengthActualQty
+                                              , model.LengthSuggsRemain
+                                              , model.LengthActualRemain
+                                              , model.SelectedFlag
+                                              , _session.UserID
+                                              , model.Quantity
+                                              );
+
+            //Update PartLot.CheckBox01 = 1 to change status has already used.
+            /*
+            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
+                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
+                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
+             */
+
+            Repository.Instance.ExecuteWithTransaction(sql, "Add Sim RS");
+            return GetReshearSimulation(model.WorkOrderID);
+        }
+
         public bool UnConfirmWork(int workOrderID)
         {
             try
             {
                 string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 0 WHERE WorkOrderID = {0} ", workOrderID);
+                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool UnlockHold(int workOrderID)
+        {
+            try
+            {
+                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 1 WHERE WorkOrderID = {0} ", workOrderID);
                 Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
                 return true;
             }
@@ -1752,212 +2019,6 @@ namespace Epicoil.Library.Repositories.Planning
 
             var result = Repository.Instance.GetOne<int>(sql, "BackStep").GetInt();
             return result;
-        }
-
-        public bool ClearSimulateLeveller(int workOrderID)
-        {
-            try
-            {
-                string sql = string.Format(@"DELETE FROM ucc_pln_LevellerSimulateTmp WHERE WorkOrderID = {0}", workOrderID);
-                Repository.Instance.ExecuteWithTransaction(sql, "Delete Simulate");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        public bool UnlockHold(int workOrderID)
-        {
-            try
-            {
-                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 1 WHERE WorkOrderID = {0} ", workOrderID);
-                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-        public bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
-        {
-            msg = string.Empty;
-            //bool IsSuccess = false;
-            Session currSession;
-            var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
-            try
-            {
-                currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
-            }
-            catch (Exception ex)
-            {
-                msg = ex.Message;
-                return false;
-            }
-
-            foreach (var item in resultContinue)
-            {
-                try
-                {
-                    LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
-                    lotPart.DeleteByID(item.MCSSNo, item.SerialNo);
-                }
-                catch (Exception ex)
-                {
-                    msg = ex.Message;
-                    return false;
-                }
-            }
-
-            string sql1 = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
-            Repository.Instance.ExecuteWithTransaction(sql1, "Delete Serial");
-
-            return true;
-        }
-
-
-        public bool ClearSerialInEpicor(int workOrderID)
-        {
-            try
-            {
-                string sql1 = string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 0 WHERE WorkOrderID = {0} ", workOrderID);
-                Repository.Instance.ExecuteWithTransaction(sql1, "Update Complete");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-
-        public IEnumerable<SimulateModel> GetSimulateLeveller(int workOrderID)
-        {
-            string sql = string.Format(@"SELECT mat.MCSSNo, mat.Serial as MaterialSerialNo, cut.SONo, cut.SOLine, sim.Plant, sim.WorkOrderID
-	                                            , cut.NORNum, cut.QtyPack as Quantity, cut.Possession, busi.Key1 as BussinessType, busi.Character01 as BussinessTypeName
-	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
-	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
-	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , mat.MCSSNo, cut.CutSeq as SimLineID, cut.Thick, cut.Width, cut.Length, cut.CutSeq as SimSeq
-												, cut.Status, cut.Pack as Stand, cut.CutDivision as CutDiv, cut.UnitWeight, cut.TotalWeight
-												, 1 as CalculatedFlag, cut.Length / 1000 as LengthM, sim.CuttingLineID, sim.MaterialTransLineID
-                                            FROM ucc_pln_LevellerSimulateTmp sim
-	                                            LEFT JOIN ucc_pln_Material mat ON(sim.MaterialTransLineID = mat.TransactionLineID)
-	                                            LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
-	                                            LEFT JOIN UD25 busi ON(cut.BussinessType = busi.Key1)
-	                                            LEFT JOIN UD29 cmdt ON(cut.CommodityCode = cmdt.Key1)
-	                                            LEFT JOIN UD30 spec ON(cut.CommodityCode = spec.Key2 and cut.SpecCode = spec.Key1)
-	                                            LEFT JOIN UD31 coat ON(cut.CoatingCode = coat.Key1)
-                                            WHERE sim.WorkOrderID = {0}
-                                            ORDER BY sim.CuttingLineID ASC", workOrderID);
-            return Repository.Instance.GetMany<SimulateModel>(sql);
-        }
-
-
-        public IEnumerable<SimulateReshearModel> GetReshearSimulation(int workOrderID)
-        {
-            string sql = string.Format(@"SELECT * FROM ucc_pln_ReShearSimulation WHERE WorkOrderID = {0} ORDER BY LineID", workOrderID);
-            return Repository.Instance.GetMany<SimulateReshearModel>(sql);
-        }
-
-        public IEnumerable<SimulateReshearModel> SaveReshearSimulation(SessionInfo _session, SimulateReshearModel model)
-        {
-            string sql = string.Format(@"IF NOT EXISTS
-									    (
-										    SELECT * FROM ucc_pln_ReShearSimulation (NOLOCK)
-										    WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
-									    )
-                                        BEGIN
-                                            INSERT INTO ucc_pln_ReShearSimulation
-                                                       (WorkOrderID
-                                                       ,MaterialTransLineID
-                                                       ,CuttingLineID
-                                                       ,OptionNum
-                                                       ,WidthSuggsQty
-                                                       ,WidthActualQty
-                                                       ,WidthSuggsRemain
-                                                       ,WidthActualRemain
-                                                       ,LengthSuggsQty
-                                                       ,LengthActualQty
-                                                       ,LengthSuggsRemain
-                                                       ,LengthActualRemain
-                                                       ,SelectedFlag
-                                                       ,CreationDate
-                                                       ,LastUpdateDate
-                                                       ,CreatedBy
-                                                       ,UpdatedBy
-                                                       ,Quantity)
-                                                 VALUES
-                                                       ({0} --<WorkOrderID, bigint,>
-                                                       ,{1} --<MaterialTransLineID, bigint,>
-                                                       ,{2} --<CuttingLineID, bigint,>
-                                                       ,{3} --<OptionNum, int,>
-                                                       ,{4} --<WidthSuggsQty, decimal(20,9),>
-                                                       ,{5} --<WidthActualQty, decimal(20,9),>
-                                                       ,{6} --<WidthSuggsRemain, decimal(20,9),>
-                                                       ,{7} --<WidthActualRemain, decimal(20,9),>
-                                                       ,{8} --<LengthSuggsQty, decimal(20,9),>
-                                                       ,{9} --<LengthActualQty, decimal(20,9),>
-                                                       ,{10} --<LengthSuggsRemain, decimal(20,9),>
-                                                       ,{11} --<LengthActualRemain, decimal(20,9),>
-                                                       ,{12} --<SelectedFlag, int,>
-                                                       ,GETDATE() --<CreationDate, datetime,>
-                                                       ,GETDATE() --<LastUpdateDate, datetime,>
-                                                       ,N'{13}' --<CreatedBy, nvarchar(45),>
-                                                       ,N'{13}' --<UpdatedBy, nvarchar(45),>
-                                                       ,N'{14}' --<Quantity, decimal(20,9),>
-		                                    )
-                                        END
-                                    ELSE
-                                        BEGIN
-                                            UPDATE ucc_pln_ReShearSimulation
-                                               SET WorkOrderID = {0} --<WorkOrderID, bigint,>
-                                                  ,MaterialTransLineID = {1} --<MaterialTransLineID, bigint,>
-                                                  ,CuttingLineID = {2} --<CuttingLineID, bigint,>
-                                                  ,OptionNum = {3} --<OptionNum, int,>
-                                                  ,WidthSuggsQty = {4} --<WidthSuggsQty, decimal(20,9),>
-                                                  ,WidthActualQty = {5} --<WidthActualQty, decimal(20,9),>
-                                                  ,WidthSuggsRemain = {6} --<WidthSuggsRemain, decimal(20,9),>
-                                                  ,WidthActualRemain = {7} --<WidthActualRemain, decimal(20,9),>
-                                                  ,LengthSuggsQty = {8} --<LengthSuggsQty, decimal(20,9),>
-                                                  ,LengthActualQty = {9} --<LengthActualQty, decimal(20,9),>
-                                                  ,LengthSuggsRemain = {10} --<LengthSuggsRemain, decimal(20,9),>
-                                                  ,LengthActualRemain = {11} --<LengthActualRemain, decimal(20,9),>
-                                                  ,SelectedFlag = {12} --<SelectedFlag, int,>
-                                                  ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
-                                                  ,UpdatedBy = N'{13}' --<UpdatedBy, nvarchar(45),>
-                                                  ,Quantity = {14} --<Quantity, decimal(20,9),>
-                                             WHERE WorkOrderID = {0} AND MaterialTransLineID = {1} AND CuttingLineID = {2} AND OptionNum = {3}
-                                        END" + Environment.NewLine
-                                              , model.WorkOrderID
-                                              , model.MaterialTransLineID
-                                              , model.CuttingLineID
-                                              , model.OptionNum
-                                              , model.WidthSuggsQty
-                                              , model.WidthActualQty
-                                              , model.WidthSuggsRemain
-                                              , model.WidthActualRemain
-                                              , model.LengthSuggsQty
-                                              , model.LengthActualQty
-                                              , model.LengthSuggsRemain
-                                              , model.LengthActualRemain
-                                              , model.SelectedFlag
-                                              , _session.UserID
-                                              , model.Quantity
-                                              );
-
-            //Update PartLot.CheckBox01 = 1 to change status has already used.
-            /*
-            sql += string.Format(@"UPDATE PartLot SET CheckBox01 = 1, ShortChar05 = N'{2}', Date03 = CONVERT(DATETIME, '{3}',103), Number08 = 2
-                                   WHERE PartNum = N'{0}' AND LotNum = N'{1}'"
-                                   , model.MCSSNo, model.SerialNo, model.WorkOrderNum, model.WorkDate.ToString("dd/MM/yyyy hh:mm:ss"));
-             */
-
-            Repository.Instance.ExecuteWithTransaction(sql, "Add Sim RS");
-            return GetReshearSimulation(model.WorkOrderID);
         }
     }
 }

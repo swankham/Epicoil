@@ -175,6 +175,9 @@
     <Compile Include="Models\Planning\SimulateModel.cs" />
     <Compile Include="Models\Planning\SimulateReshearHeadModel.cs" />
     <Compile Include="Models\Planning\SimulateReshearModel.cs" />
+    <Compile Include="Models\Production\MaterialFindingModel.cs" />
+    <Compile Include="Models\Production\ProductionHeadModel.cs" />
+    <Compile Include="Models\Production\SerialCuttingModel.cs" />
     <Compile Include="Models\Sales\OrderDetailModel.cs" />
     <Compile Include="Models\Sales\OrderHeadModel.cs" />
     <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />
@@ -236,6 +239,10 @@
     <Compile Include="Repositories\Planning\Interface\IWorkEntryRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\DieMasterRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\WorkEntryRepo.cs" />
+    <Compile Include="Repositories\Production\Interface\IMaterialFindingRepo.cs" />
+    <Compile Include="Repositories\Production\Interface\IProductionRepo.cs" />
+    <Compile Include="Repositories\Production\Repository\MaterialFindingRepo.cs" />
+    <Compile Include="Repositories\Production\Repository\ProductionRepo.cs" />
     <Compile Include="Repositories\Sales\Interface\ISaleOrderRepo.cs" />
     <Compile Include="Repositories\Sales\Repository\SaleOrderRepo.cs" />
     <Compile Include="Repositories\StoreInPlan\Interface\ILookupRepo.cs" />

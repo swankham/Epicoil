@@ -18,5 +18,9 @@ namespace Epicoil.Library.Repositories.TQA
         bool CheckMaterialExisting(string norCode, string matCode);
 
         bool CheckUsedLine(string norNum);
+
+        ProductsMasterModel Save(SessionInfo _session, ProductsMasterModel data);
+
+        bool NewPart(SessionInfo _session, ProductsMasterModel model, out bool IsSucces, out string msgError);
     }
 }

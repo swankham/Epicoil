@@ -96,7 +96,7 @@ namespace Epicoil.Library.Models.Planning
         /// </summary>
         public int FormState { get; set; }
 
-        //public bool SimulateFlag { get; set; }
+        //public boolean SimulateFlag { get; set; }
 
         public MaterialModel matSet = new MaterialModel();
         public ClassMasterModel CurrentClass = new ClassMasterModel();
