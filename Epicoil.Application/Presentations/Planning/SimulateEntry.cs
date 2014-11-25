@@ -146,10 +146,13 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void butCalculate_Click(object sender, EventArgs e)
         {
+            //Validate check box is checked.
             if (rdoWeight.Checked || rdoLength.Checked || rdoDivision.Checked)
             {
+                //When weight or length checked.
                 if (rdoWeight.Checked || rdoLength.Checked)
                 {
+                    #region Common validation data within weight and length checked. 
                     if (string.IsNullOrEmpty(cmbCutSeq.Text.GetString()))
                     {
                         MessageBox.Show("Please fill Cut Seq. value.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -191,28 +194,50 @@ namespace Epicoil.Appl.Presentations.Planning
                         cmbCutSeq.SelectAll();
                         return;
                     }
+                    #endregion
 
+                    /*
+                     * Important for case Weight and Length checked.
+                     * - Length checked will be convert length expected to weight done and then call CalculateRowForWeightOption(MaterialModel).
+                     * - Weight checked can be call CalculateRowForWeightOption(MaterialModel) immediately.
+                     */
+                    //Get index on current row.
                     int iRow = dgvMaterial.CurrentRow.Index;
+                    //Get current material transaction line id.
                     int id = Convert.ToInt32(dgvMaterial.Rows[iRow].Cells["transactionlineid"].Value.ToString()).GetInt();
+                    //Get using status on current row.
                     bool usedflag = Convert.ToBoolean(dgvMaterial.Rows[iRow].Cells["usedflag"].Value.ToString()).GetBoolean();
+                    //Get material serial No on current row. 
                     string article = dgvMaterial.Rows[iRow].Cells["article"].Value.ToString().GetString().Trim();
 
+                    //Get Material Row by selected.
                     var mat = _repo.GetMaterial(id);
-                    IEnumerable<SimulateModel> line = new List<SimulateModel>();
-                    line = SimModel.Cuttings.Where(i => i.CutDiv.Equals(SimModel.CutSeleted) && i.MaterialSerialNo.GetString() == article && i.CalculatedFlag.GetBoolean() == true).ToList();
+
+                    //New object instant.
+                    //IEnumerable<SimulateModel> line = new List<SimulateModel>();
+                    //Get calculated cutting line by [CutDivision, MaterialSerialNo, CalculateFlag == true] parameter, this line will be to verify weight/length remain balance.
+                    //line = SimModel.Cuttings.Where(i => i.CutDiv.Equals(SimModel.CutSeleted) && i.MaterialSerialNo.GetString() == article && i.CalculatedFlag.GetBoolean() == true).ToList();
+
+                    //***Length option checked.
                     if (rdoLength.Checked)
                     {
+                        //Simulate option = 1 is calculate by Length.
                         SimModel.SimulateOption = 1;
+                        //Keep expected value into 'SimModel.Expected' from TextBox.
                         SimModel.Expected = Convert.ToDecimal(txtExpected.Text.GetString());
-                        decimal usingLengthM = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["usingLengthM"].Value.ToString()).GetDecimal();
+
+                        //decimal usingLengthM = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["usingLengthM"].Value.ToString()).GetDecimal();
                         decimal LengthM = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["LengthM"].Value.ToString()).GetDecimal();
+                        //Get Length remaining on current row selected.
                         decimal RemainLengthM = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["RemainLengthM"].Value.ToString()).GetDecimal();
 
-                        if (usedflag && line.ToList().Count == 0)
+                        #region Validation Length remaining for material partial used.
+                        //If current material selected is used and 
+                        if (usedflag) // && line.ToList().Count == 0)
                         {
                             if (RemainLengthM < SimModel.Expected)
                             {
-                                MessageBox.Show("Expected value must Less than or Equals material length(M).", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Expected value must Less than or Equals material length(M).", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 txtExpected.Focus();
                                 txtExpected.SelectAll();
                                 return;
@@ -222,29 +247,42 @@ namespace Epicoil.Appl.Presentations.Planning
                         {
                             if (LengthM < SimModel.Expected)
                             {
-                                MessageBox.Show("Expected value must Less than or Equals material length(M).", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("Expected value must Less than or Equals material length(M).", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 txtExpected.Focus();
                                 txtExpected.SelectAll();
                                 return;
                             }
                         }
+                        #endregion
 
+                        //Keep variable expected value and convert value to decimal.
                         decimal d = Convert.ToDecimal(txtExpected.Text.GetString());
-                        SimModel.CalculateRowForLegnthOption(mat);
+
+                        //Calculate all rows for material and cutting grid by Simulate header.
+                        //SimModel.CalculateRowForLegnthOption(mat);
+                        //Convert Length to Weight and keep [Weight value] for calculate same weight option checked.
                         SimModel.Expected = (mat.Weight * d) / mat.LengthM;                        
                     }
-                    
+
+                    //***Weight option checked.
                     if (rdoWeight.Checked)
                     {
+                        //Simulate option = 1 is calculate by Weight.
                         SimModel.SimulateOption = 0;
+                        //Keeping [Weight value] for calculate.
                         SimModel.Expected = Convert.ToDecimal(txtExpected.Text.GetString());
                     }
 
+                    //Keeping [Cutting value] for calculate.
                     SimModel.CutSeleted = Convert.ToInt32(cmbCutSeq.Text.GetString());
+
+                    //Keeping weight value from material grid.
                     decimal weight = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["weight"].Value.ToString()).GetDecimal();
+                    //Keeping remain weight value from material grid.
                     decimal remainWeight = Convert.ToDecimal(dgvMaterial.Rows[iRow].Cells["remainWeight"].Value.ToString()).GetDecimal();
 
-                    if (usedflag && line.ToList().Count == 0)
+                    #region Validation Weight remaining for material partial used.
+                    if (usedflag)// && line.ToList().Count == 0)
                     {
                         if (remainWeight < SimModel.Expected)
                         {
@@ -264,7 +302,9 @@ namespace Epicoil.Appl.Presentations.Planning
                             return;
                         }
                     }
+                    #endregion
 
+                    //Calculate after data preparation in case Weight and Length checked.
                     SimModel.CalculateRowForWeightOption(mat);
                     SimModel.SumTrimmingWeight(HeadModel);
                 }

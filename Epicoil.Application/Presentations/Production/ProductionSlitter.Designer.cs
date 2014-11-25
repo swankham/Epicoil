@@ -50,6 +50,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.cmnuWorkEntry = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.luachToWorkOrderEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPICName = new System.Windows.Forms.TextBox();
@@ -70,12 +75,11 @@
             this.cmbProcessLine = new System.Windows.Forms.ComboBox();
             this.butWorkOrder = new System.Windows.Forms.Button();
             this.txtWorkOrderNum = new System.Windows.Forms.TextBox();
-            this.cmnuWorkEntry = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.luachToWorkOrderEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.dgvSerialCuttingList = new System.Windows.Forms.DataGridView();
+            this.serialLineID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.serialNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.materialsn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.thick1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -85,6 +89,7 @@
             this.lengthplan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.weightact = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.weightplan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.percent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ngflag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cutseq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.commodity1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -123,13 +128,6 @@
             this.butStart = new System.Windows.Forms.Button();
             this.butFinish = new System.Windows.Forms.Button();
             this.dgvMaterial = new System.Windows.Forms.DataGridView();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.tbutNew = new System.Windows.Forms.ToolStripButton();
-            this.tbutSave = new System.Windows.Forms.ToolStripButton();
-            this.tbutClean = new System.Windows.Forms.ToolStripButton();
-            this.tbutClose = new System.Windows.Forms.ToolStripButton();
-            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.transactionlineid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.seqno = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -153,13 +151,18 @@
             this.note = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tbutNew = new System.Windows.Forms.ToolStripButton();
+            this.tbutSave = new System.Windows.Forms.ToolStripButton();
+            this.tbutClean = new System.Windows.Forms.ToolStripButton();
+            this.tbutClose = new System.Windows.Forms.ToolStripButton();
+            this.cmnuWorkEntry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.cmnuWorkEntry.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
@@ -173,6 +176,28 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvMaterial)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // cmnuWorkEntry
+            // 
+            this.cmnuWorkEntry.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.luachToWorkOrderEntryToolStripMenuItem});
+            this.cmnuWorkEntry.Name = "cmnuWorkEntry";
+            this.cmnuWorkEntry.Size = new System.Drawing.Size(166, 26);
+            // 
+            // luachToWorkOrderEntryToolStripMenuItem
+            // 
+            this.luachToWorkOrderEntryToolStripMenuItem.Name = "luachToWorkOrderEntryToolStripMenuItem";
+            this.luachToWorkOrderEntryToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.luachToWorkOrderEntryToolStripMenuItem.Text = "Work Order Entry";
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
             // 
             // splitContainer1
             // 
@@ -319,16 +344,17 @@
             this.butOK.Text = "OK";
             this.butOK.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.butOK.UseVisualStyleBackColor = true;
+            this.butOK.Click += new System.EventHandler(this.butOK_Click);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label5.Location = new System.Drawing.Point(121, 52);
+            this.label5.Location = new System.Drawing.Point(123, 51);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(62, 17);
+            this.label5.Size = new System.Drawing.Size(60, 17);
             this.label5.TabIndex = 11;
-            this.label5.Text = "Manual :";
+            this.label5.Text = "Weight :";
             // 
             // label4
             // 
@@ -339,15 +365,18 @@
             this.label4.Size = new System.Drawing.Size(45, 17);
             this.label4.TabIndex = 10;
             this.label4.Text = "Auto :";
+            this.label4.Visible = false;
             // 
             // txtCuttingWeigthAuto
             // 
             this.txtCuttingWeigthAuto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.txtCuttingWeigthAuto.Location = new System.Drawing.Point(189, 21);
             this.txtCuttingWeigthAuto.Name = "txtCuttingWeigthAuto";
+            this.txtCuttingWeigthAuto.ReadOnly = true;
             this.txtCuttingWeigthAuto.Size = new System.Drawing.Size(131, 23);
             this.txtCuttingWeigthAuto.TabIndex = 4;
             this.txtCuttingWeigthAuto.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtCuttingWeigthAuto.Visible = false;
             // 
             // txtCuttingWeigthManual
             // 
@@ -402,21 +431,9 @@
             this.txtWorkOrderNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.txtWorkOrderNum.Location = new System.Drawing.Point(134, 22);
             this.txtWorkOrderNum.Name = "txtWorkOrderNum";
+            this.txtWorkOrderNum.ReadOnly = true;
             this.txtWorkOrderNum.Size = new System.Drawing.Size(131, 23);
             this.txtWorkOrderNum.TabIndex = 2;
-            // 
-            // cmnuWorkEntry
-            // 
-            this.cmnuWorkEntry.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.luachToWorkOrderEntryToolStripMenuItem});
-            this.cmnuWorkEntry.Name = "cmnuWorkEntry";
-            this.cmnuWorkEntry.Size = new System.Drawing.Size(166, 26);
-            // 
-            // luachToWorkOrderEntryToolStripMenuItem
-            // 
-            this.luachToWorkOrderEntryToolStripMenuItem.Name = "luachToWorkOrderEntryToolStripMenuItem";
-            this.luachToWorkOrderEntryToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
-            this.luachToWorkOrderEntryToolStripMenuItem.Text = "Work Order Entry";
             // 
             // label2
             // 
@@ -431,7 +448,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -483,6 +500,7 @@
             this.dgvSerialCuttingList.ColumnHeadersHeight = 25;
             this.dgvSerialCuttingList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dgvSerialCuttingList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.serialLineID,
             this.serialNo,
             this.materialsn,
             this.thick1,
@@ -492,6 +510,7 @@
             this.lengthplan,
             this.weightact,
             this.weightplan,
+            this.percent,
             this.ngflag,
             this.cutseq,
             this.commodity1,
@@ -511,6 +530,17 @@
             this.dgvSerialCuttingList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvSerialCuttingList.Size = new System.Drawing.Size(751, 457);
             this.dgvSerialCuttingList.TabIndex = 22;
+            this.dgvSerialCuttingList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSerialCuttingList_CellClick);
+            this.dgvSerialCuttingList.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSerialCuttingList_CellEndEdit);
+            this.dgvSerialCuttingList.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgvSerialCuttingList_RowStateChanged);
+            this.dgvSerialCuttingList.SelectionChanged += new System.EventHandler(this.dgvSerialCuttingList_SelectionChanged);
+            // 
+            // serialLineID
+            // 
+            this.serialLineID.HeaderText = "ID";
+            this.serialLineID.Name = "serialLineID";
+            this.serialLineID.ReadOnly = true;
+            this.serialLineID.Width = 43;
             // 
             // serialNo
             // 
@@ -569,38 +599,48 @@
             dataGridViewCellStyle5.Format = "N2";
             dataGridViewCellStyle5.NullValue = "0";
             this.lengthact.DefaultCellStyle = dataGridViewCellStyle5;
-            this.lengthact.HeaderText = "Length Actual";
+            this.lengthact.HeaderText = "Length Actual(M)";
             this.lengthact.Name = "lengthact";
-            this.lengthact.Width = 105;
+            this.lengthact.Width = 124;
             // 
             // lengthplan
             // 
             dataGridViewCellStyle6.Format = "N2";
             dataGridViewCellStyle6.NullValue = "0";
             this.lengthplan.DefaultCellStyle = dataGridViewCellStyle6;
-            this.lengthplan.HeaderText = "Length Plan";
+            this.lengthplan.HeaderText = "Length Plan(M)";
             this.lengthplan.Name = "lengthplan";
             this.lengthplan.ReadOnly = true;
-            this.lengthplan.Width = 97;
+            this.lengthplan.Width = 116;
             // 
             // weightact
             // 
             dataGridViewCellStyle7.Format = "N2";
             dataGridViewCellStyle7.NullValue = "0";
             this.weightact.DefaultCellStyle = dataGridViewCellStyle7;
-            this.weightact.HeaderText = "Weight Actual";
+            this.weightact.HeaderText = "Weight Actual(Kg.)";
             this.weightact.Name = "weightact";
-            this.weightact.Width = 105;
+            this.weightact.Width = 131;
             // 
             // weightplan
             // 
             dataGridViewCellStyle8.Format = "N2";
             dataGridViewCellStyle8.NullValue = "0";
             this.weightplan.DefaultCellStyle = dataGridViewCellStyle8;
-            this.weightplan.HeaderText = "Weight Plan";
+            this.weightplan.HeaderText = "Weight Plan(Kg.)";
             this.weightplan.Name = "weightplan";
             this.weightplan.ReadOnly = true;
-            this.weightplan.Width = 97;
+            this.weightplan.Width = 123;
+            // 
+            // percent
+            // 
+            dataGridViewCellStyle9.Format = "N2";
+            dataGridViewCellStyle9.NullValue = "0";
+            this.percent.DefaultCellStyle = dataGridViewCellStyle9;
+            this.percent.HeaderText = "Percent(%)";
+            this.percent.Name = "percent";
+            this.percent.ReadOnly = true;
+            this.percent.Width = 92;
             // 
             // ngflag
             // 
@@ -1070,10 +1110,219 @@
             this.dgvMaterial.Size = new System.Drawing.Size(1125, 172);
             this.dgvMaterial.TabIndex = 18;
             // 
-            // timer1
+            // transactionlineid
             // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            this.transactionlineid.HeaderText = "ID";
+            this.transactionlineid.Name = "transactionlineid";
+            this.transactionlineid.ReadOnly = true;
+            this.transactionlineid.Visible = false;
+            this.transactionlineid.Width = 43;
+            // 
+            // MCSSNum
+            // 
+            this.MCSSNum.HeaderText = "MCSS No.";
+            this.MCSSNum.Name = "MCSSNum";
+            this.MCSSNum.ReadOnly = true;
+            this.MCSSNum.Width = 88;
+            // 
+            // seqno
+            // 
+            this.seqno.HeaderText = "Seq.";
+            this.seqno.Name = "seqno";
+            this.seqno.ReadOnly = true;
+            this.seqno.Width = 56;
+            // 
+            // article
+            // 
+            this.article.HeaderText = "Serial No.";
+            this.article.Name = "article";
+            this.article.ReadOnly = true;
+            this.article.Width = 85;
+            // 
+            // spec
+            // 
+            this.spec.HeaderText = "Spec";
+            this.spec.Name = "spec";
+            this.spec.ReadOnly = true;
+            this.spec.Width = 59;
+            // 
+            // coating
+            // 
+            this.coating.HeaderText = "Coating";
+            this.coating.Name = "coating";
+            this.coating.ReadOnly = true;
+            this.coating.Width = 73;
+            // 
+            // thick
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N2";
+            dataGridViewCellStyle10.NullValue = "0";
+            this.thick.DefaultCellStyle = dataGridViewCellStyle10;
+            this.thick.HeaderText = "Thick";
+            this.thick.Name = "thick";
+            this.thick.ReadOnly = true;
+            this.thick.Width = 60;
+            // 
+            // width
+            // 
+            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N2";
+            dataGridViewCellStyle11.NullValue = "0";
+            this.width.DefaultCellStyle = dataGridViewCellStyle11;
+            this.width.HeaderText = "Width";
+            this.width.Name = "width";
+            this.width.ReadOnly = true;
+            this.width.Width = 62;
+            // 
+            // length
+            // 
+            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle12.Format = "N2";
+            dataGridViewCellStyle12.NullValue = "0";
+            this.length.DefaultCellStyle = dataGridViewCellStyle12;
+            this.length.HeaderText = "Length";
+            this.length.Name = "length";
+            this.length.ReadOnly = true;
+            this.length.Width = 69;
+            // 
+            // weight
+            // 
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = "0";
+            this.weight.DefaultCellStyle = dataGridViewCellStyle13;
+            this.weight.HeaderText = "Weight";
+            this.weight.Name = "weight";
+            this.weight.ReadOnly = true;
+            this.weight.Width = 69;
+            // 
+            // usingweight
+            // 
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = "0";
+            this.usingweight.DefaultCellStyle = dataGridViewCellStyle14;
+            this.usingweight.HeaderText = "Using Weight";
+            this.usingweight.Name = "usingweight";
+            this.usingweight.ReadOnly = true;
+            this.usingweight.Width = 104;
+            // 
+            // remainWeight
+            // 
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = "0";
+            this.remainWeight.DefaultCellStyle = dataGridViewCellStyle15;
+            this.remainWeight.HeaderText = "Remain Weight";
+            this.remainWeight.Name = "remainWeight";
+            this.remainWeight.ReadOnly = true;
+            this.remainWeight.Width = 116;
+            // 
+            // LengthM
+            // 
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle16.Format = "N2";
+            dataGridViewCellStyle16.NullValue = "0";
+            this.LengthM.DefaultCellStyle = dataGridViewCellStyle16;
+            this.LengthM.HeaderText = "Length(M)";
+            this.LengthM.Name = "LengthM";
+            this.LengthM.ReadOnly = true;
+            this.LengthM.Width = 88;
+            // 
+            // usingLengthM
+            // 
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.Format = "N2";
+            dataGridViewCellStyle17.NullValue = "0";
+            this.usingLengthM.DefaultCellStyle = dataGridViewCellStyle17;
+            this.usingLengthM.HeaderText = "Using Length(M)";
+            this.usingLengthM.Name = "usingLengthM";
+            this.usingLengthM.ReadOnly = true;
+            this.usingLengthM.Width = 123;
+            // 
+            // remainLengthM
+            // 
+            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle18.Format = "N2";
+            dataGridViewCellStyle18.NullValue = "0";
+            this.remainLengthM.DefaultCellStyle = dataGridViewCellStyle18;
+            this.remainLengthM.HeaderText = "Remain Length(M)";
+            this.remainLengthM.Name = "remainLengthM";
+            this.remainLengthM.ReadOnly = true;
+            this.remainLengthM.Width = 135;
+            // 
+            // qtyPack
+            // 
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle19.Format = "N0";
+            dataGridViewCellStyle19.NullValue = "0";
+            this.qtyPack.DefaultCellStyle = dataGridViewCellStyle19;
+            this.qtyPack.HeaderText = "Quantity/Pack";
+            this.qtyPack.Name = "qtyPack";
+            this.qtyPack.ReadOnly = true;
+            this.qtyPack.Width = 105;
+            // 
+            // quantity
+            // 
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle20.Format = "N0";
+            dataGridViewCellStyle20.NullValue = "0";
+            this.quantity.DefaultCellStyle = dataGridViewCellStyle20;
+            this.quantity.HeaderText = "Using Quantity";
+            this.quantity.Name = "quantity";
+            this.quantity.ReadOnly = true;
+            this.quantity.Width = 110;
+            // 
+            // RemQuantity
+            // 
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle21.Format = "N0";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.RemQuantity.DefaultCellStyle = dataGridViewCellStyle21;
+            this.RemQuantity.HeaderText = "Remain Quantity";
+            this.RemQuantity.Name = "RemQuantity";
+            this.RemQuantity.ReadOnly = true;
+            this.RemQuantity.Width = 122;
+            // 
+            // SelectCB
+            // 
+            this.SelectCB.HeaderText = "Select C/B";
+            this.SelectCB.Name = "SelectCB";
+            this.SelectCB.ReadOnly = true;
+            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.SelectCB.Width = 87;
+            // 
+            // status
+            // 
+            this.status.HeaderText = "Status";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 65;
+            // 
+            // note
+            // 
+            this.note.HeaderText = "Note";
+            this.note.Name = "note";
+            this.note.ReadOnly = true;
+            this.note.Width = 57;
+            // 
+            // bt
+            // 
+            this.bt.HeaderText = "BT";
+            this.bt.Name = "bt";
+            this.bt.ReadOnly = true;
+            this.bt.Width = 46;
+            // 
+            // productstatus
+            // 
+            this.productstatus.HeaderText = "Product Status";
+            this.productstatus.Name = "productstatus";
+            this.productstatus.ReadOnly = true;
+            this.productstatus.Width = 110;
             // 
             // toolStrip2
             // 
@@ -1137,224 +1386,6 @@
             this.tbutClose.Size = new System.Drawing.Size(36, 36);
             this.tbutClose.Text = "Close Job";
             // 
-            // timer2
-            // 
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
-            // 
-            // transactionlineid
-            // 
-            this.transactionlineid.HeaderText = "ID";
-            this.transactionlineid.Name = "transactionlineid";
-            this.transactionlineid.ReadOnly = true;
-            this.transactionlineid.Visible = false;
-            this.transactionlineid.Width = 43;
-            // 
-            // MCSSNum
-            // 
-            this.MCSSNum.HeaderText = "MCSS No.";
-            this.MCSSNum.Name = "MCSSNum";
-            this.MCSSNum.ReadOnly = true;
-            this.MCSSNum.Width = 88;
-            // 
-            // seqno
-            // 
-            this.seqno.HeaderText = "Seq.";
-            this.seqno.Name = "seqno";
-            this.seqno.ReadOnly = true;
-            this.seqno.Width = 56;
-            // 
-            // article
-            // 
-            this.article.HeaderText = "Serial No.";
-            this.article.Name = "article";
-            this.article.ReadOnly = true;
-            this.article.Width = 85;
-            // 
-            // spec
-            // 
-            this.spec.HeaderText = "Spec";
-            this.spec.Name = "spec";
-            this.spec.ReadOnly = true;
-            this.spec.Width = 59;
-            // 
-            // coating
-            // 
-            this.coating.HeaderText = "Coating";
-            this.coating.Name = "coating";
-            this.coating.ReadOnly = true;
-            this.coating.Width = 73;
-            // 
-            // thick
-            // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.thick.DefaultCellStyle = dataGridViewCellStyle9;
-            this.thick.HeaderText = "Thick";
-            this.thick.Name = "thick";
-            this.thick.ReadOnly = true;
-            this.thick.Width = 60;
-            // 
-            // width
-            // 
-            this.width.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.width.DefaultCellStyle = dataGridViewCellStyle10;
-            this.width.HeaderText = "Width";
-            this.width.Name = "width";
-            this.width.ReadOnly = true;
-            this.width.Width = 62;
-            // 
-            // length
-            // 
-            this.length.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N2";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.length.DefaultCellStyle = dataGridViewCellStyle11;
-            this.length.HeaderText = "Length";
-            this.length.Name = "length";
-            this.length.ReadOnly = true;
-            this.length.Width = 69;
-            // 
-            // weight
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = "0";
-            this.weight.DefaultCellStyle = dataGridViewCellStyle12;
-            this.weight.HeaderText = "Weight";
-            this.weight.Name = "weight";
-            this.weight.ReadOnly = true;
-            this.weight.Width = 69;
-            // 
-            // usingweight
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = "0";
-            this.usingweight.DefaultCellStyle = dataGridViewCellStyle13;
-            this.usingweight.HeaderText = "Using Weight";
-            this.usingweight.Name = "usingweight";
-            this.usingweight.ReadOnly = true;
-            this.usingweight.Width = 104;
-            // 
-            // remainWeight
-            // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle14.Format = "N2";
-            dataGridViewCellStyle14.NullValue = "0";
-            this.remainWeight.DefaultCellStyle = dataGridViewCellStyle14;
-            this.remainWeight.HeaderText = "Remain Weight";
-            this.remainWeight.Name = "remainWeight";
-            this.remainWeight.ReadOnly = true;
-            this.remainWeight.Width = 116;
-            // 
-            // LengthM
-            // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N2";
-            dataGridViewCellStyle15.NullValue = "0";
-            this.LengthM.DefaultCellStyle = dataGridViewCellStyle15;
-            this.LengthM.HeaderText = "Length(M)";
-            this.LengthM.Name = "LengthM";
-            this.LengthM.ReadOnly = true;
-            this.LengthM.Width = 88;
-            // 
-            // usingLengthM
-            // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = "0";
-            this.usingLengthM.DefaultCellStyle = dataGridViewCellStyle16;
-            this.usingLengthM.HeaderText = "Using Length(M)";
-            this.usingLengthM.Name = "usingLengthM";
-            this.usingLengthM.ReadOnly = true;
-            this.usingLengthM.Width = 123;
-            // 
-            // remainLengthM
-            // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle17.Format = "N2";
-            dataGridViewCellStyle17.NullValue = "0";
-            this.remainLengthM.DefaultCellStyle = dataGridViewCellStyle17;
-            this.remainLengthM.HeaderText = "Remain Length(M)";
-            this.remainLengthM.Name = "remainLengthM";
-            this.remainLengthM.ReadOnly = true;
-            this.remainLengthM.Width = 135;
-            // 
-            // qtyPack
-            // 
-            dataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle18.Format = "N0";
-            dataGridViewCellStyle18.NullValue = "0";
-            this.qtyPack.DefaultCellStyle = dataGridViewCellStyle18;
-            this.qtyPack.HeaderText = "Quantity/Pack";
-            this.qtyPack.Name = "qtyPack";
-            this.qtyPack.ReadOnly = true;
-            this.qtyPack.Width = 105;
-            // 
-            // quantity
-            // 
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle19.Format = "N0";
-            dataGridViewCellStyle19.NullValue = "0";
-            this.quantity.DefaultCellStyle = dataGridViewCellStyle19;
-            this.quantity.HeaderText = "Using Quantity";
-            this.quantity.Name = "quantity";
-            this.quantity.ReadOnly = true;
-            this.quantity.Width = 110;
-            // 
-            // RemQuantity
-            // 
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle20.Format = "N0";
-            dataGridViewCellStyle20.NullValue = "0";
-            this.RemQuantity.DefaultCellStyle = dataGridViewCellStyle20;
-            this.RemQuantity.HeaderText = "Remain Quantity";
-            this.RemQuantity.Name = "RemQuantity";
-            this.RemQuantity.ReadOnly = true;
-            this.RemQuantity.Width = 122;
-            // 
-            // SelectCB
-            // 
-            this.SelectCB.HeaderText = "Select C/B";
-            this.SelectCB.Name = "SelectCB";
-            this.SelectCB.ReadOnly = true;
-            this.SelectCB.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SelectCB.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.SelectCB.Width = 87;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "Status";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            this.status.Width = 65;
-            // 
-            // note
-            // 
-            this.note.HeaderText = "Note";
-            this.note.Name = "note";
-            this.note.ReadOnly = true;
-            this.note.Width = 57;
-            // 
-            // bt
-            // 
-            this.bt.HeaderText = "BT";
-            this.bt.Name = "bt";
-            this.bt.ReadOnly = true;
-            this.bt.Width = 46;
-            // 
-            // productstatus
-            // 
-            this.productstatus.HeaderText = "Product Status";
-            this.productstatus.Name = "productstatus";
-            this.productstatus.ReadOnly = true;
-            this.productstatus.Width = 110;
-            // 
             // ProductionSlitter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1366,7 +1397,9 @@
             this.Name = "ProductionSlitter";
             this.Text = "Production [Slitter]";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductionSlitter_FormClosing);
             this.Load += new System.EventHandler(this.ProductionSlitter_Load);
+            this.cmnuWorkEntry.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1375,7 +1408,6 @@
             this.panel1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.cmnuWorkEntry.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -1459,22 +1491,6 @@
         private System.Windows.Forms.Timer timer2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtPICName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn serialNo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn materialsn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn thick1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn width1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn length1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lengthact;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lengthplan;
-        private System.Windows.Forms.DataGridViewTextBoxColumn weightact;
-        private System.Windows.Forms.DataGridViewTextBoxColumn weightplan;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn ngflag;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cutseq;
-        private System.Windows.Forms.DataGridViewTextBoxColumn commodity1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn spec1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn possession;
         private System.Windows.Forms.ContextMenuStrip cmnuWorkEntry;
         private System.Windows.Forms.ToolStripMenuItem luachToWorkOrderEntryToolStripMenuItem;
         private System.Windows.Forms.DataGridView dgvMaterial;
@@ -1501,5 +1517,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn note;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt;
         private System.Windows.Forms.DataGridViewTextBoxColumn productstatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialLineID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn serialNo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn materialsn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn thick1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn width1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn length1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthact;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lengthplan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn weightact;
+        private System.Windows.Forms.DataGridViewTextBoxColumn weightplan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn percent;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn ngflag;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cutseq;
+        private System.Windows.Forms.DataGridViewTextBoxColumn commodity1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn spec1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn possession;
     }
 }

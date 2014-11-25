@@ -50,7 +50,7 @@ namespace Epicoil.Library.Models.Planning
 
         public int CutDiv { get; set; }
 
-        public int CutSeq { get; set; }
+        public decimal CutSeq { get; set; }
 
         public decimal UnitWeight { get; set; }
 
@@ -82,7 +82,7 @@ namespace Epicoil.Library.Models.Planning
             this.Length = (decimal)row["Length"].GetDecimal();
             this.Status = (string)row["Status"].GetString();
             this.Stand = (int)row["Stand"].GetInt();
-            this.CutSeq = (int)row["CutSeq"].GetInt();
+            this.CutSeq = (decimal)row["CutSeq"].GetDecimal();
             this.CutDiv = (int)row["CutDiv"].GetInt();
             this.UnitWeight = (decimal)row["UnitWeight"].GetDecimal();
             this.TotalWeight = (decimal)row["TotalWeight"].GetDecimal();
@@ -122,7 +122,7 @@ namespace Epicoil.Library.Models.Planning
             cutMax = head.Cuttings.Max(i => i.CutDiv);
             UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.Expected, widthMat, Width), 2);
             TotalWeight = UnitWeight * Stand;
-            LengthM = Math.Round((Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 1), 0);
+            LengthM = Math.Round(CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate), 0);
             //}
             //else if (head.SimulateOption == 1)
             //{

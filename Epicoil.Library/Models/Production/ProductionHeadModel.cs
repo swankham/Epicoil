@@ -20,6 +20,8 @@ namespace Epicoil.Library.Models.Production
 
         public int CutSeq { get; set; }
 
+        public string CutSeqStr { get; set; }
+
         public decimal CuttingAutoWeight { get; set; }
 
         public decimal CuttingManualWeight { get; set; }
@@ -82,6 +84,7 @@ namespace Epicoil.Library.Models.Production
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
+            this.CutSeqStr = this.CutSeq.ToString("#,###.#");
         }
     }
 }

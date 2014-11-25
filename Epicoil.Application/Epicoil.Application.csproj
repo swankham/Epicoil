@@ -319,6 +319,11 @@
       <DependentUpon>McssMaster.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reports\Production\dsProduction.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dsProduction.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainMPI.resx">
       <DependentUpon>MainMPI.cs</DependentUpon>
     </EmbeddedResource>
@@ -463,6 +468,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="epicor.ico" />
+    <None Include="Reports\Production\dsProduction.xsc">
+      <DependentUpon>dsProduction.xsd</DependentUpon>
+    </None>
+    <None Include="Reports\Production\dsProduction.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>dsProduction.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Reports\Production\dsProduction.xss">
+      <DependentUpon>dsProduction.xsd</DependentUpon>
+    </None>
     <None Include="Resources\1416388107_gtk-media-stop.png" />
     <None Include="Resources\1416387642_eraser.png" />
     <None Include="Resources\1416387138_Save.png" />

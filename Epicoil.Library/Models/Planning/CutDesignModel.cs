@@ -204,7 +204,6 @@ namespace Epicoil.Library.Models.Planning
             Mc = (Ma * Mb);
             WgtPerUnit = Math.Round(Mc, 2);
             return WgtPerUnit;
-
         }
 
         /// <summary>

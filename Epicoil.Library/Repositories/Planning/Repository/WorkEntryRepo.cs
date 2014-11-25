@@ -761,12 +761,14 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , mat.MCSSNo, 0 as CutSeq, mat.Plant, 0 as SimLineID, sim.WorkOrderID, 0 as CuttingLineID, sim.TransactionLineID as MaterialTransLineID, 0 as SimSeq
+	                                            , mat.MCSSNo, cut.CutDiv as CutSeq, mat.Plant, 0 as SimLineID, sim.WorkOrderID, 0 as CuttingLineID, sim.TransactionLineID as MaterialTransLineID, 0 as SimSeq
 		                                        , sim.Thick, sim.Width, sim.Length, sim.UsingLengthM, sim.LengthM, sim.MCSSNo, sim.Status, 1 as Stand, 0 as CutDiv, sim.Weight as UnitWeight, sim.Weight as TotalWeight
 		                                        , 1 as CalculatedFlag, sim.*, 'CB' as SerialType
                                             FROM ucc_pln_CoilBack sim
 	                                            LEFT JOIN ucc_pln_Material mat ON(sim.TransactionLineID = mat.TransactionLineID)
-	                                            --LEFT JOIN ucc_pln_CuttingDesign cut ON(sim.CuttingLineID = cut.LineID)
+	                                            LEFT JOIN (SELECT max(CutDiv) + 0.1 as CutDiv, WorkOrderID, MaterialTransLineID FROM ucc_pln_Simulate
+														   GROUP BY WorkOrderID, MaterialTransLineID) cut 
+																				ON(cut.WorkOrderID = sim.WorkOrderID AND cut.MaterialTransLineID = sim.TransactionLineID)
 	                                            LEFT JOIN UD25 busi ON(mat.BT = busi.Key1)
 	                                            LEFT JOIN UD29 cmdt ON(mat.Cmdty = cmdt.Key1)
 	                                            LEFT JOIN UD30 spec ON(mat.Cmdty = spec.Key2 and mat.Spec = spec.Key1)

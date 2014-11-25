@@ -62,6 +62,7 @@ namespace Epicoil.Library.Models.Planning
                 {
                     m.UsingWeight = Expected;
                 }
+                m.CalculateUsingLength();
                 m.UsedFlag = true;
             }
 
@@ -91,14 +92,14 @@ namespace Epicoil.Library.Models.Planning
                 //m.UsedFlag = true;
             }
 
-            //foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
-            //{
-            //    item.CalculateRow(this, mat);
-            //}
+            foreach (var item in Cuttings.Where(i => i.CutDiv.Equals(CutSeleted)))
+            {
+                item.CalculateRow(this, mat);
+            }
 
-            //SumProductWeight();
-            //SumMaterialWeight();
-            //SumYeild();
+            SumProductWeight();
+            SumMaterialWeight();
+            SumYeild();
         }
 
         public void SumProductWeight()

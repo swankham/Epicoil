@@ -89,8 +89,8 @@ namespace Epicoil.Appl.Presentations.Production
 
                     butOK.Enabled = true;
                     butPrint.Enabled = true;
-                    butAddCut.Enabled = true;
-                    butDeleteCut.Enabled = true;
+                    //butAddCut.Enabled = true;
+                    //butDeleteCut.Enabled = true;
 
                     tbutSave.Enabled = true;
 
@@ -115,7 +115,7 @@ namespace Epicoil.Appl.Presentations.Production
                     butQ.Enabled = true;
                     butOther.Enabled = true;
                     break;
-
+                    
                 case "Pause":
                     timepause = DateTime.Now;
                     pauseFlag = true;
@@ -158,8 +158,8 @@ namespace Epicoil.Appl.Presentations.Production
                     txtTimePause.Text = "00:00:00";
                     butOK.Enabled = true;
                     butPrint.Enabled = true;
-                    butAddCut.Enabled = true;
-                    butDeleteCut.Enabled = true;
+                    //butAddCut.Enabled = true;
+                    //butDeleteCut.Enabled = true;
                     butStart.Enabled = false;
                     butFinish.Enabled = true;
                     butA.Enabled = true;
@@ -187,12 +187,25 @@ namespace Epicoil.Appl.Presentations.Production
                     txtSS.ReadOnly = true;
                     break;
 
-                case "Normal":
+                case "Ready":
                     txtTimeStamp.Text = "00:00:00";
                     txtTimePause.Text = "00:00:00";
                     butStart.Enabled = true;
                     tbutNew.Enabled = true;
                     break;
+
+                case "Normal":
+                    txtTimeStamp.Text = "00:00:00";
+                    txtTimePause.Text = "00:00:00";
+                    butStart.Enabled = false;
+                    tbutNew.Enabled = false;
+                    break;
+            }
+
+            string cutline = HeaderContent.CutSeqStr;
+            if (!string.IsNullOrEmpty(cutline))
+            {
+                if (action != "Pause") SetModifyCut(cutline);
             }
         }
 
@@ -363,15 +376,118 @@ namespace Epicoil.Appl.Presentations.Production
 
         private void cmbCutLine_Leave(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(cmbCutLine.Text)) return;
-            int cutline = HeaderContent.CutSeq;
+            ShowCuttingSerail();
+        }
 
-            ListSerialCuttingToGrid(HeaderContent.SerialLines.Where(x => x.CutSeq == cutline));
+        private void ProductionSlitter_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (timer1.Enabled)
+            {
+                MessageBox.Show("This WorkOrder is running, so you can't close.", "Job is running.", MessageBoxButtons.OK);
+                // Cancel the Closing event from closing the form.
+                e.Cancel = true;
+            }
+        }
+
+        private void butOK_Click(object sender, EventArgs e)
+        {
+            decimal cutWeight;
+            if (!decimal.TryParse(txtCuttingWeigthManual.Text, out cutWeight))
+            {
+                MessageBox.Show("Cutting weight value must be Number type.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            AverageWeightToCuttingLine(cutWeight);
+        }
+
+        private void dgvSerialCuttingList_SelectionChanged(object sender, EventArgs e)
+        {
+            SetSelectionMaterial();
+        }
+
+        private void dgvSerialCuttingList_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+        }
+
+        private void dgvSerialCuttingList_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            bool changeState = false;
+            string colName = dgvSerialCuttingList.Columns[e.ColumnIndex].Name;
+            string strVal = dgvSerialCuttingList.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
+            string serialLineId = dgvSerialCuttingList.Rows[e.RowIndex].Cells["serialLineID"].Value.GetString();
+
+            var result = (from item in HeaderContent.SerialLines
+                          where item.SerialLineID == Convert.ToInt32(serialLineId)
+                          select item).First();
+            switch (colName)
+            {
+                case "weightact":
+                    changeState = (result.WeightActual != Convert.ToDecimal(strVal));
+                    result.WeightActual = Convert.ToDecimal(strVal);
+                    result.SetLengthActualM();
+                    dgvSerialCuttingList.Rows[e.RowIndex].Cells["lengthact"].Value = result.LengthActual;
+                    break;
+
+                case "lengthact":
+                    changeState = (result.LengthActual != Convert.ToDecimal(strVal));
+                    result.LengthActual = Convert.ToDecimal(strVal);
+                    result.SetWeightActualKg();
+                    dgvSerialCuttingList.Rows[e.RowIndex].Cells["weightact"].Value = result.WeightActual;
+                    break;
+
+                case "ngflag":
+                    changeState = (result.NGFlag != Convert.ToBoolean(strVal));
+                    result.NGFlag = Convert.ToBoolean(strVal);
+                    break;
+            }
+        }
+
+        private void dgvSerialCuttingList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+            var dataGridView = (DataGridView)sender;
+
+            if (dataGridView.Columns[e.ColumnIndex].Name != "ngflag") return;
+            var cell = dataGridView.Rows[e.RowIndex].Cells["ngflag"];
+
+            if (cell.Value == null) cell.Value = false;
+            cell.Value = !(bool)cell.Value;
+            dataGridView.EndEdit();
         }
 
         #endregion From Event
 
         #region Customize Method
+
+        private void ShowCuttingSerail()
+        {
+            //if (string.IsNullOrEmpty(cmbCutLine.Text)) return;
+            string cutline = HeaderContent.CutSeqStr;
+            SetModifyCut(cutline);
+            ListSerialCuttingToGrid(HeaderContent.SerialLines.Where(x => x.CutSeqStr == cutline));
+        }
+
+        private void SetModifyCut(string cutline)
+        {
+            string matSerial = (from item in HeaderContent.SerialLines
+                                where item.CutSeqStr == cutline
+                                select item.MaterialSerialNo).First();
+
+            var maxCut = HeaderContent.SerialLines
+                                        .Where(p => p.MaterialSerialNo == matSerial)
+                                        .Max(p => p.CutSeq);
+
+            if (Math.Round(Convert.ToDecimal(cutline), 0) == Math.Round(maxCut, 0))
+            {
+                butAddCut.Enabled = true;
+                butDeleteCut.Enabled = true;
+            }
+            else
+            {
+                butAddCut.Enabled = false;
+                butDeleteCut.Enabled = false;
+            }
+        }
 
         private void SetHeadContent(ProductionHeadModel model)
         {
@@ -386,16 +502,19 @@ namespace Epicoil.Appl.Presentations.Production
             cmbProcessLine.ValueMember = "ResourceID";
             cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineId", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            cmbCutLine.DataSource = model.SerialLines.GroupBy(x => x.CutSeq)
+            cmbCutLine.DataSource = model.SerialLines.GroupBy(x => new { x.CutSeq })
                                                          .Select(g => g.First()).ToList();
-            cmbCutLine.DisplayMember = "CutSeq";
-            cmbCutLine.ValueMember = "CutSeq";
-            cmbCutLine.DataBindings.Add("SelectedValue", model, "CutSeq", false, DataSourceUpdateMode.OnPropertyChanged);
+            cmbCutLine.DisplayMember = "CutSeqStr";
+            cmbCutLine.ValueMember = "CutSeqStr";
+            cmbCutLine.DataBindings.Add("SelectedValue", model, "CutSeqStr", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //DatePicker
             //dtpProductionDate.Value = model.ProductionDate;
 
-            SetTimeControl("Normal");
+            SetTimeControl("Ready");
+            if (cmbCutLine.Items.Count > 0) cmbCutLine.SelectedIndex = 0;
+
+            ShowCuttingSerail();
             ListMaterialGrid(model.Materials);
         }
 
@@ -424,10 +543,11 @@ namespace Epicoil.Appl.Presentations.Production
         {
             int i = 0;
             dgvSerialCuttingList.Rows.Clear();
+            var sumWeigth = item.Sum(p => p.UnitWeight);
             foreach (var p in item)
             {
-                dgvSerialCuttingList.Rows.Add(p.SerialNo, p.MaterialSerialNo, p.Thick, p.Width, p.Length, p.LengthActual, p.LengthM
-                                             , p.WeightActual, p.UnitWeight, p.NGFlag, p.CutSeq, p.CommodityCode + " - " + p.CommodityName
+                dgvSerialCuttingList.Rows.Add(p.SerialLineID, p.SerialNo, p.MaterialSerialNo, p.Thick, p.Width, p.Length, p.LengthActual, p.LengthM
+                                             , p.WeightActual, p.UnitWeight, (p.UnitWeight / sumWeigth) * 100, p.NGFlag, p.CutSeq, p.CommodityCode + " - " + p.CommodityName
                                              , p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName
                                              , p.BussinessType + " - " + p.BussinessTypeName, p.PossessionName);
                 //Fill color rows for even number.
@@ -459,6 +579,52 @@ namespace Epicoil.Appl.Presentations.Production
                 }
                 i++;
             }
+        }
+
+        private void SetSelectionMaterial()
+        {
+            if (dgvMaterial.Rows.Count == 0) return;
+            int currentRow = dgvSerialCuttingList.CurrentCell.RowIndex;
+            string matSN = dgvSerialCuttingList.Rows[currentRow].Cells["materialsn"].Value.GetString();
+
+            int index = -1;
+
+            DataGridViewRow row = dgvMaterial.Rows
+                .Cast<DataGridViewRow>()
+                .Where(r => r.Cells["article"].Value.ToString().Equals(matSN))
+                .First();
+
+            index = row.Index;
+
+            dgvMaterial.Rows[index].Selected = true;
+        }
+
+        private void AverageWeightToCuttingLine(decimal cutWeight)
+        {
+            decimal rate = cutWeight / 100;
+            foreach (DataGridViewRow row in dgvSerialCuttingList.Rows)
+            {
+                string serialLineId = row.Cells["serialLineID"].Value.GetString();
+
+                var result = (from item in HeaderContent.SerialLines
+                              where item.SerialLineID == Convert.ToInt32(serialLineId)
+                              select item).First();
+
+                decimal perct = Convert.ToDecimal(row.Cells["percent"].Value);
+                decimal weightPerCut = perct * rate;
+
+                result.WeightActual = weightPerCut;
+                result.SetLengthActualM();
+
+                UpdateCuttingWeightCell(row, result);
+            }
+        }
+
+        private void UpdateCuttingWeightCell(DataGridViewRow row, SerialCuttingModel model)
+        {
+            row.Cells["weightact"].Value = model.WeightActual.ToString("#,###.00");
+            row.Cells["lengthact"].Value = model.LengthActual.ToString("#,###.00");
+            dgvSerialCuttingList.EndEdit();
         }
 
         #endregion Customize Method
