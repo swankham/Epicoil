@@ -1,6 +1,6 @@
-﻿namespace Epicoil.Appl.Presentations.Planning
+﻿namespace Epicoil.Appl.Presentations.Production
 {
-    partial class WorkEntryDialog
+    partial class ProdDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,8 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkEntryDialog));
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProdDialog));
+            this.workordernumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.txtProcessStep = new System.Windows.Forms.TextBox();
             this.cmbPossession = new System.Windows.Forms.ComboBox();
             this.cmbOrderType = new System.Windows.Forms.ComboBox();
@@ -41,11 +41,18 @@
             this.dtDueTo = new System.Windows.Forms.DateTimePicker();
             this.dtDueFrom = new System.Windows.Forms.DateTimePicker();
             this.dtWOTo = new System.Windows.Forms.DateTimePicker();
+            this.ProcessLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.WODate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PIC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dtWOFrom = new System.Windows.Forms.DateTimePicker();
             this.cmbProcessLine = new System.Windows.Forms.ComboBox();
             this.txtPIC = new System.Windows.Forms.TextBox();
             this.txtWONo = new System.Windows.Forms.TextBox();
+            this.ProcessStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label8 = new System.Windows.Forms.Label();
+            this.operation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -53,61 +60,22 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.dgvWorkOrder = new System.Windows.Forms.DataGridView();
-            this.workordernumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProcessStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ProcessLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.WODate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DueDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PIC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operation = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvWorkOrder = new System.Windows.Forms.DataGridView();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkOrder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkOrder)).BeginInit();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // workordernumber
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.txtProcessStep);
-            this.splitContainer1.Panel1.Controls.Add(this.cmbPossession);
-            this.splitContainer1.Panel1.Controls.Add(this.cmbOrderType);
-            this.splitContainer1.Panel1.Controls.Add(this.btnSelect);
-            this.splitContainer1.Panel1.Controls.Add(this.btnClear);
-            this.splitContainer1.Panel1.Controls.Add(this.btnSearch);
-            this.splitContainer1.Panel1.Controls.Add(this.dtDueTo);
-            this.splitContainer1.Panel1.Controls.Add(this.dtDueFrom);
-            this.splitContainer1.Panel1.Controls.Add(this.dtWOTo);
-            this.splitContainer1.Panel1.Controls.Add(this.dtWOFrom);
-            this.splitContainer1.Panel1.Controls.Add(this.cmbProcessLine);
-            this.splitContainer1.Panel1.Controls.Add(this.txtPIC);
-            this.splitContainer1.Panel1.Controls.Add(this.txtWONo);
-            this.splitContainer1.Panel1.Controls.Add(this.label8);
-            this.splitContainer1.Panel1.Controls.Add(this.label7);
-            this.splitContainer1.Panel1.Controls.Add(this.label6);
-            this.splitContainer1.Panel1.Controls.Add(this.label5);
-            this.splitContainer1.Panel1.Controls.Add(this.label4);
-            this.splitContainer1.Panel1.Controls.Add(this.label3);
-            this.splitContainer1.Panel1.Controls.Add(this.label2);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.dgvWorkOrder);
-            this.splitContainer1.Size = new System.Drawing.Size(775, 483);
-            this.splitContainer1.SplitterDistance = 102;
-            this.splitContainer1.TabIndex = 0;
+            this.workordernumber.HeaderText = "Work Order No.";
+            this.workordernumber.Name = "workordernumber";
+            this.workordernumber.ReadOnly = true;
+            this.workordernumber.Width = 115;
             // 
             // txtProcessStep
             // 
@@ -142,7 +110,6 @@
             this.btnSelect.TabIndex = 26;
             this.btnSelect.Text = "Select";
             this.btnSelect.UseVisualStyleBackColor = true;
-            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // btnClear
             // 
@@ -152,7 +119,6 @@
             this.btnClear.TabIndex = 25;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnSearch
             // 
@@ -162,7 +128,6 @@
             this.btnSearch.TabIndex = 24;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
             // 
             // dtDueTo
             // 
@@ -187,6 +152,47 @@
             this.dtWOTo.Name = "dtWOTo";
             this.dtWOTo.Size = new System.Drawing.Size(101, 21);
             this.dtWOTo.TabIndex = 21;
+            // 
+            // ProcessLine
+            // 
+            this.ProcessLine.HeaderText = "Process Line";
+            this.ProcessLine.Name = "ProcessLine";
+            this.ProcessLine.ReadOnly = true;
+            this.ProcessLine.Width = 102;
+            // 
+            // WODate
+            // 
+            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
+            dataGridViewCellStyle1.NullValue = null;
+            this.WODate.DefaultCellStyle = dataGridViewCellStyle1;
+            this.WODate.HeaderText = "Work Order Date";
+            this.WODate.Name = "WODate";
+            this.WODate.ReadOnly = true;
+            this.WODate.Width = 122;
+            // 
+            // DueDate
+            // 
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            this.DueDate.DefaultCellStyle = dataGridViewCellStyle2;
+            this.DueDate.HeaderText = "Due Date";
+            this.DueDate.Name = "DueDate";
+            this.DueDate.ReadOnly = true;
+            this.DueDate.Width = 83;
+            // 
+            // PIC
+            // 
+            this.PIC.HeaderText = "P-I-C";
+            this.PIC.Name = "PIC";
+            this.PIC.ReadOnly = true;
+            this.PIC.Width = 58;
+            // 
+            // OrderType
+            // 
+            this.OrderType.HeaderText = "Order Type";
+            this.OrderType.Name = "OrderType";
+            this.OrderType.ReadOnly = true;
+            this.OrderType.Visible = false;
+            this.OrderType.Width = 85;
             // 
             // dtWOFrom
             // 
@@ -219,6 +225,13 @@
             this.txtWONo.Size = new System.Drawing.Size(115, 21);
             this.txtWONo.TabIndex = 8;
             // 
+            // ProcessStep
+            // 
+            this.ProcessStep.HeaderText = "Process Step";
+            this.ProcessStep.Name = "ProcessStep";
+            this.ProcessStep.ReadOnly = true;
+            this.ProcessStep.Width = 103;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -227,6 +240,13 @@
             this.label8.Size = new System.Drawing.Size(76, 15);
             this.label8.TabIndex = 7;
             this.label8.Text = "Possession :";
+            // 
+            // operation
+            // 
+            this.operation.HeaderText = "Operation";
+            this.operation.Name = "operation";
+            this.operation.ReadOnly = true;
+            this.operation.Width = 85;
             // 
             // label7
             // 
@@ -291,6 +311,13 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Process Line :";
             // 
+            // Possession
+            // 
+            this.Possession.HeaderText = "Possession";
+            this.Possession.Name = "Possession";
+            this.Possession.ReadOnly = true;
+            this.Possession.Width = 94;
+            // 
             // dgvWorkOrder
             // 
             this.dgvWorkOrder.AllowUserToAddRows = false;
@@ -325,118 +352,95 @@
             this.dgvWorkOrder.RowHeadersVisible = false;
             this.dgvWorkOrder.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvWorkOrder.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvWorkOrder.Size = new System.Drawing.Size(775, 377);
+            this.dgvWorkOrder.Size = new System.Drawing.Size(787, 518);
             this.dgvWorkOrder.TabIndex = 18;
-            this.dgvWorkOrder.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvWorkOrder_CellDoubleClick);
             // 
-            // workordernumber
+            // splitContainer1
             // 
-            this.workordernumber.HeaderText = "Work Order No.";
-            this.workordernumber.Name = "workordernumber";
-            this.workordernumber.ReadOnly = true;
-            this.workordernumber.Width = 115;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // ProcessStep
+            // splitContainer1.Panel1
             // 
-            this.ProcessStep.HeaderText = "Process Step";
-            this.ProcessStep.Name = "ProcessStep";
-            this.ProcessStep.ReadOnly = true;
-            this.ProcessStep.Width = 103;
+            this.splitContainer1.Panel1.Controls.Add(this.txtProcessStep);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbPossession);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbOrderType);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSelect);
+            this.splitContainer1.Panel1.Controls.Add(this.btnClear);
+            this.splitContainer1.Panel1.Controls.Add(this.btnSearch);
+            this.splitContainer1.Panel1.Controls.Add(this.dtDueTo);
+            this.splitContainer1.Panel1.Controls.Add(this.dtDueFrom);
+            this.splitContainer1.Panel1.Controls.Add(this.dtWOTo);
+            this.splitContainer1.Panel1.Controls.Add(this.dtWOFrom);
+            this.splitContainer1.Panel1.Controls.Add(this.cmbProcessLine);
+            this.splitContainer1.Panel1.Controls.Add(this.txtPIC);
+            this.splitContainer1.Panel1.Controls.Add(this.txtWONo);
+            this.splitContainer1.Panel1.Controls.Add(this.label8);
+            this.splitContainer1.Panel1.Controls.Add(this.label7);
+            this.splitContainer1.Panel1.Controls.Add(this.label6);
+            this.splitContainer1.Panel1.Controls.Add(this.label5);
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
             // 
-            // ProcessLine
+            // splitContainer1.Panel2
             // 
-            this.ProcessLine.HeaderText = "Process Line";
-            this.ProcessLine.Name = "ProcessLine";
-            this.ProcessLine.ReadOnly = true;
-            this.ProcessLine.Width = 102;
+            this.splitContainer1.Panel2.Controls.Add(this.dgvWorkOrder);
+            this.splitContainer1.Size = new System.Drawing.Size(787, 624);
+            this.splitContainer1.SplitterDistance = 102;
+            this.splitContainer1.TabIndex = 1;
             // 
-            // WODate
-            // 
-            dataGridViewCellStyle1.Format = "dd/MM/yyyy";
-            dataGridViewCellStyle1.NullValue = null;
-            this.WODate.DefaultCellStyle = dataGridViewCellStyle1;
-            this.WODate.HeaderText = "Work Order Date";
-            this.WODate.Name = "WODate";
-            this.WODate.ReadOnly = true;
-            this.WODate.Width = 122;
-            // 
-            // DueDate
-            // 
-            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
-            this.DueDate.DefaultCellStyle = dataGridViewCellStyle2;
-            this.DueDate.HeaderText = "Due Date";
-            this.DueDate.Name = "DueDate";
-            this.DueDate.ReadOnly = true;
-            this.DueDate.Width = 83;
-            // 
-            // PIC
-            // 
-            this.PIC.HeaderText = "P-I-C";
-            this.PIC.Name = "PIC";
-            this.PIC.ReadOnly = true;
-            this.PIC.Width = 58;
-            // 
-            // OrderType
-            // 
-            this.OrderType.HeaderText = "Order Type";
-            this.OrderType.Name = "OrderType";
-            this.OrderType.ReadOnly = true;
-            this.OrderType.Visible = false;
-            this.OrderType.Width = 91;
-            // 
-            // Possession
-            // 
-            this.Possession.HeaderText = "Possession";
-            this.Possession.Name = "Possession";
-            this.Possession.ReadOnly = true;
-            this.Possession.Width = 94;
-            // 
-            // operation
-            // 
-            this.operation.HeaderText = "Operation";
-            this.operation.Name = "operation";
-            this.operation.ReadOnly = true;
-            this.operation.Width = 85;
-            // 
-            // WorkEntryDialog
+            // ProdDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(775, 483);
+            this.ClientSize = new System.Drawing.Size(787, 624);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "WorkEntryDialog";
+            this.Name = "ProdDialog";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Work Entry Dialog";
-            this.Load += new System.EventHandler(this.WorkEntryDialog_Load);
+            this.Text = "Work Order List";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkOrder)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvWorkOrder)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dgvWorkOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn workordernumber;
+        private System.Windows.Forms.TextBox txtProcessStep;
+        private System.Windows.Forms.ComboBox cmbPossession;
+        private System.Windows.Forms.ComboBox cmbOrderType;
         private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.DateTimePicker dtDueTo;
         private System.Windows.Forms.DateTimePicker dtDueFrom;
         private System.Windows.Forms.DateTimePicker dtWOTo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessLine;
+        private System.Windows.Forms.DataGridViewTextBoxColumn WODate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DueDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PIC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OrderType;
         private System.Windows.Forms.DateTimePicker dtWOFrom;
         private System.Windows.Forms.ComboBox cmbProcessLine;
         private System.Windows.Forms.TextBox txtPIC;
         private System.Windows.Forms.TextBox txtWONo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessStep;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn operation;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -444,17 +448,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox cmbPossession;
-        private System.Windows.Forms.ComboBox cmbOrderType;
-        private System.Windows.Forms.TextBox txtProcessStep;
-        private System.Windows.Forms.DataGridViewTextBoxColumn workordernumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessStep;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ProcessLine;
-        private System.Windows.Forms.DataGridViewTextBoxColumn WODate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DueDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PIC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OrderType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Possession;
-        private System.Windows.Forms.DataGridViewTextBoxColumn operation;
+        private System.Windows.Forms.DataGridView dgvWorkOrder;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

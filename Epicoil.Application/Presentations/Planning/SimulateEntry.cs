@@ -334,13 +334,20 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             else
             {
-                MessageBox.Show("Please select option for calculate.", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select option for calculate.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void butConfirm_Click(object sender, EventArgs e)
         {
             int workComplete = 1; string riskFlag = string.Empty; string msg = string.Empty;
+
+            if (HeadModel.GenSerialFlag == 1)
+            {
+                MessageBox.Show("This work order has generated serial, can't re-confirm.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!SimModel.CheckYeild(HeadModel, SimModel.Yield))
             {
                 DialogResult diaResult = MessageBox.Show("Yield invalid, are you sure to hold work order.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);

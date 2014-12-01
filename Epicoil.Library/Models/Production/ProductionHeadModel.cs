@@ -18,7 +18,7 @@ namespace Epicoil.Library.Models.Production
 
         public string WorkOrderNum { get; set; }
 
-        public int CutSeq { get; set; }
+        public decimal CutSeq { get; set; }
 
         public string CutSeqStr { get; set; }
 
@@ -50,6 +50,8 @@ namespace Epicoil.Library.Models.Production
         public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
         public IEnumerable<SerialCuttingModel> SerialList = new List<SerialCuttingModel>();
         public IEnumerable<MaterialModel> MaterailList = new List<MaterialModel>();
+        public IEnumerable<ReasonModel> ReasonList = new List<ReasonModel>();
+        public IEnumerable<CuttedLineUpModel> CuttedList = new List<CuttedLineUpModel>();
 
         public List<ResourceModel> ProcessLines
         {
@@ -69,10 +71,29 @@ namespace Epicoil.Library.Models.Production
             set { this.MaterailList = value; }
         }
 
+        public List<ReasonModel> Reasons
+        {
+            get { return this.ReasonList.ToList(); }
+            set { this.ReasonList = value; }
+        }
+
+        public List<CuttedLineUpModel> Cutteds
+        {
+            get { return this.CuttedList.ToList(); }
+            set { this.CuttedList = value; }
+        }
+
+        public string Reason { get; set; }
+
+        public string ActionState { get; set; }
+
+        public int OperationState { get; set; }
+
         public void DataBind(DataRow row)
         {
+            this.Plant = (string)row["Plant"].GetString();
             this.ProductionID = (int)row["ProductionID"].GetInt();
-            this.WorkOrderID = (int)row["Length"].GetInt();
+            this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
             this.WorkOrderNum = (string)row["WorkOrderNum"].GetString();
             this.ProductionDate = (DateTime)row["ProductionDate"].GetDate();
             this.StartTime = (DateTime)row["StartTime"].GetDate();
@@ -84,7 +105,9 @@ namespace Epicoil.Library.Models.Production
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
+            //this.CutSeq = (decimal)row["CutSeq"].GetDecimal();
             this.CutSeqStr = this.CutSeq.ToString("#,###.#");
+            this.OperationState = (int)row["OperationState"].GetInt();
         }
     }
 }

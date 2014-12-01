@@ -41,6 +41,10 @@
     <StartupObject>Epicoil.Appl.initail</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Data.AdoDotNetInterop, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
     </Reference>
@@ -228,6 +232,12 @@
     <Compile Include="Presentations\Production\MaterialTracker.Designer.cs">
       <DependentUpon>MaterialTracker.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Production\ProdDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Production\ProdDialog.Designer.cs">
+      <DependentUpon>ProdDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Production\ProductionSlitter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -324,6 +334,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsProduction.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Production\ProductionLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reports\Production\ProductionLabel11.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductionLabel1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="MainMPI.resx">
       <DependentUpon>MainMPI.cs</DependentUpon>
     </EmbeddedResource>
@@ -396,6 +415,9 @@
     <EmbeddedResource Include="Presentations\Production\MaterialTracker.resx">
       <DependentUpon>MaterialTracker.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Production\ProdDialog.resx">
+      <DependentUpon>ProdDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Production\ProductionSlitter.resx">
       <DependentUpon>ProductionSlitter.cs</DependentUpon>
     </EmbeddedResource>
@@ -451,6 +473,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\Production\ProductionLabel1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>ProductionLabel11.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -518,6 +544,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

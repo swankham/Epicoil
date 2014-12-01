@@ -87,6 +87,7 @@ namespace Epicoil.Library.Repositories.Planning
             }
 
             string sql1 = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
+            sql1 += string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 0 WHERE WorkOrderID = {0} ", model.WorkOrderID);
             Repository.Instance.ExecuteWithTransaction(sql1, "Delete Serial");
 
             return true;
@@ -288,7 +289,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,CreatedBy
                                                        ,UpdatedBy
                                                        ,LotRunning
-                                                       ,SerialNo, CutSeq)
+                                                       ,SerialNo, CutSeq, ProductionUsedFlag)
                                                  VALUES
                                                        (N'{0}'  --<Plant, nvarchar(8),>
                                                        ,{1}  --<SimLineID, bigint,>
@@ -309,7 +310,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,N'{14}'  --<CreatedBy, nvarchar(45),>
                                                        ,N'{14}'  --<UpdatedBy, nvarchar(45),>
                                                        ,{15}  --<LotRunning, bigint,>
-                                                       ,N'{16}', {17}
+                                                       ,N'{16}', {17}, 0
                                                        )" + Environment.NewLine
                                                       , _session.PlantID
                                                       , item.SimLineID
@@ -811,13 +812,18 @@ namespace Epicoil.Library.Repositories.Planning
         /// </summary>
         /// <param name="plant"></param>
         /// <returns>WorkOrder rows</returns>
-        public IEnumerable<PlanningHeadModel> GetWorkAll(string plant)
+        public IEnumerable<PlanningHeadModel> GetWorkAll(PlanningHeadModel model)
         {
+            string whereCluase = string.Empty;
+            if (model.Completed != 0) whereCluase = string.Format(@"AND Completed = {0}", model.Completed);
+            if (model.GenSerialFlag != 0) whereCluase += string.Format(@"AND GenSerialFlag = {0}", model.GenSerialFlag);
+            if (model.OperationState != 0) whereCluase += string.Format(@"AND OperationState = {0}", model.OperationState);
+
             string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
                                         FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
 		                                    LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
-                                            WHERE plh.Plant = N'{0}'", plant);
+                                            WHERE plh.Plant = N'{0}' {1}", model.Plant, whereCluase);
 
             var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);
             return result;

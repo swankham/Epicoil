@@ -12,8 +12,12 @@
   <xs:element name="dsProduction" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsProduction" msprop:Generator_UserDSName="dsProduction">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+        <xs:element name="Label" msprop:Generator_TableClassName="LabelDataTable" msprop:Generator_TableVarName="tableLabel" msprop:Generator_TablePropName="Label" msprop:Generator_RowDeletingName="LabelRowDeleting" msprop:Generator_RowChangingName="LabelRowChanging" msprop:Generator_RowEvHandlerName="LabelRowChangeEventHandler" msprop:Generator_RowDeletedName="LabelRowDeleted" msprop:Generator_UserTableName="Label" msprop:Generator_RowChangedName="LabelRowChanged" msprop:Generator_RowEvArgName="LabelRowChangeEvent" msprop:Generator_RowClassName="LabelRow">
           <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo" type="xs:string" minOccurs="0" />
+              <xs:element name="NG" msprop:Generator_ColumnVarNameInTable="columnNG" msprop:Generator_ColumnPropNameInRow="NG" msprop:Generator_ColumnPropNameInTable="NGColumn" msprop:Generator_UserColumnName="NG" type="xs:string" minOccurs="0" />
+            </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>

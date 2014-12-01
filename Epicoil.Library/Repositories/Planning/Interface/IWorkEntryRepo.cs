@@ -70,7 +70,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         int GetStepByWorkOrder(int workOrderID);
 
-        IEnumerable<PlanningHeadModel> GetWorkAll(string plant);
+        IEnumerable<PlanningHeadModel> GetWorkAll(PlanningHeadModel model);
 
         PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant);
 

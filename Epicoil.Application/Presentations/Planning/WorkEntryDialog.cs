@@ -4,7 +4,6 @@ using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -20,12 +19,13 @@ namespace Epicoil.Appl.Presentations.Planning
         private IEnumerable<PlanningHeadModel> _model;
         public PlanningHeadModel _selected;
 
-        public WorkEntryDialog(SessionInfo _session, PlanningHeadModel param = null)
+        public WorkEntryDialog(SessionInfo _session, IEnumerable<PlanningHeadModel> param = null)
         {
             InitializeComponent();
             this._repo = new WorkEntryRepo();
             this._repoRes = new ResourceRepo();
             this._repoUcd = new UserCodeRepo();
+            this._model = param;
             //this.PatternPara = "";
             //this.StorePerPcsPara = "";
             //this.RemarkPara = "";
@@ -100,17 +100,22 @@ namespace Epicoil.Appl.Presentations.Planning
 
             SetHeadContent(Header);
             //ClearHeaderContent();
-            _model = _repo.GetWorkAll(epiSession.PlantID);
+
+            if (_model == null)
+            {
+                PlanningHeadModel plan = new PlanningHeadModel();
+                plan.Plant = epiSession.PlantID;
+                _model = _repo.GetWorkAll(plan);
+            }
             SetGrid(_model);
         }
 
         private void SetGrid(IEnumerable<PlanningHeadModel> data)
         {
             dgvWorkOrder.Rows.Clear();
-            int i = 0;
             foreach (var p in data)
             {
-                dgvWorkOrder.Rows.Add(p.WorkOrderNum, p.ProcessStep, p.ProcessLineId, p.IssueDate, p.DueDate, p.PIC, p.OrderType, p.Possession);
+                dgvWorkOrder.Rows.Add(p.WorkOrderNum, p.ProcessStep, p.ProcessLineId, p.IssueDate, p.DueDate, p.PIC, p.OrderType, p.PossessionName, p.OperationStateName);
             }
         }
 

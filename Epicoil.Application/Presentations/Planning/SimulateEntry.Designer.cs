@@ -49,6 +49,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimulateEntry));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.txtRewindWeight = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.cmbCutSeq = new System.Windows.Forms.ComboBox();
             this.txtExpected = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,6 +72,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.dgvMaterial = new System.Windows.Forms.DataGridView();
+            this.dgvCutting = new System.Windows.Forms.DataGridView();
             this.transactionlineid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MCSSNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.seqno = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -93,7 +96,6 @@
             this.bt = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.productstatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.usedflag = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.dgvCutting = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.seq = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cutseq = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -116,8 +118,6 @@
             this.coating1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.possession = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtRewindWeight = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -167,6 +167,26 @@
             this.splitContainer1.Size = new System.Drawing.Size(971, 587);
             this.splitContainer1.SplitterDistance = 102;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // txtRewindWeight
+            // 
+            this.txtRewindWeight.Location = new System.Drawing.Point(382, 71);
+            this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
+            this.txtRewindWeight.Name = "txtRewindWeight";
+            this.txtRewindWeight.ReadOnly = true;
+            this.txtRewindWeight.Size = new System.Drawing.Size(142, 21);
+            this.txtRewindWeight.TabIndex = 41;
+            this.txtRewindWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(280, 74);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(96, 15);
+            this.label10.TabIndex = 40;
+            this.label10.Text = "Rewind Weight :";
             // 
             // cmbCutSeq
             // 
@@ -427,11 +447,61 @@
             this.dgvMaterial.Size = new System.Drawing.Size(971, 126);
             this.dgvMaterial.TabIndex = 18;
             // 
+            // dgvCutting
+            // 
+            this.dgvCutting.AllowUserToAddRows = false;
+            this.dgvCutting.AllowUserToDeleteRows = false;
+            this.dgvCutting.AllowUserToResizeRows = false;
+            this.dgvCutting.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvCutting.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvCutting.BackgroundColor = System.Drawing.Color.White;
+            this.dgvCutting.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvCutting.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
+            this.dgvCutting.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvCutting.ColumnHeadersHeight = 25;
+            this.dgvCutting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvCutting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.seq,
+            this.cutseq,
+            this.norno,
+            this.thick1,
+            this.width1,
+            this.length1,
+            this.status1,
+            this.stand,
+            this.cutdiv,
+            this.unitweight1,
+            this.totalweight,
+            this.lengthM1,
+            this.calculated,
+            this.MaterialSN,
+            this.soline,
+            this.sono,
+            this.commodity1,
+            this.spec1,
+            this.coating1,
+            this.bt1,
+            this.possession});
+            this.dgvCutting.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCutting.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.dgvCutting.EnableHeadersVisualStyles = false;
+            this.dgvCutting.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvCutting.Location = new System.Drawing.Point(0, 0);
+            this.dgvCutting.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvCutting.Name = "dgvCutting";
+            this.dgvCutting.RowHeadersVisible = false;
+            this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvCutting.Size = new System.Drawing.Size(971, 351);
+            this.dgvCutting.TabIndex = 19;
+            // 
             // transactionlineid
             // 
             this.transactionlineid.HeaderText = "ID";
             this.transactionlineid.Name = "transactionlineid";
             this.transactionlineid.ReadOnly = true;
+            this.transactionlineid.Visible = false;
             this.transactionlineid.Width = 43;
             // 
             // MCSSNum
@@ -640,60 +710,12 @@
             this.usedflag.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.usedflag.Width = 55;
             // 
-            // dgvCutting
-            // 
-            this.dgvCutting.AllowUserToAddRows = false;
-            this.dgvCutting.AllowUserToDeleteRows = false;
-            this.dgvCutting.AllowUserToResizeRows = false;
-            this.dgvCutting.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvCutting.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvCutting.BackgroundColor = System.Drawing.Color.White;
-            this.dgvCutting.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgvCutting.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            this.dgvCutting.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            this.dgvCutting.ColumnHeadersHeight = 25;
-            this.dgvCutting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvCutting.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.id,
-            this.seq,
-            this.cutseq,
-            this.norno,
-            this.thick1,
-            this.width1,
-            this.length1,
-            this.status1,
-            this.stand,
-            this.cutdiv,
-            this.unitweight1,
-            this.totalweight,
-            this.lengthM1,
-            this.calculated,
-            this.MaterialSN,
-            this.soline,
-            this.sono,
-            this.commodity1,
-            this.spec1,
-            this.coating1,
-            this.bt1,
-            this.possession});
-            this.dgvCutting.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCutting.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dgvCutting.EnableHeadersVisualStyles = false;
-            this.dgvCutting.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvCutting.Location = new System.Drawing.Point(0, 0);
-            this.dgvCutting.Margin = new System.Windows.Forms.Padding(4);
-            this.dgvCutting.Name = "dgvCutting";
-            this.dgvCutting.RowHeadersVisible = false;
-            this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(971, 351);
-            this.dgvCutting.TabIndex = 19;
-            // 
             // id
             // 
             this.id.HeaderText = "ID";
             this.id.Name = "id";
             this.id.ReadOnly = true;
+            this.id.Visible = false;
             this.id.Width = 43;
             // 
             // seq
@@ -776,7 +798,7 @@
             this.cutdiv.Name = "cutdiv";
             this.cutdiv.ReadOnly = true;
             this.cutdiv.Visible = false;
-            this.cutdiv.Width = 67;
+            this.cutdiv.Width = 69;
             // 
             // unitweight1
             // 
@@ -873,26 +895,6 @@
             this.possession.ReadOnly = true;
             this.possession.Width = 94;
             // 
-            // txtRewindWeight
-            // 
-            this.txtRewindWeight.Location = new System.Drawing.Point(382, 71);
-            this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
-            this.txtRewindWeight.Name = "txtRewindWeight";
-            this.txtRewindWeight.ReadOnly = true;
-            this.txtRewindWeight.Size = new System.Drawing.Size(142, 21);
-            this.txtRewindWeight.TabIndex = 41;
-            this.txtRewindWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(280, 74);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(96, 15);
-            this.label10.TabIndex = 40;
-            this.label10.Text = "Rewind Weight :";
-            // 
             // SimulateEntry
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -948,6 +950,8 @@
         private System.Windows.Forms.Button butCalculate;
         private System.Windows.Forms.Button butConfirm;
         private System.Windows.Forms.ComboBox cmbCutSeq;
+        private System.Windows.Forms.TextBox txtRewindWeight;
+        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DataGridViewTextBoxColumn transactionlineid;
         private System.Windows.Forms.DataGridViewTextBoxColumn MCSSNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn seqno;
@@ -993,7 +997,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
         private System.Windows.Forms.DataGridViewTextBoxColumn bt1;
         private System.Windows.Forms.DataGridViewTextBoxColumn possession;
-        private System.Windows.Forms.TextBox txtRewindWeight;
-        private System.Windows.Forms.Label label10;
     }
 }

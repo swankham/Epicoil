@@ -403,7 +403,17 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
-            if (HeaderContent.Completed == 1) return;
+            if (HeaderContent.Completed == 1)
+            {
+                MessageBox.Show("This work order has completed process, can't re-simulate.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (HeaderContent.GenSerialFlag == 1)
+            {
+                MessageBox.Show("This work order has generated serial, can't re-simulate.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
             {

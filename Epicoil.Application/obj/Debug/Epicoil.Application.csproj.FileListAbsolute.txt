@@ -24,6 +24,7 @@ D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.P
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.WorkEntry.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Planning.WorkEntryDialog.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Production.MaterialTracker.resources
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Production.ProdDialog.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Production.ProductionSlitter.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Progression.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Sales.OrderHeadDialog.resources

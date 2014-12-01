@@ -175,6 +175,8 @@
     <Compile Include="Models\Planning\SimulateModel.cs" />
     <Compile Include="Models\Planning\SimulateReshearHeadModel.cs" />
     <Compile Include="Models\Planning\SimulateReshearModel.cs" />
+    <Compile Include="Models\Production\CuttedLineUpModel.cs" />
+    <Compile Include="Models\Production\LineStopModel.cs" />
     <Compile Include="Models\Production\MaterialFindingModel.cs" />
     <Compile Include="Models\Production\ProductionHeadModel.cs" />
     <Compile Include="Models\Production\ReasonModel.cs" />

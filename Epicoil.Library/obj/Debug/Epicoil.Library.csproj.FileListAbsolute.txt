@@ -1,5 +1,3 @@
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Library.pdb
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.LotSelectUpdate.dll
@@ -192,6 +190,7 @@ D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.GLCTEntitySearch.x
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.GLCntrl.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.BO.TaxExemptSearch.xml
 D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\Epicor.Mfg.IF.IEduLicense.xml
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.CustomComboBox.resources
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
-D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csprojResolveAssemblyReference.cache

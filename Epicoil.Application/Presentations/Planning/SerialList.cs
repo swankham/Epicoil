@@ -97,7 +97,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
                     if (mat == null)
                     {
-                        MessageBox.Show("This Material is not avariable.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("This Material is not available.", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
 
@@ -127,8 +127,11 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tlbClear_Click(object sender, EventArgs e)
         {
             string msg = string.Empty;
-            //if (_repo.ClearSerialInEpicor(epiSession, workParent, out msg))
-            //{
+            if (workParent.OperationState > 1)
+            {
+                MessageBox.Show("This work order has to used in Production process, can't delete serials.","Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             _repo.ClearSerialInEpicor(epiSession, workParent, out msg);
             _repo.ClearSerialInEpicor(workParent.WorkOrderID);
             GenSNComplete = false;
