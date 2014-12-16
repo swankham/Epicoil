@@ -47,6 +47,8 @@ namespace Epicoil.Library.Models.Planning
 
         public string UpdatedBy { get; set; }
 
+        public string NORNum { get; set; }
+
         public override void DataBind(DataRow row)
         {
             base.DataBind(row);
@@ -72,6 +74,7 @@ namespace Epicoil.Library.Models.Planning
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
             this.MCSSNo = (string)row["MCSSNo"].GetString();
+            this.NORNum = string.IsNullOrEmpty((string)row["NORNum"].GetString()) ? "" : (string)row["NORNum"].GetString();
         }
     }
 }

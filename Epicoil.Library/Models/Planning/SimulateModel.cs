@@ -9,6 +9,7 @@ namespace Epicoil.Library.Models.Planning
         public string Plant { get; set; }
 
         public int SimLineID { get; set; }
+
         public int WorkOrderID { get; set; }
 
         public int CuttingLineID { get; set; }
@@ -90,7 +91,6 @@ namespace Epicoil.Library.Models.Planning
             this.CalculatedFlag = Convert.ToBoolean((int)row["CalculatedFlag"].GetInt());
             this.LengthM = (decimal)row["LengthM"].GetDecimal();
             this.SerialType = (string)row["SerialType"].GetString();
-            
         }
 
         public decimal CalLengthMeter(decimal weight, decimal width, decimal thick, decimal gravity, decimal frontPlate, decimal backPlate)

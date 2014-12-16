@@ -668,6 +668,7 @@ namespace Epicoil.Appl.Presentations.Production
         private void dgvSerialCuttingList_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
+            if (dgvSerialCuttingList.Rows[e.RowIndex].Cells["ngflag"].ReadOnly == true) return;
             var dataGridView = (DataGridView)sender;
 
             if (dataGridView.Columns[e.ColumnIndex].Name != "ngflag") return;

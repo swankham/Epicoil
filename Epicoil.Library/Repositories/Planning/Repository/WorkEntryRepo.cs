@@ -59,8 +59,9 @@ namespace Epicoil.Library.Repositories.Planning
         public bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg)
         {
             msg = string.Empty;
-            bool IsSuccess = false;
-            Session currSession;
+            bool IsSuccess = true;
+            string sql = string.Empty;
+            Session currSession = null;
             var resultContinue = GetSerialAllByWorkOrder(model.WorkOrderID).ToList();
             try
             {
@@ -69,7 +70,7 @@ namespace Epicoil.Library.Repositories.Planning
             catch (Exception ex)
             {
                 msg = ex.Message;
-                return false;
+                IsSuccess = false;
             }
 
             foreach (var item in resultContinue)
@@ -77,23 +78,25 @@ namespace Epicoil.Library.Repositories.Planning
                 try
                 {
                     LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
-                    lotPart.DeleteByID(item.MCSSNo, item.SerialNo);
+                    lotPart.DeleteByID(string.IsNullOrEmpty(item.NORNum) ? item.MCSSNo : item.NORNum, item.SerialNo);
                 }
                 catch (Exception ex)
                 {
                     msg = ex.Message;
                     IsSuccess = false;
                 }
+
+                //TODO : There are has one more case for delete S/N.
+                sql += string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} AND SerialNo = '{1}' {2}{3}{4}"
+                                        , item.WorkOrderID, item.SerialNo, Environment.NewLine, "", Environment.NewLine);
             }
 
-            string sql1 = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
-            sql1 += string.Format(@"UPDATE ucc_pln_PlanHead SET Completed = 0 WHERE WorkOrderID = {0} ", model.WorkOrderID);
-            Repository.Instance.ExecuteWithTransaction(sql1, "Delete Serial");
-
-            return true;
+            sql += string.Format(@"UPDATE ucc_pln_PlanHead SET GenSerialFlag = 0 WHERE WorkOrderID = {0} ", model.WorkOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql, "Delete Serial");
+            return IsSuccess;
         }
 
-        public bool ClearSerialInEpicor(int workOrderID)
+        public bool UpdateGenerateSN(int workOrderID)
         {
             try
             {
@@ -768,7 +771,7 @@ namespace Epicoil.Library.Repositories.Planning
                                             FROM ucc_pln_CoilBack sim
 	                                            LEFT JOIN ucc_pln_Material mat ON(sim.TransactionLineID = mat.TransactionLineID)
 	                                            LEFT JOIN (SELECT max(CutDiv) + 0.1 as CutDiv, WorkOrderID, MaterialTransLineID FROM ucc_pln_Simulate
-														   GROUP BY WorkOrderID, MaterialTransLineID) cut 
+														   GROUP BY WorkOrderID, MaterialTransLineID) cut
 																				ON(cut.WorkOrderID = sim.WorkOrderID AND cut.MaterialTransLineID = sim.TransactionLineID)
 	                                            LEFT JOIN UD25 busi ON(mat.BT = busi.Key1)
 	                                            LEFT JOIN UD29 cmdt ON(mat.Cmdty = cmdt.Key1)
@@ -909,7 +912,7 @@ namespace Epicoil.Library.Repositories.Planning
                 {
                     LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
                     LotSelectUpdateDataSet dsLot = new LotSelectUpdateDataSet();
-                    lotPart.GetNewPartLot(dsLot, item.MCSSNo);
+                    lotPart.GetNewPartLot(dsLot, string.IsNullOrEmpty(item.NORNum) ? item.MCSSNo : item.NORNum);
 
                     DataRow drLot = dsLot.Tables[0].Rows[0];
                     drLot.BeginEdit();
@@ -928,12 +931,20 @@ namespace Epicoil.Library.Repositories.Planning
 
                     drLot.EndEdit();
                     lotPart.Update(dsLot);
+                    msg = "Successful";
                 }
                 catch (Exception ex)
                 {
                     msg = ex.Message;
-                    return false;
                 }
+
+                string sql = string.Format(@"UPDATE ucc_pln_SerialGenerated
+                                                SET GeneratedFlag = 1 --<GeneratedFlag, tinyint,>
+                                                    ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+                                                    ,UpdatedBy = N'{1}' --<UpdatedBy, nvarchar(45),>
+                                                    ,ImportMessage = N'{2}' --<ImportMessage, nvarchar(max),>
+                                                WHERE SerialNo =  N'{0}'", item.SerialNo, _session.UserID, msg);
+                Repository.Instance.ExecuteWithTransaction(sql, "Update Import SN");
             }
 
             return true;
@@ -1086,7 +1097,9 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,SimulateFlag
                                                        ,GenSerialFlag
                                                        ,OpenFlag
-                                                       ,OperationState)
+                                                       ,OperationState
+                                                       ,PackingStyleFlag
+                                                       ,PackingPlanFlag)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -1121,6 +1134,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , {27} --<GenSerialFlag, tinyint>
                                                        , {28} --<OpenFlag, tinyint>
                                                        , {29} --<OperationState, int>
+                                                       , {30} --<PackingStyleFlag, int>
+                                                       , {31} --<PackingPlanFlag, int>
 		                                               )
                                             END
                                         ELSE
@@ -1157,6 +1172,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,GenSerialFlag = {27} --<GenSerialFlag, tinyint,>
                                                       ,OpenFlag = {28} --<OpenFlag, tinyint,>
                                                       ,OperationState = {29} --<OperationState, int>
+                                                      ,PackingStyleFlag = {30} --<PackingStyleFlag, int,>
+                                                      ,PackingPlanFlag = {31} --<PackingPlanFlag, int>
                                                  WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
                                             END" + Environment.NewLine
                                               , _session.CompanyID
@@ -1189,6 +1206,8 @@ namespace Epicoil.Library.Repositories.Planning
                                               , model.GenSerialFlag.GetInt()
                                               , model.OpenFlag.GetInt()
                                               , model.OperationState.GetInt()       //{29}
+                                              , model.PackingOrderFlag
+                                              , model.PackingPlanFlag
                                               );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Planning");
             //if (model.Materails.ToList().Count != 0)

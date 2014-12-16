@@ -2,6 +2,7 @@
 using Epicoil.Library.Models.Planning;
 using Epicoil.Library.Repositories.Planning;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -30,11 +31,11 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             int i = 0;
             dgvCutting.Rows.Clear();
-            foreach (var p in item)
+            foreach (var p in item.OrderBy(x => x.SerialNo))
             {
-                dgvCutting.Rows.Add(p.SerialNo, p.Thick, p.Width, p.Length, p.Quantity, p.UnitWeight, p.Status
+                dgvCutting.Rows.Add(p.SerialNo, p.Thick, p.Width, p.Length, p.Quantity, p.UnitWeight, (p.Status == "0") ? "Coil-Back" : p.Status
                                     , p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName
-                                    , p.BussinessType + " - " + p.BussinessTypeName, p.PossessionName, p.MCSSNo);
+                                    , p.BussinessType + " - " + p.BussinessTypeName, p.PossessionName, p.NORNum, p.MCSSNo );
                 //Fill color rows for even number.
                 if (i % 2 == 1)
                 {
@@ -133,7 +134,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 return;
             }
             _repo.ClearSerialInEpicor(epiSession, workParent, out msg);
-            _repo.ClearSerialInEpicor(workParent.WorkOrderID);
+            //_repo.UpdateGenerateSN(workParent.WorkOrderID);
             GenSNComplete = false;
             this.Close();
             //}

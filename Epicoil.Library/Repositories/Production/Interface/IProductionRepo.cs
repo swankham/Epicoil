@@ -25,5 +25,7 @@ namespace Epicoil.Library.Repositories.Production
         bool SaveSerialCutting(SessionInfo _session, ProductionHeadModel model);
 
         bool DeteteCutFromPlan(int workOrderId, decimal cutSeq);
+
+        bool ClearSerialInEpicor(SessionInfo _session, ProductionHeadModel model, out string msg);
     }
 }

@@ -196,6 +196,12 @@
     <Compile Include="Presentations\Planning\MaterialSelecting.Designer.cs">
       <DependentUpon>MaterialSelecting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Planning\PackingOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Planning\PackingOrder.Designer.cs">
+      <DependentUpon>PackingOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Planning\SerialList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,12 @@
     </Compile>
     <Compile Include="Presentations\Production\ProdDialog.Designer.cs">
       <DependentUpon>ProdDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Presentations\Production\ProductionSheet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Production\ProductionSheet.Designer.cs">
+      <DependentUpon>ProductionSheet.cs</DependentUpon>
     </Compile>
     <Compile Include="Presentations\Production\ProductionSlitter.cs">
       <SubType>Form</SubType>
@@ -397,6 +409,9 @@
     <EmbeddedResource Include="Presentations\Planning\MaterialSelecting.resx">
       <DependentUpon>MaterialSelecting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Planning\PackingOrder.resx">
+      <DependentUpon>PackingOrder.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Planning\SerialList.resx">
       <DependentUpon>SerialList.cs</DependentUpon>
     </EmbeddedResource>
@@ -417,6 +432,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Production\ProdDialog.resx">
       <DependentUpon>ProdDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Production\ProductionSheet.resx">
+      <DependentUpon>ProductionSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Production\ProductionSlitter.resx">
       <DependentUpon>ProductionSlitter.cs</DependentUpon>
@@ -494,6 +512,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="epicor.ico" />
+    <None Include="Resources\leftArrow.png" />
+    <None Include="Resources\rightArrow.png" />
+    <None Include="Resources\_find.png" />
     <None Include="Reports\Production\dsProduction.xsc">
       <DependentUpon>dsProduction.xsd</DependentUpon>
     </None>

@@ -84,6 +84,10 @@
             this.imageList1.Images.SetKeyName(0, "open16.png");
             this.imageList1.Images.SetKeyName(1, "folder_closed.png");
             this.imageList1.Images.SetKeyName(2, "application.png");
+            this.imageList1.Images.SetKeyName(3, "1400687324_folder-open.png");
+            this.imageList1.Images.SetKeyName(4, "1410297591_text_list_bullets.png");
+            this.imageList1.Images.SetKeyName(5, "folder-checked-32.png");
+            this.imageList1.Images.SetKeyName(6, "none-folder-32.png");
             // 
             // ribbonTab2
             // 
@@ -171,11 +175,11 @@
             // 
             this.trvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.trvMenu.ImageIndex = 1;
+            this.trvMenu.ImageIndex = 6;
             this.trvMenu.ImageList = this.imageList1;
             this.trvMenu.Location = new System.Drawing.Point(0, 0);
             this.trvMenu.Name = "trvMenu";
-            this.trvMenu.SelectedImageIndex = 0;
+            this.trvMenu.SelectedImageIndex = 5;
             this.trvMenu.Size = new System.Drawing.Size(234, 488);
             this.trvMenu.TabIndex = 0;
             this.trvMenu.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.trvMenu_NodeMouseClick);

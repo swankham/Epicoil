@@ -93,6 +93,14 @@ namespace Epicoil.Appl.Presentations.Planning
             SetHeader(SimModel);
             ListMaterialGrid(SimModel.Materials);
             ListSimulateGrid(SimModel.Cuttings);
+            if (HeadModel.SimulateFlag == 1)
+            {
+                butConfirm.Enabled = false;
+            }
+            else
+            {
+                butConfirm.Enabled = true;
+            }
         }
 
         private void ListMaterialGrid(IEnumerable<MaterialModel> item)
@@ -364,7 +372,7 @@ namespace Epicoil.Appl.Presentations.Planning
             //string msg = string.Empty;
             if (!SimModel.ValidateToConfirm(out msg))
             {
-                MessageBox.Show(msg, "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show(msg, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -377,6 +385,14 @@ namespace Epicoil.Appl.Presentations.Planning
             HeadModel.Yield = SimModel.Yield;
             HeadModel.CuttingDesign = _repo.UpdateCuttingByWorkOrder(epiSession, SimModel.Cuttings, HeadModel.WorkOrderID).ToList();
             HeadModel.Materails = _repo.UpdateMaterialByWorkOrder(epiSession, SimModel.Materials, HeadModel.WorkOrderID);
+
+            //Clear all coil-back.
+            foreach (var item in HeadModel.Materails)
+            {
+                var rsult = _repo.DeleteCoilBack(epiSession, HeadModel.WorkOrderID, item.TransactionLineID);
+            }
+
+            HeadModel.CoilBacks = _repo.GetCoilBackAll(HeadModel.WorkOrderID).ToList();
             this.Close();
         }
     }

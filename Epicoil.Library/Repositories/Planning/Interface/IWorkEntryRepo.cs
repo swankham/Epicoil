@@ -12,7 +12,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         bool ClearSerialInEpicor(SessionInfo _session, PlanningHeadModel model, out string msg);
 
-        bool ClearSerialInEpicor(int workOrderID);
+        bool UpdateGenerateSN(int workOrderID);
 
         bool ClearSimulateLeveller(int workOrderID);
 

@@ -303,11 +303,11 @@
             // 
             // cmbCutLine
             // 
-            this.cmbCutLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.cmbCutLine.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.cmbCutLine.FormattingEnabled = true;
-            this.cmbCutLine.Location = new System.Drawing.Point(9, 49);
+            this.cmbCutLine.Location = new System.Drawing.Point(37, 40);
             this.cmbCutLine.Name = "cmbCutLine";
-            this.cmbCutLine.Size = new System.Drawing.Size(69, 24);
+            this.cmbCutLine.Size = new System.Drawing.Size(79, 33);
             this.cmbCutLine.TabIndex = 10;
             this.cmbCutLine.Leave += new System.EventHandler(this.cmbCutLine_Leave);
             // 
@@ -315,11 +315,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label3.Location = new System.Drawing.Point(6, 25);
+            this.label3.Location = new System.Drawing.Point(4, 51);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 17);
+            this.label3.Size = new System.Drawing.Size(37, 17);
             this.label3.TabIndex = 9;
-            this.label3.Text = "Cut No. ";
+            this.label3.Text = "Cut. ";
             // 
             // butPrint
             // 
@@ -355,7 +355,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label5.Location = new System.Drawing.Point(123, 51);
+            this.label5.Location = new System.Drawing.Point(122, 54);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 17);
             this.label5.TabIndex = 11;
@@ -365,7 +365,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label4.Location = new System.Drawing.Point(138, 25);
+            this.label4.Location = new System.Drawing.Point(137, 14);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(45, 17);
             this.label4.TabIndex = 10;
@@ -375,7 +375,7 @@
             // txtCuttingWeigthAuto
             // 
             this.txtCuttingWeigthAuto.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.txtCuttingWeigthAuto.Location = new System.Drawing.Point(189, 21);
+            this.txtCuttingWeigthAuto.Location = new System.Drawing.Point(189, 11);
             this.txtCuttingWeigthAuto.Name = "txtCuttingWeigthAuto";
             this.txtCuttingWeigthAuto.ReadOnly = true;
             this.txtCuttingWeigthAuto.Size = new System.Drawing.Size(131, 23);
@@ -385,10 +385,10 @@
             // 
             // txtCuttingWeigthManual
             // 
-            this.txtCuttingWeigthManual.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.txtCuttingWeigthManual.Location = new System.Drawing.Point(189, 49);
+            this.txtCuttingWeigthManual.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold);
+            this.txtCuttingWeigthManual.Location = new System.Drawing.Point(188, 38);
             this.txtCuttingWeigthManual.Name = "txtCuttingWeigthManual";
-            this.txtCuttingWeigthManual.Size = new System.Drawing.Size(131, 23);
+            this.txtCuttingWeigthManual.Size = new System.Drawing.Size(131, 35);
             this.txtCuttingWeigthManual.TabIndex = 5;
             this.txtCuttingWeigthManual.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
@@ -424,7 +424,7 @@
             this.butWorkOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.butWorkOrder.Location = new System.Drawing.Point(12, 21);
             this.butWorkOrder.Name = "butWorkOrder";
-            this.butWorkOrder.Size = new System.Drawing.Size(116, 24);
+            this.butWorkOrder.Size = new System.Drawing.Size(116, 35);
             this.butWorkOrder.TabIndex = 3;
             this.butWorkOrder.Text = "Work Order No.";
             this.butWorkOrder.UseVisualStyleBackColor = true;

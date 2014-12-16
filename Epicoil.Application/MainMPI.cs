@@ -83,7 +83,7 @@ namespace Epicoil.Appl
             {
                 listView.Items.Add(i.MenuDescription);
                 listView.Items[n].Name = i.Module + "." + i.SecCode;
-                listView.Items[n].ImageIndex = 2;
+                listView.Items[n].ImageIndex = 4;
                 n++;
             }
         }

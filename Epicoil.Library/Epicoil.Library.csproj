@@ -170,6 +170,7 @@
     <Compile Include="Models\Planning\GeneratedSerialModel.cs" />
     <Compile Include="Models\Planning\LevellerSimulateModel.cs" />
     <Compile Include="Models\Planning\MaterailModel.cs" />
+    <Compile Include="Models\Planning\PackingOrderModel.cs" />
     <Compile Include="Models\Planning\PlanningHeadModel.cs" />
     <Compile Include="Models\Planning\SimulateActionModel.cs" />
     <Compile Include="Models\Planning\SimulateModel.cs" />
@@ -239,8 +240,10 @@
     <Compile Include="Repositories\Common\Repository\UserCodeRepo.cs" />
     <Compile Include="Repositories\Common\Repository\WharehouseRepo.cs" />
     <Compile Include="Repositories\Planning\Interface\IDieMasterRepo.cs" />
+    <Compile Include="Repositories\Planning\Interface\IPackingOrderRepo.cs" />
     <Compile Include="Repositories\Planning\Interface\IWorkEntryRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\DieMasterRepo.cs" />
+    <Compile Include="Repositories\Planning\Repository\PackingOrderRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\WorkEntryRepo.cs" />
     <Compile Include="Repositories\Production\Interface\IMaterialFindingRepo.cs" />
     <Compile Include="Repositories\Production\Interface\IProductionRepo.cs" />

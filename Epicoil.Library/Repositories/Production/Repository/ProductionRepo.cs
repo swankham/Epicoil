@@ -2,6 +2,8 @@
 using Epicoil.Library.Models;
 using Epicoil.Library.Models.Production;
 using Epicoil.Library.Repositories.Planning;
+using Epicor.Mfg.BO;
+using Epicor.Mfg.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +61,7 @@ namespace Epicoil.Library.Repositories.Production
 	                                                , mat.MCSSNo, pln.WorkOrderNum, gsn.ProductionID, gsn.ActualLengthM as LengthActual, gsn.ActualWeight as WeightActual, gsn.NGFlag, gsn.Plant
 		                                            , gsn.FinLineID as LineID, gsn.SerialNo as SerialID, 0 as SimLineID, gsn.WorkOrderID, gsn.CuttingLineID, gsn.MaterialTransLineID, gsn.Thick, gsn.Width, gsn.Length
 		                                            , gsn.PlanLengthM as LengthM, gsn.Status, gsn.CutSeq, gsn.PlanWeight as UnitWeight, gsn.Quantity, gsn.TotalWeight, 0 as GeneratedFlag, gsn.CreationDate, gsn.LastUpdateDate
-		                                            , gsn.CreatedBy, gsn.UpdatedBy, 0 as LotRunning, 0 as ProductionUsedFlag
+		                                            , gsn.CreatedBy, gsn.UpdatedBy, 0 as LotRunning, 0 as ProductionUsedFlag, '' as ImportMessage
                                                 FROM ucc_prd_FinishJobBySerial gsn
 	                                                LEFT JOIN ucc_pln_Material mat ON(gsn.MaterialTransLineID = mat.TransactionLineID)
 	                                                LEFT JOIN ucc_pln_CuttingDesign cut ON(gsn.CuttingLineID = cut.LineID)
@@ -429,7 +431,6 @@ namespace Epicoil.Library.Repositories.Production
         public bool DeteteCutFromPlan(int workOrderId, decimal cutSeq)
         {
             string sql = string.Format(@"UPDATE ucc_pln_SerialGenerated SET ProductionUsedFlag = 1 WHERE WorkOrderID = {0} AND CutSeq = {1}", workOrderId, cutSeq);
-
             try
             {
                 Repository.Instance.ExecuteWithTransaction(sql, "Delete Line Stop");
@@ -439,6 +440,38 @@ namespace Epicoil.Library.Repositories.Production
             {
                 return false;
             }
+        }
+
+
+        public bool ClearSerialInEpicor(SessionInfo _session, ProductionHeadModel model, out string msg)
+        {
+            msg = string.Empty; bool IsSuccess = false; Session currSession;
+            try
+            {
+                currSession = new Session(_session.UserID, _session.UserPassword, _session.AppServer, Session.LicenseType.Default);
+            }
+            catch (Exception ex)
+            {
+                msg = ex.Message;
+                return false;
+            }
+
+            foreach (var item in model.SerialLines.Where(i => i.CutSeq.Equals(model.CutSeq)))
+            {
+                try
+                {
+                    LotSelectUpdate lotPart = new LotSelectUpdate(currSession.ConnectionPool);
+                    lotPart.DeleteByID(item.MCSSNo, item.SerialNo);
+                }
+                catch (Exception ex)
+                {
+                    msg = ex.Message + ": Status = " + IsSuccess.ToString();
+                    IsSuccess = false;
+                }
+            }
+            string sql = string.Format(@"DELETE FROM ucc_pln_SerialGenerated WHERE WorkOrderID = {0} ", model.WorkOrderID);
+            Repository.Instance.ExecuteWithTransaction(sql, "Delete Serial");
+            return true;
         }
     }
 }

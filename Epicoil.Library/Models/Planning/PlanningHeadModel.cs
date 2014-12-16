@@ -11,106 +11,44 @@ namespace Epicoil.Library.Models.Planning
     public class PlanningHeadModel
     {
         private readonly IWorkEntryRepo _repo;
-        private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
-
+        private readonly IUserCodeRepo _repoUcd;
+        #region Constructors
         public PlanningHeadModel()
         {
             this._repo = new WorkEntryRepo();
             this._repoUcd = new UserCodeRepo();
             this._repoRes = new ResourceRepo();
         }
+        #endregion
+        #region Properties
 
-        #region Attribute
+        public IEnumerable<CoilBackModel> CoilBackList = new List<CoilBackModel>();
 
-        public string Company { get; set; }
+        public IEnumerable<CoilBackRuleModel> CoilBackRoleList = new List<CoilBackRuleModel>();
 
-        public string Plant { get; set; }
+        public ClassMasterModel CurrentClass = new ClassMasterModel();
 
-        public int WorkOrderID { get; set; }
+        public IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
 
-        public string WorkOrderNum { get; set; }
+        public IEnumerable<LevellerSimulateModel> LevSimulateList = new List<LevellerSimulateModel>();
 
-        public string ProcessLineId { get; set; }
+        public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
 
-        public decimal ProcessStep { get; set; }
+        public MaterialModel matSet = new MaterialModel();
 
-        public string OrderType { get; set; }
+        public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
 
-        public string PIC { get; set; }
+        public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
 
-        public string PICName { get; set; }
+        //public boolean SimulateFlag { get; set; }
+        public ResourceModel ProcessLineDetail = new ResourceModel();
 
-        public string Possession { get; set; }
-
-        public string PossessionName
-        {
-            get
-            {
-                return Enum.GetName(typeof(Possession), Convert.ToInt32(Possession));
-            }
-        }
-
-        public DateTime IssueDate { get; set; }
-
-        public DateTime DueDate { get; set; }
-
-        public decimal UsingWeight { get; set; }
-
-        public decimal InputWeight { get; set; }
-
-        public decimal RewindWeight { get; set; }
-
-        public decimal OutputWeight { get; set; }
-
-        public decimal LossWeight { get; set; }
-
-        public decimal Yield { get; set; }
-
-        public decimal TotalMaterialAmount { get; set; }
-
-        public decimal TotalWidth { get; set; }
+        public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
 
         public string BussinessType { get; set; }
 
         public string BussinessTypeName { get; set; }
-
-        public bool LVTrim { get; set; }
-
-        public bool PackingPlan { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
-
-        public string CreatedBy { get; set; }
-
-        public string UpdatedBy { get; set; }
-
-        /// <summary>
-        /// 0 = Nothing.
-        /// 1 = New Transaction.
-        /// 2 = Transaction was save.
-        /// 3 = Selected materail.
-        /// 4 = Calculated.
-        /// </summary>
-        public int FormState { get; set; }
-
-        //public boolean SimulateFlag { get; set; }
-
-        public MaterialModel matSet = new MaterialModel();
-        public ClassMasterModel CurrentClass = new ClassMasterModel();
-        public ResourceModel ProcessLineDetail = new ResourceModel();
-        public IEnumerable<ResourceModel> ResourceList = new List<ResourceModel>();
-        public IEnumerable<UserCodeModel> OrderTypeList = new List<UserCodeModel>();
-        public IEnumerable<UserCodeModel> PossessionList = new List<UserCodeModel>();
-        public IEnumerable<LevellerSimulateModel> LevSimulateList = new List<LevellerSimulateModel>();
-
-        public MaterialModel MaterialPattern
-        {
-            get { return this.matSet; }
-            set { this.matSet = value; }
-        }
 
         public ClassMasterModel Class
         {
@@ -118,46 +56,12 @@ namespace Epicoil.Library.Models.Planning
             set { this.CurrentClass = value; }
         }
 
-        public ResourceModel ProcessLine
+        public int ClassID { get; set; }
+
+        public List<CoilBackRuleModel> CoilBackRoles
         {
-            get { return this.ProcessLineDetail; }
-            set { this.ProcessLineDetail = value; }
-        }
-
-        public List<ResourceModel> Resources
-        {
-            get { return this.ResourceList.ToList(); }
-            set { this.ResourceList = value; }
-        }
-
-        public List<UserCodeModel> UserCodes
-        {
-            get { return this.OrderTypeList.ToList(); }
-            set { this.OrderTypeList = value; }
-        }
-
-        public List<UserCodeModel> Possessions
-        {
-            get { return this.PossessionList.ToList(); }
-            set { this.PossessionList = value; }
-        }
-
-        public List<LevellerSimulateModel> LevSimulates
-        {
-            get { return this.LevSimulateList.ToList(); }
-            set { this.LevSimulateList = value; }
-        }
-
-        public IEnumerable<MaterialModel> Materails = new List<MaterialModel>();
-        public IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
-        public IEnumerable<CoilBackModel> CoilBackList = new List<CoilBackModel>();
-
-        public IEnumerable<CoilBackRuleModel> CoilBackRoleList = new List<CoilBackRuleModel>();
-
-        public List<CutDesignModel> CuttingDesign
-        {
-            get { return this.CuttingLines.ToList(); }
-            set { this.CuttingLines = value; }
+            get { return this.CoilBackRoleList.ToList(); }
+            set { this.CoilBackRoleList = value; }
         }
 
         public List<CoilBackModel> CoilBacks
@@ -166,13 +70,7 @@ namespace Epicoil.Library.Models.Planning
             set { this.CoilBackList = value; }
         }
 
-        public List<CoilBackRuleModel> CoilBackRoles
-        {
-            get { return this.CoilBackRoleList.ToList(); }
-            set { this.CoilBackRoleList = value; }
-        }
-
-        public int ClassID { get; set; }
+        public string Company { get; set; }
 
         public int Completed { get; set; }
 
@@ -184,15 +82,26 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
-        public int SimulateFlag { get; set; }
+        public string CreatedBy { get; set; }
 
-        public string SimulateFlagStr
+        public DateTime CreationDate { get; set; }
+
+        public List<CutDesignModel> CuttingDesign
         {
-            get
-            {
-                return Enum.GetName(typeof(SimulateStatus), SimulateFlag);
-            }
+            get { return this.CuttingLines.ToList(); }
+            set { this.CuttingLines = value; }
         }
+
+        public DateTime DueDate { get; set; }
+
+        /// <summary>
+        /// 0 = Nothing.
+        /// 1 = New Transaction.
+        /// 2 = Transaction was save.
+        /// 3 = Selected materail.
+        /// 4 = Calculated.
+        /// </summary>
+        public int FormState { get; set; }
 
         public int GenSerialFlag { get; set; }
 
@@ -200,8 +109,30 @@ namespace Epicoil.Library.Models.Planning
         {
             get
             {
-                return (Enum.GetName(typeof(GenerateSNStatus), GenSerialFlag).Replace("_"," "));
+                return (Enum.GetName(typeof(GenerateSNStatus), GenSerialFlag).Replace("_", " "));
             }
+        }
+
+        public decimal InputWeight { get; set; }
+
+        public DateTime IssueDate { get; set; }
+
+        public DateTime LastUpdateDate { get; set; }
+
+        public List<LevellerSimulateModel> LevSimulates
+        {
+            get { return this.LevSimulateList.ToList(); }
+            set { this.LevSimulateList = value; }
+        }
+
+        public decimal LossWeight { get; set; }
+
+        public bool LVTrim { get; set; }
+
+        public MaterialModel MaterialPattern
+        {
+            get { return this.matSet; }
+            set { this.matSet = value; }
         }
 
         public int OpenFlag { get; set; }
@@ -216,9 +147,130 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
+        public string OrderType { get; set; }
+
+        public decimal OutputWeight { get; set; }
+
+        public bool PackingPlan { get; set; }
+
+        public int PackingPlanFlag { get; set; }
+
+        public int PackingOrderFlag { get; set; }
+
+        public string PIC { get; set; }
+
+        public string PICName { get; set; }
+
+        public string Plant { get; set; }
+
+        public string Possession { get; set; }
+
+        public string PossessionName
+        {
+            get
+            {
+                return Enum.GetName(typeof(Possession), Convert.ToInt32(Possession));
+            }
+        }
+
+        public List<UserCodeModel> Possessions
+        {
+            get { return this.PossessionList.ToList(); }
+            set { this.PossessionList = value; }
+        }
+
+        public ResourceModel ProcessLine
+        {
+            get { return this.ProcessLineDetail; }
+            set { this.ProcessLineDetail = value; }
+        }
+
+        public string ProcessLineId { get; set; }
+
+        public decimal ProcessStep { get; set; }
+
+        public List<ResourceModel> Resources
+        {
+            get { return this.ResourceList.ToList(); }
+            set { this.ResourceList = value; }
+        }
+
+        public decimal RewindWeight { get; set; }
+
+        public int SimulateFlag { get; set; }
+
+        public string SimulateFlagStr
+        {
+            get
+            {
+                return Enum.GetName(typeof(SimulateStatus), SimulateFlag);
+            }
+        }
+
+        public decimal TotalMaterialAmount { get; set; }
+
+        public decimal TotalWidth { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public List<UserCodeModel> UserCodes
+        {
+            get { return this.OrderTypeList.ToList(); }
+            set { this.OrderTypeList = value; }
+        }
+
+        public decimal UsingWeight { get; set; }
+
+        public int WorkOrderID { get; set; }
+
+        public string WorkOrderNum { get; set; }
+
+        public decimal Yield { get; set; }
+
         #endregion Attribute
 
         #region Method
+
+        public void CalculationHeader(PlanningHeadModel model)
+        {
+            SumUsingWeight(model.Materails);
+            SumInputWeight(model);
+            SumRewindWeight(model);
+            SumOutputWeight(model);
+            SumLossWeight(model);
+            SumYeild(model);
+            SumProductWidth(model);
+        }
+
+        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        {
+            decimal YieldPer = 0;
+            WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
+            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
+            return YieldPer;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="YeildValue"></param>
+        /// <returns>True = In of range/False = Out of range</returns>
+        public bool CheckYeild(decimal YeildValue)
+        {
+            decimal YieldMin = ProcessLineDetail.YieldPercentMin;
+            decimal YieldMax = ProcessLineDetail.YieldPercentMax;
+
+            bool FlagYield = true;
+            if (YeildValue < YieldMin)
+            {
+                FlagYield = false;
+            }
+            if (YeildValue > YieldMax)
+            {
+                FlagYield = false;
+            }
+            return FlagYield;
+        }
 
         public virtual void DataBind(DataRow row)
         {
@@ -256,9 +308,22 @@ namespace Epicoil.Library.Models.Planning
             this.GenSerialFlag = (int)row["GenSerialFlag"].GetInt();
             this.OpenFlag = (int)row["OpenFlag"].GetInt();
             this.OperationState = (int)row["OperationState"].GetInt();
+            this.PackingPlanFlag = (int)row["PackingPlanFlag"].GetInt();
+            this.PackingOrderFlag = (int)row["PackingOrderFlag"].GetInt();
         }
 
-        public void PreLoad() //0 = Nothing.
+        public void New(string plantId)
+        {
+            this.FormState = 1;
+            this.IssueDate = DateTime.Now;
+            this.DueDate = DateTime.Now;
+            this.ResourceList = _repoRes.GetAll(plantId).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
+            this.OrderTypeList = _repoUcd.GetAll("OrderType");
+            this.PossessionList = _repoUcd.GetAll("Pocessed");
+            this.ProcessStep = _repo.GetLastStep(WorkOrderID);
+        }
+
+        public void PreLoad()
         {
             this.FormState = 0;
             this.SimulateFlag = 0;
@@ -267,56 +332,24 @@ namespace Epicoil.Library.Models.Planning
             this.ResourceList = new List<ResourceModel>();
             this.OrderTypeList = new List<UserCodeModel>();
             this.PossessionList = new List<UserCodeModel>();
-            //this.MaterialList = new List<MaterialModel>();
             this.MaterialPattern = new MaterialModel();
             this.CurrentClass = new ClassMasterModel();
         }
 
-        public void New(string plantId) //1 = New Transaction.
+        public List<CutDesignModel> ReCalculateCuttingLine()
         {
-            this.FormState = 1;
-            this.IssueDate = DateTime.Now;
-            this.DueDate = DateTime.Now;
-            this.ResourceList = _repoRes.GetAll(plantId).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-            this.OrderTypeList = _repoUcd.GetAll("OrderType");
-            this.PossessionList = _repoUcd.GetAll("Pocessed");
-            //this.ProcessLineDetail.ResourceID = "R08";
-            //this.MaterialList = new List<MaterialModel>();
-            this.ProcessStep = _repo.GetLastStep(WorkOrderID);
+            foreach (var v in CuttingDesign)
+            {
+                v.CalculateRows(this);
+            }
+            return CuttingDesign;
         }
 
-        public void Saved() //2 = Transaction was save.
+        public void Saved()
         {
             this.FormState = 2;
             this.MaterialPattern = new MaterialModel();
             this.CurrentClass = new ClassMasterModel();
-        }
-
-        public void CalculationHeader(PlanningHeadModel model)
-        {
-            SumUsingWeight(model.Materails);
-            SumInputWeight(model);
-            SumRewindWeight(model);
-            SumOutputWeight(model);
-            SumLossWeight(model);
-            SumYeild(model);
-            SumProductWidth(model);
-        }
-
-        public void SumProductWidth(PlanningHeadModel model)
-        {
-            TotalWidth = (from item in model.CuttingDesign
-                          where item.Status != "S"
-                          select item).Sum(i => i.Width * i.Stand);
-        }
-
-        /// <summary>
-        /// Sum Using weight on header
-        /// </summary>
-        /// <param name="materialList"></param>
-        public void SumUsingWeight(IEnumerable<MaterialModel> materialList)
-        {
-            UsingWeight = materialList.Sum(p => p.UsingWeight).GetDecimal();
         }
 
         /// <summary>
@@ -336,19 +369,12 @@ namespace Epicoil.Library.Models.Planning
         }
 
         /// <summary>
-        /// Sum Rewind weight on header
+        /// Sum Loss weight on header
         /// </summary>
         /// <param name="model"></param>
-        public void SumRewindWeight(PlanningHeadModel model)
+        public void SumLossWeight(PlanningHeadModel model)
         {
-            if (model.CoilBacks.ToList().Count != 0)
-            {
-                RewindWeight = Math.Round(model.CoilBacks.Sum(p => p.Weight), 0);
-            }
-            else
-            {
-                RewindWeight = 0;
-            }
+            LossWeight = InputWeight.GetDecimal() - RewindWeight.GetDecimal() - OutputWeight.GetDecimal();
         }
 
         /// <summary>
@@ -367,21 +393,36 @@ namespace Epicoil.Library.Models.Planning
             }
         }
 
-        /// <summary>
-        /// Sum Loss weight on header
-        /// </summary>
-        /// <param name="model"></param>
-        public void SumLossWeight(PlanningHeadModel model)
+        public void SumProductWidth(PlanningHeadModel model)
         {
-            LossWeight = InputWeight.GetDecimal() - RewindWeight.GetDecimal() - OutputWeight.GetDecimal();
+            TotalWidth = (from item in model.CuttingDesign
+                          where item.Status != "S"
+                          select item).Sum(i => i.Width * i.Stand);
         }
 
-        public decimal CalYeildPercent(decimal WgtFG, decimal WgtMaterial, decimal WgtCoilBack)
+        /// <summary>
+        /// Sum Rewind weight on header
+        /// </summary>
+        /// <param name="model"></param>
+        public void SumRewindWeight(PlanningHeadModel model)
         {
-            decimal YieldPer = 0;
-            WgtMaterial = (WgtMaterial == 0) ? 1 : WgtMaterial;
-            YieldPer = Math.Round(Math.Round(WgtFG, 0) / (Math.Round(WgtMaterial, 0) - Math.Round(WgtCoilBack, 0)) * 100, 2);
-            return YieldPer;
+            if (model.CoilBacks.ToList().Count != 0)
+            {
+                RewindWeight = Math.Round(model.CoilBacks.Sum(p => p.Weight), 0);
+            }
+            else
+            {
+                RewindWeight = 0;
+            }
+        }
+
+        /// <summary>
+        /// Sum Using weight on header
+        /// </summary>
+        /// <param name="materialList"></param>
+        public void SumUsingWeight(IEnumerable<MaterialModel> materialList)
+        {
+            UsingWeight = materialList.Sum(p => p.UsingWeight).GetDecimal();
         }
 
         /// <summary>
@@ -393,26 +434,40 @@ namespace Epicoil.Library.Models.Planning
             Yield = CalYeildPercent(Math.Round(OutputWeight, 0), Math.Round(InputWeight, 0), Math.Round(RewindWeight, 0));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="YeildValue"></param>
-        /// <returns>True = In of range/False = Out of range</returns>
-        public bool CheckYeild(decimal YeildValue)
+        public List<CutDesignModel> UpdateCuttingByLine(OrderDetailModel ordDtl, int lineID)
         {
-            decimal YieldMin = ProcessLineDetail.YieldPercentMin;
-            decimal YieldMax = ProcessLineDetail.YieldPercentMax;
+            for (int i = 0; i < CuttingDesign.Count; i++)
+            {
+                if (CuttingDesign[i].LineID == lineID)
+                {
+                    CuttingDesign[i].SOLine = ordDtl.OrderLine;
+                    CuttingDesign[i].NORNum = ordDtl.NORNo;
+                    CuttingDesign[i].CommodityCode = ordDtl.CommodityCode;
+                    CuttingDesign[i].SpecCode = ordDtl.SpecCode;
+                    CuttingDesign[i].CoatingCode = ordDtl.CoatingCode;
+                    CuttingDesign[i].Thick = ordDtl.Thick;
+                    CuttingDesign[i].Width = ordDtl.Width;
+                    CuttingDesign[i].Length = ordDtl.Length;
+                    CuttingDesign[i].SOWeight = ordDtl.SOWeight;
+                    CuttingDesign[i].SOQuantity = ordDtl.SOQuantity;
+                    CuttingDesign[i].QtyPack = ordDtl.QtyPack;
+                    CuttingDesign[i].Pack = ordDtl.Pack;
+                    CuttingDesign[i].BussinessType = ordDtl.BussinessType;
+                }
+            }
 
-            bool FlagYield = true;
-            if (YeildValue < YieldMin)
-            {
-                FlagYield = false;
-            }
-            if (YeildValue > YieldMax)
-            {
-                FlagYield = false;
-            }
-            return FlagYield;
+            return CuttingDesign;
+        }
+
+        public bool ValidateToDelMaterial(MaterialModel material, out string msg)
+        {
+            bool valid = true;
+            msg = "";
+            //TODO : Work around method.
+            /*
+             * Condition statement...
+            */
+            return valid;
         }
 
         public bool ValidateToSave(PlanningHeadModel model, out string invalidObject, out string msg)
@@ -421,7 +476,8 @@ namespace Epicoil.Library.Models.Planning
             msg = "";
             bool valid = true;
 
-            //Validate Process Line Selected.
+            #region Validate Process Line Selected.
+
             if (ProcessLineId == null)
             {
                 invalidObject = "ProcessLine";
@@ -433,7 +489,7 @@ namespace Epicoil.Library.Models.Planning
                 if (ProcessLineDetail.ResourceGrpID != "S" && PackingPlan == true)
                 {
                     invalidObject = "ProcessLine";
-                    msg = "Packing Plan can be select for Sliter only.";
+                    msg = "Packing Plan can be select for Slitter only.";
                     return false;
                 }
 
@@ -445,7 +501,10 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
-            //Validate compatible between Machine and Materail.
+            #endregion Validate Process Line Selected.
+
+            #region Validate compatible between Machine and Material.
+
             if (Materails.ToList().Count() > 0)
             {
                 //Validate Possession.
@@ -460,7 +519,7 @@ namespace Epicoil.Library.Models.Planning
                 if (ProcessLineDetail.WidthMin > valmin)
                 {
                     invalidObject = "ProcessLine";
-                    msg = string.Format(@"Machine and Materail is not compatible for Machine width min = {0} and Materail width = {1}.",
+                    msg = string.Format(@"Machine and Material is not compatible for Machine width min = {0} and Material width = {1}.",
                                         ProcessLineDetail.WidthMin.ToString("#,##0.00"), valmin.ToString("#,##0.00"));
                     return false;
                 }
@@ -469,7 +528,7 @@ namespace Epicoil.Library.Models.Planning
                 if (ProcessLineDetail.WidthMax < valmax)
                 {
                     invalidObject = "ProcessLine";
-                    msg = string.Format(@"Machine and Materail is not compatible for Machine width max = {0} and Materail width = {1}.",
+                    msg = string.Format(@"Machine and Material is not compatible for Machine width max = {0} and Material width = {1}.",
                                         ProcessLineDetail.WidthMin.ToString("#,##0.00"), valmax.ToString("#,##0.00"));
                     return false;
                 }
@@ -484,7 +543,10 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
-            //Cutting line dose existing.
+            #endregion Validate compatible between Machine and Material.
+
+            #region Cutting line dose existing.
+
             if (CuttingDesign.ToList().Count > 0)
             {
                 //Line from Sale Order
@@ -508,8 +570,10 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
+            #endregion Cutting line dose existing.
 
-            //Compare date between Issue date and Due date.
+            #region Compare date between Issue date and Due date.
+
             if (IssueDate > DueDate)
             {
                 invalidObject = "IssueDate";
@@ -517,54 +581,11 @@ namespace Epicoil.Library.Models.Planning
                 return false;
             }
 
+            #endregion Compare date between Issue date and Due date.
+
             return valid;
         }
 
-        public bool ValidateToDelMaterial(MaterialModel material, out string msg)
-        {
-            bool valid = true;
-            msg = "";
-            //TODO : Work around method.
-            /*
-             * Condition statement...
-            */
-            return valid;
-        }
-
-
-        public List<CutDesignModel> UpdateCuttingByLine(OrderDetailModel ordDtl, int lineID)
-        {
-            for (int i = 0; i < CuttingDesign.Count; i++ )
-            {
-                if (CuttingDesign[i].LineID == lineID)
-                {
-                    CuttingDesign[i].SOLine = ordDtl.OrderLine;
-                    CuttingDesign[i].NORNum = ordDtl.NORNo;
-                    CuttingDesign[i].CommodityCode = ordDtl.CommodityCode;
-                    CuttingDesign[i].SpecCode = ordDtl.SpecCode;
-                    CuttingDesign[i].CoatingCode = ordDtl.CoatingCode;
-                    CuttingDesign[i].Thick = ordDtl.Thick;
-                    CuttingDesign[i].Width = ordDtl.Width;
-                    CuttingDesign[i].Length = ordDtl.Length;
-                    CuttingDesign[i].SOWeight = ordDtl.SOWeight;
-                    CuttingDesign[i].SOQuantity = ordDtl.SOQuantity;
-                    CuttingDesign[i].QtyPack = ordDtl.QtyPack;
-                    CuttingDesign[i].Pack = ordDtl.Pack;
-                    CuttingDesign[i].BussinessType = ordDtl.BussinessType;
-                }
-            }
-
-            return CuttingDesign;
-        }
-
-        public List<CutDesignModel> ReCalculateCuttingLine()
-        {
-            foreach (var v in CuttingDesign)
-            {
-                v.CalculateRows(this);
-            }
-            return CuttingDesign;
-        }
         #endregion Method
     }
 }
