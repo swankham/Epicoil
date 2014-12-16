@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="dsPlanning" targetNamespace="http://tempuri.org/dsPlanning.xsd" xmlns:mstns="http://tempuri.org/dsPlanning.xsd" xmlns="http://tempuri.org/dsPlanning.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="dsPlanning" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="dsPlanning" msprop:Generator_UserDSName="dsPlanning">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PackingOrderHead" msprop:Generator_TableClassName="PackingOrderHeadDataTable" msprop:Generator_TableVarName="tablePackingOrderHead" msprop:Generator_TablePropName="PackingOrderHead" msprop:Generator_RowDeletingName="PackingOrderHeadRowDeleting" msprop:Generator_RowChangingName="PackingOrderHeadRowChanging" msprop:Generator_RowEvHandlerName="PackingOrderHeadRowChangeEventHandler" msprop:Generator_RowDeletedName="PackingOrderHeadRowDeleted" msprop:Generator_UserTableName="PackingOrderHead" msprop:Generator_RowChangedName="PackingOrderHeadRowChanged" msprop:Generator_RowEvArgName="PackingOrderHeadRowChangeEvent" msprop:Generator_RowClassName="PackingOrderHeadRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="WorkOrderId" msprop:Generator_ColumnVarNameInTable="columnWorkOrderId" msprop:Generator_ColumnPropNameInRow="WorkOrderId" msprop:Generator_ColumnPropNameInTable="WorkOrderIdColumn" msprop:Generator_UserColumnName="WorkOrderId" type="xs:int" minOccurs="0" />
+              <xs:element name="WorkOrderNum" msprop:Generator_ColumnVarNameInTable="columnWorkOrderNum" msprop:Generator_ColumnPropNameInRow="WorkOrderNum" msprop:Generator_ColumnPropNameInTable="WorkOrderNumColumn" msprop:Generator_UserColumnName="WorkOrderNum" type="xs:string" minOccurs="0" />
+              <xs:element name="DueDate" msprop:Generator_ColumnVarNameInTable="columnDueDate" msprop:Generator_ColumnPropNameInRow="DueDate" msprop:Generator_ColumnPropNameInTable="DueDateColumn" msprop:Generator_UserColumnName="DueDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="IssueDate" msprop:Generator_ColumnVarNameInTable="columnIssueDate" msprop:Generator_ColumnPropNameInRow="IssueDate" msprop:Generator_ColumnPropNameInTable="IssueDateColumn" msprop:Generator_UserColumnName="IssueDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="PackOrderNum" msprop:Generator_ColumnVarNameInTable="columnPackOrderNum" msprop:Generator_ColumnPropNameInRow="PackOrderNum" msprop:Generator_ColumnPropNameInTable="PackOrderNumColumn" msprop:Generator_UserColumnName="PackOrderNum" type="xs:string" minOccurs="0" />
+              <xs:element name="CompleteFlag" msprop:Generator_ColumnVarNameInTable="columnCompleteFlag" msprop:Generator_ColumnPropNameInRow="CompleteFlag" msprop:Generator_ColumnPropNameInTable="CompleteFlagColumn" msprop:Generator_UserColumnName="CompleteFlag" type="xs:int" minOccurs="0" />
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="PackStyleLines" msprop:Generator_TableClassName="PackStyleLinesDataTable" msprop:Generator_TableVarName="tablePackStyleLines" msprop:Generator_TablePropName="PackStyleLines" msprop:Generator_RowDeletingName="PackStyleLinesRowDeleting" msprop:Generator_RowChangingName="PackStyleLinesRowChanging" msprop:Generator_RowEvHandlerName="PackStyleLinesRowChangeEventHandler" msprop:Generator_RowDeletedName="PackStyleLinesRowDeleted" msprop:Generator_UserTableName="PackStyleLines" msprop:Generator_RowChangedName="PackStyleLinesRowChanged" msprop:Generator_RowEvArgName="PackStyleLinesRowChangeEvent" msprop:Generator_RowClassName="PackStyleLinesRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="HeadID" msprop:Generator_ColumnVarNameInTable="columnHeadID" msprop:Generator_ColumnPropNameInRow="HeadID" msprop:Generator_ColumnPropNameInTable="HeadIDColumn" msprop:Generator_UserColumnName="HeadID" type="xs:int" minOccurs="0" />
+              <xs:element name="LineID" msprop:Generator_ColumnVarNameInTable="columnLineID" msprop:Generator_ColumnPropNameInRow="LineID" msprop:Generator_ColumnPropNameInTable="LineIDColumn" msprop:Generator_UserColumnName="LineID" type="xs:int" minOccurs="0" />
+              <xs:element name="CustId" msprop:Generator_ColumnVarNameInTable="columnCustId" msprop:Generator_ColumnPropNameInRow="CustId" msprop:Generator_ColumnPropNameInTable="CustIdColumn" msprop:Generator_UserColumnName="CustId" type="xs:string" minOccurs="0" />
+              <xs:element name="CustomerName" msprop:Generator_ColumnVarNameInTable="columnCustomerName" msprop:Generator_ColumnPropNameInRow="CustomerName" msprop:Generator_ColumnPropNameInTable="CustomerNameColumn" msprop:Generator_UserColumnName="CustomerName" type="xs:string" minOccurs="0" />
+              <xs:element name="ThickMin" msprop:Generator_ColumnVarNameInTable="columnThickMin" msprop:Generator_ColumnPropNameInRow="ThickMin" msprop:Generator_ColumnPropNameInTable="ThickMinColumn" msprop:Generator_UserColumnName="ThickMin" type="xs:decimal" minOccurs="0" />
+              <xs:element name="ThickMax" msprop:Generator_ColumnVarNameInTable="columnThickMax" msprop:Generator_ColumnPropNameInRow="ThickMax" msprop:Generator_ColumnPropNameInTable="ThickMaxColumn" msprop:Generator_UserColumnName="ThickMax" type="xs:decimal" minOccurs="0" />
+              <xs:element name="WidthMin" msprop:Generator_ColumnVarNameInTable="columnWidthMin" msprop:Generator_ColumnPropNameInRow="WidthMin" msprop:Generator_ColumnPropNameInTable="WidthMinColumn" msprop:Generator_UserColumnName="WidthMin" type="xs:decimal" minOccurs="0" />
+              <xs:element name="WidthMax" msprop:Generator_ColumnVarNameInTable="columnWidthMax" msprop:Generator_ColumnPropNameInRow="WidthMax" msprop:Generator_ColumnPropNameInTable="WidthMaxColumn" msprop:Generator_UserColumnName="WidthMax" type="xs:decimal" minOccurs="0" />
+              <xs:element name="StyleCode" msprop:Generator_ColumnVarNameInTable="columnStyleCode" msprop:Generator_ColumnPropNameInRow="StyleCode" msprop:Generator_ColumnPropNameInTable="StyleCodeColumn" msprop:Generator_UserColumnName="StyleCode" type="xs:string" minOccurs="0" />
+              <xs:element name="Remarks" msprop:Generator_ColumnVarNameInTable="columnRemarks" msprop:Generator_ColumnPropNameInRow="Remarks" msprop:Generator_ColumnPropNameInTable="RemarksColumn" msprop:Generator_UserColumnName="Remarks" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SerialsByPackingStyle" msprop:Generator_TableClassName="SerialsByPackingStyleDataTable" msprop:Generator_TableVarName="tableSerialsByPackingStyle" msprop:Generator_TablePropName="SerialsByPackingStyle" msprop:Generator_RowDeletingName="SerialsByPackingStyleRowDeleting" msprop:Generator_RowChangingName="SerialsByPackingStyleRowChanging" msprop:Generator_RowEvHandlerName="SerialsByPackingStyleRowChangeEventHandler" msprop:Generator_RowDeletedName="SerialsByPackingStyleRowDeleted" msprop:Generator_UserTableName="SerialsByPackingStyle" msprop:Generator_RowChangedName="SerialsByPackingStyleRowChanged" msprop:Generator_RowEvArgName="SerialsByPackingStyleRowChangeEvent" msprop:Generator_RowClassName="SerialsByPackingStyleRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PackStyleID" msprop:Generator_ColumnVarNameInTable="columnPackStyleID" msprop:Generator_ColumnPropNameInRow="PackStyleID" msprop:Generator_ColumnPropNameInTable="PackStyleIDColumn" msprop:Generator_UserColumnName="PackStyleID" type="xs:int" minOccurs="0" />
+              <xs:element name="SerialNo" msprop:Generator_ColumnVarNameInTable="columnSerialNo" msprop:Generator_ColumnPropNameInRow="SerialNo" msprop:Generator_ColumnPropNameInTable="SerialNoColumn" msprop:Generator_UserColumnName="SerialNo" type="xs:string" minOccurs="0" />
+              <xs:element name="Thick" msprop:Generator_ColumnVarNameInTable="columnThick" msprop:Generator_ColumnPropNameInRow="Thick" msprop:Generator_ColumnPropNameInTable="ThickColumn" msprop:Generator_UserColumnName="Thick" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Width" msprop:Generator_ColumnVarNameInTable="columnWidth" msprop:Generator_ColumnPropNameInRow="Width" msprop:Generator_ColumnPropNameInTable="WidthColumn" msprop:Generator_UserColumnName="Width" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Length" msprop:Generator_ColumnVarNameInTable="columnLength" msprop:Generator_ColumnPropNameInRow="Length" msprop:Generator_ColumnPropNameInTable="LengthColumn" msprop:Generator_UserColumnName="Length" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PackingDesignId" msprop:Generator_ColumnVarNameInTable="columnPackingDesignId" msprop:Generator_ColumnPropNameInRow="PackingDesignId" msprop:Generator_ColumnPropNameInTable="PackingDesignIdColumn" msprop:Generator_UserColumnName="PackingDesignId" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="SkidPackingDesign" msprop:Generator_TableClassName="SkidPackingDesignDataTable" msprop:Generator_TableVarName="tableSkidPackingDesign" msprop:Generator_TablePropName="SkidPackingDesign" msprop:Generator_RowDeletingName="SkidPackingDesignRowDeleting" msprop:Generator_RowChangingName="SkidPackingDesignRowChanging" msprop:Generator_RowEvHandlerName="SkidPackingDesignRowChangeEventHandler" msprop:Generator_RowDeletedName="SkidPackingDesignRowDeleted" msprop:Generator_UserTableName="SkidPackingDesign" msprop:Generator_RowChangedName="SkidPackingDesignRowChanged" msprop:Generator_RowEvArgName="SkidPackingDesignRowChangeEvent" msprop:Generator_RowClassName="SkidPackingDesignRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="PackStyleID" msprop:Generator_ColumnVarNameInTable="columnPackStyleID" msprop:Generator_ColumnPropNameInRow="PackStyleID" msprop:Generator_ColumnPropNameInTable="PackStyleIDColumn" msprop:Generator_UserColumnName="PackStyleID" type="xs:int" minOccurs="0" />
+              <xs:element name="Seq" msprop:Generator_ColumnVarNameInTable="columnSeq" msprop:Generator_ColumnPropNameInRow="Seq" msprop:Generator_ColumnPropNameInTable="SeqColumn" msprop:Generator_UserColumnName="Seq" type="xs:int" minOccurs="0" />
+              <xs:element name="SkidNumber" msprop:Generator_ColumnVarNameInTable="columnSkidNumber" msprop:Generator_ColumnPropNameInRow="SkidNumber" msprop:Generator_ColumnPropNameInTable="SkidNumberColumn" msprop:Generator_UserColumnName="SkidNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:annotation>
+    <xs:appinfo>
+      <msdata:Relationship name="PackingOrderHead_PackStyleLines" msdata:parent="PackingOrderHead" msdata:child="PackStyleLines" msdata:parentkey="ID" msdata:childkey="HeadID" msprop:Generator_UserChildTable="PackStyleLines" msprop:Generator_ChildPropName="GetPackStyleLinesRows" msprop:Generator_UserRelationName="PackingOrderHead_PackStyleLines" msprop:Generator_ParentPropName="PackingOrderHeadRow" msprop:Generator_RelationVarName="relationPackingOrderHead_PackStyleLines" msprop:Generator_UserParentTable="PackingOrderHead" />
+      <msdata:Relationship name="PackStyleLines_SerialsByPackingStyle" msdata:parent="PackStyleLines" msdata:child="SerialsByPackingStyle" msdata:parentkey="LineID" msdata:childkey="PackStyleID" msprop:Generator_UserChildTable="SerialsByPackingStyle" msprop:Generator_ChildPropName="GetSerialsByPackingStyleRows" msprop:Generator_UserRelationName="PackStyleLines_SerialsByPackingStyle" msprop:Generator_ParentPropName="PackStyleLinesRow" msprop:Generator_RelationVarName="relationPackStyleLines_SerialsByPackingStyle" msprop:Generator_UserParentTable="PackStyleLines" />
+      <msdata:Relationship name="PackStyleLines_SkidPackingDesign" msdata:parent="PackStyleLines" msdata:child="SkidPackingDesign" msdata:parentkey="LineID" msdata:childkey="PackStyleID" msprop:Generator_UserChildTable="SkidPackingDesign" msprop:Generator_ChildPropName="GetSkidPackingDesignRows" msprop:Generator_UserRelationName="PackStyleLines_SkidPackingDesign" msprop:Generator_ParentPropName="PackStyleLinesRow" msprop:Generator_RelationVarName="relationPackStyleLines_SkidPackingDesign" msprop:Generator_UserParentTable="PackStyleLines" />
+    </xs:appinfo>
+  </xs:annotation>
+</xs:schema>

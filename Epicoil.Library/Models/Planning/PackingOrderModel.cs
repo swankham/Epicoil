@@ -41,6 +41,9 @@ namespace Epicoil.Library.Models.Planning
 
         public IList<SkidPackingModel> SkidPacks { get; set; }
 
+        public string CreationBy { get; set; }
+        public DateTime CreationDate { get; set; }
+
         #endregion Properties
 
         #region Methods

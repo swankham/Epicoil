@@ -127,8 +127,7 @@ namespace Epicoil.Library.Repositories.Planning
                                         ELSE
 	                                        BEGIN
 		                                        UPDATE ucc_pkg_Header
-		                                           SET Plant = N'{0}' --<Plant, nvarchar(8),>
-			                                          ,Remarks = N'{3}' --<Remarks, nvarchar(max),>
+		                                           SET Remarks = N'{3}' --<Remarks, nvarchar(max),>
 			                                          ,CompleteFlag = {4} --<CompleteFlag, int,>
 			                                          ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
 			                                          ,UpdatedBy = N'{5}' --<UpdatedBy, nvarchar(45),>
@@ -194,14 +193,16 @@ namespace Epicoil.Library.Repositories.Planning
             return result;
         }
 
-        public bool SavePackStyles(SessionInfo _session, IEnumerable<PackStyleOrderModel> packStyles)
+        public bool SavePackStyles(SessionInfo _session, IEnumerable<PackStyleOrderModel> packStyles = null, PackStyleOrderModel model = null)
         {
             bool isSuccess = false;
             string sql = string.Empty;
             //resultRow = null;
-            foreach (var item in packStyles)
+            if (packStyles != null && model == null)
             {
-                sql += string.Format(@"IF NOT EXISTS
+                foreach (var item in packStyles)
+                {
+                    sql += string.Format(@"IF NOT EXISTS
                                         (
 	                                        SELECT * FROM ucc_pkg_PackStyleList (NOLOCK)
 	                                        WHERE HeadLineID = {1} AND StyleCode = N'{3}'
@@ -252,42 +253,56 @@ namespace Epicoil.Library.Repositories.Planning
                                         ELSE
 	                                        BEGIN
 		                                        UPDATE ucc_pkg_PackStyleList
-			                                        SET Plant = N'{0}' --<Plant, nvarchar(8),>
-				                                        ,HeadLineID = {1} --<HeadLineID, bigint,>
-				                                        ,CustID = N'{2}' --<CustID, nvarchar(25),>
-				                                        ,StyleCode = N'{3}' --<StyleCode, nvarchar(45),>
-				                                        ,TotalQuantity = {4} --<TotalQuantity, int,>
-				                                        ,ThickMin = {5} --<ThickMin, decimal(15,9),>
-				                                        ,ThickMax = {6} --<ThickMax, decimal(15,9),>
-				                                        ,WidthMin = {7} --<WidthMin, decimal(15,9),>
-				                                        ,WidthMax = {8} --<WidthMax, decimal(15,9),>
-				                                        ,Remarks = N'{9}' --<Remarks, nvarchar(max),>
-				                                        ,CompleteFlag = {10} --<CompleteFlag, int,>
-				                                        ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
-				                                        ,UpdatedBy = N'{11}' --<UpdatedBy, nvarchar(45),>
-				                                        ,CoilWeigthPackMin = {12} --<CoilWeigthPackMin, decimal(15,9),>
-				                                        ,CoilWeigthPackMax = {13} --<CoilWeigthPackMax, decimal(15,9),>
-				                                        ,CoilPerPackMin = {14} --<CoilPerPackMin, decimal(15,9),>
-				                                        ,CoilPerPackMax = {15} --<CoilPerPackMax, decimal(15,9),>
+			                                        SET Remarks = N'{9}' --<Remarks, nvarchar(max),>
+                                                       ,CompleteFlag = {10} --<CompleteFlag, int,>
+				                                       ,HeadLineID = {1} --<HeadLineID, bigint,>
+				                                       ,CustID = N'{2}' --<CustID, nvarchar(25),>
+				                                       ,StyleCode = N'{3}' --<StyleCode, nvarchar(45),>
+				                                       ,TotalQuantity = {4} --<TotalQuantity, int,>
+				                                       ,ThickMin = {5} --<ThickMin, decimal(15,9),>
+				                                       ,ThickMax = {6} --<ThickMax, decimal(15,9),>
+				                                       ,WidthMin = {7} --<WidthMin, decimal(15,9),>
+				                                       ,WidthMax = {8} --<WidthMax, decimal(15,9),>				                                       				                                        
+				                                       ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+				                                       ,UpdatedBy = N'{11}' --<UpdatedBy, nvarchar(45),>
+				                                       ,CoilWeigthPackMin = {12} --<CoilWeigthPackMin, decimal(15,9),>
+				                                       ,CoilWeigthPackMax = {13} --<CoilWeigthPackMax, decimal(15,9),>
+				                                       ,CoilPerPackMin = {14} --<CoilPerPackMin, decimal(15,9),>
+				                                       ,CoilPerPackMax = {15} --<CoilPerPackMax, decimal(15,9),>
 			                                        WHERE HeadLineID = {1} AND StyleCode = N'{3}'
 	                                        END
                                             " + Environment.NewLine
-                                                 , _session.PlantID
-                                                 , item.HeadLineID
-                                                 , item.CustId
-                                                 , item.StyleCode
-                                                 , item.TotalQuantity
-                                                 , item.ThickMin
-                                                 , item.ThickMax
-                                                 , item.WidthMin
-                                                 , item.WidthMax
-                                                 , item.Remarks
-                                                 , 0
-                                                 , _session.UserID
-                                                 , item.CoilWeigthPackMin
-                                                 , item.CoilWeigthPackMax
-                                                 , item.CoilPerPackMin
-                                                 , item.CoilPerPackMax);
+                                                     , _session.PlantID
+                                                     , item.HeadLineID
+                                                     , item.CustId
+                                                     , item.StyleCode
+                                                     , item.TotalQuantity
+                                                     , item.ThickMin
+                                                     , item.ThickMax
+                                                     , item.WidthMin
+                                                     , item.WidthMax
+                                                     , item.Remarks
+                                                     , 0
+                                                     , _session.UserID
+                                                     , item.CoilWeigthPackMin
+                                                     , item.CoilWeigthPackMax
+                                                     , item.CoilPerPackMin
+                                                     , item.CoilPerPackMax);
+                }
+            }
+            else if (packStyles == null && model != null)
+            {
+                sql = string.Format(@"UPDATE ucc_pkg_PackStyleList
+			                            SET Remarks = N'{2}' --<Remarks, nvarchar(max),>
+                                            ,CompleteFlag = {3} --<CompleteFlag, int,>
+				                            ,LastUpdateDate = GETDATE() --<LastUpdateDate, datetime,>
+				                            ,UpdatedBy = N'{4}' --<UpdatedBy, nvarchar(45),>
+			                            WHERE HeadLineID = {0} AND StyleCode = N'{1}'" + Environment.NewLine
+                                        , model.HeadLineID
+                                        , model.StyleCode
+                                        , model.Remarks
+                                        , 0
+                                        , _session.UserID);
             }
 
             try

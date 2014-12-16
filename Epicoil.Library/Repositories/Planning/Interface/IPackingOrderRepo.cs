@@ -18,7 +18,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         bool SavePackOrder(SessionInfo _session, PackingOrderModel model, out PackingOrderModel resultRow);
 
-        bool SavePackStyles(SessionInfo _session, IEnumerable<PackStyleOrderModel> packStyles);
+        bool SavePackStyles(SessionInfo _session, IEnumerable<PackStyleOrderModel> packStyles = null, PackStyleOrderModel model = null);
 
         bool SaveSerialByStyle(SessionInfo _session, IEnumerable<SerialsPackingModel> models);
 

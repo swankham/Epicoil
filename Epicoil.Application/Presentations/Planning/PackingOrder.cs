@@ -187,6 +187,56 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
+        private void tbutSave_Click(object sender, EventArgs e)
+        {
+            PackingOrderModel model = new PackingOrderModel();
+            model.WorkOrderId = HeaderContent.WorkOrderId;
+            model.Remark = txtRemark.Text.ToString();
+            model.CompleteFlag = (HeaderContent.SerialLines.Where(i => i.DesignedPack == false).ToList().Count > 0) ? 0 : 1;
+            if (_repo.SavePackOrder(epiSession, model, out HeaderContent))
+            {
+                PackStyleOrderModel styles = new PackStyleOrderModel();
+                styles.HeadLineID = HeaderContent.Id;
+                styles.StyleCode = dgvPackStyle.CurrentRow.Cells["packstyle"].Value.ToString();
+                styles.Remarks = txtPackingRemark.Text.ToString();
+
+                if (_repo.SavePackStyles(epiSession, null, styles))
+                {
+                    MessageBox.Show("Save complete.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    HeaderContent.PackStyles = _repo.GetPackStyleByPackOrder(HeaderContent.WorkOrderId).ToList();
+                }
+            }
+        }
+
+        private void butLeft_Click(object sender, EventArgs e)
+        {
+            string styleId = dgvPackStyle.CurrentRow.Cells["styleid"].Value.GetString();
+            string id = dgvSkidNumber.CurrentRow.Cells["id"].Value.GetString();
+            string serialId = dgvSkidNumber.CurrentRow.Cells["serialId"].Value.GetString();
+            int snId = string.IsNullOrEmpty(serialId) ? 0 : Convert.ToInt32(serialId);
+            if (string.IsNullOrEmpty(serialId)) return;
+            if (string.IsNullOrEmpty(id))
+            {
+                MessageBox.Show("Please select packing design.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            HeaderContent.SkidPacks = _repo.DeleteSkidPacking(epiSession, HeaderContent.Id, Convert.ToInt32(id), snId).ToList();
+            ListSkidWithinSerial(HeaderContent.SkidPacks.Where(i => i.PackStyleId == Convert.ToInt32(styleId)));
+            ListSerialCuttingToGrid(HeaderContent.SerialLines.Where(i => i.PackStyleId == Convert.ToInt32(styleId)));
+        }
+
+        private void tlbClear_Click(object sender, EventArgs e)
+        {
+            HeaderContent = new PackingOrderModel();
+            BindingContentsHeader(HeaderContent);
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            BindingContentsHeader(HeaderContent);
+        }
+
         #endregion Forms events
 
         #region Binding controls
@@ -198,8 +248,8 @@ namespace Epicoil.Appl.Presentations.Planning
             txtRemark.DataBindings.Add("Text", model, "Remark", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //Set value to DatePicker
-            //dptIssueDate.Value = model.IssueDate;
-            //dptDueDate.Value = model.DueDate;
+            dptIssueDate.Value = model.IssueDate;
+            dptDueDate.Value = model.DueDate;
         }
 
         private void BindingStyleContent(PackStyleOrderModel model)
