@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
-    public class ImexCheckModel : StoreInPlanHead
+    public class ImexCheckModel : StoreInPlanHeadModel
     {
         public string UpdatedBy { get; set; }
 

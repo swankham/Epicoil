@@ -45,6 +45,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tlbClear = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.txtRemark = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -104,7 +105,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.butLeft = new System.Windows.Forms.Button();
             this.butRight = new System.Windows.Forms.Button();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -203,6 +203,16 @@
             this.toolStripButton1.Size = new System.Drawing.Size(23, 32);
             this.toolStripButton1.Text = "toolStripButton1";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::Epicoil.Appl.Properties.Resources.print;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(27, 32);
+            this.toolStripButton3.Text = "toolStripButton3";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // splitContainer1
             // 
@@ -867,15 +877,6 @@
             this.butRight.TabIndex = 0;
             this.butRight.UseVisualStyleBackColor = true;
             this.butRight.Click += new System.EventHandler(this.butRight_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::Epicoil.Appl.Properties.Resources.print;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(27, 32);
-            this.toolStripButton3.Text = "toolStripButton3";
             // 
             // PackingOrder
             // 

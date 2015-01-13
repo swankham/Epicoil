@@ -50,9 +50,14 @@ namespace Epicoil.Library.Repositories.Planning
             if (model.OperationState != 0) whereCluase += string.Format(@"AND OperationState = {0}", model.OperationState);
 
             string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
-                                        FROM ucc_pln_PlanHead plh (NOLOCK)
-                                            LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
-		                                    LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
+                                            FROM ucc_pln_PlanHead plh (NOLOCK)
+                                                LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
+	                                            LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
+	                                            INNER JOIN (select Count(*) as lines, WorkOrderID 
+				                                            from ucc_pln_SerialGenerated 				
+				                                            where Status = 'F'
+				                                            group by WorkOrderID) ln
+						                                            ON(plh.WorkOrderID = ln.WorkOrderID)
                                             WHERE plh.Plant = N'{0}' AND PackingOrderFlag = 0 {1}", model.Plant, whereCluase);
 
             var result = Repository.Instance.GetMany<PlanningHeadModel>(sql);

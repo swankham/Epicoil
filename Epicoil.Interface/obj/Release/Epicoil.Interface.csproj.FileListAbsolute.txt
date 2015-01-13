@@ -1,0 +1,5 @@
+D:\SourceControl\EPIC\Epicoil.Interface\bin\Release\Epicoil.Interface.dll
+D:\SourceControl\EPIC\Epicoil.Interface\bin\Release\Epicoil.Interface.pdb
+D:\SourceControl\EPIC\Epicoil.Interface\obj\Release\Epicoil.Interface.csprojResolveAssemblyReference.cache
+D:\SourceControl\EPIC\Epicoil.Interface\obj\Release\Epicoil.Interface.dll
+D:\SourceControl\EPIC\Epicoil.Interface\obj\Release\Epicoil.Interface.pdb

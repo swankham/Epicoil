@@ -75,6 +75,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txtOrderType = new System.Windows.Forms.TextBox();
             this.cmbArivePort = new System.Windows.Forms.ComboBox();
             this.cmbLoadPort = new System.Windows.Forms.ComboBox();
             this.dtpETADate = new System.Windows.Forms.DateTimePicker();
@@ -83,8 +84,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtInvoiceNum = new System.Windows.Forms.TextBox();
             this.txtStoreInPlanNum = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txtMillName = new System.Windows.Forms.TextBox();
@@ -105,7 +104,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtBussinessTypeName = new System.Windows.Forms.TextBox();
             this.txtBussinessType = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.butBusinessType = new System.Windows.Forms.Button();
+            this.txtInvoiceNum = new System.Windows.Forms.TextBox();
             this.txtExchangeRate = new System.Windows.Forms.TextBox();
             this.dtpInvoiceDate = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
@@ -118,7 +119,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.dgvList = new System.Windows.Forms.DataGridView();
+            this.dgvPOLine = new System.Windows.Forms.DataGridView();
             this.pono = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.salecontract = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.poline = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -232,7 +233,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPOLine)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel5.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -359,7 +360,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
             this.splitContainer1.Size = new System.Drawing.Size(1190, 688);
-            this.splitContainer1.SplitterDistance = 189;
+            this.splitContainer1.SplitterDistance = 188;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 38;
             // 
@@ -370,7 +371,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1190, 189);
+            this.panel1.Size = new System.Drawing.Size(1190, 188);
             this.panel1.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -387,11 +388,12 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1188, 187);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1188, 186);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.txtOrderType);
             this.panel2.Controls.Add(this.cmbArivePort);
             this.panel2.Controls.Add(this.cmbLoadPort);
             this.panel2.Controls.Add(this.dtpETADate);
@@ -400,8 +402,6 @@
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.txtInvoiceNum);
             this.panel2.Controls.Add(this.txtStoreInPlanNum);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.txtMillName);
@@ -416,14 +416,23 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(469, 181);
+            this.panel2.Size = new System.Drawing.Size(469, 180);
             this.panel2.TabIndex = 0;
+            // 
+            // txtOrderType
+            // 
+            this.txtOrderType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtOrderType.Location = new System.Drawing.Point(243, 13);
+            this.txtOrderType.Name = "txtOrderType";
+            this.txtOrderType.Size = new System.Drawing.Size(208, 23);
+            this.txtOrderType.TabIndex = 44;
+            this.txtOrderType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // cmbArivePort
             // 
             this.cmbArivePort.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbArivePort.FormattingEnabled = true;
-            this.cmbArivePort.Location = new System.Drawing.Point(121, 166);
+            this.cmbArivePort.Location = new System.Drawing.Point(121, 153);
             this.cmbArivePort.Name = "cmbArivePort";
             this.cmbArivePort.Size = new System.Drawing.Size(96, 23);
             this.cmbArivePort.TabIndex = 43;
@@ -435,7 +444,7 @@
             this.cmbLoadPort.Items.AddRange(new object[] {
             "JAPAN",
             "BANKOK"});
-            this.cmbLoadPort.Location = new System.Drawing.Point(121, 133);
+            this.cmbLoadPort.Location = new System.Drawing.Point(121, 120);
             this.cmbLoadPort.Name = "cmbLoadPort";
             this.cmbLoadPort.Size = new System.Drawing.Size(96, 23);
             this.cmbLoadPort.TabIndex = 43;
@@ -443,26 +452,28 @@
             // dtpETADate
             // 
             this.dtpETADate.CustomFormat = "dd/MM/yyyy";
+            this.dtpETADate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.dtpETADate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpETADate.Location = new System.Drawing.Point(303, 164);
+            this.dtpETADate.Location = new System.Drawing.Point(303, 151);
             this.dtpETADate.Name = "dtpETADate";
-            this.dtpETADate.Size = new System.Drawing.Size(147, 21);
+            this.dtpETADate.Size = new System.Drawing.Size(147, 23);
             this.dtpETADate.TabIndex = 34;
             // 
             // dtpETDDate
             // 
             this.dtpETDDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpETDDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.dtpETDDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpETDDate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dtpETDDate.Location = new System.Drawing.Point(303, 134);
+            this.dtpETDDate.Location = new System.Drawing.Point(303, 121);
             this.dtpETDDate.Name = "dtpETDDate";
-            this.dtpETDDate.Size = new System.Drawing.Size(147, 21);
+            this.dtpETDDate.Size = new System.Drawing.Size(147, 23);
             this.dtpETDDate.TabIndex = 33;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(225, 170);
+            this.label8.Location = new System.Drawing.Point(225, 157);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(64, 15);
             this.label8.TabIndex = 32;
@@ -471,7 +482,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(225, 138);
+            this.label7.Location = new System.Drawing.Point(225, 125);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(66, 15);
             this.label7.TabIndex = 31;
@@ -480,7 +491,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(48, 170);
+            this.label3.Location = new System.Drawing.Point(48, 157);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(68, 15);
             this.label3.TabIndex = 28;
@@ -489,43 +500,26 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(51, 138);
+            this.label2.Location = new System.Drawing.Point(51, 125);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 15);
             this.label2.TabIndex = 27;
             this.label2.Text = "Load Port :";
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(240, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
-            this.label1.TabIndex = 26;
-            this.label1.Text = "Invoice No. :";
-            // 
-            // txtInvoiceNum
-            // 
-            this.txtInvoiceNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtInvoiceNum.Location = new System.Drawing.Point(327, 14);
-            this.txtInvoiceNum.Name = "txtInvoiceNum";
-            this.txtInvoiceNum.Size = new System.Drawing.Size(124, 21);
-            this.txtInvoiceNum.TabIndex = 25;
-            // 
             // txtStoreInPlanNum
             // 
-            this.txtStoreInPlanNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtStoreInPlanNum.Location = new System.Drawing.Point(121, 14);
+            this.txtStoreInPlanNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtStoreInPlanNum.Location = new System.Drawing.Point(121, 13);
             this.txtStoreInPlanNum.Name = "txtStoreInPlanNum";
             this.txtStoreInPlanNum.ReadOnly = true;
-            this.txtStoreInPlanNum.Size = new System.Drawing.Size(116, 21);
+            this.txtStoreInPlanNum.Size = new System.Drawing.Size(116, 23);
             this.txtStoreInPlanNum.TabIndex = 24;
             this.txtStoreInPlanNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStoreInPlanNum.Leave += new System.EventHandler(this.txtStoreInPlanNum_Leave);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(13, 12);
+            this.button1.Location = new System.Drawing.Point(13, 10);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 27);
             this.button1.TabIndex = 23;
@@ -535,39 +529,39 @@
             // 
             // txtMillName
             // 
-            this.txtMillName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMillName.Location = new System.Drawing.Point(176, 104);
+            this.txtMillName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtMillName.Location = new System.Drawing.Point(176, 93);
             this.txtMillName.Name = "txtMillName";
             this.txtMillName.ReadOnly = true;
-            this.txtMillName.Size = new System.Drawing.Size(275, 21);
+            this.txtMillName.Size = new System.Drawing.Size(275, 23);
             this.txtMillName.TabIndex = 22;
             // 
             // txtMillCode
             // 
-            this.txtMillCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMillCode.Location = new System.Drawing.Point(121, 104);
+            this.txtMillCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtMillCode.Location = new System.Drawing.Point(121, 93);
             this.txtMillCode.Name = "txtMillCode";
-            this.txtMillCode.Size = new System.Drawing.Size(47, 21);
+            this.txtMillCode.Size = new System.Drawing.Size(54, 23);
             this.txtMillCode.TabIndex = 21;
             this.txtMillCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMillCode.Leave += new System.EventHandler(this.txtMillCode_Leave);
             // 
             // txtMakerName
             // 
-            this.txtMakerName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMakerName.Location = new System.Drawing.Point(176, 75);
+            this.txtMakerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtMakerName.Location = new System.Drawing.Point(176, 66);
             this.txtMakerName.Name = "txtMakerName";
             this.txtMakerName.ReadOnly = true;
-            this.txtMakerName.Size = new System.Drawing.Size(275, 21);
+            this.txtMakerName.Size = new System.Drawing.Size(275, 23);
             this.txtMakerName.TabIndex = 20;
             // 
             // txtMakerCode
             // 
-            this.txtMakerCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtMakerCode.ContextMenuStrip = this.mnuContext;
-            this.txtMakerCode.Location = new System.Drawing.Point(121, 74);
+            this.txtMakerCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtMakerCode.Location = new System.Drawing.Point(121, 66);
             this.txtMakerCode.Name = "txtMakerCode";
-            this.txtMakerCode.Size = new System.Drawing.Size(47, 21);
+            this.txtMakerCode.Size = new System.Drawing.Size(54, 23);
             this.txtMakerCode.TabIndex = 19;
             this.txtMakerCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtMakerCode.Leave += new System.EventHandler(this.txtMakerCode_Leave);
@@ -575,26 +569,26 @@
             // 
             // txtSupplierName
             // 
-            this.txtSupplierName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSupplierName.Location = new System.Drawing.Point(176, 44);
+            this.txtSupplierName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtSupplierName.Location = new System.Drawing.Point(176, 39);
             this.txtSupplierName.Name = "txtSupplierName";
             this.txtSupplierName.ReadOnly = true;
-            this.txtSupplierName.Size = new System.Drawing.Size(275, 21);
+            this.txtSupplierName.Size = new System.Drawing.Size(275, 23);
             this.txtSupplierName.TabIndex = 16;
             // 
             // txtSupplierCode
             // 
-            this.txtSupplierCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSupplierCode.Location = new System.Drawing.Point(121, 44);
+            this.txtSupplierCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtSupplierCode.Location = new System.Drawing.Point(121, 39);
             this.txtSupplierCode.Name = "txtSupplierCode";
-            this.txtSupplierCode.Size = new System.Drawing.Size(47, 21);
+            this.txtSupplierCode.Size = new System.Drawing.Size(54, 23);
             this.txtSupplierCode.TabIndex = 15;
             this.txtSupplierCode.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtSupplierCode.Leave += new System.EventHandler(this.txtSupplierCode_Leave);
             // 
             // butMill
             // 
-            this.butMill.Location = new System.Drawing.Point(13, 100);
+            this.butMill.Location = new System.Drawing.Point(13, 91);
             this.butMill.Name = "butMill";
             this.butMill.Size = new System.Drawing.Size(107, 27);
             this.butMill.TabIndex = 5;
@@ -604,7 +598,7 @@
             // 
             // butMaker
             // 
-            this.butMaker.Location = new System.Drawing.Point(13, 72);
+            this.butMaker.Location = new System.Drawing.Point(13, 64);
             this.butMaker.Name = "butMaker";
             this.butMaker.Size = new System.Drawing.Size(107, 27);
             this.butMaker.TabIndex = 4;
@@ -614,7 +608,7 @@
             // 
             // butSupplier
             // 
-            this.butSupplier.Location = new System.Drawing.Point(13, 40);
+            this.butSupplier.Location = new System.Drawing.Point(13, 37);
             this.butSupplier.Name = "butSupplier";
             this.butSupplier.Size = new System.Drawing.Size(107, 27);
             this.butSupplier.TabIndex = 2;
@@ -632,7 +626,9 @@
             this.panel3.Controls.Add(this.label9);
             this.panel3.Controls.Add(this.txtBussinessTypeName);
             this.panel3.Controls.Add(this.txtBussinessType);
+            this.panel3.Controls.Add(this.label1);
             this.panel3.Controls.Add(this.butBusinessType);
+            this.panel3.Controls.Add(this.txtInvoiceNum);
             this.panel3.Controls.Add(this.txtExchangeRate);
             this.panel3.Controls.Add(this.dtpInvoiceDate);
             this.panel3.Controls.Add(this.label6);
@@ -641,32 +637,32 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(478, 3);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(470, 181);
+            this.panel3.Size = new System.Drawing.Size(470, 180);
             this.panel3.TabIndex = 1;
             // 
             // txtCustomerName
             // 
-            this.txtCustomerName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtCustomerName.Location = new System.Drawing.Point(192, 44);
+            this.txtCustomerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtCustomerName.Location = new System.Drawing.Point(184, 39);
             this.txtCustomerName.Name = "txtCustomerName";
             this.txtCustomerName.ReadOnly = true;
-            this.txtCustomerName.Size = new System.Drawing.Size(262, 21);
+            this.txtCustomerName.Size = new System.Drawing.Size(268, 23);
             this.txtCustomerName.TabIndex = 45;
             // 
             // txtCustID
             // 
-            this.txtCustID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtCustID.ContextMenuStrip = this.mnuContext;
-            this.txtCustID.Location = new System.Drawing.Point(122, 44);
+            this.txtCustID.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtCustID.Location = new System.Drawing.Point(118, 39);
             this.txtCustID.Name = "txtCustID";
-            this.txtCustID.Size = new System.Drawing.Size(63, 21);
+            this.txtCustID.Size = new System.Drawing.Size(64, 23);
             this.txtCustID.TabIndex = 44;
             this.txtCustID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtCustID.MouseUp += new System.Windows.Forms.MouseEventHandler(this.txtCustID_MouseUp);
             // 
             // butCustomer
             // 
-            this.butCustomer.Location = new System.Drawing.Point(12, 43);
+            this.butCustomer.Location = new System.Drawing.Point(12, 37);
             this.butCustomer.Name = "butCustomer";
             this.butCustomer.Size = new System.Drawing.Size(104, 27);
             this.butCustomer.TabIndex = 43;
@@ -679,7 +675,7 @@
             this.cmdCurrencyCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmdCurrencyCode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmdCurrencyCode.FormattingEnabled = true;
-            this.cmdCurrencyCode.Location = new System.Drawing.Point(122, 75);
+            this.cmdCurrencyCode.Location = new System.Drawing.Point(118, 66);
             this.cmdCurrencyCode.Name = "cmdCurrencyCode";
             this.cmdCurrencyCode.Size = new System.Drawing.Size(84, 23);
             this.cmdCurrencyCode.TabIndex = 42;
@@ -687,16 +683,16 @@
             // 
             // txtVessel
             // 
-            this.txtVessel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtVessel.Location = new System.Drawing.Point(122, 164);
+            this.txtVessel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtVessel.Location = new System.Drawing.Point(118, 120);
             this.txtVessel.Name = "txtVessel";
-            this.txtVessel.Size = new System.Drawing.Size(330, 21);
+            this.txtVessel.Size = new System.Drawing.Size(334, 23);
             this.txtVessel.TabIndex = 41;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(64, 166);
+            this.label9.Location = new System.Drawing.Point(67, 122);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 15);
             this.label9.TabIndex = 40;
@@ -704,28 +700,37 @@
             // 
             // txtBussinessTypeName
             // 
-            this.txtBussinessTypeName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBussinessTypeName.Location = new System.Drawing.Point(192, 134);
+            this.txtBussinessTypeName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtBussinessTypeName.Location = new System.Drawing.Point(184, 153);
             this.txtBussinessTypeName.Name = "txtBussinessTypeName";
             this.txtBussinessTypeName.ReadOnly = true;
-            this.txtBussinessTypeName.Size = new System.Drawing.Size(260, 21);
+            this.txtBussinessTypeName.Size = new System.Drawing.Size(268, 23);
             this.txtBussinessTypeName.TabIndex = 39;
             this.txtBussinessTypeName.Visible = false;
             // 
             // txtBussinessType
             // 
-            this.txtBussinessType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBussinessType.Location = new System.Drawing.Point(122, 134);
+            this.txtBussinessType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtBussinessType.Location = new System.Drawing.Point(118, 153);
             this.txtBussinessType.Name = "txtBussinessType";
-            this.txtBussinessType.Size = new System.Drawing.Size(63, 21);
+            this.txtBussinessType.Size = new System.Drawing.Size(64, 23);
             this.txtBussinessType.TabIndex = 38;
             this.txtBussinessType.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtBussinessType.Visible = false;
             this.txtBussinessType.Leave += new System.EventHandler(this.txtBussinessType_Leave);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(43, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 15);
+            this.label1.TabIndex = 26;
+            this.label1.Text = "Invoice No. :";
+            // 
             // butBusinessType
             // 
-            this.butBusinessType.Location = new System.Drawing.Point(9, 133);
+            this.butBusinessType.Location = new System.Drawing.Point(12, 150);
             this.butBusinessType.Name = "butBusinessType";
             this.butBusinessType.Size = new System.Drawing.Size(104, 27);
             this.butBusinessType.TabIndex = 37;
@@ -734,30 +739,40 @@
             this.butBusinessType.Visible = false;
             this.butBusinessType.Click += new System.EventHandler(this.butBusinessType_Click);
             // 
+            // txtInvoiceNum
+            // 
+            this.txtInvoiceNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtInvoiceNum.Location = new System.Drawing.Point(118, 13);
+            this.txtInvoiceNum.Name = "txtInvoiceNum";
+            this.txtInvoiceNum.Size = new System.Drawing.Size(118, 23);
+            this.txtInvoiceNum.TabIndex = 25;
+            // 
             // txtExchangeRate
             // 
-            this.txtExchangeRate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtExchangeRate.Location = new System.Drawing.Point(122, 104);
+            this.txtExchangeRate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.txtExchangeRate.Location = new System.Drawing.Point(118, 93);
             this.txtExchangeRate.Name = "txtExchangeRate";
             this.txtExchangeRate.ReadOnly = true;
-            this.txtExchangeRate.Size = new System.Drawing.Size(85, 21);
+            this.txtExchangeRate.Size = new System.Drawing.Size(85, 23);
             this.txtExchangeRate.TabIndex = 36;
             this.txtExchangeRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // dtpInvoiceDate
             // 
             this.dtpInvoiceDate.CustomFormat = "dd/MM/yyyy";
+            this.dtpInvoiceDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.dtpInvoiceDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpInvoiceDate.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.dtpInvoiceDate.Location = new System.Drawing.Point(122, 14);
+            this.dtpInvoiceDate.Location = new System.Drawing.Point(291, 14);
             this.dtpInvoiceDate.Name = "dtpInvoiceDate";
-            this.dtpInvoiceDate.Size = new System.Drawing.Size(161, 21);
+            this.dtpInvoiceDate.Size = new System.Drawing.Size(161, 23);
             this.dtpInvoiceDate.TabIndex = 34;
+            this.dtpInvoiceDate.ValueChanged += new System.EventHandler(this.dtpInvoiceDate_ValueChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 108);
+            this.label6.Location = new System.Drawing.Point(19, 97);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(97, 15);
             this.label6.TabIndex = 2;
@@ -766,7 +781,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(51, 77);
+            this.label5.Location = new System.Drawing.Point(55, 70);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 15);
             this.label5.TabIndex = 1;
@@ -775,11 +790,11 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(29, 16);
+            this.label4.Location = new System.Drawing.Point(246, 17);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 15);
+            this.label4.Size = new System.Drawing.Size(39, 15);
             this.label4.TabIndex = 0;
-            this.label4.Text = "Invoice Date :";
+            this.label4.Text = "Date :";
             // 
             // panel4
             // 
@@ -789,14 +804,14 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(954, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(231, 181);
+            this.panel4.Size = new System.Drawing.Size(231, 180);
             this.panel4.TabIndex = 2;
             this.panel4.Visible = false;
             // 
             // chkConfirm
             // 
             this.chkConfirm.AutoSize = true;
-            this.chkConfirm.Location = new System.Drawing.Point(96, 13);
+            this.chkConfirm.Location = new System.Drawing.Point(93, 17);
             this.chkConfirm.Name = "chkConfirm";
             this.chkConfirm.Size = new System.Drawing.Size(69, 19);
             this.chkConfirm.TabIndex = 2;
@@ -807,10 +822,10 @@
             // 
             this.txtIMEXRemark.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtIMEXRemark.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.txtIMEXRemark.Location = new System.Drawing.Point(0, 7);
+            this.txtIMEXRemark.Location = new System.Drawing.Point(0, 39);
             this.txtIMEXRemark.Multiline = true;
             this.txtIMEXRemark.Name = "txtIMEXRemark";
-            this.txtIMEXRemark.Size = new System.Drawing.Size(231, 174);
+            this.txtIMEXRemark.Size = new System.Drawing.Size(231, 141);
             this.txtIMEXRemark.TabIndex = 1;
             // 
             // label15
@@ -830,7 +845,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1190, 472);
+            this.tabControl1.Size = new System.Drawing.Size(1190, 473);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
@@ -841,7 +856,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1182, 444);
+            this.tabPage1.Size = new System.Drawing.Size(1182, 445);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Import";
             // 
@@ -853,26 +868,26 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.dgvList);
+            this.splitContainer2.Panel1.Controls.Add(this.dgvPOLine);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer2.Size = new System.Drawing.Size(1176, 394);
-            this.splitContainer2.SplitterDistance = 569;
+            this.splitContainer2.Size = new System.Drawing.Size(1176, 395);
+            this.splitContainer2.SplitterDistance = 522;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 1;
             // 
-            // dgvList
+            // dgvPOLine
             // 
-            this.dgvList.AllowUserToAddRows = false;
-            this.dgvList.AllowUserToResizeRows = false;
-            this.dgvList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvList.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvList.BackgroundColor = System.Drawing.Color.White;
-            this.dgvList.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.dgvList.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
-            this.dgvList.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            this.dgvPOLine.AllowUserToAddRows = false;
+            this.dgvPOLine.AllowUserToResizeRows = false;
+            this.dgvPOLine.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgvPOLine.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.dgvPOLine.BackgroundColor = System.Drawing.Color.White;
+            this.dgvPOLine.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.dgvPOLine.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleVertical;
+            this.dgvPOLine.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
@@ -880,10 +895,10 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvList.ColumnHeadersHeight = 25;
-            this.dgvList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.dgvList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvPOLine.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvPOLine.ColumnHeadersHeight = 25;
+            this.dgvPOLine.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dgvPOLine.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.pono,
             this.salecontract,
             this.poline,
@@ -895,12 +910,12 @@
             this.BussinessType,
             this.unitprice,
             this.amount});
-            this.dgvList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvList.EnableHeadersVisualStyles = false;
-            this.dgvList.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvList.Location = new System.Drawing.Point(0, 0);
-            this.dgvList.MultiSelect = false;
-            this.dgvList.Name = "dgvList";
+            this.dgvPOLine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvPOLine.EnableHeadersVisualStyles = false;
+            this.dgvPOLine.GridColor = System.Drawing.SystemColors.ActiveCaption;
+            this.dgvPOLine.Location = new System.Drawing.Point(0, 0);
+            this.dgvPOLine.MultiSelect = false;
+            this.dgvPOLine.Name = "dgvPOLine";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
@@ -908,13 +923,13 @@
             dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvList.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvList.RowHeadersVisible = false;
-            this.dgvList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(569, 394);
-            this.dgvList.TabIndex = 16;
-            this.dgvList.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellClick);
+            this.dgvPOLine.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            this.dgvPOLine.RowHeadersVisible = false;
+            this.dgvPOLine.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgvPOLine.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvPOLine.Size = new System.Drawing.Size(522, 395);
+            this.dgvPOLine.TabIndex = 16;
+            this.dgvPOLine.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellClick);
             // 
             // pono
             // 
@@ -1050,7 +1065,7 @@
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(602, 394);
+            this.dataGridView1.Size = new System.Drawing.Size(649, 395);
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
@@ -1177,7 +1192,6 @@
             // 
             // txtReceiptWeight
             // 
-            this.txtReceiptWeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtReceiptWeight.Location = new System.Drawing.Point(528, 17);
             this.txtReceiptWeight.Name = "txtReceiptWeight";
             this.txtReceiptWeight.Size = new System.Drawing.Size(126, 21);
@@ -1186,7 +1200,6 @@
             // 
             // txtNumberOfArticle
             // 
-            this.txtNumberOfArticle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtNumberOfArticle.Location = new System.Drawing.Point(419, 17);
             this.txtNumberOfArticle.Name = "txtNumberOfArticle";
             this.txtNumberOfArticle.Size = new System.Drawing.Size(102, 21);
@@ -1195,7 +1208,6 @@
             // 
             // txtPoLine
             // 
-            this.txtPoLine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPoLine.Location = new System.Drawing.Point(310, 17);
             this.txtPoLine.Name = "txtPoLine";
             this.txtPoLine.Size = new System.Drawing.Size(102, 21);
@@ -1259,7 +1271,6 @@
             // 
             // txtSaleContract
             // 
-            this.txtSaleContract.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSaleContract.Location = new System.Drawing.Point(155, 17);
             this.txtSaleContract.Name = "txtSaleContract";
             this.txtSaleContract.Size = new System.Drawing.Size(148, 21);
@@ -1268,7 +1279,6 @@
             // 
             // txtPoNumber
             // 
-            this.txtPoNumber.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtPoNumber.Location = new System.Drawing.Point(3, 17);
             this.txtPoNumber.Name = "txtPoNumber";
             this.txtPoNumber.Size = new System.Drawing.Size(144, 21);
@@ -1280,10 +1290,10 @@
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Controls.Add(this.panel6);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1182, 444);
+            this.tabPage2.Size = new System.Drawing.Size(1182, 447);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Itaku";
             // 
@@ -1337,7 +1347,7 @@
             dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(1176, 375);
+            this.dataGridView2.Size = new System.Drawing.Size(1176, 378);
             this.dataGridView2.TabIndex = 17;
             this.dataGridView2.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView2_CellMouseClick);
             // 
@@ -1583,7 +1593,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 472);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 473);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1190, 22);
@@ -1926,7 +1936,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvPOLine)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
@@ -2006,13 +2016,12 @@
         private System.Windows.Forms.ToolStripMenuItem domesticToolStripMenuItem1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button butArticleDetail;
         private System.Windows.Forms.TextBox txtSaleContract;
         private System.Windows.Forms.TextBox txtPoNumber;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.DataGridView dgvList;
+        private System.Windows.Forms.DataGridView dgvPOLine;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label13;
@@ -2033,8 +2042,6 @@
         private System.Windows.Forms.ToolStripMenuItem itakuToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem itakuToolStripMenuItem1;
-        private System.Windows.Forms.Panel panel6;
-        public System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.CheckBox chkConfirm;
         private System.Windows.Forms.DataGridViewTextBoxColumn pono;
         private System.Windows.Forms.DataGridViewTextBoxColumn salecontract;
@@ -2054,11 +2061,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mnudeleterow;
         private System.Windows.Forms.ToolStripMenuItem mnuclearall;
-        private System.Windows.Forms.Button butValidate;
-        private System.Windows.Forms.TextBox txtFilePath;
-        private System.Windows.Forms.Button butChooseFile;
-        private System.Windows.Forms.Button butLoadData;
-        private System.Windows.Forms.ComboBox cmdSheet;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem getITAKUTemplateToolStripMenuItem;
         private System.Windows.Forms.ToolStripLabel lblValidation;
@@ -2083,6 +2085,10 @@
         private System.Windows.Forms.ToolStripMenuItem addMappingDataForCustomerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addMappingDataForMakerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectCoatingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelStoreInPlanToolStripMenuItem;
+        private System.Windows.Forms.TextBox txtOrderType;
+        private System.Windows.Forms.TabPage tabPage2;
+        public System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridViewTextBoxColumn id1;
         private System.Windows.Forms.DataGridViewTextBoxColumn lineid;
         private System.Windows.Forms.DataGridViewTextBoxColumn article;
@@ -2104,6 +2110,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn note1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn editflag;
         private System.Windows.Forms.DataGridViewCheckBoxColumn storein;
-        private System.Windows.Forms.ToolStripMenuItem cancelStoreInPlanToolStripMenuItem;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Button butLoadData;
+        private System.Windows.Forms.ComboBox cmdSheet;
+        private System.Windows.Forms.TextBox txtFilePath;
+        private System.Windows.Forms.Button butChooseFile;
+        private System.Windows.Forms.Button butValidate;
     }
 }

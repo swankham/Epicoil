@@ -6,6 +6,8 @@ namespace Epicoil.Library.Models.Planning
 {
     public class SimulateModel : BaseSerial
     {
+        #region Properties
+
         public string Plant { get; set; }
 
         public int SimLineID { get; set; }
@@ -38,13 +40,6 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal LengthM { get; set; }
 
-        //{
-        //    get
-        //    {
-        //        return (Length == 0) ? CalLengthMeter(UnitWeight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 2);
-        //    }
-        //}
-
         public string Status { get; set; }
 
         public int Stand { get; set; }
@@ -62,6 +57,10 @@ namespace Epicoil.Library.Models.Planning
         public bool CalculatedFlag { get; set; }
 
         public string SerialType { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void DataBind(DataRow row)
         {
@@ -175,5 +174,7 @@ namespace Epicoil.Library.Models.Planning
             }
             return ActualLength;
         }
+
+        #endregion Methods
     }
 }

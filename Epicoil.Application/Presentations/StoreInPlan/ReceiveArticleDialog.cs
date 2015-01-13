@@ -17,18 +17,18 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
         private readonly IStoreInPlanRepo _repo;
         private readonly IWharehouseRepo _repoWhse;
 
-        private IEnumerable<StoreInPlanDetail> ArticleList;
-        private StoreInPlanDetail lineNum;
+        private IEnumerable<StoreInPlanDetailModel> ArticleList;
+        private StoreInPlanDetailModel lineNum;
         private int numofline;
         private decimal WeightRcv;
         private bool DataFlag;
 
-        public ReceiveArticleDialog(StoreInPlanDetail model, SessionInfo _session, int LineReceive, decimal WeightReceive)
+        public ReceiveArticleDialog(StoreInPlanDetailModel model, SessionInfo _session, int LineReceive, decimal WeightReceive)
         {
             InitializeComponent();
             this._repo = new StoreInPlanRepo();
             this._repoWhse = new WharehouseRepo();
-            this.ArticleList = new List<StoreInPlanDetail>();
+            this.ArticleList = new List<StoreInPlanDetailModel>();
             this.lineNum = model;
             this.numofline = LineReceive;
             this.WeightRcv = WeightReceive;
@@ -230,7 +230,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             {
                 for (int i = 0; (this.dataGridView1.Rows.Count) > i; i++)
                 {
-                    StoreInPlanDetail param = new StoreInPlanDetail();
+                    StoreInPlanDetailModel param = new StoreInPlanDetailModel();
                     param.SeqId = Convert.ToInt32(dataGridView1.Rows[i].Cells[0].Value.ToString().Trim());
                     param.StoreInPlanId = lineNum.StoreInPlanId;
                     param.LineID = 0;

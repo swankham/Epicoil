@@ -47,10 +47,12 @@
     <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.Core.Session, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -73,7 +75,9 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
@@ -346,6 +350,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dsPlanning.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reports\Planning\PackingOrder.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PackingOrder.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Reports\Production\dsProduction.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -496,6 +506,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Reports\Planning\PackingOrder.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>PackingOrder.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\Production\ProductionLabel1.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProductionLabel11.cs</LastGenOutput>
@@ -566,6 +580,7 @@
     <ProjectReference Include="..\Epicoil.Library\Epicoil.Library.csproj">
       <Project>{03d6aa07-cd32-42b0-ac43-bd41d485b04f}</Project>
       <Name>Epicoil.Library</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

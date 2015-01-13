@@ -55,21 +55,21 @@ namespace Epicoil.Appl.Presentations.StoreIn
                 type = "1";
             }
 
-            using (StoreInPlanDialog frm = new StoreInPlanDialog(status, type))
-            {
-                frm.ShowDialog();
-                var result = _repo.GetStoreInPlanByID(frm.HeadContent.StoreInPlanId);
-                if (result == null)
-                {
-                    return;
-                }
-                else
-                {
-                    result.Possession = HeadContent.Possession;
-                    HeadContent = result;
-                    ModelClone = (StoreInHead)HeadContent.Clone();
-                }
-            }
+            //using (StoreInPlanDialog frm = new StoreInPlanDialog(status, type))
+            //{
+            //    frm.ShowDialog();
+            //    var result = _repo.GetStoreInPlanByID(frm.HeadContent.StoreInPlanId);
+            //    if (result == null)
+            //    {
+            //        return;
+            //    }
+            //    else
+            //    {
+            //        result.Possession = HeadContent.Possession;
+            //        HeadContent = result;
+            //        ModelClone = (StoreInHead)HeadContent.Clone();
+            //    }
+            //}
             txtStoreInPlanNum.Text = HeadContent.StoreInPlanNum;
             SetHeaderContent(HeadContent);
         }

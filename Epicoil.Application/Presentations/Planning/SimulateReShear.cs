@@ -27,8 +27,8 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void SimulateReShear_Load(object sender, EventArgs e)
         {
-            this.ListMaterialGrid(ReshearHead.Materials);
-            this.ListCuttingGrid(ReshearHead.Cuttings);
+            ListMaterialGrid(ReshearHead.Materials.ToList());
+            ListCuttingGrid(ReshearHead.Cuttings.ToList());
         }
 
         private void ListMaterialGrid(List<MaterialModel> item)
@@ -139,7 +139,7 @@ namespace Epicoil.Appl.Presentations.Planning
         private void tbutSimulate_Click(object sender, EventArgs e)
         {
             int transactionLineID = Convert.ToInt32(dgvMaterial.Rows[dgvMaterial.CurrentRow.Index].Cells["transactionlineid"].Value.ToString());
-            var mat = HeadModel.Materails.Where(i => i.TransactionLineID == transactionLineID).First();
+            var mat = HeadModel.Materials.Where(i => i.TransactionLineID == transactionLineID).First();
             ReshearHead.SetMaterialRemain(mat);
 
             int cutLineID = Convert.ToInt32(dgvFinishGood.Rows[dgvFinishGood.CurrentRow.Index].Cells["lineid"].Value.ToString());

@@ -1,8 +1,12 @@
-﻿using Epicoil.Library.Models;
+﻿using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using Epicoil.Appl.Reports.Planning;
+using Epicoil.Library.Models;
 using Epicoil.Library.Models.Planning;
 using Epicoil.Library.Repositories.Planning;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -77,6 +81,7 @@ namespace Epicoil.Appl.Presentations.Planning
             }
 
             BindingContentsHeader(HeaderContent);
+
             ListPackingStyleToGrid(HeaderContent.PackStyles);
             string styleId = dgvPackStyle.CurrentRow.Cells["styleid"].Value.GetString();
             ListSerialCuttingToGrid(HeaderContent.SerialLines.Where(i => i.PackStyleId == Convert.ToInt32(styleId)));
@@ -237,6 +242,39 @@ namespace Epicoil.Appl.Presentations.Planning
             BindingContentsHeader(HeaderContent);
         }
 
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            HeaderContent = _repo.GetPackOrderByID(HeaderContent.WorkOrderId);
+
+            ReportClass rptH = new ReportClass();
+            dsPlanning ds = new dsPlanning();
+            string outPath = Application.StartupPath + string.Format(@"\\Out\\{0}.pdf", HeaderContent.WorkOrderNum);
+            rptH.FileName = Application.StartupPath + "\\Reports\\Planning\\PackingOrder.rpt";
+            ds.PackingOrderHead.AddPackingOrderHeadRow(HeaderContent.Id, HeaderContent.WorkOrderId, HeaderContent.WorkOrderNum
+                                          , HeaderContent.DueDate, HeaderContent.IssueDate, HeaderContent.PackOrderNum
+                                          , HeaderContent.CompleteFlag, HeaderContent.Remark);
+            foreach (var p in HeaderContent.PackStyles)
+            {
+                ds.PackStyleLines.AddPackStyleLinesRow(p.HeadLineID, p.Id, p.CustId, p.CustomerName, p.ThickMin, p.ThickMax
+                                                     , p.WidthMin, p.WidthMax, p.StyleCode, p.Remarks);
+
+                foreach (var k in HeaderContent.SkidPacks.Where(i => i.PackStyleId == p.Id))
+                {
+                    ds.SkidPackingDesign.AddSkidPackingDesignRow(k.PackStyleId, k.Seq, k.SkidNumber, k.Description, k.Id);
+                    foreach (var s in HeaderContent.SerialLines.Where(i => i.PackStyleId == p.Id && i.PackingDesignId == k.Id))
+                    {
+                        ds.SerialsByPackingStyle.AddSerialsByPackingStyleRow(s.PackStyleId, s.SerialNo, s.Thick, s.Width, s.Length, s.PackingDesignId);
+                    }
+                }
+            }
+            rptH.Load();
+            ds.AcceptChanges();
+            rptH.SetDataSource(ds);
+            rptH.Refresh();
+            rptH.ExportToDisk(ExportFormatType.PortableDocFormat, outPath);
+            OpenPdfFile(outPath);
+        }
+
         #endregion Forms events
 
         #region Binding controls
@@ -248,8 +286,8 @@ namespace Epicoil.Appl.Presentations.Planning
             txtRemark.DataBindings.Add("Text", model, "Remark", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //Set value to DatePicker
-            dptIssueDate.Value = model.IssueDate;
-            dptDueDate.Value = model.DueDate;
+            //dptIssueDate.Value = model.IssueDate;
+            //dptDueDate.Value = model.DueDate;
         }
 
         private void BindingStyleContent(PackStyleOrderModel model)
@@ -345,5 +383,21 @@ namespace Epicoil.Appl.Presentations.Planning
         }
 
         #endregion Binding controls
+
+        #region Method
+
+        private void OpenPdfFile(string outPath)
+        {
+            try
+            {
+                Process.Start(outPath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Please install MicrosoftOffice/PDF Reader to view files", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        #endregion Method
     }
 }

@@ -5,9 +5,11 @@ namespace Epicoil.Library.Models.Planning
 {
     public class GeneratedSerialModel : BaseSerial
     {
+        #region Properties
+
         public string Plant { get; set; }
 
-        public string SerialNo { get; set; }        
+        public string SerialNo { get; set; }
 
         public int SimLineID { get; set; }
 
@@ -49,6 +51,10 @@ namespace Epicoil.Library.Models.Planning
 
         public string NORNum { get; set; }
 
+        #endregion Properties
+
+        #region Methods
+
         public override void DataBind(DataRow row)
         {
             base.DataBind(row);
@@ -76,5 +82,7 @@ namespace Epicoil.Library.Models.Planning
             this.MCSSNo = (string)row["MCSSNo"].GetString();
             this.NORNum = string.IsNullOrEmpty((string)row["NORNum"].GetString()) ? "" : (string)row["NORNum"].GetString();
         }
+
+        #endregion Methods
     }
 }

@@ -54,6 +54,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvWorkOrder = new System.Windows.Forms.DataGridView();
+            this.workorderid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.workordernumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProcessStep = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ProcessLine = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -304,6 +305,7 @@
             this.dgvWorkOrder.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvWorkOrder.ColumnHeadersHeight = 25;
             this.dgvWorkOrder.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.workorderid,
             this.workordernumber,
             this.ProcessStep,
             this.ProcessLine,
@@ -328,6 +330,13 @@
             this.dgvWorkOrder.Size = new System.Drawing.Size(775, 377);
             this.dgvWorkOrder.TabIndex = 18;
             this.dgvWorkOrder.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvWorkOrder_CellDoubleClick);
+            // 
+            // workorderid
+            // 
+            this.workorderid.HeaderText = "ID";
+            this.workorderid.Name = "workorderid";
+            this.workorderid.ReadOnly = true;
+            this.workorderid.Width = 43;
             // 
             // workordernumber
             // 
@@ -447,6 +456,7 @@
         private System.Windows.Forms.ComboBox cmbPossession;
         private System.Windows.Forms.ComboBox cmbOrderType;
         private System.Windows.Forms.TextBox txtProcessStep;
+        private System.Windows.Forms.DataGridViewTextBoxColumn workorderid;
         private System.Windows.Forms.DataGridViewTextBoxColumn workordernumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessStep;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProcessLine;

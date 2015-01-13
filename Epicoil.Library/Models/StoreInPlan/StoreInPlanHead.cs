@@ -1,14 +1,44 @@
-﻿using System;
+﻿using Epicoil.Library.Enums;
+using Epicoil.Library.Repositories.StoreInPlan;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using Epicoil.Library.Models;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
-    public class StoreInPlanHead : ICloneable
+    public class StoreInPlanHeadModel : ICloneable
     {
+        #region Fields
+
+        private IStoreInPlanRepo _repoMaster;
+
+        #endregion Fields
+
+        #region Constructors
+
+        public StoreInPlanHeadModel()
+        {
+            _repoMaster = new StoreInPlanRepo();
+
+            Currencies = new List<CurrencyModel>();
+            ImportPorts = new List<PortModel>();
+            ArivePorts = new List<PortModel>();
+            StoreInPlanDetails = new List<StoreInPlanDetailModel>();
+            StoreInPlanFileDetails = new List<ExternalFileModel>();            
+        }
+
+        #endregion Constructors
+
         public int ImportFlag { get; set; }  //0=Import, 1=Domestic, 2=Itaku
+
+        public string OrderType
+        {
+            get
+            {
+                return Enum.GetName(typeof(StoreInPlanType), ImportFlag);
+            }
+        }
 
         public bool InsertState { get; set; }
 
@@ -101,24 +131,17 @@ namespace Epicoil.Library.Models.StoreInPlan
 
         public decimal WeightRcv { get; set; }
 
-        public IEnumerable<CurrenciesModel> CurrenciesList = new List<CurrenciesModel>();
-        public IEnumerable<PortModel> PortList = new List<PortModel>();
+        public int OpenOrder { get; set; }
 
-        public List<CurrenciesModel> Currencies
-        {
-            get { return this.CurrenciesList.ToList(); }
-            set { this.CurrenciesList = value; }
-        }
+        public IList<CurrencyModel> Currencies { get; set; }
 
-        public List<PortModel> ImportPorts
-        {
-            get { return this.PortList.ToList(); }
-            set { this.PortList = value; }
-        }
+        public IList<PortModel> ImportPorts { get; set; }
 
-        public IEnumerable<StoreInPlanDetail> StoreInPlanDetails { get; set; }
+        public IList<PortModel> ArivePorts { get; set; }
 
-        public IEnumerable<ExternalFileModel> StoreInPlanFileDetails { get; set; }
+        public IList<StoreInPlanDetailModel> StoreInPlanDetails { get; set; }
+
+        public IList<ExternalFileModel> StoreInPlanFileDetails { get; set; }
 
         public virtual void DataBind(DataRow row)
         {
@@ -138,7 +161,7 @@ namespace Epicoil.Library.Models.StoreInPlan
             this.CurrencyCode = (string)row["CurrencyCode"].GetString().Trim();
             this.IMexItemNo = (string)row["IMexItemNo"].GetString();
             this.InvoiceNum = (string)row["InvoiceNum"].GetString();
-            this.InvoiceDate = (DateTime)row["InvoiceDate"].GetDate(); ;
+            this.InvoiceDate = (DateTime)row["InvoiceDate"].GetDate();
             this.ExchangeRate = (decimal)row["PORate"].GetDecimal();
             this.TisiFlag = (string)row["TisiFlag"].GetString();
             this.LoadPort = (string)row["LoadPort"].GetString();
@@ -151,15 +174,70 @@ namespace Epicoil.Library.Models.StoreInPlan
             this.StoreInFlag = (string)row["StoreInFlag"].GetString();
             this.CustID = (string)row["CustID"].GetString();
             this.CustomerName = (string)row["CustomerName"].GetString();
+            this.OpenOrder = (int)row["OpenOrder"].GetInt();
         }
 
         public object Clone()
         {
             return this.MemberwiseClone();
         }
+
+        public bool ValidHeader(SessionInfo _session, out string attribute, out string message)
+        {
+            bool result = true;
+            attribute = string.Empty;
+            message = string.Empty;
+            _repoMaster = new StoreInPlanRepo();
+
+            if (string.IsNullOrEmpty(InvoiceNum))
+            {
+                message = "Please fill the required field.";
+                result = false;
+            }
+            else if (_repoMaster.CheckInvoiceExisting(InvoiceNum) && InsertState == true)
+            {
+                
+                message = "This invoice number is duplicate.";
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(SupplierCode))
+            {
+                message = "Please fill the required field.";
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(MakerCode))
+            {
+                message = "Please fill the required field.";
+                result = false;
+            }
+
+            if (string.IsNullOrEmpty(MillCode))
+            {
+                message = "Please fill the required field.";
+                result = false;
+            }
+
+            if (ImportFlag == 0)
+            {
+                if (string.IsNullOrEmpty(Vessel))
+                {
+                    message = "Please fill the required field.";
+                    result = false;
+                }
+                if (string.IsNullOrEmpty(ArivePort))
+                {
+                    message = "Please fill the required field.";
+                    result = false;
+                }
+            }
+
+            return result;
+        }
     }
 
-    public class GetHeader
+    public class POHeaderModel
     {
         public string SupplierCode { get; set; }
 
@@ -181,6 +259,8 @@ namespace Epicoil.Library.Models.StoreInPlan
 
         public decimal ExchangeRate { get; set; }
 
+        public DateTime OrderDate { get; set; }
+
         public virtual void DataBind(DataRow row)
         {
             this.SupplierCode = (string)row["SupplierCode"].GetString();
@@ -193,6 +273,7 @@ namespace Epicoil.Library.Models.StoreInPlan
             this.CustomerName = (string)row["CustomerName"].GetString();
             this.CurrencyCode = (string)row["CurrencyCode"].GetString();
             this.ExchangeRate = (decimal)row["ExchangeRate"].GetDecimal();
+            this.OrderDate = (DateTime)row["OrderDate"].GetDate();
         }
     }
 }

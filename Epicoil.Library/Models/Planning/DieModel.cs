@@ -1,11 +1,20 @@
-﻿using Epicoil.Library.Models;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 
 namespace Epicoil.Library.Models.Planning
 {
     public class DieModel
     {
+        #region Constructors
+
+        public DieModel()
+        {
+            Pattern = new DiePatternModel();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         public string CompanyID { get; set; }
 
         public string PlantID { get; set; }
@@ -18,14 +27,11 @@ namespace Epicoil.Library.Models.Planning
 
         public string PatternID { get; set; }
 
-        //public List<PartList> OutPutList { get; set; }
-        public DiePatternModel DiePatternInst = new DiePatternModel();
+        public DiePatternModel Pattern { get; set; }
 
-        public DiePatternModel Pattern 
-        {
-            get { return this.DiePatternInst; }
-            set { this.DiePatternInst = value; }
-        }
+        #endregion Properties
+
+        #region Methods
 
         public void DataBind(DataRow row)
         {
@@ -36,10 +42,14 @@ namespace Epicoil.Library.Models.Planning
             this.DieRemark = (string)row["Character02"].GetString();
             this.PatternID = (string)row["ShortChar01"].GetString();
         }
+
+        #endregion Methods
     }
 
     public class PartList
     {
+        #region Properties
+
         public string DieCode { get; set; }
 
         public string PatternID { get; set; }
@@ -57,5 +67,7 @@ namespace Epicoil.Library.Models.Planning
         public string PartName { get; set; }
 
         public int Active { get; set; }
+
+        #endregion
     }
 }

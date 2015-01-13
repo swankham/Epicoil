@@ -8,9 +8,15 @@ namespace Epicoil.Library.Models.Planning
 {
     public class CutDesignModel
     {
+        #region Fields
+
         private readonly IWorkEntryRepo _repo;
-        private readonly IUserCodeRepo _repoUcd;
         private readonly IResourceRepo _repoRes;
+        private readonly IUserCodeRepo _repoUcd;
+
+        #endregion Fields
+
+        #region Constructors
 
         public CutDesignModel()
         {
@@ -19,107 +25,160 @@ namespace Epicoil.Library.Models.Planning
             this._repoRes = new ResourceRepo();
         }
 
-        public string Plant { get; set; }
+        #endregion Constructors
 
-        public int LineID { get; set; }
-
-        public int WorkOrderID { get; set; }
-
-        public int TransactionLineID { get; set; }
-
-        public int CutSeq { get; set; }
-
-        public string SONo { get; set; }
-
-        public int SOLine { get; set; }
-
-        public string NORNum { get; set; }
-
-        public string CommodityCode { get; set; }
-
-        public string SpecCode { get; set; }
-
-        public decimal Gravity { get; set; }
-
-        public string CoatingCode { get; set; }
-
-        public decimal FrontPlate { get; set; }
+        #region Properties
 
         public decimal BackPlate { get; set; }
-
-        public decimal Thick { get; set; }
-
-        public decimal Width { get; set; }
-
-        public decimal Length { get; set; }
-
-        public string Status { get; set; }
-
-        public int Stand { get; set; }
-
-        public int CutDivision { get; set; }
-
-        public decimal UnitWeight { get; set; }
-
-        public decimal TotalWeight { get; set; }
-
-        public decimal TotalLength { get; set; }
-
-        public string EndUserCode { get; set; }
-
-        public string DestinationCode { get; set; }
-
-        public decimal QtyPack { get; set; }
-
-        public decimal Pack { get; set; }
-
-        public decimal SOWeight { get; set; }
-
-        public decimal SOQuantity { get; set; }
-
-        public decimal CalQuantity { get; set; }
-
-        public DateTime DeliveryDate { get; set; }
 
         public string BussinessType { get; set; }
 
         public string BussinessTypeName { get; set; }
 
-        public int Possession { get; set; }
+        public decimal CalQuantity { get; set; }
 
-        public int ProductStatus { get; set; }
+        public string CoatingCode { get; set; }
 
-        public string Description { get; set; }
+        public string CommodityCode { get; set; }
 
-        public string Note { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
+        public bool CompleteRow { get; set; }
 
         public string CreatedBy { get; set; }
 
-        public string UpdatedBy { get; set; }
-
-        public string SupplierCode { get; set; }
-
-        public string SupplierName { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public string CustID { get; set; }
 
         public string CustomerName { get; set; }
 
+        public int CutDivision { get; set; }
+
+        public int CutSeq { get; set; }
+
+        public DateTime DeliveryDate { get; set; }
+
+        public string Description { get; set; }
+
+        public string DestinationCode { get; set; }
+
+        public string EndUserCode { get; set; }
+
+        public decimal FrontPlate { get; set; }
+
+        public decimal Gravity { get; set; }
+
+        public DateTime LastUpdateDate { get; set; }
+
+        public decimal Length { get; set; }
+
+        public int LineID { get; set; }
+
         public string MakerCode { get; set; }
 
         public string MakerName { get; set; }
+
+        public bool MaterialLineID { get; set; }
 
         public string MillCode { get; set; }
 
         public string MillName { get; set; }
 
-        public bool CompleteRow { get; set; }
+        public string NORNum { get; set; }
 
-        public bool MaterialLineID { get; set; }
+        public string Note { get; set; }
+
+        public decimal Pack { get; set; }
+
+        public string Plant { get; set; }
+
+        public int Possession { get; set; }
+
+        public int ProductStatus { get; set; }
+
+        public decimal QtyPack { get; set; }
+
+        public int SOLine { get; set; }
+
+        public string SONo { get; set; }
+
+        public decimal SOQuantity { get; set; }
+
+        public decimal SOWeight { get; set; }
+
+        public string SpecCode { get; set; }
+
+        public int Stand { get; set; }
+
+        public string Status { get; set; }
+
+        public string SupplierCode { get; set; }
+
+        public string SupplierName { get; set; }
+
+        public decimal Thick { get; set; }
+
+        public decimal TotalLength { get; set; }
+
+        public decimal TotalWeight { get; set; }
+
+        public int TransactionLineID { get; set; }
+
+        public decimal UnitWeight { get; set; }
+
+        public string UpdatedBy { get; set; }
+
+        public decimal Width { get; set; }
+
+        public int WorkOrderID { get; set; }
+
+        #region Custom for Re-shear
+
+        public string Direction { get; set; }
+
+        public decimal QtyPerMaterial { get; set; }
+
+        #endregion Custom for Re-shear
+
+        #endregion Properties
+
+        #region Methods
+
+        public void CalculateRows(PlanningHeadModel head)
+        {
+            //Fix bug in case Materials is null.
+            if (head.ProcessLine.ResourceGrpID == "S")
+            {
+                decimal widthMat = 0;
+                if (head.Materials.ToList().Count > 0) widthMat = head.Materials.Max(p => p.Width);
+                UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
+                TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
+                decimal matLengthM = head.Materials.Sum(i => i.LengthM);
+                decimal matWeight = head.Materials.Sum(i => i.Weight);
+                decimal matUsingWeight = head.Materials.Sum(i => i.UsingWeight);
+                TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
+            }
+            else if (head.ProcessLine.ResourceGrpID == "L")
+            {
+                UnitWeight = CalUnitWgt(Thick, Width, Length / 1000, Gravity, FrontPlate, BackPlate);
+                TotalWeight = UnitWeight * SOQuantity;
+                Pack = CalQuantity / ((QtyPack == 0 ? 1 : QtyPack));
+                TotalLength = Length * CalQuantity;
+            }
+        }
+
+        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
+        {
+            decimal Ma = 0.0M;
+            decimal Mb = 0.0M;
+            decimal Mc = 0.0M;
+            decimal WgtPerUnit = 0;
+
+            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
+            Mb = (W / 1000) * (L);
+            Mc = (Ma * Mb);
+            WgtPerUnit = Math.Round(Mc, 2);
+            return WgtPerUnit;
+        }
 
         public void DataBind(DataRow row)
         {
@@ -166,79 +225,8 @@ namespace Epicoil.Library.Models.Planning
             this.Gravity = (decimal)row["Gravity"].GetDecimal();
             this.FrontPlate = (decimal)row["FrontPlate"].GetDecimal();
             this.BackPlate = (decimal)row["BackPlate"].GetDecimal();
-        }
-
-        public void CalculateRows(PlanningHeadModel head)
-        {
-            //Fix bug in case Materials is null.
-            if (head.ProcessLineDetail.ResourceGrpID == "S")
-            {
-                decimal widthMat = 0;
-                if (head.Materails.ToList().Count > 0) widthMat = head.Materails.Max(p => p.Width);
-                UnitWeight = Math.Round(CalUnitWgtByUsingWgt(head.UsingWeight, widthMat, Width), 2) / ((CutDivision == 0) ? 1 : CutDivision);
-                TotalWeight = Math.Round(UnitWeight * (CutDivision * Stand), 2);
-                decimal matLengthM = head.Materails.Sum(i => i.LengthM);
-                decimal matWeight = head.Materails.Sum(i => i.Weight);
-                decimal matUsingWeight = head.Materails.Sum(i => i.UsingWeight);
-                TotalLength = CalUsingLength(matLengthM, matWeight, matUsingWeight, CutDivision);
-            }
-            else if (head.ProcessLineDetail.ResourceGrpID == "L")
-            {
-                UnitWeight = CalUnitWgt(Thick, Width, Length / 1000, Gravity, FrontPlate, BackPlate);
-                TotalWeight = UnitWeight * SOQuantity;
-                Pack = CalQuantity / ((QtyPack == 0 ? 1 : QtyPack));
-                TotalLength = Length * CalQuantity;
-            }
-        }
-
-
-        public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
-        {
-            decimal Ma = 0.0M;
-            decimal Mb = 0.0M;
-            decimal Mc = 0.0M;
-            decimal WgtPerUnit = 0;
-
-            Ma = (T * Gravity) + ((FrontCoat + BackCoat) / 1000);
-            Mb = (W / 1000) * (L);
-            Mc = (Ma * Mb);
-            WgtPerUnit = Math.Round(Mc, 2);
-            return WgtPerUnit;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="UsingWgt">Unit is Kg.</param>
-        /// <param name="WidthMaterial">Unit is MM.</param>
-        /// <param name="WidthFG">Unit is MM.</param>
-        /// <returns></returns>
-        private decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
-        {
-            decimal CalWeightFG = 0.0M;
-            if (UsingWgt > 0 && WidthMaterial > 0 && WidthFG > 0)
-            {
-                CalWeightFG = Math.Round((UsingWgt / WidthMaterial * WidthFG), 2);
-            }
-            return CalWeightFG;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="MaterialLengthM">Unit is Meter</param>
-        /// <param name="MaterialWeight">Unit is Kg.</param>
-        /// <param name="MaterialUsingWeight">Unit is Kg.</param>
-        /// <param name="CutDiv">Value of cut</param>
-        /// <returns></returns>
-        private static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
-        {
-            decimal ActualLength = 0.0M;
-            if (MaterialWeight > 0 && MaterialUsingWeight > 0 && MaterialLengthM > 0 && CutDiv > 0)
-            {
-                ActualLength = MaterialUsingWeight * MaterialLengthM / MaterialWeight / CutDiv;
-            }
-            return ActualLength;
+            this.QtyPerMaterial = (int)row["QtyPerMaterial"].GetInt();
+            this.Direction = (string)row["Direction"].GetString();
         }
 
         public bool ValidateByRow(PlanningHeadModel head, out string risk, out string msg)
@@ -255,20 +243,20 @@ namespace Epicoil.Library.Models.Planning
                 return false;
             }
 
-            if (head.CuttingLines.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
+            if (head.CuttingDesign.Where(p => p.Status.ToString().Equals("S") && p.LineID != LineID).ToList().Count != 0 && Status == "S")
             {
                 risk = "WARNNING";
                 msg = "Status 'S' is already exist in cutting lines.";
                 return false;
             }
 
-            if (head.Materails.ToList().Count > 0)
+            if (head.Materials.ToList().Count > 0)
             {
-                if (head.ProcessLineDetail.ResourceGrpID == "S")
+                if (head.ProcessLine.ResourceGrpID == "S")
                 {
                     decimal totalWidth = (from item in head.CuttingDesign
                                           select item).Sum(i => i.Width * i.Stand);
-                    var totalMatWidth = (from mat in head.Materails
+                    var totalMatWidth = (from mat in head.Materials
                                          select mat).First();
 
                     if (totalMatWidth.Width < totalWidth)
@@ -280,7 +268,7 @@ namespace Epicoil.Library.Models.Planning
                 }
             }
 
-            if (head.ProcessLineDetail.ResourceGrpID == "L")
+            if (head.ProcessLine.ResourceGrpID == "L")
             {
                 if (CalQuantity == 0)
                 {
@@ -289,14 +277,13 @@ namespace Epicoil.Library.Models.Planning
                     return false;
                 }
 
-                if (Pack != (CalQuantity/((QtyPack == 0) ? 1 : QtyPack)))
+                if (Pack != (CalQuantity / ((QtyPack == 0) ? 1 : QtyPack)))
                 {
                     risk = "WARNNING";
                     msg = "Pack invalid.";
                     return false;
                 }
             }
-
 
             if (!string.IsNullOrEmpty(SONo) && SOLine == 0)
             {
@@ -333,5 +320,42 @@ namespace Epicoil.Library.Models.Planning
             }
             return valid;
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="MaterialLengthM">Unit is Meter</param>
+        /// <param name="MaterialWeight">Unit is Kg.</param>
+        /// <param name="MaterialUsingWeight">Unit is Kg.</param>
+        /// <param name="CutDiv">Value of cut</param>
+        /// <returns></returns>
+        private static decimal CalUsingLength(decimal MaterialLengthM, decimal MaterialWeight, decimal MaterialUsingWeight, decimal CutDiv)
+        {
+            decimal ActualLength = 0.0M;
+            if (MaterialWeight > 0 && MaterialUsingWeight > 0 && MaterialLengthM > 0 && CutDiv > 0)
+            {
+                ActualLength = MaterialUsingWeight * MaterialLengthM / MaterialWeight / CutDiv;
+            }
+            return ActualLength;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="UsingWgt">Unit is Kg.</param>
+        /// <param name="WidthMaterial">Unit is MM.</param>
+        /// <param name="WidthFG">Unit is MM.</param>
+        /// <returns></returns>
+        private decimal CalUnitWgtByUsingWgt(decimal UsingWgt, decimal WidthMaterial, decimal WidthFG)
+        {
+            decimal CalWeightFG = 0.0M;
+            if (UsingWgt > 0 && WidthMaterial > 0 && WidthFG > 0)
+            {
+                CalWeightFG = Math.Round((UsingWgt / WidthMaterial * WidthFG), 2);
+            }
+            return CalWeightFG;
+        }
+
+        #endregion Methods
     }
 }

@@ -72,7 +72,7 @@ namespace Epicoil.Library.Repositories.Planning
 
         IEnumerable<PlanningHeadModel> GetWorkAll(PlanningHeadModel model);
 
-        PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant);
+        PlanningHeadModel GetWorkById(int workOrderID, int processStep, string plant);
 
         PlanningHeadModel GetWorkById(string plant, int workOrderID);
 

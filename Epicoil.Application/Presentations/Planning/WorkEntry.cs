@@ -16,6 +16,8 @@ namespace Epicoil.Appl.Presentations.Planning
 {
     public partial class WorkEntry : BaseSession
     {
+        #region Fields
+
         private readonly IClassMasterRepo _repoCls;
         private readonly IWorkEntryRepo _repo;
         private readonly IResourceRepo _repoRes;
@@ -25,6 +27,10 @@ namespace Epicoil.Appl.Presentations.Planning
         private readonly IResourceRepo _reRes;
         private ClassMasterModel _class;
         private PlanningHeadModel HeaderContent;
+
+        #endregion Fields
+
+        #region Constructors
 
         public WorkEntry(SessionInfo _session = null, PlanningHeadModel model = null)
         {
@@ -48,7 +54,9 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-        #region Set Form Properties
+        #endregion Constructors
+
+        #region Binding Data
 
         private void ClearHeaderContent()
         {
@@ -56,6 +64,8 @@ namespace Epicoil.Appl.Presentations.Planning
             butGenSN.Visible = false;
             butSimulate.Visible = false;
             txtYield.BackColor = SystemColors.Control;
+
+            #region Clear TextBox binding
 
             txtWorkOrderNum.DataBindings.Clear();
             txtProcessStep.DataBindings.Clear();
@@ -70,7 +80,10 @@ namespace Epicoil.Appl.Presentations.Planning
             txtTotalMaterialAmount.DataBindings.Clear();
             txtTotalWidth.DataBindings.Clear();
 
-            //ComboBox
+            #endregion Clear TextBox binding
+
+            #region Clear ComboBox binding
+
             cmbProcessLine.DataBindings.Clear();
             cmbOrderType.DataBindings.Clear();
             cmbPossession.DataBindings.Clear();
@@ -84,17 +97,26 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbOrderType.Items.Clear();
             cmbPossession.Items.Clear();
 
-            //CheckBox
+            #endregion Clear ComboBox binding
+
+            #region Clear CheckBox binding
+
             chkLVTrim.DataBindings.Clear();
             chkPackingPlan.DataBindings.Clear();
             chkPackingPlan.Checked = false;
             chkLVTrim.Checked = false;
 
-            //DatePicker
+            #endregion Clear CheckBox binding
+
+            #region Clear DatePicker value
+
             dptIssueDate.Value = DateTime.Now;
             dptDueDate.Value = DateTime.Now;
 
-            //Clear Content
+            #endregion Clear DatePicker value
+
+            #region Clear TextBox text content
+
             txtWorkOrderNum.Clear();
             txtProcessStep.Clear();
             txtPICName.Clear();
@@ -107,6 +129,8 @@ namespace Epicoil.Appl.Presentations.Planning
             txtYield.Clear();
             txtTotalMaterialAmount.Clear();
             txtTotalWidth.Clear();
+
+            #endregion Clear TextBox text content
         }
 
         private void ResetCoilBackGrid()
@@ -128,11 +152,12 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             switch (HeaderContent.FormState)
             {
-                case 0: /// 0 = Nothing.
+                #region 0 = Nothing.
+
+                case 0:
                     tbutNewWork.Enabled = true;
                     tbutNewMaterial.Enabled = false;
                     tbutNewCutting.Enabled = false;
-                    //tbutNewCoilBack.Enabled = false;
                     tbutSave.Enabled = false;
                     tbutCalculate.Enabled = false;
                     tbutSimulate.Enabled = false;
@@ -142,11 +167,14 @@ namespace Epicoil.Appl.Presentations.Planning
                     butWorkOrder.Enabled = true;
                     break;
 
-                case 1: /// 1 = New Transaction.
+                #endregion 0 = Nothing.
+
+                #region 1 = New Transaction.
+
+                case 1:
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = false;
                     tbutNewCutting.Enabled = false;
-                    //tbutNewCoilBack.Enabled = false;
                     tbutSave.Enabled = true;
                     tbutCalculate.Enabled = false;
                     tbutSimulate.Enabled = false;
@@ -159,7 +187,11 @@ namespace Epicoil.Appl.Presentations.Planning
                     ResetCuttingGrid();
                     break;
 
-                case 2: /// 2 = Transaction was save.
+                #endregion 1 = New Transaction.
+
+                #region 2 = Transaction was save.
+
+                case 2:
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
                     tbutNewCutting.Enabled = true;
@@ -167,11 +199,14 @@ namespace Epicoil.Appl.Presentations.Planning
                     butWorkOrder.Enabled = false;
                     break;
 
-                case 3: /// 3 = Selected materail.
+                #endregion 2 = Transaction was save.
+
+                #region 3 = Selected material.
+
+                case 3:
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
                     tbutNewCutting.Enabled = true;
-                    //tbutNewCoilBack.Enabled = false;
                     tbutSave.Enabled = true;
                     tbutCalculate.Enabled = true;
                     tbutSimulate.Enabled = false;
@@ -181,11 +216,14 @@ namespace Epicoil.Appl.Presentations.Planning
                     butWorkOrder.Enabled = false;
                     break;
 
-                case 4: /// 4 = Calculated.
+                #endregion 3 = Selected material.
+
+                #region 4 = Calculated.
+
+                case 4:
                     tbutNewWork.Enabled = false;
                     tbutNewMaterial.Enabled = true;
                     tbutNewCutting.Enabled = true;
-                    //tbutNewCoilBack.Enabled = true;
                     tbutSave.Enabled = true;
                     tbutCalculate.Enabled = true;
                     tbutSimulate.Enabled = true;
@@ -194,6 +232,8 @@ namespace Epicoil.Appl.Presentations.Planning
                     tbutCancelWorkOrder.Enabled = true;
                     butWorkOrder.Enabled = false;
                     break;
+
+                #endregion 4 = Calculated.
             }
             butAddMaterial.Enabled = tbutNewMaterial.Enabled;
         }
@@ -202,12 +242,14 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             //Call clear binding data that anchor with object.
             ClearHeaderContent();
+            model.CalculationHeader(model);
 
             //Default PIC.
             model.PIC = epiSession.UserID;
             model.PICName = epiSession.UserName;
 
-            //Binding data to TextBox objects.
+            #region Binding data to TextBox objects.
+
             txtWorkOrderNum.DataBindings.Add("Text", model, "WorkOrderNum", false, DataSourceUpdateMode.OnPropertyChanged);
             txtProcessStep.DataBindings.Add("Text", model, "ProcessStep", false, DataSourceUpdateMode.OnPropertyChanged);
             txtPICName.DataBindings.Add("Text", model, "PICName", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -221,8 +263,11 @@ namespace Epicoil.Appl.Presentations.Planning
             txtTotalMaterialAmount.DataBindings.Add("Text", model, "TotalMaterialAmount", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
             txtTotalWidth.DataBindings.Add("Text", model, "TotalWidth", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,###,##0.00");
 
-            //Binding data to ComboBox objects.
-            cmbProcessLine.DataSource = model.ResourceList.ToList();
+            #endregion Binding data to TextBox objects.
+
+            #region Binding data to ComboBox objects.
+
+            cmbProcessLine.DataSource = model.Resources.ToList();
             cmbProcessLine.DisplayMember = "ResourceDescription";
             cmbProcessLine.ValueMember = "ResourceID";
             cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineId", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -232,18 +277,26 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbOrderType.ValueMember = "CodeID";
             cmbOrderType.DataBindings.Add("SelectedValue", model, "OrderType", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            cmbPossession.DataSource = model.PossessionList.ToList();
+            cmbPossession.DataSource = model.Possessions.ToList();
             cmbPossession.DisplayMember = "CodeDesc";
             cmbPossession.ValueMember = "CodeID";
             cmbPossession.DataBindings.Add("SelectedValue", model, "Possession", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            //Binding data to CheckBox objects.
+            #endregion Binding data to ComboBox objects.
+
+            #region Binding data to CheckBox objects.
+
             chkPackingPlan.DataBindings.Add("Checked", model, "PackingPlan", false, DataSourceUpdateMode.OnPropertyChanged);
             chkLVTrim.DataBindings.Add("Checked", model, "LVTrim", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            //Set value to DatePicker
+            #endregion Binding data to CheckBox objects.
+
+            #region Set value to DatePicker
+
             dptIssueDate.Value = model.IssueDate;
             dptDueDate.Value = model.DueDate;
+
+            #endregion Set value to DatePicker
 
             #region Automate set Yield status.
 
@@ -262,7 +315,7 @@ namespace Epicoil.Appl.Presentations.Planning
 
             #region Lock object can be modify depend on the Cutting Line and Materials.
 
-            if (model.CuttingDesign.ToList().Count > 0 || model.Materails.ToList().Count > 0)
+            if (model.CuttingDesign.ToList().Count > 0 || model.Materials.ToList().Count > 0)
             {
                 cmbProcessLine.Enabled = false;
                 cmbOrderType.Enabled = false;
@@ -284,7 +337,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 butConfirm.BackColor = Color.FromArgb(161, 205, 95);
                 dptIssueDate.Enabled = false;
                 dptDueDate.Enabled = false;
-                txtProcessStep.Enabled = false;
+                //txtProcessStep.ReadOnly = true;
                 chkPackingPlan.Enabled = false;
                 chkLVTrim.Enabled = false;
 
@@ -297,7 +350,7 @@ namespace Epicoil.Appl.Presentations.Planning
             {
                 dptIssueDate.Enabled = true;
                 dptDueDate.Enabled = true;
-                txtProcessStep.Enabled = true;
+                //txtProcessStep.ReadOnly = false;
                 chkPackingPlan.Enabled = true;
                 chkLVTrim.Enabled = true;
 
@@ -330,7 +383,7 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvCutting.Columns["stand"].ReadOnly = true;
             dgvCutting.Columns["cutdiv"].ReadOnly = true;
 
-            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
+            if (HeaderContent.ProcessLine.ResourceGrpID == "S")
             {
                 dgvCutting.Columns["width1"].ReadOnly = false;
                 dgvCutting.Columns["status1"].ReadOnly = false;
@@ -338,13 +391,13 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvCutting.Columns["cutdiv"].ReadOnly = false;
                 dgvCutting.Columns["qtyPack1"].ReadOnly = true;
             }
-            else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
+            else if (HeaderContent.ProcessLine.ResourceGrpID == "L")
             {
                 dgvCutting.Columns["length1"].ReadOnly = false;
                 dgvCutting.Columns["status1"].ReadOnly = false;
                 dgvCutting.Columns["qtyPack1"].ReadOnly = false; //calqty
             }
-            else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "R")
+            else if (HeaderContent.ProcessLine.ResourceGrpID == "R")
             {
                 dgvCutting.Columns["width1"].ReadOnly = false;
                 dgvCutting.Columns["length1"].ReadOnly = false;
@@ -353,51 +406,31 @@ namespace Epicoil.Appl.Presentations.Planning
             }
         }
 
-        #endregion Set Form Properties
+        #endregion Binding Data
 
-        #region Event
+        #region Form Events
 
         private void butAddMaterial_Click(object sender, EventArgs e)
         {
+            //Exit this function if order completed.
             if (OrderCompleted()) return;
+
             //Initialization
             HeaderContent.FormState = 3;
             SetFormState();
-            HeaderContent.MaterialPattern = new MaterialModel();
 
             //Default direction for all (Class/Machine etc.).
-            SetDirectionPatter();
-
-            //If material list > 0 must be assign material filtering.
-            if (HeaderContent.Materails.ToList().Count > 0 && HeaderContent.CuttingDesign.ToList().Count == 0)
-            {
-                //HeaderContent.MaterialPattern.CommodityCode = mat.CommodityCode;
-                //HeaderContent.MaterialPattern.SpecCode = mat.SpecCode;
-                //HeaderContent.MaterialPattern.CoatingCode = mat.CoatingCode;
-                //HeaderContent.MaterialPattern.Possession = mat.Possession;
-                //HeaderContent.MaterialPattern.BussinessType = mat.BussinessType;
-            }
-
-            //If material list > 0 must be assign material filtering.
-            if (HeaderContent.Materails.ToList().Count == 0 && HeaderContent.CuttingDesign.ToList().Count > 0)
-            {
-                //var nor = HeaderContent.CuttingDesign.FirstOrDefault();
-                //HeaderContent.MaterialPattern.CommodityCode = nor.CommodityCode;
-                //HeaderContent.MaterialPattern.SpecCode = nor.SpecCode;
-                //HeaderContent.MaterialPattern.CoatingCode = nor.CoatingCode;
-                //HeaderContent.MaterialPattern.Possession = nor.Possession;
-                //HeaderContent.MaterialPattern.Thick = nor.Thick;
-                //HeaderContent.MaterialPattern.Width = nor.Width;
-                //HeaderContent.MaterialPattern.Length = nor.Length;
-                //HeaderContent.MaterialPattern.BussinessType = mat.BussinessType;
-            }
+            SetDirectionPattern();
 
             //Get Material that compatible with Machine was select.
             var result = _repo.GetAllMatByFilter(epiSession.PlantID, HeaderContent);
+
+            #region Call the Material List forms and passing material result by filter.
+
             using (MaterialSelecting frm = new MaterialSelecting(epiSession, result, HeaderContent))
             {
                 frm.ShowDialog();
-                HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+                HeaderContent.Materials = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
 
                 //
                 if (string.IsNullOrEmpty(HeaderContent.Possession))
@@ -406,22 +439,34 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
-            //Set Material Grid.
+            #endregion Call the Material List forms and passing material result by filter.
+
+            #region Set Material Grid after selected material.
+
             try
             {
-                ListMaterialGrid(HeaderContent.Materails);
+                ListMaterialGrid(HeaderContent.Materials);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
 
-            //Summaries using weight
+            #endregion Set Material Grid after selected material.
+
+            #region Summaries Input/Using weight
+
             HeaderContent.SumInputWeight(HeaderContent);
-            HeaderContent.SumUsingWeight(HeaderContent.Materails);
-            //Set content and list Material was add from dialog.
+            HeaderContent.SumUsingWeight(HeaderContent.Materials);
+
+            #endregion Summaries Input/Using weight
+
+            #region Set content and list Material was add from dialog.
+
             SetHeadContent(HeaderContent);
             ListCuttingGrid(HeaderContent.CuttingDesign);
+
+            #endregion Set content and list Material was add from dialog.
         }
 
         private void butWorkOrder_Click(object sender, EventArgs e)
@@ -444,13 +489,13 @@ namespace Epicoil.Appl.Presentations.Planning
                     HeaderContent.FormState = 3;
                     SetFormState();
                     //Summaries using weight
-                    HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                    HeaderContent.SumUsingWeight(HeaderContent.Materials);
                     //Set content and list Material was add from dialog.
                     SetHeadContent(HeaderContent);
                     //Set Material Grid.
                     try
                     {
-                        ListMaterialGrid(HeaderContent.Materails);
+                        ListMaterialGrid(HeaderContent.Materials);
                         ListCuttingGrid(HeaderContent.CuttingDesign);
                         ListCoilBackGrid(HeaderContent.CoilBacks);
                     }
@@ -488,9 +533,9 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void cmbPossession_Leave(object sender, EventArgs e)
         {
-            if (HeaderContent.Materails.ToList().Count > 0)
+            if (HeaderContent.Materials.ToList().Count > 0)
             {
-                int result = HeaderContent.Materails.Max(p => p.Possession);
+                int result = HeaderContent.Materials.Max(p => p.Possession);
                 if (cmbPossession.SelectedValue.ToString() != result.ToString())
                 {
                     MessageBox.Show("Please select 'Possession' that compatible with material.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -517,17 +562,17 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void cmbProcessLine_Leave(object sender, EventArgs e)
         {
-            if (HeaderContent.Materails.ToList().Count > 0)
+            if (HeaderContent.Materials.ToList().Count > 0)
             {
                 MessageBox.Show("Please clear all material before change process line.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbProcessLine.SelectedValue = HeaderContent.ProcessLineDetail.ResourceID;
+                cmbProcessLine.SelectedValue = HeaderContent.ProcessLine.ResourceID;
                 return;
             }
 
-            if (HeaderContent.CuttingLines.ToList().Count > 0)
+            if (HeaderContent.CuttingDesign.ToList().Count > 0)
             {
                 MessageBox.Show("Please clear all cutting design before change process line.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbProcessLine.SelectedValue = HeaderContent.ProcessLineDetail.ResourceID;
+                cmbProcessLine.SelectedValue = HeaderContent.ProcessLine.ResourceID;
                 return;
             }
         }
@@ -535,24 +580,26 @@ namespace Epicoil.Appl.Presentations.Planning
         private void dgvCutting_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (OrderCompleted()) return;
+
             OrderHeadModel result = new OrderHeadModel();
             int i; decimal d; string riskFlag = string.Empty; string msg = string.Empty;
             string colName = dgvCutting.Columns[e.ColumnIndex].Name;
             string lineId = dgvCutting.Rows[e.RowIndex].Cells["lineid"].Value.GetString();
             string resultValue = dgvCutting.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.GetString();
             bool changeState = false;
-            CutDesignModel rowData = new CutDesignModel();
 
+            CutDesignModel rowData = new CutDesignModel();
             rowData = (from item in HeaderContent.CuttingDesign
                        where item.LineID == Convert.ToInt32(lineId)
-                       select item).First();
+                       select item).FirstOrDefault();
+            rowData.CompleteRow = false;
             switch (colName)
             {
                 case "sono":
 
                     #region Verify S/O No.
 
-                    if (HeaderContent.Materails.ToList().Count == 0) HeaderContent.BussinessType = "";
+                    if (HeaderContent.Materials.ToList().Count == 0) HeaderContent.BussinessType = "";
                     if (HeaderContent.CuttingDesign.ToList().Count == 1) HeaderContent.BussinessType = "";
 
                     if (!string.IsNullOrEmpty(resultValue) && rowData.SONo != resultValue)
@@ -588,8 +635,9 @@ namespace Epicoil.Appl.Presentations.Planning
 
                             rowData = (from item in HeaderContent.CuttingDesign
                                        where item.LineID == Convert.ToInt32(lineId)
-                                       select item).First();
-                            dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = result.OrderNumber;
+                                       select item).FirstOrDefault();
+
+                            dgvCutting.Rows[e.RowIndex].Cells["sono"].Value = rowData.SONo;
                             dgvCutting.Rows[e.RowIndex].Cells["customer"].Value = result.CustID;
                             dgvCutting.Rows[e.RowIndex].Cells["soline"].Value = rowData.SOLine;
                             dgvCutting.Rows[e.RowIndex].Cells["norno"].Value = rowData.NORNum;
@@ -644,22 +692,18 @@ namespace Epicoil.Appl.Presentations.Planning
                     changeState = (rowData.Status != resultValue);
                     if (changeState)
                     {
-                        if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
+                        if (HeaderContent.ProcessLine.ResourceGrpID == "L")
                         {
                             if (resultValue == "F" && !string.IsNullOrEmpty(rowData.NORNum))
                             {
                                 dgvCutting.Rows[e.RowIndex].Cells["length1"].ReadOnly = true;
-                                //dgvCutting.Rows[e.RowIndex].Cells["calqty"].ReadOnly = true;
-                                //dgvCutting.Rows[e.RowIndex].Cells["qtyPack1"].ReadOnly = true;
                             }
                             else
                             {
                                 dgvCutting.Rows[e.RowIndex].Cells["length1"].ReadOnly = false;
-                                //dgvCutting.Rows[e.RowIndex].Cells["calqty"].ReadOnly = true;
-                                //dgvCutting.Rows[e.RowIndex].Cells["qtyPack1"].ReadOnly = true;
                             }
                         }
-                        else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
+                        else if (HeaderContent.ProcessLine.ResourceGrpID == "S")
                         {
                             if (resultValue == "S" && !string.IsNullOrEmpty(rowData.NORNum))
                             {
@@ -727,15 +771,14 @@ namespace Epicoil.Appl.Presentations.Planning
                     }
                 }
 
-                //Set rial time to change wieght by row.
+                //Set rial time to change weight by row.
                 dgvCutting.Rows[e.RowIndex].Cells["unitweight1"].Value = rowData.UnitWeight;
                 dgvCutting.Rows[e.RowIndex].Cells["totalweight"].Value = rowData.TotalWeight;
                 dgvCutting.Rows[e.RowIndex].Cells["totallength"].Value = rowData.TotalLength;
                 rowData.CompleteRow = validRow;
                 HeaderContent.CuttingDesign = _repo.SaveLineCutting(epiSession, HeaderContent, rowData).ToList();
-                HeaderContent.CalculationHeader(HeaderContent);
                 SetHeadContent(HeaderContent);
-                ListMaterialGrid(HeaderContent.Materails);
+                ListMaterialGrid(HeaderContent.Materials);
             }
         }
 
@@ -772,7 +815,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
             }
 
-            var result = (from item in HeaderContent.Materails
+            var result = (from item in HeaderContent.Materials
                           where item.TransactionLineID == Convert.ToInt32(transId)
                           select item).FirstOrDefault();
 
@@ -782,7 +825,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     changeState = (result.UsingWeight != Convert.ToDecimal(strVal));
                     if (changeState)
                     {
-                        HeaderContent.Materails.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
+                        HeaderContent.Materials.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList()
                                                             .ForEach(i => i.UsingWeight = Convert.ToDecimal(strVal));
 
                         var coilExist = HeaderContent.CoilBacks.Where(p => p.TransactionLineID.ToString().Equals(transId)).ToList();
@@ -880,7 +923,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 dgvMaterial.Rows[e.RowIndex].Cells["remainLengthM"].Value = result.RemainLengthM;
                 result.WorkDate = dptIssueDate.Value;
                 var res = _repo.SaveMaterial(epiSession, result);
-                HeaderContent.SumUsingWeight(HeaderContent.Materails);
+                HeaderContent.SumUsingWeight(HeaderContent.Materials);
                 HeaderContent.CuttingDesign = HeaderContent.ReCalculateCuttingLine();
                 ListCuttingGrid(HeaderContent.CuttingDesign);
                 SetHeadContent(HeaderContent);
@@ -904,7 +947,13 @@ namespace Epicoil.Appl.Presentations.Planning
             string riskFlag = string.Empty;
             string msg = string.Empty;
 
-            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
+            if (HeaderContent.CoilBacks.Count > 0)
+            {
+                MessageBox.Show("If would you like to calculate you must be deleted CoilBack before.", "Data invalid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (HeaderContent.ProcessLine.ResourceGrpID == "S")
             {
                 HeaderContent.CuttingDesign = _repo.GenerateCuttingLine(epiSession, HeaderContent, out riskFlag, out msg).ToList();
                 if (!string.IsNullOrEmpty(msg))
@@ -912,7 +961,11 @@ namespace Epicoil.Appl.Presentations.Planning
                     MessageBox.Show(msg, "Data invalid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
+            else if (HeaderContent.ProcessLine.ResourceGrpID == "R")
+            {
+            }
+            //Do not delete this section.
+            else if (HeaderContent.ProcessLine.ResourceGrpID == "L")
             {
                 SimulateLeveller();
                 LevellerResetCutting();
@@ -931,17 +984,16 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
                 //HeaderContent.CuttingDesign = _repo.GenerateCuttingLineForLeveller(epiSession, HeaderContent, out riskFlag, out msg).ToList();
             }
-            HeaderContent.CalculationHeader(HeaderContent);
+
             SetHeadContent(HeaderContent);
             ListCuttingGrid(HeaderContent.CuttingDesign);
-            ListMaterialGrid(HeaderContent.Materails);
+            ListMaterialGrid(HeaderContent.Materials);
         }
 
         private void tbutCalculate_Click(object sender, EventArgs e)
         {
             //Simulated Complete.
             RecheckCuttingByRow();
-            HeaderContent.CalculationHeader(HeaderContent);
             SetHeadContent(HeaderContent);
             ListCuttingGrid(HeaderContent.CuttingDesign);
 
@@ -963,7 +1015,7 @@ namespace Epicoil.Appl.Presentations.Planning
         {
             CutDesignModel model = new CutDesignModel();
 
-            if (HeaderContent.Materails.ToList().Count == 0)
+            if (HeaderContent.Materials.ToList().Count == 0)
             {
                 model.Status = "S";
                 model.Stand = 1;
@@ -973,8 +1025,8 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             else
             {
-                var result = (from item in HeaderContent.Materails
-                              select item).First();
+                var result = (from item in HeaderContent.Materials
+                              select item).FirstOrDefault();
 
                 model.Status = "S";
                 model.DeliveryDate = DateTime.Now;
@@ -1024,17 +1076,15 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void tbutSave_Click(object sender, EventArgs e)
         {
-            //if (OrderCompleted()) return;
             string objectValid;
             string messageValid;
 
             RecheckCuttingByRow();
-            HeaderContent.CalculationHeader(HeaderContent);
             SetHeadContent(HeaderContent);
             ListCuttingGrid(HeaderContent.CuttingDesign);
 
             IEnumerable<MaterialModel> model = new List<MaterialModel>();
-            HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, HeaderContent.ProcessLineId);
+            HeaderContent.ProcessLine = _reRes.GetByID(epiSession.PlantID, HeaderContent.ProcessLineId);
 
             var result = HeaderContent.ValidateToSave(HeaderContent, out objectValid, out messageValid);
 
@@ -1045,7 +1095,7 @@ namespace Epicoil.Appl.Presentations.Planning
             }
             else
             {
-                if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L" && HeaderContent.SimulateFlag == 1 && HeaderContent.Completed == 0)
+                if (HeaderContent.ProcessLine.ResourceGrpID == "L" && HeaderContent.SimulateFlag == 1 && HeaderContent.Completed == 0 && HeaderContent.CheckYeild(HeaderContent.Yield))
                 {
                     DialogResult diaResult = MessageBox.Show("This Order already simulated. Do you want to confirm.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (diaResult == DialogResult.Yes)
@@ -1081,7 +1131,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 return;
             }
 
-            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
+            if (HeaderContent.ProcessLine.ResourceGrpID == "S")
             {
                 //Simulated Complete.
                 var resExisting = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
@@ -1107,7 +1157,7 @@ namespace Epicoil.Appl.Presentations.Planning
                 simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
 
                 simModel.Cuttings = _repo.InsertSimulate(epiSession, HeaderContent).ToList();
-                simModel.Materials = HeaderContent.Materails.ToList();
+                simModel.Materials = HeaderContent.Materials.ToList();
                 using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
                 {
                     frm.ShowDialog();
@@ -1115,18 +1165,18 @@ namespace Epicoil.Appl.Presentations.Planning
                 }
 
                 SetHeadContent(HeaderContent);
-                ListMaterialGrid(HeaderContent.Materails);
+                ListMaterialGrid(HeaderContent.Materials);
                 ListCuttingGrid(HeaderContent.CuttingDesign);
                 ListCoilBackGrid(HeaderContent.CoilBacks);
                 tbutCalculate_Click(sender, e);
                 //tbutSave_Click(sender, e);
                 HeaderContent.SimulateFlag = 1;
             }
-            else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "R")
+            else if (HeaderContent.ProcessLine.ResourceGrpID == "R")
             {
                 SimulateReshearHeadModel simModel = new SimulateReshearHeadModel();
-                simModel.Materials = HeaderContent.Materails.ToList();
-                simModel.Cuttings = HeaderContent.CuttingDesign;
+                simModel.Materials = HeaderContent.Materials.ToList();
+                simModel.Cuttings = HeaderContent.CuttingDesign.ToList();
                 simModel.WorkOrderID = HeaderContent.WorkOrderID;
                 simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
 
@@ -1163,13 +1213,13 @@ namespace Epicoil.Appl.Presentations.Planning
                 {
                     if (_repo.DeleteMaterail(epiSession, mat, out validateMsg))
                     {
-                        HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+                        HeaderContent.Materials = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
                         SetHeadContent(HeaderContent);
 
                         //Set Material Grid.
                         try
                         {
-                            ListMaterialGrid(HeaderContent.Materails);
+                            ListMaterialGrid(HeaderContent.Materials);
                         }
                         catch (Exception ex)
                         {
@@ -1199,13 +1249,13 @@ namespace Epicoil.Appl.Presentations.Planning
                 CutDesignModel cut = _repo.GetCuttingByID(Convert.ToInt32(dgvCutting.Rows[iRow].Cells["lineid"].Value.ToString()));
                 if (_repo.DeleteCutting(epiSession, cut, out validateMsg))
                 {
-                    HeaderContent.CuttingLines = _repo.GetCuttingLines(HeaderContent.WorkOrderID).ToList();
+                    HeaderContent.CuttingDesign = _repo.GetCuttingLines(HeaderContent.WorkOrderID).ToList();
                     SetHeadContent(HeaderContent);
                     //if (dgvCutting.Rows.Count == 0) tbutNewCutting.Enabled = true;
                     //Set Cutting Grid.
                     try
                     {
-                        ListCuttingGrid(HeaderContent.CuttingLines);
+                        ListCuttingGrid(HeaderContent.CuttingDesign);
                     }
                     catch (Exception ex)
                     {
@@ -1217,6 +1267,455 @@ namespace Epicoil.Appl.Presentations.Planning
                     MessageBox.Show(validateMsg, "Delete Cutting error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+            }
+        }
+
+        private void tbutCancelWorkOrder_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void WorkEntrySlitter_Load(object sender, EventArgs e)
+        {
+            HeaderContent.PreLoad();
+            SetFormState();
+        }
+
+        private void addSOLineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvCutting.Rows.Count == 0) return;
+            string lineId = dgvCutting.Rows[dgvCutting.CurrentRow.Index].Cells["lineid"].Value.GetString();
+            string sono = dgvCutting.Rows[dgvCutting.CurrentRow.Index].Cells["sono"].Value.GetString();
+            if (!string.IsNullOrEmpty(sono))
+            {
+                HeaderContent.CuttingDesign = addSOLine(Convert.ToInt32(lineId), sono);
+            }
+        }
+
+        private void butAddCoilBack_Click(object sender, EventArgs e)
+        {
+            ListCuttingGrid(HeaderContent.CuttingDesign);
+        }
+
+        private void butConfirm_Click(object sender, EventArgs e)
+        {
+            if (HeaderContent.Completed == 1 && HeaderContent.SimulateFlag == 1 && HeaderContent.GenSerialFlag == 0)
+            {
+                DialogResult diaResulta = MessageBox.Show("Are you sure to unconfirm.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (diaResulta == DialogResult.Yes)
+                {
+                    if (_repo.UnConfirmWork(HeaderContent.WorkOrderID))
+                    {
+                        MessageBox.Show("Unconfirmed Order completed.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        HeaderContent = _repo.GetWorkById(HeaderContent.WorkOrderID, Convert.ToInt32(HeaderContent.ProcessStep), epiSession.PlantID);
+                        SetHeadContent(HeaderContent);
+                        ListMaterialGrid(HeaderContent.Materials);
+                    }
+                }
+            }
+        }
+
+        private void butGenSN_Click(object sender, EventArgs e)
+        {
+            string msg = string.Empty;
+            IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
+            IEnumerable<SimulateModel> simResult = new List<SimulateModel>();
+            IEnumerable<SimulateModel> coilBack = new List<SimulateModel>();
+            if (HeaderContent.GenSerialFlag == 0)
+            {
+                if (HeaderContent.ProcessLine.ResourceGrpID == "S")
+                {
+                    simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
+                }
+                else if (HeaderContent.ProcessLine.ResourceGrpID == "L")
+                {
+                    simResult = _repo.GetSimulateLeveller(HeaderContent.WorkOrderID);
+                }
+
+                coilBack = _repo.GetSimulateCoilBack(HeaderContent.WorkOrderID);
+
+                if (coilBack.ToList().Count > 0)
+                {
+                    var cbResult = _repo.GenerateSerial(epiSession, coilBack, HeaderContent.WorkOrderID);
+                }
+
+                if (simResult.ToList().Count > 0)
+                {
+                    serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
+                    _repo.ImportSerialToEpicor(epiSession, HeaderContent, out msg);
+                    HeaderContent.GenSerialFlag = 1;
+                }
+            }
+            else
+            {
+                serialLines = _repo.GetSerialAllByWorkOrder(HeaderContent.WorkOrderID);
+            }
+
+            using (SerialList frm = new SerialList(epiSession, serialLines, HeaderContent))
+            {
+                frm.ShowDialog();
+                HeaderContent.GenSerialFlag = Convert.ToInt32(frm.GenSNComplete);
+                SetHeadContent(HeaderContent);
+            }
+        }
+
+        private void butSimulate_Click(object sender, EventArgs e)
+        {
+            if (HeaderContent.ProcessLine.ResourceGrpID == "S")
+            {
+                SimulateActionModel simModel = new SimulateActionModel();
+                simModel.WorkOrderID = HeaderContent.WorkOrderID;
+                simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
+                simModel.MaterialWeight = HeaderContent.InputWeight;
+                simModel.ProductWeight = HeaderContent.OutputWeight;
+                simModel.Yield = HeaderContent.Yield;
+                simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
+                simModel.Cuttings = _repo.GetSimulateAll(HeaderContent.WorkOrderID).ToList();
+                simModel.Materials = HeaderContent.Materials.ToList();
+                using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
+                {
+                    frm.ShowDialog();
+                    HeaderContent = frm.HeadModel;
+                }
+            }
+
+            SetHeadContent(HeaderContent);
+            ListMaterialGrid(HeaderContent.Materials);
+            ListCuttingGrid(HeaderContent.CuttingDesign);
+            ListCoilBackGrid(HeaderContent.CoilBacks);
+            dgvMaterial.EndEdit();
+        }
+
+        private void cmbOrderType_Leave(object sender, EventArgs e)
+        {
+            if (HeaderContent.CuttingDesign.ToList().Count > 0)
+            {
+                MessageBox.Show("Please clear all cutting design before change process line.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbProcessLine.SelectedValue = HeaderContent.ProcessLine.ResourceID;
+                return;
+            }
+        }
+
+        private void dgvMaterial_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+        }
+
+        #endregion Form Events
+
+        #region Methods
+
+        public bool ValidateUsing(decimal usingVal, decimal baseVal, bool weightValid, out string col, out string msg)
+        {
+            bool valid = true;
+            col = (weightValid) ? "Weight" : "Quantity";
+            msg = string.Empty;
+
+            if (usingVal > baseVal)
+            {
+                msg = string.Format("Using {0} must less than or equals with {0}.", (weightValid) ? "Weight" : "Quantity");
+                valid = false;
+            }
+            return valid;
+        }
+
+        private IList<CutDesignModel> addSOLine(int lineID, string soNumber)
+        {
+            string risk = string.Empty;
+            string msg = string.Empty;
+
+            //Load data from current selected row to rowData.
+            var rowData = (from item in HeaderContent.CuttingDesign
+                           where item.LineID == Convert.ToInt32(lineID)
+                           select item).FirstOrDefault();
+
+            OrderDetailModel resultLine = new OrderDetailModel();
+            IEnumerable<OrderDetailModel> resultParam = new List<OrderDetailModel>();
+            SetDirectionPattern();
+
+            resultParam = _repoSale.GetOrderDtlByFilter(soNumber, HeaderContent);
+            using (OrderLineDialog frm = new OrderLineDialog(epiSession, resultParam))
+            {
+                frm.ShowDialog();
+                resultLine = frm._selected;
+                if (resultLine.OrderNum == null)
+                {
+                    return HeaderContent.CuttingDesign;
+                }
+            }
+
+            HeaderContent.ClassID = resultLine.ClassID;
+            HeaderContent.Possession = Convert.ToString(resultLine.Possession);
+            HeaderContent.BussinessType = resultLine.BussinessType;
+
+            rowData.SONo = soNumber;
+            rowData.CustID = resultLine.CustID;
+            rowData.SOLine = resultLine.OrderLine;
+            rowData.NORNum = resultLine.NORNo;
+            rowData.CommodityCode = resultLine.CommodityCode;
+            rowData.SpecCode = resultLine.SpecCode;
+            rowData.CoatingCode = resultLine.CoatingCode;
+            rowData.Thick = resultLine.Thick;
+            rowData.Width = resultLine.Width;
+            rowData.Length = resultLine.Length;
+            rowData.Status = "";
+            rowData.SOWeight = resultLine.SOWeight;
+            rowData.SOQuantity = resultLine.SOQuantity;
+            rowData.QtyPack = resultLine.QtyPack;
+            rowData.Pack = resultLine.Pack;
+            rowData.BussinessType = resultLine.BussinessType;
+            rowData.CompleteRow = rowData.ValidateByRow(HeaderContent, out risk, out msg);
+            return _repo.SaveLineCutting(epiSession, HeaderContent, rowData).ToList();
+        }
+
+        private void LevellerResetCutting()
+        {
+            string riskFlag = string.Empty; string msg = string.Empty;
+            foreach (var p in HeaderContent.CuttingDesign)
+            {
+                decimal bQty = 0;
+                var result = HeaderContent.LevSimulates.Where(i => i.CuttingLineID == p.LineID).ToList();
+                if (result.Count != 0)
+                {
+                    bQty = HeaderContent.LevSimulates.Where(i => i.CuttingLineID == p.LineID).Sum(i => i.CalQuantity).GetDecimal();
+                }
+
+                p.CalQuantity = bQty;
+                p.CalculateRows(HeaderContent);
+                p.CompleteRow = p.ValidateByRow(HeaderContent, out riskFlag, out msg);
+                HeaderContent.CuttingDesign = _repo.SaveLineCutting(epiSession, HeaderContent, p).ToList();
+            }
+        }
+
+        private void ListCoilBackGrid(IEnumerable<CoilBackModel> item)
+        {
+            int i = 0;
+            if (dgvCoilBack.Rows.Count != 0) dgvCoilBack.Rows.Clear();
+            foreach (var p in item)
+            {
+                dgvCoilBack.Rows.Add(p.TransactionLineID, p.Serial, p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName
+                                    , p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length, p.Weight, p.LengthM, p.MCSSNo
+                                    , "", Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note);
+
+                //Fill color rows for even number.
+                if (i % 2 == 1)
+                {
+                    this.dgvCoilBack.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
+        }
+
+        private void ListCuttingGrid(IEnumerable<CutDesignModel> item)
+        {
+            int i = 0;
+            if (dgvCutting.Rows.Count != 0) dgvCutting.Rows.Clear();
+            foreach (var p in item)
+            {
+                dgvCutting.Rows.Add(p.LineID, i + 1, p.SONo, (p.SOLine == 0) ? "" : p.SOLine.ToString(), p.NORNum, p.CustID, p.CommodityCode, p.SpecCode
+                                    , p.CoatingCode, p.Direction.GetString(), p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDivision, p.Note
+                                    , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.QtyPerMaterial, p.CalQuantity, p.QtyPack, p.Pack
+                                    , p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(Possession), p.Possession), p.CompleteRow);
+
+                #region Set cells permission
+                dgvCutting.Columns["direction"].Visible = false;
+                dgvCutting.Columns["qtypermat"].Visible = false;
+                dgvCutting.Rows[i].Cells["sono"].ReadOnly = true;
+                dgvCutting.Rows[i].Cells["width1"].ReadOnly = true;
+                dgvCutting.Rows[i].Cells["length1"].ReadOnly = true;
+                dgvCutting.Rows[i].Cells["status1"].ReadOnly = true;
+                dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = true;
+                dgvCutting.Rows[i].Cells["calqty"].ReadOnly = true;
+
+                if (HeaderContent.Completed == 0)
+                {
+                    if (HeaderContent.ProcessLine.ResourceGrpID == "L")
+                    {
+                        dgvCutting.Rows[i].Cells["length1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["soqty"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["status1"].ReadOnly = false;
+                    }
+
+                    if (HeaderContent.ProcessLine.ResourceGrpID == "R")
+                    {
+                        dgvCutting.Columns["direction"].Visible = true;
+                        dgvCutting.Columns["qtypermat"].Visible = true;
+                        dgvCutting.Rows[i].Cells["direction"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["qtypermat"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["length1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["status1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["calqty"].ReadOnly = false;
+                    }
+
+                    if (HeaderContent.ProcessLine.ResourceGrpID == "S")
+                    {
+                        dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["stand"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["status1"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["cutdiv"].ReadOnly = false;
+                        dgvCutting.Rows[i].Cells["note1"].ReadOnly = false;
+                    }
+
+                    if (!string.IsNullOrEmpty(p.Status) && p.Status == "F")
+                    {
+                        this.dgvCutting.Rows[i].Cells["width1"].ReadOnly = true;
+                        this.dgvCutting.Rows[i].Cells["length1"].ReadOnly = true;
+                    }
+
+                    if (p.CompleteRow)
+                    {
+                        dgvCutting.Rows[i].Cells["sono"].ReadOnly = true;
+                    }
+                    else
+                    {
+                        dgvCutting.Rows[i].Cells["sono"].ReadOnly = false;
+                    }
+                }
+
+                #endregion Set cells permission
+
+                //Fill color rows for even number.
+                if (i % 2 == 1)
+                {
+                    this.dgvCutting.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
+            //SetPermissCuttingDesign();
+            if (HeaderContent.ProcessLine.ResourceGrpID == "S")
+            {
+                if (dgvCutting.Rows.Count == 0)
+                {
+                    tbutNewCutting.Enabled = true;
+                }
+                else
+                {
+                    tbutNewCutting.Enabled = false;
+                }
+            }
+        }
+
+        private void ListMaterialGrid(IEnumerable<MaterialModel> item)
+        {
+            int i = 0;
+            dgvMaterial.Rows.Clear();
+            foreach (var p in item)
+            {
+                //p.CalculateUsingLength();
+                dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
+                    , p.Weight, p.UsingWeight
+                    , p.RemainWeight, p.LengthM, p.UsingLengthM, p.RemainLengthM
+                    , (p.Length == 0) ? 1 : p.QuantityPack, (p.UsingQuantity == 0) ? ((p.Length == 0) ? 1 : p.QuantityPack) : p.UsingQuantity
+                    , p.RemainQuantity, p.CBSelect
+                    , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
+                //Fill color rows for even number.
+                if (i % 2 == 1)
+                {
+                    this.dgvMaterial.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+
+                if (HeaderContent.Completed == 1)
+                {
+                    dgvMaterial.Columns["usingLengthM"].ReadOnly = true;
+                    dgvMaterial.Columns["usingweight"].ReadOnly = true;
+                    dgvMaterial.Columns["quantity"].ReadOnly = true;
+                    if (HeaderContent.GenSerialFlag == 1) dgvMaterial.Columns["SelectCB"].ReadOnly = true;
+                }
+                else
+                {
+                    if (p.Length == 0)
+                    {
+                        dgvMaterial.Columns["quantity"].ReadOnly = true;
+                        dgvMaterial.Columns["usingweight"].ReadOnly = false;
+                    }
+                    else
+                    {
+                        dgvMaterial.Columns["quantity"].ReadOnly = false;
+                        dgvMaterial.Columns["usingweight"].ReadOnly = true;
+                    }
+
+                    if (HeaderContent.ProcessLine.ResourceGrpID == "L")
+                    {
+                        dgvMaterial.Columns["usingLengthM"].ReadOnly = false;
+                        dgvMaterial.Columns["usingweight"].ReadOnly = true;
+                        dgvMaterial.Columns["quantity"].ReadOnly = true;
+                    }
+                    else
+                    {
+                        dgvMaterial.Columns["usingLengthM"].ReadOnly = true;
+                    }
+                    dgvMaterial.Columns["SelectCB"].ReadOnly = false;
+                }
+
+                i++;
+            }
+        }
+
+        private void MaterialReset()
+        {
+            string riskFlag = string.Empty; string msg = string.Empty;
+            foreach (var m in HeaderContent.Materials)
+            {
+                decimal bQty = 0;
+                var result = HeaderContent.LevSimulates.Where(i => i.MaterialTransLineID == m.TransactionLineID).ToList();
+                if (result.Count != 0)
+                {
+                    bQty = HeaderContent.LevSimulates.Where(i => i.MaterialTransLineID == m.TransactionLineID).Min(i => i.RemainLengthM);
+                }
+
+                m.WorkDate = HeaderContent.IssueDate;
+                m.UsingLengthM = m.LengthM - bQty;
+                m.ConvertUsingLengthToUsingWeight();
+                var res = _repo.SaveMaterial(epiSession, m);
+            }
+
+            HeaderContent.Materials = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+        }
+
+        private void RecheckCuttingByRow()
+        {
+            int i = 0;
+            foreach (DataGridViewRow row in dgvCutting.Rows)
+            {
+                dgvCutting.CurrentCell = dgvCutting[1, i];
+                i++;
+            }
+        }
+
+        private void SetDirectionPattern()
+        {
+            HeaderContent.Class = new ClassMasterModel();
+            if (HeaderContent.Class == null) HeaderContent.Class = new ClassMasterModel();
+
+            //Default direction of material pattern by Machine.
+            HeaderContent.ProcessLine = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
+
+            //When we selected materials, need to fix direction of material pattern.
+            if (HeaderContent.Materials.ToList().Count > 0)
+            {
+                var mat = HeaderContent.Materials.FirstOrDefault();
+
+                //Change default direction of material pattern.
+                HeaderContent.ProcessLine.ThickMin = mat.Thick;
+                HeaderContent.ProcessLine.ThickMax = mat.Thick;
+                HeaderContent.ProcessLine.WidthMin = mat.Width;
+                HeaderContent.ProcessLine.WidthMax = mat.Width;
+                HeaderContent.ProcessLine.LengthMin = mat.Length;
+                HeaderContent.ProcessLine.LengthMax = mat.Length;
+            }
+
+            //Verify to make sure there already Class pattern.
+            if (HeaderContent.ClassID == 0)
+            {
+                //HeaderContent.CurrentClass.CustomerReq = 1;
+                HeaderContent.Class.ComudityReq = 1;
+                HeaderContent.Class.SpecCodeReq = 1;
+                HeaderContent.Class.PlateCodeReq = 1;
+            }
+            else
+            {
+                HeaderContent.Class = _repoCls.GetByID(epiSession.PlantID, HeaderContent.ClassID);
             }
         }
 
@@ -1264,443 +1763,6 @@ namespace Epicoil.Appl.Presentations.Planning
             return bolResult;
         }
 
-        private void WorkEntrySlitter_Load(object sender, EventArgs e)
-        {
-            HeaderContent.PreLoad();
-            SetFormState();
-        }
-
-        #endregion Event
-
-        #region Method
-
-        public bool ValidateUsing(decimal usingVal, decimal baseVal, bool weightValid, out string col, out string msg)
-        {
-            bool valid = true;
-            col = (weightValid) ? "Weight" : "Quantity";
-            msg = string.Empty;
-
-            if (usingVal > baseVal)
-            {
-                msg = string.Format("Using {0} must less than or equals with {0}.", (weightValid) ? "Weight" : "Quantity");
-                valid = false;
-            }
-            return valid;
-        }
-
-        private List<CutDesignModel> addSOLine(int lineID, string soNumber)
-        {
-            string risk = string.Empty;
-            string msg = string.Empty;
-            //Load data from current seleted row to rowData.
-            var rowData = (from item in HeaderContent.CuttingDesign
-                           where item.LineID == Convert.ToInt32(lineID)
-                           select item).First();
-
-            OrderDetailModel resultLine = new OrderDetailModel();
-            IEnumerable<OrderDetailModel> resultParam = new List<OrderDetailModel>();
-            SetDirectionPatter();
-            resultParam = _repoSale.GetOrderDtlByFilter(soNumber, HeaderContent);
-            using (OrderLineDialog frm = new OrderLineDialog(epiSession, resultParam))
-            {
-                frm.ShowDialog();
-                resultLine = frm._selected;
-                if (resultLine.OrderNum == null)
-                {
-                    return HeaderContent.CuttingDesign;
-                }
-            }
-
-            HeaderContent.MaterialPattern = new MaterialModel();
-            HeaderContent.ClassID = resultLine.ClassID;
-            HeaderContent.Possession = Convert.ToString(resultLine.Possession);
-            HeaderContent.BussinessType = resultLine.BussinessType;
-            HeaderContent.MaterialPattern.CommodityCode = resultLine.CommodityCode;
-            HeaderContent.MaterialPattern.SpecCode = resultLine.SpecCode;
-            HeaderContent.MaterialPattern.CoatingCode = resultLine.CoatingCode;
-            HeaderContent.MaterialPattern.Thick = resultLine.Thick;
-            HeaderContent.MaterialPattern.Width = resultLine.Width;
-            HeaderContent.MaterialPattern.Length = resultLine.Length;
-            HeaderContent.MaterialPattern.BussinessType = resultLine.BussinessType;
-            HeaderContent.MaterialPattern.Possession = resultLine.Possession;
-
-            rowData.SONo = soNumber;
-            rowData.CustID = resultLine.CustID;
-            rowData.SOLine = resultLine.OrderLine;
-            rowData.NORNum = resultLine.NORNo;
-            rowData.CommodityCode = resultLine.CommodityCode;
-            rowData.SpecCode = resultLine.SpecCode;
-            rowData.CoatingCode = resultLine.CoatingCode;
-            rowData.Thick = resultLine.Thick;
-            rowData.Width = resultLine.Width;
-            rowData.Length = resultLine.Length;
-            rowData.Status = "";
-            rowData.SOWeight = resultLine.SOWeight;
-            rowData.SOQuantity = resultLine.SOQuantity;
-            rowData.QtyPack = resultLine.QtyPack;
-            rowData.Pack = resultLine.Pack;
-            rowData.BussinessType = resultLine.BussinessType;
-            rowData.CompleteRow = rowData.ValidateByRow(HeaderContent, out risk, out msg);
-            return _repo.SaveLineCutting(epiSession, HeaderContent, rowData).ToList();
-        }
-
-        private void LevellerResetCutting()
-        {
-            string riskFlag = string.Empty; string msg = string.Empty;
-            foreach (var p in HeaderContent.CuttingDesign)
-            {
-                decimal bQty = 0;
-                var result = HeaderContent.LevSimulateList.Where(i => i.CuttingLineID == p.LineID).ToList();
-                if (result.Count != 0)
-                {
-                    bQty = HeaderContent.LevSimulates.Where(i => i.CuttingLineID == p.LineID).Sum(i => i.Quantity).GetDecimal();
-                }
-
-                p.CalQuantity = bQty;
-                p.CalculateRows(HeaderContent);
-                p.CompleteRow = p.ValidateByRow(HeaderContent, out riskFlag, out msg);
-                HeaderContent.CuttingDesign = _repo.SaveLineCutting(epiSession, HeaderContent, p).ToList();
-            }
-        }
-
-        private void ListCoilBackGrid(IEnumerable<CoilBackModel> item)
-        {
-            int i = 0;
-            if (dgvCoilBack.Rows.Count != 0) dgvCoilBack.Rows.Clear();
-            foreach (var p in item)
-            {
-                dgvCoilBack.Rows.Add(p.TransactionLineID, p.Serial, p.CommodityCode + " - " + p.CommodityName, p.SpecCode + " - " + p.SpecName
-                                    , p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length, p.Weight, p.LengthM, p.MCSSNo
-                                    , "", Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note);
-
-                //Fill color rows for even number.
-                if (i % 2 == 1)
-                {
-                    this.dgvCoilBack.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-                i++;
-            }
-        }
-
-        private void ListCuttingGrid(IEnumerable<CutDesignModel> item)
-        {
-            int i = 0;
-            if (dgvCutting.Rows.Count != 0) dgvCutting.Rows.Clear();
-            foreach (var p in item)
-            {
-                dgvCutting.Rows.Add(p.LineID, i + 1, p.SONo, (p.SOLine == 0) ? "" : p.SOLine.ToString(), p.NORNum, p.CustID, p.CommodityCode, p.SpecCode
-                                    , p.CoatingCode, p.Thick, p.Width, p.Length, p.Status, p.Stand, p.CutDivision, p.Note
-                                    , p.UnitWeight, p.TotalWeight, p.TotalLength, p.SOWeight, p.SOQuantity, p.CalQuantity, p.QtyPack, p.Pack
-                                    , p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(Possession), p.Possession), p.CompleteRow);
-                if (HeaderContent.Completed == 1)
-                {
-                    dgvCutting.Rows[i].Cells["width1"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["sono"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["status1"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["stand"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["cutdiv"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["note1"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["soqty"].ReadOnly = true;
-                    dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = true;
-                }
-                else
-                {
-                    dgvCutting.Rows[i].Cells["sono"].ReadOnly = false;
-                    dgvCutting.Rows[i].Cells["status1"].ReadOnly = false;
-
-                    if (string.IsNullOrEmpty(p.Status) && p.Status != "F")
-                    {
-                        this.dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;
-                        this.dgvCutting.Rows[i].Cells["length1"].ReadOnly = false;
-                    }
-
-                    if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
-                    {
-                        dgvCutting.Rows[i].Cells["width1"].ReadOnly = true;
-                        if (string.IsNullOrEmpty(p.NORNum))
-                        {
-                            dgvCutting.Rows[i].Cells["soqty"].ReadOnly = false;
-                            dgvCutting.Rows[i].Cells["qtyPack1"].ReadOnly = false;
-                        }
-                        else
-                        {
-                            dgvCutting.Rows[i].Cells["soqty"].ReadOnly = true;
-                        }
-                    }
-
-                    if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
-                    {
-                        dgvCutting.Rows[i].Cells["width1"].ReadOnly = false;                        
-                        dgvCutting.Rows[i].Cells["stand"].ReadOnly = false;
-                        dgvCutting.Rows[i].Cells["cutdiv"].ReadOnly = false;
-                        dgvCutting.Rows[i].Cells["note1"].ReadOnly = false;
-                    }
-                }
-
-                //Fill color rows for even number.
-                if (i % 2 == 1)
-                {
-                    this.dgvCutting.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-                i++;
-            }
-            //SetPermissCuttingDesign();
-            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
-            {
-                if (dgvCutting.Rows.Count == 0)
-                {
-                    tbutNewCutting.Enabled = true;
-                }
-                else
-                {
-                    tbutNewCutting.Enabled = false;
-                }
-            }
-        }
-
-        private void ListMaterialGrid(IEnumerable<MaterialModel> item)
-        {
-            int i = 0;
-            dgvMaterial.Rows.Clear();
-            foreach (var p in item)
-            {
-                //p.CalculateUsingLength();
-                dgvMaterial.Rows.Add(p.TransactionLineID, p.MCSSNo, i + 1, p.SerialNo, p.SpecCode + " - " + p.SpecName, p.CoatingCode + " - " + p.CoatingName, p.Thick, p.Width, p.Length
-                    , p.Weight, p.UsingWeight
-                    , p.RemainWeight, p.LengthM, p.UsingLengthM, p.RemainLengthM
-                    , (p.Length == 0) ? 1 : p.QuantityPack, (p.UsingQuantity == 0) ? ((p.Length == 0) ? 1 : p.QuantityPack) : p.UsingQuantity
-                    , p.RemainQuantity, p.CBSelect
-                    , Enum.GetName(typeof(MaterialStatus), int.Parse(p.Status)), p.Note, p.BussinessType + " - " + p.BussinessTypeName, Enum.GetName(typeof(ProductStatus), int.Parse(p.ProductStatus)));
-                //Fill color rows for even number.
-                if (i % 2 == 1)
-                {
-                    this.dgvMaterial.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-
-                if (HeaderContent.Completed == 1)
-                {
-                    dgvMaterial.Columns["usingLengthM"].ReadOnly = true;
-                    dgvMaterial.Columns["usingweight"].ReadOnly = true;
-                    dgvMaterial.Columns["quantity"].ReadOnly = true;
-                    if (HeaderContent.GenSerialFlag == 1) dgvMaterial.Columns["SelectCB"].ReadOnly = true;                  
-                }
-                else
-                {
-                    if (p.Length == 0)
-                    {
-                        dgvMaterial.Columns["quantity"].ReadOnly = true;
-                        dgvMaterial.Columns["usingweight"].ReadOnly = false;
-                    }
-                    else
-                    {
-                        dgvMaterial.Columns["quantity"].ReadOnly = false;
-                        dgvMaterial.Columns["usingweight"].ReadOnly = true;
-                    }
-
-                    if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
-                    {
-                        dgvMaterial.Columns["usingLengthM"].ReadOnly = false;
-                        dgvMaterial.Columns["usingweight"].ReadOnly = true;
-                        dgvMaterial.Columns["quantity"].ReadOnly = true;
-                    }
-                    else
-                    {
-                        dgvMaterial.Columns["usingLengthM"].ReadOnly = true;
-                    }
-                    dgvMaterial.Columns["SelectCB"].ReadOnly = false;
-                }
-
-                i++;
-            }
-        }
-
-        private void MaterialReset()
-        {
-            string riskFlag = string.Empty; string msg = string.Empty;
-            foreach (var m in HeaderContent.Materails)
-            {
-                decimal bQty = 0;
-                var result = HeaderContent.LevSimulateList.Where(i => i.MaterialTransLineID == m.TransactionLineID).ToList();
-                if (result.Count != 0)
-                {
-                    bQty = HeaderContent.LevSimulates.Where(i => i.MaterialTransLineID == m.TransactionLineID).Min(i => i.LengthM);
-                }
-
-                m.WorkDate = HeaderContent.IssueDate;
-                m.UsingLengthM = m.LengthM - bQty;
-                var res = _repo.SaveMaterial(epiSession, m);
-            }
-
-            HeaderContent.Materails = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID);
-        }
-
-        private void RecheckCuttingByRow()
-        {
-            int i = 0;
-            foreach (DataGridViewRow row in dgvCutting.Rows)
-            {
-                dgvCutting.CurrentCell = dgvCutting[1, i];
-                i++;
-            }
-        }
-
-        private void SetDirectionPatter()
-        {
-            HeaderContent.CurrentClass = new ClassMasterModel();
-            if (HeaderContent.CurrentClass == null) HeaderContent.CurrentClass = new ClassMasterModel();
-
-            //Default direction of material pattern by Machine.
-            HeaderContent.ProcessLineDetail = _reRes.GetByID(epiSession.PlantID, cmbProcessLine.SelectedValue.ToString());
-
-            //When we selected materials, need to fix direction of material pattern.
-            if (HeaderContent.Materails.ToList().Count > 0)
-            {
-                var mat = HeaderContent.Materails.FirstOrDefault();
-
-                //Change default direction of material pattern.
-                HeaderContent.ProcessLineDetail.ThickMin = mat.Thick;
-                HeaderContent.ProcessLineDetail.ThickMax = mat.Thick;
-                HeaderContent.ProcessLineDetail.WidthMin = mat.Width;
-                HeaderContent.ProcessLineDetail.WidthMax = mat.Width;
-                HeaderContent.ProcessLineDetail.LengthMin = mat.Length;
-                HeaderContent.ProcessLineDetail.LengthMax = mat.Length;
-            }
-
-            //Verify to make sure there already Class pattern.
-            if (HeaderContent.ClassID == 0)
-            {
-                //HeaderContent.CurrentClass.CustomerReq = 1;
-                HeaderContent.CurrentClass.ComudityReq = 1;
-                HeaderContent.CurrentClass.SpecCodeReq = 1;
-                HeaderContent.CurrentClass.PlateCodeReq = 1;
-            }
-            else
-            {
-                HeaderContent.CurrentClass = _repoCls.GetByID(epiSession.PlantID, HeaderContent.ClassID);
-            }
-        }
-
-        #endregion Method
-
-        private void addSOLineToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dgvCutting.Rows.Count == 0) return;
-            string lineId = dgvCutting.Rows[dgvCutting.CurrentRow.Index].Cells["lineid"].Value.GetString();
-            string sono = dgvCutting.Rows[dgvCutting.CurrentRow.Index].Cells["sono"].Value.GetString();
-            if (!string.IsNullOrEmpty(sono))
-            {
-                HeaderContent.CuttingDesign = addSOLine(Convert.ToInt32(lineId), sono);
-            }
-        }
-
-        private void butAddCoilBack_Click(object sender, EventArgs e)
-        {
-            ListCuttingGrid(HeaderContent.CuttingDesign);
-        }
-
-        private void butConfirm_Click(object sender, EventArgs e)
-        {
-            if (HeaderContent.Completed == 1 && HeaderContent.SimulateFlag == 1 && HeaderContent.GenSerialFlag == 0)
-            {
-                DialogResult diaResulta = MessageBox.Show("Are you sure to unconfirm.", "Question.", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (diaResulta == DialogResult.Yes)
-                {
-                    if (_repo.UnConfirmWork(HeaderContent.WorkOrderID))
-                    {
-                        MessageBox.Show("Unconfirmed Order completed.", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        HeaderContent = _repo.GetWorkById(HeaderContent.WorkOrderNum, Convert.ToInt32(HeaderContent.ProcessStep), epiSession.PlantID);
-                        SetHeadContent(HeaderContent);
-                        ListMaterialGrid(HeaderContent.Materails);
-                    }
-                }
-            }
-        }
-
-        private void butGenSN_Click(object sender, EventArgs e)
-        {
-            string msg = string.Empty;
-            IEnumerable<GeneratedSerialModel> serialLines = new List<GeneratedSerialModel>();
-            IEnumerable<SimulateModel> simResult = new List<SimulateModel>();
-            IEnumerable<SimulateModel> coilBack = new List<SimulateModel>();
-            if (HeaderContent.GenSerialFlag == 0)
-            {
-                if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
-                {
-                    simResult = _repo.GetSimulateAll(HeaderContent.WorkOrderID);
-                }
-                else if (HeaderContent.ProcessLineDetail.ResourceGrpID == "L")
-                {
-                    simResult = _repo.GetSimulateLeveller(HeaderContent.WorkOrderID);
-                }
-
-                coilBack = _repo.GetSimulateCoilBack(HeaderContent.WorkOrderID);
-
-                if (coilBack.ToList().Count > 0)
-                {
-                    var cbResult = _repo.GenerateSerial(epiSession, coilBack, HeaderContent.WorkOrderID);
-                }
-
-                if (simResult.ToList().Count > 0)
-                {
-                    serialLines = _repo.GenerateSerial(epiSession, simResult, HeaderContent.WorkOrderID);
-                    _repo.ImportSerialToEpicor(epiSession, HeaderContent, out msg);
-                    HeaderContent.GenSerialFlag = 1;
-                }
-            }
-            else
-            {
-                serialLines = _repo.GetSerialAllByWorkOrder(HeaderContent.WorkOrderID);
-            }
-
-            using (SerialList frm = new SerialList(epiSession, serialLines, HeaderContent))
-            {
-                frm.ShowDialog();
-                HeaderContent.GenSerialFlag = Convert.ToInt32(frm.GenSNComplete);
-                SetHeadContent(HeaderContent);
-            }
-        }
-
-        private void butSimulate_Click(object sender, EventArgs e)
-        {
-            if (HeaderContent.ProcessLineDetail.ResourceGrpID == "S")
-            {
-                SimulateActionModel simModel = new SimulateActionModel();
-                simModel.WorkOrderID = HeaderContent.WorkOrderID;
-                simModel.WorkOrderNum = HeaderContent.WorkOrderNum;
-                simModel.MaterialWeight = HeaderContent.InputWeight;
-                simModel.ProductWeight = HeaderContent.OutputWeight;
-                simModel.Yield = HeaderContent.Yield;
-                simModel.TrimWeight = HeaderContent.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.TotalWeight);
-                simModel.Cuttings = _repo.GetSimulateAll(HeaderContent.WorkOrderID).ToList();
-                simModel.Materials = HeaderContent.Materails.ToList();
-                using (SimulateEntry frm = new SimulateEntry(epiSession, HeaderContent, simModel))
-                {
-                    frm.ShowDialog();
-                    HeaderContent = frm.HeadModel;
-                }
-            }
-
-            SetHeadContent(HeaderContent);
-            ListMaterialGrid(HeaderContent.Materails);
-            ListCuttingGrid(HeaderContent.CuttingDesign);
-            ListCoilBackGrid(HeaderContent.CoilBacks);
-            dgvMaterial.EndEdit();
-        }
-
-        private void cmbOrderType_Leave(object sender, EventArgs e)
-        {
-            if (HeaderContent.CuttingDesign.ToList().Count > 0)
-            {
-                MessageBox.Show("Please clear all cutting design before change process line.", "Validate data error!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbProcessLine.SelectedValue = HeaderContent.ProcessLineDetail.ResourceID;
-                return;
-            }
-        }
-
-        private void dgvMaterial_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-
         private bool OrderCompleted()
         {
             if (HeaderContent.Completed == 1)
@@ -1716,54 +1778,117 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void SimulateLeveller()
         {
-            _repo.ClearSimulateLeveller(HeaderContent.WorkOrderID);
-            HeaderContent.LevSimulates = new List<LevellerSimulateModel>();
-            decimal matBln = 0;
-            foreach (var mat in HeaderContent.Materails)
+            HeaderContent.LevSimulates = _repo.GetLevellerSimAll(HeaderContent.WorkOrderID).ToList();
+            HeaderContent.Materials = _repo.GetAllMaterial(epiSession.PlantID, HeaderContent.WorkOrderID).ToList();
+
+            #region Looping by materials
+
+            foreach (var mat in HeaderContent.Materials.Where(m => m.RemainLengthM > 0).OrderBy(m => m.TransactionLineID))
             {
-                decimal matLength = mat.UsingLengthM * 1000;
+                //Initial remaining material length from using length(Meter* 1,000).
+                decimal matRemLength = mat.RemainLengthM * 1000;
 
-                foreach (var item in HeaderContent.CuttingDesign)
+                #region Looping by materials
+
+                foreach (var item in HeaderContent.CuttingDesign.Where(i => i.CalQuantity != i.SOQuantity))
                 {
-                    decimal bQty = HeaderContent.LevSimulates.Where(p => p.CuttingLineID == item.LineID).Sum(i => i.Quantity);
-                    if (item.SOQuantity != bQty && matLength >= item.Length)
-                    {
-                        decimal calQty = Math.Floor(matLength / item.Length);
+                    //Summary quantity for a cutting design has simulated from simulation lines and assign to [bQty].
+                    decimal bQty = HeaderContent.LevSimulates.Where(p => p.CuttingLineID == item.LineID).Sum(i => i.CalQuantity);
 
-                        if (calQty >= item.SOQuantity && bQty != 0)
+                    #region Conditions implement
+
+                    /*
+                     * Quantity already simulated[bQty] if not equal SO Qty.
+                     * Remaining material length greater than cutting length per unit.
+                     */
+                    if (item.SOQuantity != bQty && matRemLength >= item.Length)
+                    {
+                        //For remaining material length can be used to cutting possible and assign to [calQty:Value is possible].
+                        decimal calQty = Math.Floor(matRemLength / item.Length);
+
+                        #region Calculate by conditional.
+
+                        /*
+                         * calQty           : จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่
+                         * bQty             : จำนวนที่ Simulate ไปแล้วสำหรับ Cut Design นี้
+                         * item.SOQuantity  : จำนวนที่ต้องตัดทั้งหมด
+                         * item.CalQuantity : จำนวนที่สั่งตัดหลังจากการคำนวณ
+                         * item.Length      : ความยาวของชิ้นงานที่ตัดใน 1 หน่วย
+                        */
+
+                        #region ยังไม่ยอดเคยถูก Simulate
+
+                        if (bQty == 0)
                         {
-                            item.CalQuantity = item.SOQuantity - bQty;
-                            item.CompleteRow = true;
-                            matLength = (calQty - (item.CalQuantity - bQty)) * item.Length;
-                        }
-                        else if (calQty >= item.SOQuantity && bQty == 0)
-                        {
-                            item.CalQuantity = item.SOQuantity;
-                            item.CompleteRow = true;
-                            matLength = Math.Floor((calQty - (item.CalQuantity)) * item.Length);
-                        }
-                        else if (calQty < item.SOQuantity && bQty == 0)
-                        {
-                            item.CalQuantity = calQty;
-                            item.CompleteRow = false;
-                            matLength = 0;
-                        }
-                        else if (calQty < item.SOQuantity && bQty != 0)
-                        {
-                            var cal = item.SOQuantity - bQty;
-                            if (cal > calQty)
+                            #region จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือมากกว่าจำนวนที่สั่ง
+
+                            if (calQty >= item.SOQuantity)
                             {
-                                item.CalQuantity = calQty;
-                                item.CompleteRow = (item.SOQuantity == (item.CalQuantity + bQty)); ;
-                                matLength = 0;
-                            }
-                            else if (cal <= calQty)
-                            {
-                                item.CalQuantity = cal;
+                                //จำนวนที่สั่งตัดหลังจากการคำนวณ = (จำนวนที่สั่ง)
+                                item.CalQuantity = item.SOQuantity;
                                 item.CompleteRow = true;
-                                matLength = (calQty - cal) * item.Length;
+
+                                //ความยาว Material ที่เหลือ (มิลลิเมตร) = (จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ - จำนวนที่สั่งตัดหลังจากการคำนวณ) * ความยาวต่อชิ้นงาน (มิลลิเมตร)
+                                matRemLength = Math.Floor((calQty - (item.CalQuantity)) * item.Length);
                             }
+
+                            #endregion จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือมากกว่าจำนวนที่สั่ง
+
+                            #region จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือน้อยกว่าจำนวนที่สั่ง
+
+                            else if (calQty < item.SOQuantity)
+                            {
+                                //จำนวนที่สั่งตัดหลังจากการคำนวณ = (จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่)
+                                item.CalQuantity = calQty;
+                                item.CompleteRow = false;
+
+                                //ความยาว Material ที่เหลือ (มิลลิเมตร) = 0
+                                matRemLength = 0;
+                            }
+
+                            #endregion จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือน้อยกว่าจำนวนที่สั่ง
                         }
+
+                        #endregion ยังไม่ยอดเคยถูก Simulate
+
+                        #region มียอดที่ Simulate ไปบ้างแล้ว
+
+                        else if (bQty != 0)
+                        {
+                            #region จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือมากกว่า [(จำนวนที่สั่ง) - (ยอดที่ Simulate ไปก่อนหน้านี้)]
+
+                            if (calQty >= (item.SOQuantity - bQty))
+                            {
+                                //จำนวนที่สั่งตัดหลังจากการคำนวณ = (จำนวนที่สั่ง) - (มียอดที่ Simulate ไปก่อนหน้านี้)
+                                item.CalQuantity = item.SOQuantity - bQty;
+                                item.CompleteRow = true;
+
+                                // ความยาว Material ที่เหลือ (มิลลิเมตร) = [จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ - (จำนวนที่สั่งตัดหลังจากการคำนวณ)] * ความยาวต่อชิ้นงาน (มิลลิเมตร)
+                                matRemLength = (calQty - (item.CalQuantity)) * item.Length;
+                            }
+
+                            #endregion จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือมากกว่า [(จำนวนที่สั่ง) - (ยอดที่ Simulate ไปก่อนหน้านี้)]
+
+                            #region จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือน้อยกว่า [(จำนวนที่สั่ง) - (ยอดที่ Simulate ไปก่อนหน้านี้)]
+
+                            else if (calQty < item.SOQuantity - bQty)
+                            {
+                                //จำนวนที่สั่งตัดหลังจากการคำนวณ = (จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่)
+                                item.CalQuantity = calQty;
+
+                                //ถ้าหากจำนวนที่ตัด + จำนวนที่ Simulate ไปแล้ว = SO Qty จะเป็นจริง ไม่เช่น จะเป็นเท็จ
+                                item.CompleteRow = (item.SOQuantity == (item.CalQuantity + bQty));
+
+                                //ความยาว Material ที่เหลือ (มิลลิเมตร) = 0
+                                matRemLength = 0;
+                            }
+
+                            #endregion จำนวนชิ้นงานที่สามารถสั่งตัดได้ทั้งหมด โดยคิดจากความยาว Material ที่มีอยู่ เหลือน้อยกว่า [(จำนวนที่สั่ง) - (ยอดที่ Simulate ไปก่อนหน้านี้)]
+                        }
+
+                        #endregion มียอดที่ Simulate ไปบ้างแล้ว
+
+                        #endregion Calculate by conditional.
 
                         LevellerSimulateModel lev = new LevellerSimulateModel();
                         lev.Plant = epiSession.PlantID;
@@ -1771,19 +1896,25 @@ namespace Epicoil.Appl.Presentations.Planning
                         lev.CuttingLineID = item.LineID;
                         lev.MaterialTransLineID = mat.TransactionLineID;
                         lev.SOQuantity = Convert.ToInt32(item.SOQuantity);
-                        lev.Quantity = Convert.ToInt32(item.CalQuantity);
-                        lev.Weight = 0;
-                        lev.LengthM = Math.Ceiling(matLength / 1000);
-                        matBln = matLength;
+                        lev.CalQuantity = Convert.ToInt32(item.CalQuantity);
+                        lev.RemainWeight = 0;// item.CalUnitWgt(item.Thick, item.Width, item.Length, item.Gravity, item.FrontPlate, item.BackPlate);
+                        lev.RemainLength = matRemLength;
+                        lev.RemainLengthM = matRemLength / 1000;
+                        lev.UsingLength = item.CalQuantity * item.Length;
+                        lev.UsingLengthM = (item.CalQuantity * item.Length) / 1000;
                         HeaderContent.LevSimulates = _repo.SaveLevellerSimulate(epiSession, lev).ToList();
                         item.CalculateRows(HeaderContent);
                     }
+
+                    #endregion Conditions implement
                 }
+
+                #endregion Looping by materials
             }
+
+            #endregion Looping by materials
         }
 
-        private void tbutCancelWorkOrder_Click(object sender, EventArgs e)
-        {
-        }
+        #endregion Methods
     }
 }

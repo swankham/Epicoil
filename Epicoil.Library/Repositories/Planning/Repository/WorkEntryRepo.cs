@@ -13,12 +13,15 @@ namespace Epicoil.Library.Repositories.Planning
 {
     public class WorkEntryRepo : IWorkEntryRepo
     {
+        #region Fields
         private readonly IClassMasterRepo _repoCls;
         private readonly IStoreInRepo _repoIn;
         private readonly IResourceRepo _repoResrc;
         private readonly ICoilBackRuleRepo _repoRule;
         private readonly IUserCodeRepo _repoUcode;
+        #endregion
 
+        #region Constructors
         public WorkEntryRepo()
         {
             this._repoUcode = new UserCodeRepo();
@@ -27,7 +30,7 @@ namespace Epicoil.Library.Repositories.Planning
             this._repoRule = new CoilBackRuleRepo();
             this._repoIn = new StoreInRepo();
         }
-
+        #endregion
         public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
         {//If Coil length must be LengthM*1000
             decimal Ma = 0.0M;
@@ -151,7 +154,9 @@ namespace Epicoil.Library.Repositories.Planning
             msg = "";
             try
             {
-                string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE LineID = {0}", model.LineID);
+                string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE LineID = {0}" + Environment.NewLine, model.LineID);
+                sql += string.Format(@"DELETE FROM ucc_pln_LevellerSimulateTmp WHERE CuttingLineID = {0}" + Environment.NewLine, model.LineID);
+                sql += string.Format(@"DELETE FROM ucc_pln_Simulate WHERE CuttingLineID = {0}" + Environment.NewLine, model.LineID);
                 Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting");
                 return true;
             }
@@ -197,10 +202,10 @@ namespace Epicoil.Library.Repositories.Planning
             //string sql = string.Format(@"DELETE FROM ucc_pln_CuttingDesign WHERE  WorkOrderID = {0} AND Status = 'S' ", head.WorkOrderID);
             //Repository.Instance.ExecuteWithTransaction(sql, "Delete Cutting S");
 
-            if (head.Materails.ToList().Count > 0)
+            if (head.Materials.ToList().Count > 0)
             {
                 var cutLines = GetCuttingLines(head.WorkOrderID);
-                var rowData = (from item in head.Materails
+                var rowData = (from item in head.Materials
                                select item).First();
 
                 risk = string.Empty;
@@ -232,10 +237,10 @@ namespace Epicoil.Library.Repositories.Planning
         {
             risk = "";
             msg = "";
-            if (head.Materails.ToList().Count > 0)
+            if (head.Materials.ToList().Count > 0)
             {
                 var cutLines = GetCuttingLines(head.WorkOrderID);
-                var rowData = (from item in head.Materails
+                var rowData = (from item in head.Materials
                                select item).First();
 
                 risk = string.Empty;
@@ -370,52 +375,52 @@ namespace Epicoil.Library.Repositories.Planning
             if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.Equals(model.BussinessType.GetString()));
             if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.Equals(Convert.ToInt32(model.Possession)));
 
-            if (model.Materails.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
+            if (model.Materials.ToList().Count > 0 && model.CuttingDesign.ToList().Count == 0)
             {
-                var mat = model.Materails.FirstOrDefault();
+                var mat = model.Materials.FirstOrDefault();
                 query = query.Where(p => p.CustID.ToString().ToUpper().Equals(mat.CustID.ToString().ToUpper()));
                 query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(mat.CommodityCode.ToString().ToUpper()));
                 query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(mat.SpecCode.ToString().ToUpper()));
                 query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(mat.CoatingCode.ToString().ToUpper()));
 
-                if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.ToString().ToUpper().Equals(mat.MakerCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.ToString().ToUpper().Equals(mat.MillCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.ToString().ToUpper().Equals(mat.SupplierCode.ToString().ToUpper()));
 
-                if (Convert.ToBoolean(model.CurrentClass.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
-                if (model.ProcessLineDetail.ResourceGrpID != "R")
+                if (Convert.ToBoolean(model.Class.ThicknessReq.GetInt())) query = query.Where(p => p.Thick.Equals(mat.Thick));
+                if (model.ProcessLine.ResourceGrpID != "R")
                 {
-                    if (Convert.ToBoolean(model.CurrentClass.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
-                    if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+                    if (Convert.ToBoolean(model.Class.WidthReq.GetInt())) query = query.Where(p => p.Width.Equals(mat.Width));
+                    if (Convert.ToBoolean(model.Class.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
                 }
             }
 
             if (model.CuttingDesign.ToList().Count > 0)
             {
                 var cut = model.CuttingDesign.FirstOrDefault();
-                if (Convert.ToBoolean(model.CurrentClass.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(cut.CustID.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(cut.CommodityCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(cut.SpecCode.ToString().ToUpper()));
-                if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(cut.CoatingCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.CustomerReq.GetInt())) query = query.Where(p => p.CustID.ToString().ToUpper().Equals(cut.CustID.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.ComudityReq.GetInt())) query = query.Where(p => p.CommodityCode.ToString().ToUpper().Equals(cut.CommodityCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.SpecCodeReq.GetInt())) query = query.Where(p => p.SpecCode.ToString().ToUpper().Equals(cut.SpecCode.ToString().ToUpper()));
+                if (Convert.ToBoolean(model.Class.PlateCodeReq.GetInt())) query = query.Where(p => p.CoatingCode.ToString().ToUpper().Equals(cut.CoatingCode.ToString().ToUpper()));
 
                 query = query.Where(p => p.Thick.Equals(cut.Thick));
                 query = query.Where(p => p.Width >= cut.Width);
-                if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(cut.Length));
+                if (Convert.ToBoolean(model.Class.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(cut.Length));
             }
 
-            query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-            query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
-            query = query.Where(p => p.Width >= model.ProcessLineDetail.WidthMin);
-            query = query.Where(p => p.Width <= model.ProcessLineDetail.WidthMax);
-            query = query.Where(p => p.Length >= model.ProcessLineDetail.LengthMin);
-            query = query.Where(p => p.Length <= model.ProcessLineDetail.LengthMax);
+            query = query.Where(p => p.Thick >= model.ProcessLine.ThickMin);
+            query = query.Where(p => p.Thick <= model.ProcessLine.ThickMax);
+            query = query.Where(p => p.Width >= model.ProcessLine.WidthMin);
+            query = query.Where(p => p.Width <= model.ProcessLine.WidthMax);
+            query = query.Where(p => p.Length >= model.ProcessLine.LengthMin);
+            query = query.Where(p => p.Length <= model.ProcessLine.LengthMax);
 
             //if machine is not Slitter and Leveller must be filter for "SHEET" only.
-            if (model.ProcessLineDetail.LengthMin > 0 || model.ProcessLineDetail.LengthMax > 0)
+            if (model.ProcessLine.LengthMin > 0 || model.ProcessLine.LengthMax > 0)
                 query = query.Where(p => p.Length > 0);
 
             //if machine is Slitter and Leveler must be filter for "COIL" only.
-            if (model.ProcessLineDetail.LengthMin == 0 && model.ProcessLineDetail.LengthMax == 0)
+            if (model.ProcessLine.LengthMin == 0 && model.ProcessLine.LengthMax == 0)
                 query = query.Where(p => p.Length.Equals(0));
 
             return query;
@@ -436,7 +441,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
-	                                        , pl.Number06 as Quantity, pl.Number06 as QuantityPack, 0 as CBSelect
+	                                        , pl.Number06 as Quantity, pl.Number07 as QuantityPack, 0 as CBSelect
                                             , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -478,7 +483,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , p.ShortChar09 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , mat.UsingWgt as UsingWeight, mat.RemainWgt as RemainWeight
-	                                        , mat.Qty as Quantity, pl.Number06 as QuantityPack, SelectCB as CBSelect
+	                                        , mat.Qty as Quantity, pl.Number07 as QuantityPack, SelectCB as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -663,7 +668,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                        , pl.Character02 as BussinessType, ISNULL(busi.Character01, '') as BussinessTypeName
 	                                        , pl.Number04 as UsingWeight, pl.Number04 as RemainWeight
 	                                        --, oh.Quantity, oh.Quantity as RemainQty, oh.DimCode, oh.Quantity as QuantityPack, 0 as CBSelect
-                                            , pl.OnHand as Quantity, pl.Number06 as QuantityPack, 0 as CBSelect
+                                            , pl.OnHand as Quantity, pl.Number07 as QuantityPack, 0 as CBSelect
 	                                        , '0' as Status, '' as Note, p.Number12 as Possession, pln.Plant
 	                                        , pl.Number01, pl.Number02, pl.Number03, pl.Number04, 0 as ProductStatus
 	                                        , pl.ShortChar03 as SupplierCode, ISNULL(ven.Name, '') as SupplierName
@@ -728,7 +733,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                                LEFT JOIN UD29 cmdt ON(mat.Cmdty = cmdt.Key1)
 	                                                LEFT JOIN UD30 spec ON(mat.Cmdty = spec.Key2 and mat.Spec = spec.Key1)
 	                                                LEFT JOIN UD31 coat ON(mat.Coating = coat.Key1)
-                                                WHERE gsn.SimLineID = 0 AND gsn.WorkOrderID = {0}", workOrderID);
+                                                WHERE gsn.Status = '0' AND gsn.WorkOrderID = {0}", workOrderID);
 
             return Repository.Instance.GetMany<GeneratedSerialModel>(sql);
         }
@@ -788,7 +793,7 @@ namespace Epicoil.Library.Repositories.Planning
 	                                            , cmdt.Key1 as CommodityCode, cmdt.Character01 as CommodityName
 	                                            , spec.Key1 as SpecCode, spec.Character01 as SpecName, spec.Number01 as Gravity
 	                                            , coat.Key1 as CoatingCode, ISNULL(coat.Character01, '') as CoatingName, ISNULL(coat.Number01, 0.00) as FrontPlate, ISNULL(coat.Number02, 0.00) as BackPlate
-	                                            , mat.MCSSNo, cut.CutSeq as SimLineID, cut.Thick, cut.Width, cut.Length, cut.CutSeq as SimSeq
+	                                            , mat.MCSSNo, cut.CutSeq as SimLineID, cut.Thick, cut.Width, cut.Length, cut.CutSeq as SimSeq, cut.CutSeq
 												, cut.Status, cut.Pack as Stand, cut.CutDivision as CutDiv, cut.UnitWeight, cut.TotalWeight
 												, 1 as CalculatedFlag, cut.Length / 1000 as LengthM, sim.CuttingLineID, sim.MaterialTransLineID, 'FG' as SerialType
                                             FROM ucc_pln_LevellerSimulateTmp sim
@@ -838,24 +843,24 @@ namespace Epicoil.Library.Repositories.Planning
         /// <param name="workOrderNum"></param>
         /// <param name="plant"></param>
         /// <returns>a row by workOrderNum</returns>
-        public PlanningHeadModel GetWorkById(string workOrderNum, int processStep, string plant)
+        public PlanningHeadModel GetWorkById(int workOrderID, int processStep, string plant)
         {
             string sql = string.Format(@"SELECT uf.Name as PICName, busi.Character01 as BussinessTypeName, plh.*
                                             FROM ucc_pln_PlanHead plh (NOLOCK)
                                             LEFT JOIN UserFile uf ON(plh.PIC = uf.DcdUserID)
                                             LEFT JOIN UD25 busi ON(plh.BT = busi.Key1)
-                                            WHERE plh.WorkOrderNum = '{0}' AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderNum, plant, processStep);
+                                            WHERE plh.WorkOrderID = {0} AND plh.Plant = N'{1}' AND ProcessStep = {2}", workOrderID, plant, processStep);
 
             var result = Repository.Instance.GetOne<PlanningHeadModel>(sql);
 
             if (result != null)
             {
-                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-                result.OrderTypeList = _repoUcode.GetAll("OrderType");
-                result.PossessionList = _repoUcode.GetAll("Pocessed");
-                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
-                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
-                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
+                result.Resources = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S")).ToList();
+                result.OrderTypeList = _repoUcode.GetAll("OrderType").ToList();
+                result.Possessions = _repoUcode.GetAll("Pocessed").ToList();
+                result.ProcessLine = _repoResrc.GetByID(plant, result.ProcessLineId);
+                result.Materials = GetAllMaterial(plant, result.WorkOrderID).ToList();
+                result.Class = _repoCls.GetByID(plant, result.ClassID);
                 result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
                 result.CoilBacks = GetCoilBackAll(result.WorkOrderID).ToList();
                 result.CoilBackRoles = _repoRule.GetAll().ToList();
@@ -876,12 +881,12 @@ namespace Epicoil.Library.Repositories.Planning
 
             if (result != null)
             {
-                result.ResourceList = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-                result.OrderTypeList = _repoUcode.GetAll("OrderType");
-                result.PossessionList = _repoUcode.GetAll("Pocessed");
-                result.ProcessLineDetail = _repoResrc.GetByID(plant, result.ProcessLineId);
-                result.Materails = GetAllMaterial(plant, result.WorkOrderID).ToList();
-                result.CurrentClass = _repoCls.GetByID(plant, result.ClassID);
+                result.Resources = _repoResrc.GetAll(plant).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S")).ToList();
+                result.OrderTypeList = _repoUcode.GetAll("OrderType").ToList();
+                result.Possessions = _repoUcode.GetAll("Pocessed").ToList();
+                result.ProcessLine = _repoResrc.GetByID(plant, result.ProcessLineId);
+                result.Materials = GetAllMaterial(plant, result.WorkOrderID).ToList();
+                result.Class = _repoCls.GetByID(plant, result.ClassID);
                 result.CuttingDesign = GetCuttingLines(result.WorkOrderID).ToList();
                 result.CoilBacks = GetCoilBackAll(result.WorkOrderID).ToList();
                 result.CoilBackRoles = _repoRule.GetAll().ToList();
@@ -1098,7 +1103,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,GenSerialFlag
                                                        ,OpenFlag
                                                        ,OperationState
-                                                       ,PackingStyleFlag
+                                                       ,PackingOrderFlag
                                                        ,PackingPlanFlag)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
@@ -1172,7 +1177,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,GenSerialFlag = {27} --<GenSerialFlag, tinyint,>
                                                       ,OpenFlag = {28} --<OpenFlag, tinyint,>
                                                       ,OperationState = {29} --<OperationState, int>
-                                                      ,PackingStyleFlag = {30} --<PackingStyleFlag, int,>
+                                                      ,PackingOrderFlag = {30} --<PackingStyleFlag, int,>
                                                       ,PackingPlanFlag = {31} --<PackingPlanFlag, int>
                                                  WHERE WorkOrderID = {3} AND ProcessStep = {4} AND Plant = N'{1}'
                                             END" + Environment.NewLine
@@ -1213,7 +1218,7 @@ namespace Epicoil.Library.Repositories.Planning
             //if (model.Materails.ToList().Count != 0)
             //    var result = SaveMaterial(_session, model.Materails);
 
-            return GetWorkById(workOrderNum, Convert.ToInt32(model.ProcessStep), _session.PlantID);
+            return GetWorkById(Convert.ToInt32(id), Convert.ToInt32(model.ProcessStep), _session.PlantID);
         }
 
         public IEnumerable<CoilBackModel> SaveCoilBack(SessionInfo _session, CoilBackModel data)
@@ -1359,26 +1364,34 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,WorkOrderID
                                                        ,CuttingLineID
                                                        ,MaterialTransLineID
-                                                       ,Quantity
-                                                       ,Weight
-                                                       ,LengthM
+                                                       ,CalQuantity
+                                                       ,RemainWeight
+                                                       ,RemainLength
+                                                       ,RemainLengthM
                                                        ,CreationDate
                                                        ,LastUpdateDate
                                                        ,CreatedBy
-                                                       ,UpdatedBy, SOQuantity)
+                                                       ,UpdatedBy, SOQuantity
+                                                       ,UsingWeight
+                                                       ,UsingLength
+                                                       ,UsingLengthM)
                                                  VALUES
                                                        (N'{0}'  --<Plant, nvarchar(8),>
                                                        ,{1}  --<WorkOrderID, bigint,>
                                                        ,{2}  --<CuttingLineID, bigint,>
                                                        ,{3}  --<MaterialTransLineID, bigint,>
-                                                       ,{4}  --<Quantity, int,>
-                                                       ,{5}  --<Weight, decimal(20,9),>
-                                                       ,{6}  --<LengthM, decimal(20,9),>
+                                                       ,{4}  --<CalQuantity, int,>
+                                                       ,{5}  --<RemainWeight, decimal(20,9),>
+                                                       ,{6}  --<RemainLength, decimal(20,9),>
+                                                       ,{7}  --<RemainLengthM, decimal(20,9),>
                                                        ,GETDATE()  --<CreationDate, datetime,>
                                                        ,GETDATE()  --<LastUpdateDate, datetime,>
-                                                       ,N'{7}'  --<CreatedBy, nvarchar(45),>
-                                                       ,N'{7}'  --<UpdatedBy, nvarchar(45),>
-                                                       ,{8}
+                                                       ,N'{8}'  --<CreatedBy, nvarchar(45),>
+                                                       ,N'{8}'  --<UpdatedBy, nvarchar(45),>
+                                                       ,{9}
+                                                       ,{10}  --<UsingWeight, decimal(20,9),>
+                                                       ,{11}  --<UsingLength, decimal(20,9),>
+                                                       ,{12}  --<UsingLengthM, decimal(20,9),>
 		                                    )
                                         END
                                     ELSE
@@ -1388,23 +1401,31 @@ namespace Epicoil.Library.Repositories.Planning
                                                   ,WorkOrderID = {1} --<WorkOrderID, bigint,>
                                                   ,CuttingLineID = {2} --<CuttingLineID, bigint,>
                                                   ,MaterialTransLineID = {3} --<MaterialTransLineID, bigint,>
-                                                  ,Quantity = {4} --<Quantity, int,>
-                                                  ,Weight = {5} --<Weight, decimal(20,9),>
-                                                  ,LengthM = {6} --<LengthM, decimal(20,9),>
+                                                  ,CalQuantity = {4} --<Quantity, int,>
+                                                  ,RemainWeight = {5} --<RemainWeight, decimal(20,9),>
+                                                  ,RemainLength = {6} --<RemainLength, decimal(20,9),>
+                                                  ,RemainLengthM = {7} --<RemainLengthM, decimal(20,9),>
                                                   ,LastUpdateDate = GETDATE()  --<LastUpdateDate, datetime,>
-                                                  ,UpdatedBy = N'{7}' --<UpdatedBy, nvarchar(45),>
-                                                  ,SOQuantity = {8}
+                                                  ,UpdatedBy = N'{8}' --<UpdatedBy, nvarchar(45),>
+                                                  ,SOQuantity = {9}
+                                                  ,UsingWeight = {10} --<UsingWeight, decimal(20,9),>
+                                                  ,UsingLength = {11} --<UsingLength, decimal(20,9),>
+                                                  ,UsingLengthM = {12} --<UsingLengthM, decimal(20,9),>
                                              WHERE WorkOrderID = {1} AND CuttingLineID = {2} AND MaterialTransLineID = {3}
                                         END" + Environment.NewLine
                                               , _session.PlantID
                                               , model.WorkOrderID
                                               , model.CuttingLineID
                                               , model.MaterialTransLineID
-                                              , model.Quantity
-                                              , model.Weight
-                                              , model.LengthM
+                                              , model.CalQuantity
+                                              , model.RemainWeight
+                                              , model.RemainLength
+                                              , model.RemainLengthM
                                               , _session.UserID
                                               , model.SOQuantity
+                                              , model.UsingWeight
+                                              , model.UsingLength
+                                              , model.UsingLengthM
                                               );
 
             //Update PartLot.CheckBox01 = 1 to change status has already used.
@@ -1459,7 +1480,7 @@ namespace Epicoil.Library.Repositories.Planning
                                                        ,CreationDate
                                                        ,LastUpdateDate
                                                        ,CreatedBy
-                                                       ,UpdatedBy, TotalLength, CompletedRow)
+                                                       ,UpdatedBy, TotalLength, CompletedRow, QtyPerMaterial, Direction)
                                                  VALUES
                                                        ( N'{0}' --<Company, nvarchar(8),>
                                                        , N'{1}' --<Plant, nvarchar(8),>
@@ -1500,6 +1521,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                        , N'{33}' --<UpdatedBy, varchar(45),>
                                                        , {35}  --<TotalLength, Decimal(20,9)>
                                                        , {36}  --<CompletedRow, int>
+                                                       , {37}  --<QtyPerMaterial, int>
+                                                       , '{38}'  --<Direction, nchar(10)>
 		                                               )
                                             END
                                         ELSE
@@ -1543,6 +1566,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
                                                       ,TotalLength = {35}  --<TotalLength, decimal(20,9),>
                                                       ,CompletedRow = {36}  --<CompletedRow, int,>
+                                                      ,QtyPerMaterial = {37}  --<QtyPerMaterial, int,>
+                                                      ,Direction = '{38}'  --<Direction, nchar(10)>
                                                  WHERE LineID = {34}
                                             END" + Environment.NewLine
                                   , _session.CompanyID
@@ -1582,6 +1607,8 @@ namespace Epicoil.Library.Repositories.Planning
                                   , data.LineID.GetInt()
                                   , data.TotalLength.GetDecimal()
                                   , Convert.ToInt32(data.CompleteRow.GetInt())
+                                  , data.QtyPerMaterial.GetDecimal()
+                                  , string.IsNullOrEmpty(data.Direction.GetString()) ? "W" : data.Direction.GetString()
                                   );
             Repository.Instance.ExecuteWithTransaction(sql, "Update Cutting");
 
@@ -1907,6 +1934,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                       ,CreatedBy = N'{33}'  --<CreatedBy, varchar(45),>
                                                       ,UpdatedBy = N'{33}'  --<UpdatedBy, varchar(45),>
                                                       ,TotalLength = {35}  --<TotalLength, decimal(20,9),>
+                                                      ,QtyPerMaterial = {36}  --<QtyPerMaterial, int,>
+                                                      ,Direction = '{37}'  --<Direction, nchar(10)>
                                                  WHERE LineID = {34}" + Environment.NewLine
                                                               , _session.CompanyID
                                                               , _session.PlantID
@@ -1944,6 +1973,8 @@ namespace Epicoil.Library.Repositories.Planning
                                                               , _session.UserID
                                                               , item.LineID.GetInt()
                                                               , lineGrpSum.TotalLength.GetDecimal()       //Update Simulate
+                                                              , item.QtyPerMaterial
+                                                              , item.Direction
                                                               );
 
                 Repository.Instance.ExecuteWithTransaction(sql, "Insert Simulates");

@@ -58,6 +58,9 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WorkEntry));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.nextProcessStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,7 +115,6 @@
             this.statusCB = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.butAddCoilBack = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvCutting = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -135,6 +137,7 @@
             this.cmbPossession = new System.Windows.Forms.ComboBox();
             this.txtPICName = new System.Windows.Forms.TextBox();
             this.chkPackingPlan = new System.Windows.Forms.CheckBox();
+            this.butConfirm = new System.Windows.Forms.Button();
             this.txtUsingWeight = new System.Windows.Forms.TextBox();
             this.dptIssueDate = new System.Windows.Forms.DateTimePicker();
             this.label8 = new System.Windows.Forms.Label();
@@ -142,7 +145,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.butConfirm = new System.Windows.Forms.Button();
             this.butGenSN = new System.Windows.Forms.Button();
             this.butSimulate = new System.Windows.Forms.Button();
             this.chkLVTrim = new System.Windows.Forms.CheckBox();
@@ -190,6 +192,7 @@
             this.commodity1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.spec1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.coating1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.direction = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.thick1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.length1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -202,6 +205,7 @@
             this.totallength = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.soweight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.soqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.qtypermat = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.calqty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.qtyPack1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pack = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -223,7 +227,6 @@
             this.panel4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoilBack)).BeginInit();
-            this.panel2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -294,7 +297,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 210);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 181);
             this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -306,8 +309,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.groupBox4);
-            this.splitContainer1.Size = new System.Drawing.Size(1258, 531);
-            this.splitContainer1.SplitterDistance = 240;
+            this.splitContainer1.Size = new System.Drawing.Size(1258, 560);
+            this.splitContainer1.SplitterDistance = 252;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -325,7 +328,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer2.Size = new System.Drawing.Size(1258, 240);
+            this.splitContainer2.Size = new System.Drawing.Size(1258, 252);
             this.splitContainer2.SplitterDistance = 889;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -338,7 +341,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(889, 240);
+            this.groupBox2.Size = new System.Drawing.Size(889, 252);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Material";
@@ -390,7 +393,7 @@
             this.dgvMaterial.RowHeadersVisible = false;
             this.dgvMaterial.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvMaterial.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMaterial.Size = new System.Drawing.Size(881, 193);
+            this.dgvMaterial.Size = new System.Drawing.Size(881, 205);
             this.dgvMaterial.TabIndex = 17;
             this.dgvMaterial.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellClick);
             this.dgvMaterial.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvMaterial_CellEndEdit);
@@ -658,7 +661,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox3.Size = new System.Drawing.Size(365, 240);
+            this.groupBox3.Size = new System.Drawing.Size(365, 252);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Coil Back / Sheet Back";
@@ -702,7 +705,7 @@
             this.dgvCoilBack.RowHeadersVisible = false;
             this.dgvCoilBack.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCoilBack.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCoilBack.Size = new System.Drawing.Size(357, 193);
+            this.dgvCoilBack.Size = new System.Drawing.Size(357, 205);
             this.dgvCoilBack.TabIndex = 18;
             // 
             // transactionlineid1
@@ -824,27 +827,12 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.butAddCoilBack);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(4, 18);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(357, 25);
             this.panel2.TabIndex = 1;
-            // 
-            // butAddCoilBack
-            // 
-            this.butAddCoilBack.Dock = System.Windows.Forms.DockStyle.Right;
-            this.butAddCoilBack.ForeColor = System.Drawing.Color.Black;
-            this.butAddCoilBack.Location = new System.Drawing.Point(199, 0);
-            this.butAddCoilBack.Margin = new System.Windows.Forms.Padding(4);
-            this.butAddCoilBack.Name = "butAddCoilBack";
-            this.butAddCoilBack.Size = new System.Drawing.Size(158, 25);
-            this.butAddCoilBack.TabIndex = 1;
-            this.butAddCoilBack.Text = "Add Manual Coil Back";
-            this.butAddCoilBack.UseVisualStyleBackColor = true;
-            this.butAddCoilBack.Visible = false;
-            this.butAddCoilBack.Click += new System.EventHandler(this.butAddCoilBack_Click);
             // 
             // groupBox4
             // 
@@ -855,7 +843,7 @@
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox4.Size = new System.Drawing.Size(1258, 286);
+            this.groupBox4.Size = new System.Drawing.Size(1258, 303);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Cutting Design";
@@ -883,6 +871,7 @@
             this.commodity1,
             this.spec1,
             this.coating1,
+            this.direction,
             this.thick1,
             this.width1,
             this.length1,
@@ -895,6 +884,7 @@
             this.totallength,
             this.soweight,
             this.soqty,
+            this.qtypermat,
             this.calqty,
             this.qtyPack1,
             this.pack,
@@ -912,7 +902,7 @@
             this.dgvCutting.RowHeadersVisible = false;
             this.dgvCutting.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvCutting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvCutting.Size = new System.Drawing.Size(1250, 242);
+            this.dgvCutting.Size = new System.Drawing.Size(1250, 259);
             this.dgvCutting.TabIndex = 18;
             this.dgvCutting.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCutting_CellEndEdit);
             this.dgvCutting.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dgvCutting_CellValidating);
@@ -920,7 +910,7 @@
             // panel3
             // 
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(4, 260);
+            this.panel3.Location = new System.Drawing.Point(4, 277);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(1250, 22);
@@ -934,7 +924,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1258, 171);
+            this.groupBox1.Size = new System.Drawing.Size(1258, 142);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Header";
@@ -952,7 +942,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox5);
-            this.splitContainer3.Size = new System.Drawing.Size(1250, 149);
+            this.splitContainer3.Size = new System.Drawing.Size(1250, 120);
             this.splitContainer3.SplitterDistance = 687;
             this.splitContainer3.TabIndex = 22;
             // 
@@ -973,14 +963,14 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer4.Size = new System.Drawing.Size(687, 149);
+            this.splitContainer4.Size = new System.Drawing.Size(687, 120);
             this.splitContainer4.SplitterDistance = 110;
             this.splitContainer4.TabIndex = 41;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(34, 100);
+            this.label3.Location = new System.Drawing.Point(34, 90);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(73, 15);
@@ -990,7 +980,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 71);
+            this.label2.Location = new System.Drawing.Point(22, 64);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 15);
@@ -1000,7 +990,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 43);
+            this.label1.Location = new System.Drawing.Point(24, 39);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 15);
@@ -1036,7 +1026,7 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.splitContainer6);
-            this.splitContainer5.Size = new System.Drawing.Size(573, 149);
+            this.splitContainer5.Size = new System.Drawing.Size(573, 120);
             this.splitContainer5.SplitterDistance = 128;
             this.splitContainer5.TabIndex = 0;
             // 
@@ -1051,9 +1041,10 @@
             // 
             // txtProcessStep
             // 
-            this.txtProcessStep.Location = new System.Drawing.Point(4, 69);
+            this.txtProcessStep.Location = new System.Drawing.Point(4, 62);
             this.txtProcessStep.Margin = new System.Windows.Forms.Padding(4);
             this.txtProcessStep.Name = "txtProcessStep";
+            this.txtProcessStep.ReadOnly = true;
             this.txtProcessStep.Size = new System.Drawing.Size(117, 21);
             this.txtProcessStep.TabIndex = 40;
             // 
@@ -1062,7 +1053,7 @@
             this.cmbOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbOrderType.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbOrderType.FormattingEnabled = true;
-            this.cmbOrderType.Location = new System.Drawing.Point(4, 97);
+            this.cmbOrderType.Location = new System.Drawing.Point(4, 87);
             this.cmbOrderType.Margin = new System.Windows.Forms.Padding(4);
             this.cmbOrderType.Name = "cmbOrderType";
             this.cmbOrderType.Size = new System.Drawing.Size(117, 23);
@@ -1074,7 +1065,7 @@
             this.cmbProcessLine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbProcessLine.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbProcessLine.FormattingEnabled = true;
-            this.cmbProcessLine.Location = new System.Drawing.Point(4, 40);
+            this.cmbProcessLine.Location = new System.Drawing.Point(4, 36);
             this.cmbProcessLine.Margin = new System.Windows.Forms.Padding(4);
             this.cmbProcessLine.Name = "cmbProcessLine";
             this.cmbProcessLine.Size = new System.Drawing.Size(117, 23);
@@ -1096,14 +1087,14 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.splitContainer7);
-            this.splitContainer6.Size = new System.Drawing.Size(441, 149);
+            this.splitContainer6.Size = new System.Drawing.Size(441, 120);
             this.splitContainer6.SplitterDistance = 77;
             this.splitContainer6.TabIndex = 0;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 47);
+            this.label6.Location = new System.Drawing.Point(3, 39);
             this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 15);
@@ -1113,7 +1104,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 18);
+            this.label4.Location = new System.Drawing.Point(39, 14);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 15);
@@ -1135,13 +1126,14 @@
             // 
             // splitContainer7.Panel2
             // 
+            this.splitContainer7.Panel2.Controls.Add(this.butConfirm);
             this.splitContainer7.Panel2.Controls.Add(this.txtUsingWeight);
             this.splitContainer7.Panel2.Controls.Add(this.dptIssueDate);
             this.splitContainer7.Panel2.Controls.Add(this.label8);
             this.splitContainer7.Panel2.Controls.Add(this.dptDueDate);
             this.splitContainer7.Panel2.Controls.Add(this.label7);
             this.splitContainer7.Panel2.Controls.Add(this.label5);
-            this.splitContainer7.Size = new System.Drawing.Size(360, 149);
+            this.splitContainer7.Size = new System.Drawing.Size(360, 120);
             this.splitContainer7.SplitterDistance = 120;
             this.splitContainer7.TabIndex = 0;
             // 
@@ -1150,7 +1142,7 @@
             this.cmbPossession.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbPossession.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.cmbPossession.FormattingEnabled = true;
-            this.cmbPossession.Location = new System.Drawing.Point(4, 42);
+            this.cmbPossession.Location = new System.Drawing.Point(4, 34);
             this.cmbPossession.Margin = new System.Windows.Forms.Padding(4);
             this.cmbPossession.Name = "cmbPossession";
             this.cmbPossession.Size = new System.Drawing.Size(111, 23);
@@ -1160,7 +1152,7 @@
             // 
             // txtPICName
             // 
-            this.txtPICName.Location = new System.Drawing.Point(4, 16);
+            this.txtPICName.Location = new System.Drawing.Point(4, 11);
             this.txtPICName.Margin = new System.Windows.Forms.Padding(4);
             this.txtPICName.Name = "txtPICName";
             this.txtPICName.ReadOnly = true;
@@ -1170,7 +1162,7 @@
             // chkPackingPlan
             // 
             this.chkPackingPlan.AutoSize = true;
-            this.chkPackingPlan.Location = new System.Drawing.Point(4, 73);
+            this.chkPackingPlan.Location = new System.Drawing.Point(4, 63);
             this.chkPackingPlan.Margin = new System.Windows.Forms.Padding(4);
             this.chkPackingPlan.Name = "chkPackingPlan";
             this.chkPackingPlan.Size = new System.Drawing.Size(98, 19);
@@ -1179,9 +1171,20 @@
             this.chkPackingPlan.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.chkPackingPlan.UseVisualStyleBackColor = true;
             // 
+            // butConfirm
+            // 
+            this.butConfirm.Location = new System.Drawing.Point(131, 83);
+            this.butConfirm.Name = "butConfirm";
+            this.butConfirm.Size = new System.Drawing.Size(102, 28);
+            this.butConfirm.TabIndex = 19;
+            this.butConfirm.Tag = "";
+            this.butConfirm.UseVisualStyleBackColor = true;
+            this.butConfirm.Visible = false;
+            this.butConfirm.Click += new System.EventHandler(this.butConfirm_Click);
+            // 
             // txtUsingWeight
             // 
-            this.txtUsingWeight.Location = new System.Drawing.Point(93, 68);
+            this.txtUsingWeight.Location = new System.Drawing.Point(92, 61);
             this.txtUsingWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtUsingWeight.Name = "txtUsingWeight";
             this.txtUsingWeight.ReadOnly = true;
@@ -1200,7 +1203,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(4, 70);
+            this.label8.Location = new System.Drawing.Point(4, 64);
             this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(86, 15);
@@ -1209,7 +1212,7 @@
             // 
             // dptDueDate
             // 
-            this.dptDueDate.Location = new System.Drawing.Point(93, 36);
+            this.dptDueDate.Location = new System.Drawing.Point(93, 32);
             this.dptDueDate.Margin = new System.Windows.Forms.Padding(4);
             this.dptDueDate.Name = "dptDueDate";
             this.dptDueDate.Size = new System.Drawing.Size(140, 21);
@@ -1218,7 +1221,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 42);
+            this.label7.Location = new System.Drawing.Point(25, 37);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(65, 15);
@@ -1237,7 +1240,6 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.butConfirm);
             this.groupBox5.Controls.Add(this.butGenSN);
             this.groupBox5.Controls.Add(this.butSimulate);
             this.groupBox5.Controls.Add(this.chkLVTrim);
@@ -1262,24 +1264,13 @@
             this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 2, 4, 4);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox5.Size = new System.Drawing.Size(557, 149);
+            this.groupBox5.Size = new System.Drawing.Size(557, 120);
             this.groupBox5.TabIndex = 21;
             this.groupBox5.TabStop = false;
             // 
-            // butConfirm
-            // 
-            this.butConfirm.Location = new System.Drawing.Point(222, 118);
-            this.butConfirm.Name = "butConfirm";
-            this.butConfirm.Size = new System.Drawing.Size(102, 28);
-            this.butConfirm.TabIndex = 19;
-            this.butConfirm.Tag = "";
-            this.butConfirm.UseVisualStyleBackColor = true;
-            this.butConfirm.Visible = false;
-            this.butConfirm.Click += new System.EventHandler(this.butConfirm_Click);
-            // 
             // butGenSN
             // 
-            this.butGenSN.Location = new System.Drawing.Point(438, 118);
+            this.butGenSN.Location = new System.Drawing.Point(438, 83);
             this.butGenSN.Name = "butGenSN";
             this.butGenSN.Size = new System.Drawing.Size(102, 28);
             this.butGenSN.TabIndex = 18;
@@ -1289,7 +1280,7 @@
             // 
             // butSimulate
             // 
-            this.butSimulate.Location = new System.Drawing.Point(330, 118);
+            this.butSimulate.Location = new System.Drawing.Point(330, 83);
             this.butSimulate.Name = "butSimulate";
             this.butSimulate.Size = new System.Drawing.Size(102, 28);
             this.butSimulate.TabIndex = 17;
@@ -1300,7 +1291,7 @@
             // chkLVTrim
             // 
             this.chkLVTrim.AutoSize = true;
-            this.chkLVTrim.Location = new System.Drawing.Point(111, 97);
+            this.chkLVTrim.Location = new System.Drawing.Point(111, 89);
             this.chkLVTrim.Margin = new System.Windows.Forms.Padding(4);
             this.chkLVTrim.Name = "chkLVTrim";
             this.chkLVTrim.Size = new System.Drawing.Size(51, 19);
@@ -1310,7 +1301,7 @@
             // 
             // txtTotalWidth
             // 
-            this.txtTotalWidth.Location = new System.Drawing.Point(395, 72);
+            this.txtTotalWidth.Location = new System.Drawing.Point(395, 61);
             this.txtTotalWidth.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalWidth.Name = "txtTotalWidth";
             this.txtTotalWidth.ReadOnly = true;
@@ -1321,7 +1312,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(272, 75);
+            this.label15.Location = new System.Drawing.Point(272, 64);
             this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(119, 15);
@@ -1331,7 +1322,7 @@
             // txtBT
             // 
             this.txtBT.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtBT.Location = new System.Drawing.Point(212, 93);
+            this.txtBT.Location = new System.Drawing.Point(152, 118);
             this.txtBT.Margin = new System.Windows.Forms.Padding(4);
             this.txtBT.Name = "txtBT";
             this.txtBT.Size = new System.Drawing.Size(40, 21);
@@ -1342,7 +1333,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(172, 97);
+            this.label16.Location = new System.Drawing.Point(112, 122);
             this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(31, 15);
@@ -1353,7 +1344,7 @@
             // txtTotalMaterialAmount
             // 
             this.txtTotalMaterialAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(395, 93);
+            this.txtTotalMaterialAmount.Location = new System.Drawing.Point(337, 118);
             this.txtTotalMaterialAmount.Margin = new System.Windows.Forms.Padding(4);
             this.txtTotalMaterialAmount.Name = "txtTotalMaterialAmount";
             this.txtTotalMaterialAmount.Size = new System.Drawing.Size(145, 21);
@@ -1363,7 +1354,7 @@
             // 
             // txtYield
             // 
-            this.txtYield.Location = new System.Drawing.Point(395, 41);
+            this.txtYield.Location = new System.Drawing.Point(395, 34);
             this.txtYield.Margin = new System.Windows.Forms.Padding(4);
             this.txtYield.Name = "txtYield";
             this.txtYield.ReadOnly = true;
@@ -1373,7 +1364,7 @@
             // 
             // txtLossWeight
             // 
-            this.txtLossWeight.Location = new System.Drawing.Point(395, 12);
+            this.txtLossWeight.Location = new System.Drawing.Point(395, 10);
             this.txtLossWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtLossWeight.Name = "txtLossWeight";
             this.txtLossWeight.ReadOnly = true;
@@ -1384,7 +1375,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(258, 95);
+            this.label12.Location = new System.Drawing.Point(200, 120);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(133, 15);
@@ -1395,7 +1386,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(340, 44);
+            this.label13.Location = new System.Drawing.Point(340, 37);
             this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(51, 15);
@@ -1405,7 +1396,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(311, 16);
+            this.label14.Location = new System.Drawing.Point(311, 13);
             this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(80, 15);
@@ -1414,7 +1405,7 @@
             // 
             // txtOutputWeight
             // 
-            this.txtOutputWeight.Location = new System.Drawing.Point(111, 69);
+            this.txtOutputWeight.Location = new System.Drawing.Point(111, 61);
             this.txtOutputWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtOutputWeight.Name = "txtOutputWeight";
             this.txtOutputWeight.ReadOnly = true;
@@ -1424,7 +1415,7 @@
             // 
             // txtRewindWeight
             // 
-            this.txtRewindWeight.Location = new System.Drawing.Point(111, 40);
+            this.txtRewindWeight.Location = new System.Drawing.Point(111, 34);
             this.txtRewindWeight.Margin = new System.Windows.Forms.Padding(4);
             this.txtRewindWeight.Name = "txtRewindWeight";
             this.txtRewindWeight.ReadOnly = true;
@@ -1445,7 +1436,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 72);
+            this.label11.Location = new System.Drawing.Point(15, 64);
             this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(90, 15);
@@ -1455,7 +1446,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(9, 43);
+            this.label10.Location = new System.Drawing.Point(9, 39);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(96, 15);
@@ -1520,14 +1511,14 @@
             this.tbutNewWork.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbutNewWork.Name = "tbutNewWork";
             this.tbutNewWork.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.tbutNewWork.Size = new System.Drawing.Size(206, 22);
+            this.tbutNewWork.Size = new System.Drawing.Size(208, 22);
             this.tbutNewWork.Text = "&New Work Order";
             this.tbutNewWork.Click += new System.EventHandler(this.tbutNewWork_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(205, 6);
             // 
             // tbutNewMaterial
             // 
@@ -1535,7 +1526,7 @@
             this.tbutNewMaterial.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbutNewMaterial.Name = "tbutNewMaterial";
             this.tbutNewMaterial.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.M)));
-            this.tbutNewMaterial.Size = new System.Drawing.Size(206, 22);
+            this.tbutNewMaterial.Size = new System.Drawing.Size(208, 22);
             this.tbutNewMaterial.Text = "&New Material";
             this.tbutNewMaterial.Click += new System.EventHandler(this.tbutNewMaterial_Click);
             // 
@@ -1545,7 +1536,7 @@
             this.tbutNewCoilBack.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbutNewCoilBack.Name = "tbutNewCoilBack";
             this.tbutNewCoilBack.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
-            this.tbutNewCoilBack.Size = new System.Drawing.Size(206, 22);
+            this.tbutNewCoilBack.Size = new System.Drawing.Size(208, 22);
             this.tbutNewCoilBack.Text = "&Add Coil Back";
             this.tbutNewCoilBack.Visible = false;
             this.tbutNewCoilBack.Click += new System.EventHandler(this.tbutNewCoilBack_Click);
@@ -1553,22 +1544,22 @@
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(203, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(205, 6);
             // 
             // tbutNewCutting
             // 
             this.tbutNewCutting.Image = global::Epicoil.Appl.Properties.Resources.epicor_new;
             this.tbutNewCutting.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tbutNewCutting.Name = "tbutNewCutting";
-            this.tbutNewCutting.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
-            this.tbutNewCutting.Size = new System.Drawing.Size(206, 22);
+            this.tbutNewCutting.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.tbutNewCutting.Size = new System.Drawing.Size(208, 22);
             this.tbutNewCutting.Text = "New Line Cutting";
             this.tbutNewCutting.Click += new System.EventHandler(this.tbutNewCutting_Click);
             // 
             // addSOLineToolStripMenuItem
             // 
             this.addSOLineToolStripMenuItem.Name = "addSOLineToolStripMenuItem";
-            this.addSOLineToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.addSOLineToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.addSOLineToolStripMenuItem.Text = "Add SO Line";
             this.addSOLineToolStripMenuItem.Visible = false;
             this.addSOLineToolStripMenuItem.Click += new System.EventHandler(this.addSOLineToolStripMenuItem_Click);
@@ -1737,11 +1728,30 @@
             this.coating1.ReadOnly = true;
             this.coating1.Width = 73;
             // 
+            // direction
+            // 
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Blue;
+            this.direction.DefaultCellStyle = dataGridViewCellStyle19;
+            this.direction.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
+            this.direction.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.direction.HeaderText = "Direction";
+            this.direction.Items.AddRange(new object[] {
+            "",
+            "W",
+            "L"});
+            this.direction.Name = "direction";
+            this.direction.ReadOnly = true;
+            this.direction.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.direction.Visible = false;
+            this.direction.Width = 80;
+            // 
             // thick1
             // 
-            dataGridViewCellStyle19.Format = "N2";
-            dataGridViewCellStyle19.NullValue = "0";
-            this.thick1.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle20.Format = "N2";
+            dataGridViewCellStyle20.NullValue = "0";
+            this.thick1.DefaultCellStyle = dataGridViewCellStyle20;
             this.thick1.HeaderText = "Thick";
             this.thick1.Name = "thick1";
             this.thick1.ReadOnly = true;
@@ -1751,9 +1761,9 @@
             // width1
             // 
             this.width1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle20.Format = "N2";
-            dataGridViewCellStyle20.NullValue = "0";
-            this.width1.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle21.Format = "N2";
+            dataGridViewCellStyle21.NullValue = "0";
+            this.width1.DefaultCellStyle = dataGridViewCellStyle21;
             this.width1.HeaderText = "Width";
             this.width1.Name = "width1";
             this.width1.ReadOnly = true;
@@ -1763,9 +1773,9 @@
             // length1
             // 
             this.length1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            dataGridViewCellStyle21.Format = "N2";
-            dataGridViewCellStyle21.NullValue = "0";
-            this.length1.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle22.Format = "N2";
+            dataGridViewCellStyle22.NullValue = "0";
+            this.length1.DefaultCellStyle = dataGridViewCellStyle22;
             this.length1.HeaderText = "Length";
             this.length1.Name = "length1";
             this.length1.ReadOnly = true;
@@ -1774,8 +1784,11 @@
             // 
             // status1
             // 
+            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Blue;
+            this.status1.DefaultCellStyle = dataGridViewCellStyle23;
             this.status1.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.ComboBox;
-            this.status1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.status1.HeaderText = "Status";
             this.status1.Items.AddRange(new object[] {
             "",
@@ -1813,9 +1826,9 @@
             // 
             // unitweight1
             // 
-            dataGridViewCellStyle22.Format = "N2";
-            dataGridViewCellStyle22.NullValue = "0";
-            this.unitweight1.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle24.Format = "N2";
+            dataGridViewCellStyle24.NullValue = "0";
+            this.unitweight1.DefaultCellStyle = dataGridViewCellStyle24;
             this.unitweight1.HeaderText = "Unit Weight";
             this.unitweight1.Name = "unitweight1";
             this.unitweight1.ReadOnly = true;
@@ -1823,9 +1836,9 @@
             // 
             // totalweight
             // 
-            dataGridViewCellStyle23.Format = "N2";
-            dataGridViewCellStyle23.NullValue = "0";
-            this.totalweight.DefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle25.Format = "N2";
+            dataGridViewCellStyle25.NullValue = "0";
+            this.totalweight.DefaultCellStyle = dataGridViewCellStyle25;
             this.totalweight.HeaderText = "Total Weight";
             this.totalweight.Name = "totalweight";
             this.totalweight.ReadOnly = true;
@@ -1833,9 +1846,9 @@
             // 
             // totallength
             // 
-            dataGridViewCellStyle24.Format = "N2";
-            dataGridViewCellStyle24.NullValue = "0";
-            this.totallength.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle26.Format = "N2";
+            dataGridViewCellStyle26.NullValue = "0";
+            this.totallength.DefaultCellStyle = dataGridViewCellStyle26;
             this.totallength.HeaderText = "Total Length";
             this.totallength.Name = "totallength";
             this.totallength.ReadOnly = true;
@@ -1843,9 +1856,9 @@
             // 
             // soweight
             // 
-            dataGridViewCellStyle25.Format = "N2";
-            dataGridViewCellStyle25.NullValue = "0";
-            this.soweight.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle27.Format = "N2";
+            dataGridViewCellStyle27.NullValue = "0";
+            this.soweight.DefaultCellStyle = dataGridViewCellStyle27;
             this.soweight.HeaderText = "SO Wgt.";
             this.soweight.Name = "soweight";
             this.soweight.ReadOnly = true;
@@ -1853,19 +1866,29 @@
             // 
             // soqty
             // 
-            dataGridViewCellStyle26.Format = "N0";
-            dataGridViewCellStyle26.NullValue = "0";
-            this.soqty.DefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle28.Format = "N0";
+            dataGridViewCellStyle28.NullValue = "0";
+            this.soqty.DefaultCellStyle = dataGridViewCellStyle28;
             this.soqty.HeaderText = "SO Qty.";
             this.soqty.Name = "soqty";
             this.soqty.ReadOnly = true;
             this.soqty.Width = 71;
             // 
+            // qtypermat
+            // 
+            dataGridViewCellStyle29.Format = "N0";
+            dataGridViewCellStyle29.NullValue = "0";
+            this.qtypermat.DefaultCellStyle = dataGridViewCellStyle29;
+            this.qtypermat.HeaderText = "Qty/Material";
+            this.qtypermat.Name = "qtypermat";
+            this.qtypermat.ReadOnly = true;
+            this.qtypermat.Width = 96;
+            // 
             // calqty
             // 
-            dataGridViewCellStyle27.Format = "N0";
-            dataGridViewCellStyle27.NullValue = "0";
-            this.calqty.DefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle30.Format = "N0";
+            dataGridViewCellStyle30.NullValue = "0";
+            this.calqty.DefaultCellStyle = dataGridViewCellStyle30;
             this.calqty.HeaderText = "Cal Qty.";
             this.calqty.Name = "calqty";
             this.calqty.ReadOnly = true;
@@ -1873,9 +1896,9 @@
             // 
             // qtyPack1
             // 
-            dataGridViewCellStyle28.Format = "N0";
-            dataGridViewCellStyle28.NullValue = "0";
-            this.qtyPack1.DefaultCellStyle = dataGridViewCellStyle28;
+            dataGridViewCellStyle31.Format = "N0";
+            dataGridViewCellStyle31.NullValue = "0";
+            this.qtyPack1.DefaultCellStyle = dataGridViewCellStyle31;
             this.qtyPack1.HeaderText = "Qty/Pack";
             this.qtyPack1.Name = "qtyPack1";
             this.qtyPack1.ReadOnly = true;
@@ -1883,9 +1906,9 @@
             // 
             // pack
             // 
-            dataGridViewCellStyle29.Format = "N0";
-            dataGridViewCellStyle29.NullValue = "0";
-            this.pack.DefaultCellStyle = dataGridViewCellStyle29;
+            dataGridViewCellStyle32.Format = "N0";
+            dataGridViewCellStyle32.NullValue = "0";
+            this.pack.DefaultCellStyle = dataGridViewCellStyle32;
             this.pack.HeaderText = "Pack";
             this.pack.Name = "pack";
             this.pack.ReadOnly = true;
@@ -1946,7 +1969,6 @@
             this.panel4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCoilBack)).EndInit();
-            this.panel2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCutting)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -2000,7 +2022,6 @@
         private System.Windows.Forms.DataGridView dgvCutting;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button butAddMaterial;
-        private System.Windows.Forms.Button butAddCoilBack;
         private System.Windows.Forms.ToolStripSplitButton tbutNew;
         private System.Windows.Forms.ToolStripMenuItem tbutNewWork;
         private System.Windows.Forms.ToolStripMenuItem tbutNewMaterial;
@@ -2118,6 +2139,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn commodity1;
         private System.Windows.Forms.DataGridViewTextBoxColumn spec1;
         private System.Windows.Forms.DataGridViewTextBoxColumn coating1;
+        private System.Windows.Forms.DataGridViewComboBoxColumn direction;
         private System.Windows.Forms.DataGridViewTextBoxColumn thick1;
         private System.Windows.Forms.DataGridViewTextBoxColumn width1;
         private System.Windows.Forms.DataGridViewTextBoxColumn length1;
@@ -2130,6 +2152,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn totallength;
         private System.Windows.Forms.DataGridViewTextBoxColumn soweight;
         private System.Windows.Forms.DataGridViewTextBoxColumn soqty;
+        private System.Windows.Forms.DataGridViewTextBoxColumn qtypermat;
         private System.Windows.Forms.DataGridViewTextBoxColumn calqty;
         private System.Windows.Forms.DataGridViewTextBoxColumn qtyPack1;
         private System.Windows.Forms.DataGridViewTextBoxColumn pack;

@@ -2,7 +2,6 @@
 using Epicoil.Library.Models.StoreInPlan;
 using Epicoil.Library.Repositories;
 using Epicoil.Library.Repositories.Common;
-using Epicoil.Library.Repositories.Sales;
 using Epicoil.Library.Repositories.StoreIn;
 using Epicoil.Library.Repositories.StoreInPlan;
 using System;
@@ -16,28 +15,35 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 {
     public partial class StoreInPlan : BaseSession
     {
+        #region Fields
+
         private readonly IStoreInPlanRepo _repo;
-        private readonly IStoreInRepo _repoIn;
-        private readonly ICurrenciesRepo _repoCurr;        
-        private readonly ISupplierRepo _repoSupplier;
         private readonly IBussinessTypeRepo _repoBT;
+        private readonly ICommodity _repoCmdt;
+        private readonly ICoatingRepo _repoCoating;
+        private readonly ICurrenciesRepo _repoCurr;
+        private readonly ICustomerRepo _repoCust;
+        private readonly IStoreInRepo _repoIn;
+        private readonly ILookupRepo _repoLookup;
         private readonly IMakerRepo _repoMaker;
         private readonly IMillRepo _repoMill;
-        private readonly ICommodity _repoCmdt;
-        private readonly ISpecRepo _repoSpec;
-        private readonly ICoatingRepo _repoCoating;
-        private readonly IWharehouseRepo _repoWhse;
         private readonly IImportPortRepo _repoPort;
-        private readonly ICustomerRepo _repoCust;
-        private readonly ILookupRepo _repoLookup;
+        private readonly ISpecRepo _repoSpec;
+        private readonly ISupplierRepo _repoSupplier;
+        private readonly IWharehouseRepo _repoWhse;
 
-        private StoreInPlanHead HeadContent;
-        private StoreInPlanHead ModelClone;
+        private StoreInPlanHeadModel HeadContent;
+        private StoreInPlanHeadModel ModelClone;
         private POLineModel POTrans;
+
         private bool IMEXReviewFlag;
         private string SourceStr;
 
-        public StoreInPlan(SessionInfo _session = null, StoreInPlanHead model = null)
+        #endregion Fields
+
+        #region Constructor
+
+        public StoreInPlan(SessionInfo _session = null, StoreInPlanHeadModel model = null)
         {
             InitializeComponent();
             this._repo = new StoreInPlanRepo();
@@ -57,7 +63,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             this.SourceStr = "";
 
             //Initial Session and content
-            this.HeadContent = new StoreInPlanHead();
+            this.HeadContent = new StoreInPlanHeadModel();
             epiSession = _session;
 
             if (model == null)
@@ -69,213 +75,23 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 this.HeadContent = model;
                 this.IMEXReviewFlag = true;
             }
-            this.ModelClone = new StoreInPlanHead();
+            this.ModelClone = new StoreInPlanHeadModel();
             this.POTrans = new POLineModel();
         }
 
-        private void StoreInPlan_Load(object sender, EventArgs e)
-        {
-            if (epiSession.SessionID == null)
-            {
-                Login frm = new Login();
-                frm.ShowDialog();
-            }
-            else if (epiSession.SessionID == "x")
-            {
-                this.Close();
-                this.Dispose();
-                Environment.Exit(1);
-            }
-            else
-            {
-                //this.Text = epiSession.PlantName;
+        #endregion Constructor
 
-                if (HeadContent.StoreInPlanId == 0 && HeadContent != null)
-                {
-                    HeadContent.InvoiceDate = DateTime.Now;
-                    HeadContent.ETADate = DateTime.Now;
-                    HeadContent.ETDDate = DateTime.Now;
-                }
-                else
-                {
-                    txtStoreInPlanNum.Text = HeadContent.StoreInPlanNum;
-                    SetHeaderContent(HeadContent);
-                }
-                ModelClone = (StoreInPlanHead)HeadContent.Clone();
+        #region Binding Data
 
-                LockHeaderControl();
-                return;
-            }
-            StoreInPlan_Load(sender, e);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            using (StoreInPlanDialog frm = new StoreInPlanDialog())
-            {
-                frm.ShowDialog();
-                if (frm.HeadContent.StoreInPlanNum != null)
-                {
-                    HeadContent = frm.HeadContent;
-                    ModelClone = (StoreInPlanHead)HeadContent.Clone();
-                }
-            }
-            txtStoreInPlanNum.Text = HeadContent.StoreInPlanNum;
-            SetHeaderContent(HeadContent);
-        }
-
-        private void txtStoreInPlanNum_Leave(object sender, EventArgs e)
-        {
-            string code = txtStoreInPlanNum.Text.Trim();
-            if (code != ModelClone.StoreInPlanNum && txtStoreInPlanNum.Text != "")
-            {
-                var result = _repo.GetByID(code);
-
-                if (result == null)
-                {
-                    button1_Click(sender, e);
-                }
-                else
-                {
-                    HeadContent = result;
-                    ModelClone = (StoreInPlanHead)HeadContent.Clone();
-                }
-                //SetHeaderContent(HeadContent);
-            }
-        }
-
-        private void ClearHeaderContent()
-        {
-            txtStoreInPlanNum.DataBindings.Clear();
-            txtInvoiceNum.DataBindings.Clear();
-            txtSupplierCode.DataBindings.Clear();
-            txtSupplierName.DataBindings.Clear();
-            txtCustID.DataBindings.Clear();
-            txtCustomerName.DataBindings.Clear();
-            txtMakerCode.DataBindings.Clear();
-            txtMakerName.DataBindings.Clear();
-            txtMillCode.DataBindings.Clear();
-            txtMillName.DataBindings.Clear();
-            txtBussinessType.DataBindings.Clear();
-            txtBussinessTypeName.DataBindings.Clear();
-            txtVessel.DataBindings.Clear();
-            txtExchangeRate.DataBindings.Clear();
-            cmdCurrencyCode.DataBindings.Clear();
-            cmbArivePort.DataBindings.Clear();
-            cmbLoadPort.DataBindings.Clear();
-
-            txtPoLine.DataBindings.Clear();
-            txtNumberOfArticle.DataBindings.Clear();
-            txtReceiptWeight.DataBindings.Clear();
-            txtIMEXRemark.DataBindings.Clear();
-
-            txtIMEXRemark.Clear();
-            txtStoreInPlanNum.Clear();
-            txtInvoiceNum.Clear();
-            txtSupplierCode.Clear();
-            txtSupplierName.Clear();
-            txtCustID.Clear();
-            txtCustomerName.Clear();
-            txtMakerCode.Clear();
-            txtMakerName.Clear();
-            txtMillCode.Clear();
-            txtMillName.Clear();
-            txtBussinessType.Clear();
-            txtBussinessTypeName.Clear();
-            txtVessel.Clear();
-            txtExchangeRate.Clear();
-
-            //dgvList.Rows.Clear();
-            //dataGridView1.Rows.Clear();
-            //dataGridView2.Rows.Clear();
-
-            errorProvider1.Clear();
-            panel4.Visible = false;
-            lblValidation.Text = "";
-        }
-
-        private void LockHeaderControl()
-        {
-            txtInvoiceNum.ReadOnly = true;
-            butSupplier.Enabled = false;
-            txtSupplierCode.ReadOnly = true;
-            butCustomer.Enabled = false;
-            txtCustID.ReadOnly = true;
-            butMaker.Enabled = false;
-            txtMakerCode.ReadOnly = true;
-            butMill.Enabled = false;
-            txtMillCode.ReadOnly = true;
-            cmbLoadPort.Enabled = false;
-            cmbArivePort.Enabled = false;
-            dtpETADate.Enabled = false;
-            dtpETDDate.Enabled = false;
-            dtpInvoiceDate.Enabled = false;
-            cmdCurrencyCode.Enabled = false;
-            butBusinessType.Enabled = false;
-            txtBussinessType.ReadOnly = true;
-            txtVessel.ReadOnly = true;
-            cmdCurrencyCode.Enabled = false;
-
-            //dataGridView2.ReadOnly = true;
-        }
-
-        private void UnLockHeaderControl()
-        {
-            txtInvoiceNum.ReadOnly = false;
-            butSupplier.Enabled = true;
-            txtSupplierCode.ReadOnly = false;
-            butCustomer.Enabled = true;
-            txtCustID.ReadOnly = false;
-            butMaker.Enabled = true;
-            txtMakerCode.ReadOnly = false;
-            butMill.Enabled = true;
-            txtMillCode.ReadOnly = false;
-            dtpInvoiceDate.Enabled = true;
-            cmdCurrencyCode.Enabled = true;
-            butBusinessType.Enabled = true;
-            txtBussinessType.ReadOnly = false;
-            cmdCurrencyCode.Enabled = true;
-            dtpETADate.DataBindings.Clear();
-            dtpETDDate.DataBindings.Clear();
-            dtpInvoiceDate.DataBindings.Clear();
-
-            if (HeadContent.ImportFlag == 0)
-            {
-                txtVessel.ReadOnly = false;
-                cmbLoadPort.Enabled = true;
-                cmbArivePort.Enabled = true;
-                dtpETADate.Enabled = true;
-                dtpETDDate.Enabled = true;
-            }
-            else if (HeadContent.ImportFlag == 1)
-            {
-                txtVessel.ReadOnly = true;
-                cmbLoadPort.Enabled = false;
-                cmbArivePort.Enabled = false;
-                dtpETADate.Enabled = false;
-                dtpETDDate.Enabled = false;
-            }
-            else
-            {
-                txtVessel.ReadOnly = false;
-                cmbLoadPort.Enabled = true;
-                cmbArivePort.Enabled = true;
-                dtpETADate.Enabled = true;
-                dtpETDDate.Enabled = true;
-            }
-        }
-
-        private void SetHeaderContent(StoreInPlanHead model)
+        private void SetHeaderContent(StoreInPlanHeadModel model)
         {
             ClearHeaderContent();
-            txtStoreInPlanNum.DataBindings.Add("Text", model, "StoreInPlanNum", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtStoreInPlanNum.DataBindings.Add(new Binding("Text", model, "StoreInPlanNum", false));
             txtInvoiceNum.DataBindings.Add("Text", model, "InvoiceNum", false, DataSourceUpdateMode.OnPropertyChanged);
             txtSupplierCode.DataBindings.Add("Text", model, "SupplierCode", false, DataSourceUpdateMode.OnPropertyChanged);
             txtSupplierName.DataBindings.Add("Text", model, "SupplierName", false, DataSourceUpdateMode.OnPropertyChanged);
-
             txtCustID.DataBindings.Add("Text", model, "CustID", false, DataSourceUpdateMode.OnPropertyChanged);
             txtCustomerName.DataBindings.Add("Text", model, "CustomerName", false, DataSourceUpdateMode.OnPropertyChanged);
-
             txtMakerCode.DataBindings.Add("Text", model, "MakerCode", false, DataSourceUpdateMode.OnPropertyChanged);
             txtMakerName.DataBindings.Add("Text", model, "MakerName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtMillCode.DataBindings.Add("Text", model, "MillCode", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -284,48 +100,73 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             txtBussinessTypeName.DataBindings.Add("Text", model, "BussinessTypeName", false, DataSourceUpdateMode.OnPropertyChanged);
             txtVessel.DataBindings.Add("Text", model, "Vessel", false, DataSourceUpdateMode.OnPropertyChanged);
             txtExchangeRate.DataBindings.Add("Text", model, "ExchangeRate", true, DataSourceUpdateMode.OnPropertyChanged, 1, "#,##0.000000");
-
             txtIMEXRemark.DataBindings.Add("Text", model, "ImexRemark", false, DataSourceUpdateMode.OnPropertyChanged);
+            txtOrderType.DataBindings.Add("Text", model, "OrderType", false, DataSourceUpdateMode.OnPropertyChanged);
 
             dtpETADate.Value = model.ETADate;
             dtpETDDate.Value = model.ETDDate;
             dtpInvoiceDate.Value = model.InvoiceDate;
 
-            cmdCurrencyCode.DataSource = model.CurrenciesList.ToList();
+            cmdCurrencyCode.DataSource = model.Currencies;
             cmdCurrencyCode.DisplayMember = "CurrencyCode";
             cmdCurrencyCode.DataBindings.Add("Text", model, "CurrencyCode");
 
-            cmbLoadPort.DataSource = model.PortList.ToList();
+            cmbLoadPort.DataSource = model.ImportPorts;
             cmbLoadPort.DisplayMember = "PortCode";
             cmbLoadPort.DataBindings.Add("Text", model, "LoadPort", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            cmbArivePort.DataSource = model.PortList.ToList();
+            cmbArivePort.DataSource = model.ArivePorts;
             cmbArivePort.DisplayMember = "PortCode";
             cmbArivePort.DataBindings.Add("Text", model, "ArivePort", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            actionToolStripMenuItem.Visible = false;
+            #region Handling tab control.
+
+            ((Control)this.tabControl1.TabPages[0]).Enabled = true;
+            ((Control)this.tabControl1.TabPages[1]).Enabled = true;
 
             if (model.ImportFlag == 0)
             {
+                //Active the first tab.
                 tabControl1.SelectedIndex = 0;
+
+                //Set label tab to 'Import'.
                 tabControl1.TabPages[0].Text = "Import";
-                dataGridView2.ReadOnly = true;
+
+                //Disable 'Action' menu.
+                actionToolStripMenuItem.Visible = false;
+
+                //Disable the second tab.
+                ((Control)this.tabControl1.TabPages[1]).Enabled = false;
             }
             else if (model.ImportFlag == 1)
             {
+                //Active the first tab.
                 tabControl1.SelectedIndex = 0;
+
+                //Set label tab to 'Domestic'.
                 tabControl1.TabPages[0].Text = "Domestic";
+
+                //Enable 'Action' menu.
                 actionToolStripMenuItem.Visible = true;
-                dataGridView2.ReadOnly = true;
+
+                //Disable the second tab.
+                ((Control)this.tabControl1.TabPages[1]).Enabled = false;
             }
             else
             {
-                actionToolStripMenuItem.Visible = true;
+                //Active the first tab.
                 tabControl1.SelectedIndex = 1;
-                dataGridView2.ReadOnly = false;
+
+                //Disable 'Action' menu.
+                actionToolStripMenuItem.Visible = false;
+
+                //Disable the first tab.
+                ((Control)this.tabControl1.TabPages[0]).Enabled = false;
             }
 
-            dgvList.Rows.Clear();
+            #endregion Handling tab control.
+
+            dgvPOLine.Rows.Clear();
             dataGridView1.Rows.Clear();
 
             if (model.InsertState)
@@ -343,7 +184,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                         toolStripButton1.Visible = false;
                     }
                 }
-                else// if (IMEXReviewFlag == true)
+                else
                 {
                     UnLockHeaderControl();
                     butArticleDetail.Enabled = true;
@@ -373,23 +214,20 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 {
                     chkConfirm.Checked = false;
                 }
-                IEnumerable<StoreInPlanDetail> result = new List<StoreInPlanDetail>();
+                IEnumerable<StoreInPlanDetailModel> result = new List<StoreInPlanDetailModel>();
 
                 if (model.ImportFlag == 2)
                 {
-                    //if (!string.IsNullOrEmpty(HeadContent.StoreInPlanNum))
-                    //{
                     result = _repo.GetDetailArticleITAKU(HeadContent.StoreInPlanId);
                     SetItakuDetail(result);
-                    //}
                 }
                 else
                 {
                     result = _repo.GetDetail(HeadContent.StoreInPlanId);
                     SetDetail(result);
-                    if (dgvList.Rows.Count >= 1)
+                    if (dgvPOLine.Rows.Count >= 1)
                     {
-                        IEnumerable<StoreInPlanDetail> resultArtcle = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvList.Rows[0].Cells[2].Value.ToString()));
+                        IEnumerable<StoreInPlanDetailModel> resultArtcle = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvPOLine.Rows[0].Cells[2].Value.ToString()));
                         SetDetailArticle(resultArtcle);
                     }
                 }
@@ -420,23 +258,130 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             txtNumberOfArticle.DataBindings.Add("Text", model, "NumberOfRcv", true, DataSourceUpdateMode.OnPropertyChanged, 0, "#,##0");
         }
 
-        private void SetDetail(IEnumerable<StoreInPlanDetail> item)
+        private void ClearHeaderContent()
+        {
+            txtStoreInPlanNum.DataBindings.Clear();
+            txtInvoiceNum.DataBindings.Clear();
+            txtSupplierCode.DataBindings.Clear();
+            txtSupplierName.DataBindings.Clear();
+            txtCustID.DataBindings.Clear();
+            txtCustomerName.DataBindings.Clear();
+            txtMakerCode.DataBindings.Clear();
+            txtMakerName.DataBindings.Clear();
+            txtMillCode.DataBindings.Clear();
+            txtMillName.DataBindings.Clear();
+            txtBussinessType.DataBindings.Clear();
+            txtBussinessTypeName.DataBindings.Clear();
+            txtVessel.DataBindings.Clear();
+            txtExchangeRate.DataBindings.Clear();
+            txtOrderType.DataBindings.Clear();
+            cmdCurrencyCode.DataBindings.Clear();
+            cmbArivePort.DataBindings.Clear();
+            cmbLoadPort.DataBindings.Clear();
+
+            txtPoLine.DataBindings.Clear();
+            txtNumberOfArticle.DataBindings.Clear();
+            txtReceiptWeight.DataBindings.Clear();
+            txtIMEXRemark.DataBindings.Clear();
+            txtOrderType.Clear();
+            txtIMEXRemark.Clear();
+            txtStoreInPlanNum.Clear();
+            txtInvoiceNum.Clear();
+            txtSupplierCode.Clear();
+            txtSupplierName.Clear();
+            txtCustID.Clear();
+            txtCustomerName.Clear();
+            txtMakerCode.Clear();
+            txtMakerName.Clear();
+            txtMillCode.Clear();
+            txtMillName.Clear();
+            txtBussinessType.Clear();
+            txtBussinessTypeName.Clear();
+            txtVessel.Clear();
+            txtExchangeRate.Clear();
+
+            //dgvList.Rows.Clear();
+            //dataGridView1.Rows.Clear();
+            //dataGridView2.Rows.Clear();
+
+            errorProvider1.Clear();
+            panel4.Visible = false;
+            lblValidation.Text = "";
+        }
+
+        private void ClearPOLineTrans()
+        {
+            POTrans = null;
+            txtPoNumber.Clear();
+            txtSaleContract.Clear();
+            txtNumberOfArticle.Clear();
+            txtPoLine.Clear();
+            txtReceiptWeight.Clear();
+        }
+
+        private void GetNew(int ImportFlag)
+        {
+            //tabControl1.TabPages.Remove(tabPage1);
+            //tabControl1.TabPages.Remove(tabPage2);
+            HeadContent = new StoreInPlanHeadModel();
+            HeadContent.InsertState = true;
+            HeadContent.StoreInPlanId = 0;
+            HeadContent.StoreInPlanNum = "";
+            HeadContent.InvoiceDate = DateTime.Now;
+            HeadContent.ETADate = DateTime.Now;
+            HeadContent.ETDDate = DateTime.Now;
+            HeadContent.StoreInFlag = "0";
+            HeadContent.Currencies = _repoCurr.GetAll().ToList();
+            HeadContent.ImportPorts = this._repoPort.GetAll().ToList();
+            HeadContent.ImportFlag = ImportFlag;
+            HeadContent.OpenOrder = 1;
+            ModelClone = (StoreInPlanHeadModel)HeadContent.Clone();
+            SetHeaderContent(HeadContent);
+        }
+
+        private void LockHeaderControl()
+        {
+            txtInvoiceNum.ReadOnly = true;
+            butSupplier.Enabled = false;
+            txtSupplierCode.ReadOnly = true;
+            butCustomer.Enabled = false;
+            txtCustID.ReadOnly = true;
+            butMaker.Enabled = false;
+            txtMakerCode.ReadOnly = true;
+            butMill.Enabled = false;
+            txtMillCode.ReadOnly = true;
+            cmbLoadPort.Enabled = false;
+            cmbArivePort.Enabled = false;
+            dtpETADate.Enabled = false;
+            dtpETDDate.Enabled = false;
+            dtpInvoiceDate.Enabled = false;
+            cmdCurrencyCode.Enabled = false;
+            butBusinessType.Enabled = false;
+            txtBussinessType.ReadOnly = true;
+            txtVessel.ReadOnly = true;
+            txtOrderType.ReadOnly = true;
+            cmdCurrencyCode.Enabled = false;
+
+            //dataGridView2.ReadOnly = true;
+        }
+
+        private void SetDetail(IEnumerable<StoreInPlanDetailModel> item)
         {
             //GetDetail
-            dgvList.Rows.Clear();
+            dgvPOLine.Rows.Clear();
             int i = 0;
             foreach (var p in item)
             {
-                dgvList.Rows.Add(p.PONumber, p.SaleContract, p.POLine, p.CommodityCode, p.SpecCode, p.Quantity, p.Weight, p.DutyRate, p.BussinessTypeName, p.UnitPrice, p.Amount);
+                dgvPOLine.Rows.Add(p.PONumber, p.SaleContract, p.POLine, p.CommodityCode, p.SpecCode, p.Quantity, p.Weight, p.DutyRate, p.BussinessTypeName, p.UnitPrice, p.Amount);
                 if (i % 2 == 1)
                 {
-                    this.dgvList.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                    this.dgvPOLine.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
                 }
                 i++;
             }
         }
 
-        private void SetDetailArticle(IEnumerable<StoreInPlanDetail> item)
+        private void SetDetailArticle(IEnumerable<StoreInPlanDetailModel> item)
         {
             //GetDetail
             int i = 0;
@@ -465,16 +410,6 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             }
         }
 
-        private void ClearPOLineTrans()
-        {
-            POTrans = null;
-            txtPoNumber.Clear();
-            txtSaleContract.Clear();
-            txtNumberOfArticle.Clear();
-            txtPoLine.Clear();
-            txtReceiptWeight.Clear();
-        }
-
         private void SetPOLineTrans(POLineModel model)
         {
             txtPoLine.DataBindings.Clear();
@@ -484,205 +419,122 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             txtReceiptWeight.DataBindings.Add("Text", model, "BalanceWeight", true, DataSourceUpdateMode.Never, 0, "#,##0.###");
         }
 
-        private void tlbClear_Click(object sender, EventArgs e)
-        {
-            ClearHeaderContent();
-            ClearPOLineTrans();
+        #region ITAKU
 
+        private void SetItakuDetail(IEnumerable<StoreInPlanDetailModel> item)
+        {
+            //GetDetail
             dataGridView2.Rows.Clear();
-            dataGridView2.ReadOnly = true;
-            txtFilePath.Clear();
-            cmdSheet.DataSource = null;
+            int i = 0;
+            foreach (var p in item)
+            {
+                int line = 0;
+                int seq = i + 1;
+                if (p.LineID != 0) line = p.LineID;
+                if (p.SeqId != 0) seq = p.SeqId;
 
-            this.HeadContent = new StoreInPlanHead();
-            this.ModelClone = new StoreInPlanHead();
+                dataGridView2.Rows.Add(line, seq, p.ArticleNo, p.CommodityCode, p.CommodityName, p.SpecCode, p.SpecName, p.CoatingCode,
+                                        p.CoatingName, p.Thick, p.Width, p.Length, p.Quantity, p.Weight,
+                                        p.Place, p.PackingNumber, p.Category, p.SaleContract, p.Note, false, p.StoreInFlag);
 
-            HeadContent.StoreInFlag = null;
-            HeadContent.InvoiceDate = DateTime.Now;
-            HeadContent.ETADate = DateTime.Now;
-            HeadContent.ETDDate = DateTime.Now;
-
-            ModelClone = (StoreInPlanHead)HeadContent.Clone();
-            LockHeaderControl();
+                if (p.StoreInFlag == 1)
+                {
+                    dataGridView2.Rows[i].ReadOnly = true;
+                }
+                if (i % 2 == 1)
+                {
+                    this.dataGridView2.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
         }
 
-        private void cmdCurrencyCode_SelectedIndexChanged(object sender, EventArgs e)
+        private void SetItakuDetailByFile(IEnumerable<ExternalFileModel> item)
         {
-            var result = _repoCurr.GetByID(cmdCurrencyCode.Text.Trim());
-            HeadContent.ExchangeRate = result.ExchangeRate;
+            //GetDetail
+            dataGridView2.Rows.Clear();
+            int i = 0;
+            foreach (var p in item)
+            {
+                int line = 0;
+                int seq = i + 1;
+                if (p.LineID != 0) line = p.LineID;
+                if (p.SeqId != 0) seq = p.SeqId;
+
+                dataGridView2.Rows.Add(line, seq, p.ArticleNo, p.Commodity, "", p.Specification, "", p.Coating, "",
+                                        p.Thick, p.Width, p.Length, p.Quantity, p.Weight,
+                                        p.Place, p.PackingNo, p.Category, p.MakerSaleContract, p.Note, false, false);
+                if (i % 2 == 1)
+                {
+                    this.dataGridView2.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
+                }
+                i++;
+            }
         }
 
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        #endregion ITAKU
+
+        #endregion Binding Data
+
+        private static void DisplayInExcel(IEnumerable<StoreInPlanDetailModel> model)
         {
-            GetNew(0);
+            var excelApp = new Excel.Application();
+            // Make the object visible.
+            excelApp.Visible = true;
+
+            // Create a new, empty workbook and add it to the collection returned
+            // by property Workbooks. The new workbook becomes the active workbook.
+            // Add has an optional parameter for specifying a praticular template.
+            // Because no argument is sent in this example, Add creates a new workbook.
+            excelApp.Workbooks.Add();
+
+            // This example uses a single workSheet. The explicit type casting is
+            // removed in a later procedure.
+            Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
+
+            // Establish column headings in cells A1 and B1.
+            workSheet.Cells[1, "A"] = "Maker";
+            workSheet.Cells[1, "B"] = "Cust";
+            workSheet.Cells[1, "C"] = "Vessel";
+            workSheet.Cells[1, "D"] = "ETA";
+            workSheet.Cells[1, "E"] = "Commodity";
+            workSheet.Cells[1, "F"] = "Invoice";
+            workSheet.Cells[1, "G"] = "Spec";
+            workSheet.Cells[1, "H"] = "Thick";
+            workSheet.Cells[1, "I"] = "Width";
+            workSheet.Cells[1, "J"] = "Length";
+            workSheet.Cells[1, "K"] = "Qty";
+            workSheet.Cells[1, "L"] = "Weight";
+            workSheet.Cells[1, "M"] = "MakerNo";
+            workSheet.Cells[1, "N"] = "MPO";
+            workSheet.Cells[1, "O"] = "CC";
+            workSheet.Cells[1, "P"] = "Location";
+            workSheet.Cells[1, "Q"] = "GRADE";
+            workSheet.Cells[1, "R"] = "Remark";
+
+            //var row = 1;
+            //foreach (var acct in model)
+            //{
+            //    row++;
+            //    workSheet.Cells[row, "A"] = acct.LineID;
+            //    workSheet.Cells[row, "B"] = acct.ArticleNo;
+            //}
+            workSheet.Cells.Font.Size = 10;
         }
 
-        private void importToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void addMappingDataForCustomerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            importToolStripMenuItem_Click(sender, e);
-        }
-
-        private void domesticToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            GetNew(1);
-        }
-
-        private void GetNew(int ImportFlag)
-        {
-            //tabControl1.TabPages.Remove(tabPage1);
-            //tabControl1.TabPages.Remove(tabPage2);
-            HeadContent = new StoreInPlanHead();
-            HeadContent.InsertState = true;
-            HeadContent.StoreInPlanId = 0;
-            HeadContent.StoreInPlanNum = "";
-            HeadContent.InvoiceDate = DateTime.Now;
-            HeadContent.ETADate = DateTime.Now;
-            HeadContent.ETDDate = DateTime.Now;
-            HeadContent.StoreInFlag = "0";
-            HeadContent.CurrenciesList = _repoCurr.GetAll();
-            HeadContent.PortList = this._repoPort.GetAll();
-            HeadContent.ImportFlag = ImportFlag;
-            ModelClone = (StoreInPlanHead)HeadContent.Clone();
-            SetHeaderContent(HeadContent);
-        }
-
-        private void domesticToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            domesticToolStripMenuItem_Click(sender, e);
-        }
-
-        private void butSupplier_Click(object sender, EventArgs e)
-        {
-            using (SupplierDialog frm = new SupplierDialog())
+            using (MappingCustomerDialog frm = new MappingCustomerDialog(HeadContent.SupplierCode, HeadContent.SupplierName, txtCustID.Text.Trim()))
             {
                 frm.ShowDialog();
-
-                HeadContent.SupplierCode = frm.VendorId;
-                HeadContent.SupplierName = frm.VendorName;
             }
-            SetHeaderContent(HeadContent);
         }
 
-        private void butMaker_Click(object sender, EventArgs e)
+        private void addMappingDataForMakerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (MakerDialog frm = new MakerDialog())
+            using (MappingMakerDialog frm = new MappingMakerDialog(HeadContent.SupplierCode, HeadContent.SupplierName, txtMakerCode.Text.Trim()))
             {
                 frm.ShowDialog();
-                string code = frm.MakerCode;
-                if (code != ModelClone.MakerCode)
-                {
-                    HeadContent.MakerCode = code;
-                    HeadContent.MakerName = frm.MakerName;
-                    ModelClone.MakerCode = code;
-                    ModelClone.MakerName = frm.MakerName;
-                    HeadContent.MillCode = "";
-                    HeadContent.MillName = "";
-                }
-            }
-            SetHeaderContent(HeadContent);
-        }
-
-        private void butMill_Click(object sender, EventArgs e)
-        {
-            using (MillDialog frm = new MillDialog(txtMakerCode.Text.ToString()))
-            {
-                frm.ShowDialog();
-
-                HeadContent.MillCode = frm.MillCode;
-                HeadContent.MillName = frm.MillName;
-            }
-            SetHeaderContent(HeadContent);
-        }
-
-        private void txtSupplierCode_Leave(object sender, EventArgs e)
-        {
-            string code = txtSupplierCode.Text.Trim();
-            if (code != ModelClone.SupplierCode && txtSupplierCode.Text != "" && HeadContent.InsertState)
-            {
-                var result = _repoSupplier.GetByID(code);
-
-                if (result == null)
-                {
-                    butSupplier_Click(sender, e);
-                }
-                else
-                {
-                    HeadContent.SupplierCode = result.VendorID;
-                    HeadContent.SupplierName = result.VendorName;
-                }
-            }
-        }
-
-        private void txtMakerCode_Leave(object sender, EventArgs e)
-        {
-            string code = txtMakerCode.Text.Trim();
-            if (code != ModelClone.MakerCode && txtMakerCode.Text != "" && HeadContent.InsertState)
-            {
-                var result = _repoMaker.GetByID(code);
-
-                if (result == null)
-                {
-                    butMaker_Click(sender, e);
-                }
-                else
-                {
-                    HeadContent.MakerCode = result.MakerCode;
-                    HeadContent.MakerName = result.MakerName;
-                }
-                //SetHeaderContent(HeadContent);
-            }
-        }
-
-        private void txtMillCode_Leave(object sender, EventArgs e)
-        {
-            string code = txtMillCode.Text.Trim();
-            if (code != ModelClone.MillCode && txtMillCode.Text != "" && HeadContent.InsertState)
-            {
-                var result = _repoMill.GetByID(code, HeadContent.MakerCode);
-
-                if (result == null)
-                {
-                    butMill_Click(sender, e);
-                }
-                else
-                {
-                    HeadContent.MillCode = result.MillCode;
-                    HeadContent.MillName = result.MillName;
-                }
-                //SetHeaderContent(HeadContent);
-            }
-        }
-
-        private void butBusinessType_Click(object sender, EventArgs e)
-        {
-            using (BussinessTypeDialog frm = new BussinessTypeDialog())
-            {
-                frm.ShowDialog();
-
-                HeadContent.BussinessType = frm.Code;
-                HeadContent.BussinessTypeName = frm.Description;
-            }
-            SetHeaderContent(HeadContent);
-        }
-
-        private void txtBussinessType_Leave(object sender, EventArgs e)
-        {
-            string code = txtBussinessType.Text.Trim();
-            string msg = "";
-            if (code != ModelClone.BussinessType && txtBussinessType.Text != "" && HeadContent.InsertState)
-            {
-                var result = _repoBT.GetByID(code);
-
-                if (result == null)
-                {
-                    butBusinessType_Click(sender, e);
-                }
-                else
-                {
-                    HeadContent.BussinessType = result.BussinessCode;
-                    HeadContent.BussinessTypeName = result.BussinessName;
-                }
-                //SetHeaderContent(HeadContent);
             }
         }
 
@@ -723,7 +575,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 
             if (!ErrorFlag)
             {
-                StoreInPlanDetail paramModel = new StoreInPlanDetail();
+                StoreInPlanDetailModel paramModel = new StoreInPlanDetailModel();
                 //decimal ReceiptWeight = Convert.ToDecimal(string.IsNullOrEmpty(txtReceiptWeight.Text.Trim()) ? "0" : txtReceiptWeight.Text.Trim());
                 paramModel = _repo.GetPoLineDetail(txtPoNumber.Text.Trim(), Convert.ToInt32(txtPoLine.Text.Trim()));
 
@@ -757,148 +609,490 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             }
         }
 
-        private void txtPoNumber_Leave(object sender, EventArgs e)
+        private void butBusinessType_Click(object sender, EventArgs e)
         {
-            string code = txtPoNumber.Text.Trim();
-            int PONum = 0;
-            string result = string.Empty;
-
-            if (HeadContent.StoreInFlag == "0" && !string.IsNullOrEmpty(code))
+            using (BussinessTypeDialog frm = new BussinessTypeDialog())
             {
-                if (string.IsNullOrEmpty(HeadContent.SupplierCode) && string.IsNullOrEmpty(HeadContent.MakerCode))
+                frm.ShowDialog();
+
+                HeadContent.BussinessType = frm.Code;
+                HeadContent.BussinessTypeName = frm.Description;
+            }
+            SetHeaderContent(HeadContent);
+        }
+
+        private void butChooseFile_Click(object sender, EventArgs e)
+        {
+            string[] FileSheet;
+            string FileName = string.Empty;
+            if (!string.IsNullOrEmpty(HeadContent.SupplierCode))
+            {
+                try
                 {
-                    GetHeader header = _repo.GetHeaderByPONum(txtPoNumber.Text.Trim());
-                    if (header == null)
+                    OpenFileDialog openfile1 = new OpenFileDialog();
+                    if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        MessageBox.Show("PO Number : " + this.txtPoNumber.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        FileName = openfile1.FileName;
+                        this.txtFilePath.Text = FileName;
+                        FileSheet = _repo.GetTableFromExcel(FileName);
+
+                        List<string> Sheets = new List<string>(FileSheet);
+
+                        cmdSheet.DataSource = null;
+                        cmdSheet.DataSource = Sheets;
+                    }
+                    {
                         return;
                     }
-                    HeadContent.SupplierCode = header.SupplierCode;
-                    HeadContent.SupplierName = header.SupplierName;
-                    HeadContent.MakerCode = header.MakerCode;
-                    HeadContent.MakerName = header.MakerName;
-                    HeadContent.MillCode = header.MillCode;
-                    HeadContent.MillName = header.MillName;
-                    HeadContent.CustID = header.CustID;
-                    HeadContent.CustomerName = header.CustomerName;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select supplier.", "Data not valid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void butCustomer_Click(object sender, EventArgs e)
+        {
+            using (CustomerDailog frm = new CustomerDailog())
+            {
+                frm.ShowDialog();
+
+                HeadContent.CustID = frm.CustId;
+                HeadContent.CustomerName = frm.CustName;
+            }
+            SetHeaderContent(HeadContent);
+        }
+
+        private void butLoadData_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                HeadContent.StoreInPlanFileDetails = _repo.GetFileDetail(txtFilePath.Text, cmdSheet.Text).ToList();
+                var row = HeadContent.StoreInPlanFileDetails.ToList();
+
+                HeadContent.Vessel = row[0].Vessel;
+                HeadContent.MakerCode = row[0].MakerCode;
+                HeadContent.CustID = row[0].CustID;
+
+                SetHeaderContent(HeadContent);
+                SetItakuDetailByFile(HeadContent.StoreInPlanFileDetails);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "File not valid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
+
+        private void butMaker_Click(object sender, EventArgs e)
+        {
+            using (MakerDialog frm = new MakerDialog())
+            {
+                frm.ShowDialog();
+                string code = frm.MakerCode;
+                if (code != ModelClone.MakerCode)
+                {
+                    HeadContent.MakerCode = code;
+                    HeadContent.MakerName = frm.MakerName;
+                    ModelClone.MakerCode = code;
+                    ModelClone.MakerName = frm.MakerName;
+                    HeadContent.MillCode = "";
+                    HeadContent.MillName = "";
+                }
+            }
+            SetHeaderContent(HeadContent);
+        }
+
+        private void butMill_Click(object sender, EventArgs e)
+        {
+            using (MillDialog frm = new MillDialog(txtMakerCode.Text.ToString()))
+            {
+                frm.ShowDialog();
+
+                HeadContent.MillCode = frm.MillCode;
+                HeadContent.MillName = frm.MillName;
+            }
+            SetHeaderContent(HeadContent);
+        }
+
+        private void butSupplier_Click(object sender, EventArgs e)
+        {
+            using (SupplierDialog frm = new SupplierDialog())
+            {
+                frm.ShowDialog();
+
+                HeadContent.SupplierCode = frm.VendorId;
+                HeadContent.SupplierName = frm.VendorName;
+            }
+            SetHeaderContent(HeadContent);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var list = _repo.GetAll(0).ToList();
+
+            using (StoreInPlanDialog frm = new StoreInPlanDialog(epiSession, list))
+            {
+                frm.ShowDialog();
+                if (frm.HeadContent.StoreInPlanNum != null)
+                {
+                    HeadContent = frm.HeadContent;
+                    ModelClone = (StoreInPlanHeadModel)HeadContent.Clone();
+                }
+            }
+            txtStoreInPlanNum.Text = HeadContent.StoreInPlanNum;
+            SetHeaderContent(HeadContent);
+        }
+
+        private void butValidate_Click(object sender, EventArgs e)
+        {
+            ValidateGridCell(ref dataGridView2);
+        }
+
+        private void cancelStoreInPlanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_repo.CheckStoreInFlagExist(HeadContent.StoreInPlanId))
+            {
+                MessageBox.Show("ไม่สามารถยกเลิกรายการ Store In Plan นี้ได้ เนื่องจากยังมีรายการ Store In อยู่", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                if (MessageBox.Show("Are you sure to Cancel.", "Question?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    if (_repo.CloseStoreInPlan(HeadContent.StoreInPlanId))
+                    {
+                        MessageBox.Show("Close completed.", "Result");
+                        tlbClear_Click(sender, e);
+                    }
+                }
+            }
+        }
+
+        private void cmdCurrencyCode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var result = _repoCurr.GetByID(cmdCurrencyCode.Text.Trim());
+            HeadContent.ExchangeRate = 0.0M;// result.ExchangeRate;
+        }
+
+        private void CopyData(ref DataGridView dgv)
+        {
+            if (dgv.GetCellCount(DataGridViewElementStates.Selected) > 0)
+            {
+                try
+                {
+                    // Add the selection to the clipboard.
+                    Clipboard.SetDataObject(dgv.GetClipboardContent());
+                }
+                catch (System.Runtime.InteropServices.ExternalException)
+                {
+                    MessageBox.Show("The Clipboard could not be accessed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void CutData(ref DataGridView dgv)
+        {
+            //Copy to clipboard
+            CopyData(ref dgv);
+
+            //Clear selected cells
+            foreach (DataGridViewCell dgvCell in dgv.SelectedCells)
+                dgvCell.Value = string.Empty;
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (HeadContent.StoreInFlag == "0")
+            {
+                dataGridView1.Rows[e.RowIndex].Cells["edit"].Value = true;
+            }
+        }
+
+        private void dataGridView2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (dataGridView2.SelectedCells.Count > 0 && dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].ColumnIndex != 1)
+                {
+                    mnuContext.Items[0].Visible = true;
+                    mnuContext.Items[1].Visible = true;
+                    mnuContext.Items[2].Visible = true;
+                    mnuContext.Items[3].Visible = true;
+                    mnuContext.Items[4].Visible = true;
+                    mnuContext.Items[5].Visible = true;
+                    mnuContext.Items[6].Visible = true;
+                    mnuContext.Items[7].Visible = false;
+                    mnuContext.Items[8].Visible = false;
+                    mnuContext.Items[9].Visible = false;
+                    mnuContext.Items[10].Visible = false;
+                    //mnuContext.Items[11].Visible = false;
+                    dataGridView2.ContextMenuStrip = mnuContext;
+                    if (dataGridView2.Columns[e.ColumnIndex].Name == "spec1"/* || dataGridView2.Columns[e.ColumnIndex].Name == "specname"*/)
+                    {
+                        mnuContext.Items[7].Visible = true;
+                        this.SourceStr = dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    }
+                    else
+                    {
+                        mnuContext.Items[7].Visible = false;
+                    }
+
+                    if (dataGridView2.Columns[e.ColumnIndex].Name == "Coating"/* || dataGridView2.Columns[e.ColumnIndex].Name == "coatingname"*/)
+                    {
+                        mnuContext.Items[10].Visible = true;
+                        this.SourceStr = dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    }
+                    else
+                    {
+                        mnuContext.Items[10].Visible = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        private void dgvList_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                IEnumerable<StoreInPlanDetailModel> result = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvPOLine.Rows[e.RowIndex].Cells[2].Value.ToString()));
+                SetDetailArticle(result);
+            }
+        }
+
+        private void domesticToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetNew(1);
+        }
+
+        private void domesticToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            domesticToolStripMenuItem_Click(sender, e);
+        }
+
+        private void getITAKUTemplateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IEnumerable<StoreInPlanDetailModel> ds = new List<StoreInPlanDetailModel>();
+            DisplayInExcel(ds);
+        }
+
+        private void goToStoreInToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HeadContent.StoreInPlanId == 0) return;
+            var result = _repoIn.GetStoreInPlanByID(HeadContent.StoreInPlanId);
+            Epicoil.Appl.Presentations.StoreIn.StoreIn frm = new Epicoil.Appl.Presentations.StoreIn.StoreIn(epiSession, result);
+
+            frm.Show();
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GetNew(0);
+        }
+
+        private void importToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            importToolStripMenuItem_Click(sender, e);
+        }
+
+        private void itakuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dataGridView2.Rows.Clear();
+            dataGridView2.ReadOnly = true;
+            txtFilePath.Clear();
+            cmdSheet.DataSource = null;
+            GetNew(2);
+        }
+
+        private void mnuclearall_Click(object sender, EventArgs e)
+        {
+            dataGridView2.Rows.Clear();
+        }
+
+        private void mnucopy_Click(object sender, EventArgs e)
+        {
+            CopyData(ref dataGridView2);
+        }
+
+        private void mnucut_Click(object sender, EventArgs e)
+        {
+            CutData(ref dataGridView2);
+        }
+
+        private void mnudeleterow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dataGridView2.Rows.RemoveAt(dataGridView2.CurrentRow.Index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
+        private void mnuFileExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void mnuMappingItem_Click(object sender, EventArgs e)
+        {
+            using (MappingSpecDialog frm = new MappingSpecDialog(HeadContent.SupplierCode, HeadContent.SupplierName, this.SourceStr))
+            {
+                frm.ShowDialog();
+            }
+        }
+
+        private void mnupaste_Click(object sender, EventArgs e)
+        {
+            if (HeadContent.ImportFlag == 2)
+            {
+                if (dataGridView2.Rows[dataGridView2.CurrentCell.RowIndex].Cells[dataGridView2.CurrentCell.ColumnIndex].ColumnIndex == 1) return;
+                PasteData(ref dataGridView2);
+            }
+        }
+
+        private void mnuSave_Click(object sender, EventArgs e)
+        {
+            tlbSave_Click(sender, e);
+        }
+
+        private void PasteData(ref DataGridView dgv)
+        {
+            char[] rowSplitter = { '\n', '\r' };  // Cr and Lf.
+            char columnSplitter = '\t';         // Tab.
+
+            IDataObject dataInClipboard = Clipboard.GetDataObject();
+            try
+            {
+                string stringInClipboard =
+                    dataInClipboard.GetData(DataFormats.Text).ToString();
+
+                string[] rowsInClipboard = stringInClipboard.Split(rowSplitter,
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                int r = dgv.SelectedCells[0].RowIndex;
+                int c = dgv.SelectedCells[0].ColumnIndex;
+
+                if (dgv.Rows.Count < (r + rowsInClipboard.Length))
+                    dgv.Rows.Add(r + rowsInClipboard.Length - dgv.Rows.Count);
+
+                // Loop through lines:
+                int iRow = 0;
+                while (iRow < rowsInClipboard.Length)
+                {
+                    // Split up rows to get individual cells:
+                    string[] valuesInRow =
+                        rowsInClipboard[iRow].Split(columnSplitter);
+
+                    // Cycle through cells.
+                    // Assign cell value only if within columns of grid:
+                    int jCol = 0;
+                    while (jCol < valuesInRow.Length)
+                    {
+                        if ((dgv.ColumnCount - 1) >= (c + jCol))
+                            dgv.Rows[r + iRow].Cells[c + jCol].Value =
+                            valuesInRow[jCol];
+
+                        jCol += 1;
+                    }
+
+                    iRow += 1;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+            }
+        }
+
+        private void selectCoatingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (CoatingDialog frm = new CoatingDialog())
+            {
+                frm.ShowDialog();
+
+                dataGridView2.SelectedCells[0].Value = frm.Coating;
+                dataGridView2.Rows[dataGridView2.CurrentRow.Index].Cells["coatingname"].Value = frm.CoatingName;
+                //McssContent.Coating2 = frm.CoatingName;
+                //McssContent.CoatingWeight1 = frm.FrontPlate;
+                //McssContent.CoatingWeight2 = frm.BackPlate;
+            }
+        }
+
+        private void StoreInPlan_Load(object sender, EventArgs e)
+        {
+            if (epiSession.SessionID == null)
+            {
+                Login frm = new Login();
+                frm.ShowDialog();
+            }
+            else if (epiSession.SessionID == "x")
+            {
+                this.Close();
+                this.Dispose();
+                Environment.Exit(1);
+            }
+            else
+            {
+                //this.Text = epiSession.PlantName;
+                if (HeadContent.StoreInPlanId == 0 && HeadContent != null)
+                {
+                    HeadContent.InvoiceDate = DateTime.Now;
                     HeadContent.ETADate = DateTime.Now;
                     HeadContent.ETDDate = DateTime.Now;
-                    HeadContent.InvoiceDate = DateTime.Now;
-                    HeadContent.CurrencyCode = header.CurrencyCode;
-                    HeadContent.ExchangeRate = header.ExchangeRate;
+                }
+                else
+                {
+                    txtStoreInPlanNum.Text = HeadContent.StoreInPlanNum;
                     SetHeaderContent(HeadContent);
                 }
+                ModelClone = (StoreInPlanHeadModel)HeadContent.Clone();
 
-                bool getPO = _repo.GetPOByPONumber(epiSession.PlantID, code, HeadContent, out result, out PONum);
-                if (!getPO)
-                {
-                    MessageBox.Show("PO Number : " + this.txtPoNumber.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    this.txtPoNumber.Focus();
-                    this.txtPoNumber.SelectAll();
-                }
-                else
-                {
-                    txtSaleContract.Text = result;
-                    using (POLineDialog frm = new POLineDialog(PONum))
-                    {
-                        frm.ShowDialog();
-                        POTrans = frm.paramLine;
-                        SetPOLineTrans(POTrans);
-                    }
-                    //txtNumberOfArticle.Focus();
-                    //txtNumberOfArticle.SelectAll();
-                }
+                LockHeaderControl();
+                return;
             }
+            StoreInPlan_Load(sender, e);
         }
 
-        private void txtSaleContract_Leave(object sender, EventArgs e)
+        private void tlbClear_Click(object sender, EventArgs e)
         {
-            string code = txtSaleContract.Text.Trim();
-            string result = "";
-            if (code != "")
-            {
-                if (!_repo.GetPOBySaleContract(epiSession.PlantID, code, HeadContent, out result))
-                {
-                    MessageBox.Show("Sale contract  : " + this.txtSaleContract.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    this.txtSaleContract.Focus();
-                    this.txtSaleContract.SelectAll();
-                }
-                else
-                {
-                    txtPoNumber.Text = result;
-                }
-            }
-        }
+            ClearHeaderContent();
+            ClearPOLineTrans();
 
-        private void txtPoLine_Leave(object sender, EventArgs e)
-        {
-            int code = Convert.ToInt32(string.IsNullOrEmpty(txtPoLine.Text.Trim()) ? "0" : txtPoLine.Text.Trim());
-            string result = "";
-            if (code != 0)
-            {
-                if (!_repo.GetPOLine(txtPoNumber.Text.Trim(), txtSaleContract.Text.Trim(), HeadContent, code, out result))
-                {
-                    MessageBox.Show("PO Line no : " + this.txtPoLine.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
-                    this.txtPoLine.Focus();
-                    this.txtPoLine.SelectAll();
-                }
-            }
-        }
+            dataGridView2.Rows.Clear();
+            dataGridView2.ReadOnly = true;
+            txtFilePath.Clear();
+            cmdSheet.DataSource = null;
 
-        private bool ValidateHeaderError()
-        {
-            bool errorFlag = false;
-            errorProvider1.Clear();
-            if (txtInvoiceNum.Text == "")
-            {
-                errorProvider1.SetError(txtInvoiceNum, "Please fill the required field.");
-                errorFlag = true;
-            }
-            else if (_repo.CheckInvoiceExisting(txtInvoiceNum.Text.Trim()) && HeadContent.InsertState == true)
-            {
-                errorProvider1.SetError(txtInvoiceNum, "This invoice number is duplicate.");
-                errorFlag = true;
-            }
+            this.HeadContent = new StoreInPlanHeadModel();
+            this.ModelClone = new StoreInPlanHeadModel();
 
-            if (txtSupplierCode.Text == "")
-            {
-                errorProvider1.SetError(txtSupplierCode, "Please fill the required field.");
-                errorFlag = true;
-            }
+            HeadContent.StoreInFlag = null;
+            HeadContent.InvoiceDate = DateTime.Now;
+            HeadContent.ETADate = DateTime.Now;
+            HeadContent.ETDDate = DateTime.Now;
 
-            if (txtMakerCode.Text == "")
-            {
-                errorProvider1.SetError(txtMakerCode, "Please fill the required field.");
-                errorFlag = true;
-            }
-
-            if (txtMillCode.Text == "")
-            {
-                errorProvider1.SetError(txtMillCode, "Please fill the required field.");
-                errorFlag = true;
-            }
-
-            if (HeadContent.ImportFlag == 0)
-            {
-                if (txtVessel.Text == "")
-                {
-                    errorProvider1.SetError(txtVessel, "Please fill the required field.");
-                    errorFlag = true;
-                }
-
-                if (cmbArivePort.Text == "")
-                {
-                    errorProvider1.SetError(cmbArivePort, "Please fill the required field.");
-                    errorFlag = true;
-                }
-            }
-
-            return errorFlag;
+            ModelClone = (StoreInPlanHeadModel)HeadContent.Clone();
+            LockHeaderControl();
         }
 
         private void tlbSave_Click(object sender, EventArgs e)
         {
             bool error = false;
+            string AttErr = string.Empty;
+            string MessegeErr = string.Empty;
+
             //ถ้ายังไม่ทำรายการ Store In
             if (HeadContent.StoreInFlag == "0")
             {
@@ -917,7 +1111,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 //Import & Domestic
                 else
                 {
-                    if (!ValidateHeaderError())
+                    if (HeadContent.ValidHeader(epiSession, out AttErr, out MessegeErr))
                     {
                         if (HeadContent.ImexConfirm == null)
                         {
@@ -977,15 +1171,6 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             }
         }
 
-        private void dgvList_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex > -1)
-            {
-                IEnumerable<StoreInPlanDetail> result = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvList.Rows[e.RowIndex].Cells[2].Value.ToString()));
-                SetDetailArticle(result);
-            }
-        }
-
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             if (HeadContent.ImportFlag == 2)
@@ -1004,33 +1189,281 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 if (dataGridView1.Rows.Count >= 1)
                 {
                     int iRow = dataGridView1.CurrentRow.Index;
-                    int jRow = dgvList.CurrentRow.Index;
+                    int jRow = dgvPOLine.CurrentRow.Index;
                     if (!Convert.ToBoolean(dataGridView1.Rows[iRow].Cells["StoreInFlag"].Value))
                     {
                         _repo.DeleteLine(Convert.ToInt32(this.dataGridView1.Rows[iRow].Cells[0].Value.ToString().Trim()));
 
-                        IEnumerable<StoreInPlanDetail> result = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvList.Rows[jRow].Cells[2].Value.ToString()));
+                        IEnumerable<StoreInPlanDetailModel> result = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvPOLine.Rows[jRow].Cells[2].Value.ToString()));
                         SetDetailArticle(result);
                     }
                 }
             }
         }
 
-        private void mnuSave_Click(object sender, EventArgs e)
+        private void txtBussinessType_Leave(object sender, EventArgs e)
         {
-            tlbSave_Click(sender, e);
-        }
-
-        private void mnuFileExit_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-            if (HeadContent.StoreInFlag == "0")
+            string code = txtBussinessType.Text.Trim();
+            string msg = "";
+            if (code != ModelClone.BussinessType && txtBussinessType.Text != "" && HeadContent.InsertState)
             {
-                dataGridView1.Rows[e.RowIndex].Cells["edit"].Value = true;
+                var result = _repoBT.GetByID(code);
+
+                if (result == null)
+                {
+                    butBusinessType_Click(sender, e);
+                }
+                else
+                {
+                    HeadContent.BussinessType = result.BussinessCode;
+                    HeadContent.BussinessTypeName = result.BussinessName;
+                }
+                //SetHeaderContent(HeadContent);
+            }
+        }
+
+        private void txtCustID_MouseUp(object sender, MouseEventArgs e)
+        {
+            mnuContext.Items[0].Visible = false;
+            mnuContext.Items[1].Visible = false;
+            mnuContext.Items[2].Visible = false;
+            mnuContext.Items[3].Visible = false;
+            mnuContext.Items[4].Visible = false;
+            mnuContext.Items[5].Visible = false;
+            mnuContext.Items[6].Visible = false;
+            mnuContext.Items[7].Visible = false;
+            mnuContext.Items[8].Visible = true;
+            mnuContext.Items[9].Visible = false;
+            mnuContext.Items[10].Visible = false;
+            //mnuContext.Items[11].Visible = false;
+        }
+
+        private void txtMakerCode_Leave(object sender, EventArgs e)
+        {
+            string code = txtMakerCode.Text.Trim();
+            if (code != ModelClone.MakerCode && txtMakerCode.Text != "" && HeadContent.InsertState)
+            {
+                var result = _repoMaker.GetByID(code);
+
+                if (result == null)
+                {
+                    butMaker_Click(sender, e);
+                }
+                else
+                {
+                    HeadContent.MakerCode = result.MakerCode;
+                    HeadContent.MakerName = result.MakerName;
+                }
+                //SetHeaderContent(HeadContent);
+            }
+        }
+
+        private void txtMakerCode_MouseUp(object sender, MouseEventArgs e)
+        {
+            mnuContext.Items[0].Visible = false;
+            mnuContext.Items[1].Visible = false;
+            mnuContext.Items[2].Visible = false;
+            mnuContext.Items[3].Visible = false;
+            mnuContext.Items[4].Visible = false;
+            mnuContext.Items[5].Visible = false;
+            mnuContext.Items[6].Visible = false;
+            mnuContext.Items[7].Visible = false;
+            mnuContext.Items[8].Visible = false;
+            mnuContext.Items[9].Visible = true;
+            mnuContext.Items[10].Visible = false;
+            //mnuContext.Items[11].Visible = false;
+        }
+
+        private void txtMillCode_Leave(object sender, EventArgs e)
+        {
+            string code = txtMillCode.Text.Trim();
+            if (code != ModelClone.MillCode && txtMillCode.Text != "" && HeadContent.InsertState)
+            {
+                var result = _repoMill.GetByID(code, HeadContent.MakerCode);
+
+                if (result == null)
+                {
+                    butMill_Click(sender, e);
+                }
+                else
+                {
+                    HeadContent.MillCode = result.MillCode;
+                    HeadContent.MillName = result.MillName;
+                }
+                //SetHeaderContent(HeadContent);
+            }
+        }
+
+        private void txtPoLine_Leave(object sender, EventArgs e)
+        {
+            int code = Convert.ToInt32(string.IsNullOrEmpty(txtPoLine.Text.Trim()) ? "0" : txtPoLine.Text.Trim());
+            string result = "";
+            if (code != 0)
+            {
+                if (!_repo.GetPOLine(txtPoNumber.Text.Trim(), txtSaleContract.Text.Trim(), HeadContent, code, out result))
+                {
+                    MessageBox.Show("PO Line no : " + this.txtPoLine.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    this.txtPoLine.Focus();
+                    this.txtPoLine.SelectAll();
+                }
+            }
+        }
+
+        private void txtPoNumber_Leave(object sender, EventArgs e)
+        {
+            string code = txtPoNumber.Text.Trim();
+            int PONum = 0;
+            string result = string.Empty;
+
+            if (HeadContent.StoreInFlag == "0" && !string.IsNullOrEmpty(code))
+            {
+                if (string.IsNullOrEmpty(HeadContent.SupplierCode) && string.IsNullOrEmpty(HeadContent.MakerCode))
+                {
+                    POHeaderModel header = _repo.GetHeaderByPONum(txtPoNumber.Text.Trim());
+                    if (header == null)
+                    {
+                        MessageBox.Show("PO Number : " + this.txtPoNumber.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                        return;
+                    }
+                    HeadContent.SupplierCode = header.SupplierCode;
+                    HeadContent.SupplierName = header.SupplierName;
+                    HeadContent.MakerCode = header.MakerCode;
+                    HeadContent.MakerName = header.MakerName;
+                    HeadContent.MillCode = header.MillCode;
+                    HeadContent.MillName = header.MillName;
+                    HeadContent.CustID = header.CustID;
+                    HeadContent.CustomerName = header.CustomerName;
+                    HeadContent.ETADate = DateTime.Now;
+                    HeadContent.ETDDate = DateTime.Now;
+                    HeadContent.InvoiceDate = header.OrderDate;
+                    HeadContent.CurrencyCode = header.CurrencyCode;
+                    HeadContent.ExchangeRate = header.ExchangeRate;
+                    SetHeaderContent(HeadContent);
+                }
+
+                bool getPO = _repo.GetPOByPONumber(epiSession.PlantID, code, HeadContent, out result, out PONum);
+                if (!getPO)
+                {
+                    MessageBox.Show("PO Number : " + this.txtPoNumber.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    this.txtPoNumber.Focus();
+                    this.txtPoNumber.SelectAll();
+                }
+                else
+                {
+                    txtSaleContract.Text = result;
+                    using (POLineDialog frm = new POLineDialog(PONum))
+                    {
+                        frm.ShowDialog();
+                        POTrans = frm.paramLine;
+                        SetPOLineTrans(POTrans);
+                    }
+                    //txtNumberOfArticle.Focus();
+                    //txtNumberOfArticle.SelectAll();
+                }
+            }
+        }
+
+        private void txtSaleContract_Leave(object sender, EventArgs e)
+        {
+            string code = txtSaleContract.Text.Trim();
+            string result = "";
+            if (code != "")
+            {
+                if (!_repo.GetPOBySaleContract(epiSession.PlantID, code, HeadContent, out result))
+                {
+                    MessageBox.Show("Sale contract  : " + this.txtSaleContract.Text.ToString() + " doesn't exists.", "Please try agian.", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                    this.txtSaleContract.Focus();
+                    this.txtSaleContract.SelectAll();
+                }
+                else
+                {
+                    txtPoNumber.Text = result;
+                }
+            }
+        }
+
+        private void txtStoreInPlanNum_Leave(object sender, EventArgs e)
+        {
+            string code = txtStoreInPlanNum.Text.Trim();
+            if (code != ModelClone.StoreInPlanNum && txtStoreInPlanNum.Text != "")
+            {
+                var result = _repo.GetByID(code);
+
+                if (result == null)
+                {
+                    button1_Click(sender, e);
+                }
+                else
+                {
+                    HeadContent = result;
+                    ModelClone = (StoreInPlanHeadModel)HeadContent.Clone();
+                }
+                //SetHeaderContent(HeadContent);
+            }
+        }
+
+        private void txtSupplierCode_Leave(object sender, EventArgs e)
+        {
+            string code = txtSupplierCode.Text.Trim();
+            if (code != ModelClone.SupplierCode && txtSupplierCode.Text != "" && HeadContent.InsertState)
+            {
+                var result = _repoSupplier.GetByID(code);
+
+                if (result == null)
+                {
+                    butSupplier_Click(sender, e);
+                }
+                else
+                {
+                    HeadContent.SupplierCode = result.VendorID;
+                    HeadContent.SupplierName = result.VendorName;
+                }
+            }
+        }
+
+        private void UnLockHeaderControl()
+        {
+            txtInvoiceNum.ReadOnly = false;
+            butSupplier.Enabled = true;
+            txtSupplierCode.ReadOnly = false;
+            butCustomer.Enabled = true;
+            txtCustID.ReadOnly = false;
+            butMaker.Enabled = true;
+            txtMakerCode.ReadOnly = false;
+            butMill.Enabled = true;
+            txtMillCode.ReadOnly = false;
+            dtpInvoiceDate.Enabled = true;
+            cmdCurrencyCode.Enabled = true;
+            butBusinessType.Enabled = true;
+            txtBussinessType.ReadOnly = false;
+            cmdCurrencyCode.Enabled = true;
+            dtpETADate.DataBindings.Clear();
+            dtpETDDate.DataBindings.Clear();
+            dtpInvoiceDate.DataBindings.Clear();
+
+            if (HeadContent.ImportFlag == 0)
+            {
+                txtVessel.ReadOnly = false;
+                cmbLoadPort.Enabled = true;
+                cmbArivePort.Enabled = true;
+                dtpETADate.Enabled = true;
+                dtpETDDate.Enabled = true;
+            }
+            else if (HeadContent.ImportFlag == 1)
+            {
+                txtVessel.ReadOnly = true;
+                cmbLoadPort.Enabled = false;
+                cmbArivePort.Enabled = false;
+                dtpETADate.Enabled = false;
+                dtpETDDate.Enabled = false;
+            }
+            else
+            {
+                txtVessel.ReadOnly = false;
+                cmbLoadPort.Enabled = true;
+                cmbArivePort.Enabled = true;
+                dtpETADate.Enabled = true;
+                dtpETDDate.Enabled = true;
             }
         }
 
@@ -1042,7 +1475,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 {
                     if (!string.IsNullOrEmpty(dataGridView2.Rows[i].Cells["id1"].Value.GetString()))
                     {
-                        StoreInPlanDetail param = new StoreInPlanDetail();
+                        StoreInPlanDetailModel param = new StoreInPlanDetailModel();
                         param.SeqId = Convert.ToInt32(dataGridView2.Rows[i].Cells["lineid"].Value);
                         param.StoreInPlanId = HeadContent.StoreInPlanId;
                         param.LineID = Convert.ToInt32(dataGridView2.Rows[i].Cells["id1"].Value);
@@ -1071,7 +1504,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 {
                     if (dataGridView1.Columns[10].Name == "edit" && (bool)dataGridView1[10, i].EditedFormattedValue)
                     {
-                        StoreInPlanDetail param = new StoreInPlanDetail();
+                        StoreInPlanDetailModel param = new StoreInPlanDetailModel();
                         param.SeqId = Convert.ToInt32(dataGridView1.Rows[i].Cells["SeqId"].Value);
                         param.StoreInPlanId = HeadContent.StoreInPlanId;
                         param.LineID = Convert.ToInt32(dataGridView1.Rows[i].Cells["id"].Value);
@@ -1093,300 +1526,12 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                         else
                         {
                             _repo.SaveArticle(param, epiSession);
-                        }                        
+                        }
                     }
                 }
             }
         }
 
-        private void goToStoreInToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (HeadContent.StoreInPlanId == 0) return;
-            var result = _repoIn.GetStoreInPlanByID(HeadContent.StoreInPlanId);
-            Epicoil.Appl.Presentations.StoreIn.StoreIn frm = new Epicoil.Appl.Presentations.StoreIn.StoreIn(epiSession, result);
-
-            frm.Show();
-        }
-
-        private void itakuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            dataGridView2.Rows.Clear();
-            dataGridView2.ReadOnly = true;
-            txtFilePath.Clear();
-            cmdSheet.DataSource = null;
-            GetNew(2);
-        }
-
-        private void CopyData(ref DataGridView dgv)
-        {
-            if (dgv.GetCellCount(DataGridViewElementStates.Selected) > 0)
-            {
-                try
-                {
-                    // Add the selection to the clipboard.
-                    Clipboard.SetDataObject(dgv.GetClipboardContent());
-                }
-                catch (System.Runtime.InteropServices.ExternalException)
-                {
-                    MessageBox.Show("The Clipboard could not be accessed. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void CutData(ref DataGridView dgv)
-        {
-            //Copy to clipboard
-            CopyData(ref dgv);
-
-            //Clear selected cells
-            foreach (DataGridViewCell dgvCell in dgv.SelectedCells)
-                dgvCell.Value = string.Empty;
-        }
-
-        private void PasteData(ref DataGridView dgv)
-        {
-            char[] rowSplitter = { '\n', '\r' };  // Cr and Lf.
-            char columnSplitter = '\t';         // Tab.
-
-            IDataObject dataInClipboard = Clipboard.GetDataObject();
-            try
-            {
-                string stringInClipboard =
-                    dataInClipboard.GetData(DataFormats.Text).ToString();
-
-                string[] rowsInClipboard = stringInClipboard.Split(rowSplitter,
-                    StringSplitOptions.RemoveEmptyEntries);
-
-                int r = dgv.SelectedCells[0].RowIndex;
-                int c = dgv.SelectedCells[0].ColumnIndex;
-
-                if (dgv.Rows.Count < (r + rowsInClipboard.Length))
-                    dgv.Rows.Add(r + rowsInClipboard.Length - dgv.Rows.Count);
-
-                // Loop through lines:
-                int iRow = 0;
-                while (iRow < rowsInClipboard.Length)
-                {
-                    // Split up rows to get individual cells:
-                    string[] valuesInRow =
-                        rowsInClipboard[iRow].Split(columnSplitter);
-
-                    // Cycle through cells.
-                    // Assign cell value only if within columns of grid:
-                    int jCol = 0;
-                    while (jCol < valuesInRow.Length)
-                    {
-                        if ((dgv.ColumnCount - 1) >= (c + jCol))
-                            dgv.Rows[r + iRow].Cells[c + jCol].Value =
-                            valuesInRow[jCol];
-
-                        jCol += 1;
-                    }
-
-                    iRow += 1;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-        }
-
-        private void dataGridView2_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            try
-            {
-                if (dataGridView2.SelectedCells.Count > 0 && dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].ColumnIndex != 1)
-                {
-                    mnuContext.Items[0].Visible = true;
-                    mnuContext.Items[1].Visible = true;
-                    mnuContext.Items[2].Visible = true;
-                    mnuContext.Items[3].Visible = true;
-                    mnuContext.Items[4].Visible = true;
-                    mnuContext.Items[5].Visible = true;
-                    mnuContext.Items[6].Visible = true;
-                    mnuContext.Items[7].Visible = false;
-                    mnuContext.Items[8].Visible = false;
-                    mnuContext.Items[9].Visible = false;
-                    mnuContext.Items[10].Visible = false;
-                    //mnuContext.Items[11].Visible = false;
-                    dataGridView2.ContextMenuStrip = mnuContext;
-                    if (dataGridView2.Columns[e.ColumnIndex].Name == "spec1"/* || dataGridView2.Columns[e.ColumnIndex].Name == "specname"*/)
-                    {
-                        mnuContext.Items[7].Visible = true;
-                        this.SourceStr = dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    }
-                    else
-                    {
-                        mnuContext.Items[7].Visible = false;
-                    }
-
-                    if (dataGridView2.Columns[e.ColumnIndex].Name == "Coating"/* || dataGridView2.Columns[e.ColumnIndex].Name == "coatingname"*/)
-                    {
-                        mnuContext.Items[10].Visible = true;
-                        this.SourceStr = dataGridView2.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
-                    }
-                    else
-                    {
-                        mnuContext.Items[10].Visible = false;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                return;
-            }
-        }
-
-        private void mnucut_Click(object sender, EventArgs e)
-        {
-            CutData(ref dataGridView2);
-        }
-
-        private void mnucopy_Click(object sender, EventArgs e)
-        {
-            CopyData(ref dataGridView2);
-        }
-
-        private void mnupaste_Click(object sender, EventArgs e)
-        {
-            if (HeadContent.ImportFlag == 2)
-            {
-                if (dataGridView2.Rows[dataGridView2.CurrentCell.RowIndex].Cells[dataGridView2.CurrentCell.ColumnIndex].ColumnIndex == 1) return;
-                PasteData(ref dataGridView2);
-            }
-        }
-
-        private void mnudeleterow_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                dataGridView2.Rows.RemoveAt(dataGridView2.CurrentRow.Index);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-            }
-        }
-
-        private void mnuclearall_Click(object sender, EventArgs e)
-        {
-            dataGridView2.Rows.Clear();
-        }
-
-        private void butChooseFile_Click(object sender, EventArgs e)
-        {
-            string[] FileSheet;
-            string FileName = string.Empty;
-            if (!string.IsNullOrEmpty(HeadContent.SupplierCode))
-            {
-                try
-                {
-                    OpenFileDialog openfile1 = new OpenFileDialog();
-                    if (openfile1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        FileName = openfile1.FileName;
-                        this.txtFilePath.Text = FileName;
-                        FileSheet = _repo.GetTableFromExcel(FileName);
-
-                        List<string> Sheets = new List<string>(FileSheet);
-
-                        cmdSheet.DataSource = null;
-                        cmdSheet.DataSource = Sheets;
-                    }
-                    {
-                        return;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message.ToString());
-                }
-            }
-            else
-            {
-                MessageBox.Show("Please select supplier.", "Data not valid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
-        private void butLoadData_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                HeadContent.StoreInPlanFileDetails = _repo.GetFileDetail(txtFilePath.Text, cmdSheet.Text);
-                var row = HeadContent.StoreInPlanFileDetails.ToList();
-
-                HeadContent.Vessel = row[0].Vessel;
-                HeadContent.MakerCode = row[0].MakerCode;
-                HeadContent.CustID = row[0].CustID;
-
-                SetHeaderContent(HeadContent);
-                SetItakuDetailByFile(HeadContent.StoreInPlanFileDetails);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "File not valid.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-        }
-
-        private void SetItakuDetail(IEnumerable<StoreInPlanDetail> item)
-        {
-            //GetDetail
-            dataGridView2.Rows.Clear();
-            int i = 0;
-            foreach (var p in item)
-            {
-                int line = 0;
-                int seq = i + 1;
-                if (p.LineID != 0) line = p.LineID;
-                if (p.SeqId != 0) seq = p.SeqId;
-
-                dataGridView2.Rows.Add(line, seq, p.ArticleNo, p.CommodityCode, p.CommodityName, p.SpecCode, p.SpecName, p.CoatingCode,
-                                        p.CoatingName, p.Thick, p.Width, p.Length, p.Quantity, p.Weight,
-                                        p.Place, p.PackingNumber, p.Category, p.SaleContract, p.Note, false, p.StoreInFlag);
-
-                if (p.StoreInFlag == 1)
-                {
-                    dataGridView2.Rows[i].ReadOnly = true;
-                }
-                if (i % 2 == 1)
-                {
-                    this.dataGridView2.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-                i++;
-            }
-        }
-
-        private void SetItakuDetailByFile(IEnumerable<ExternalFileModel> item)
-        {
-            //GetDetail
-            dataGridView2.Rows.Clear();
-            int i = 0;
-            foreach (var p in item)
-            {
-                int line = 0;
-                int seq = i + 1;
-                if (p.LineID != 0) line = p.LineID;
-                if (p.SeqId != 0) seq = p.SeqId;
-
-                dataGridView2.Rows.Add(line, seq, p.ArticleNo, p.Commodity, "", p.Specification, "", p.Coating, "",
-                                        p.Thick, p.Width, p.Length, p.Quantity, p.Weight,
-                                        p.Place, p.PackingNo, p.Category, p.MakerSaleContract, p.Note, false, false);
-                if (i % 2 == 1)
-                {
-                    this.dataGridView2.Rows[i].DefaultCellStyle.BackColor = Color.Beige;
-                }
-                i++;
-            }
-        }
-
-        /// <summary>
-        /// For ITAKU
-        /// </summary>
-        /// <param name="grid"> DataGridView Name</param>
-        /// <returns></returns>
         private bool ValidateGridCell(ref DataGridView grid)
         {
             lblValidation.Text = "";
@@ -1728,162 +1873,59 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
             return error;
         }
 
-        private void butValidate_Click(object sender, EventArgs e)
+        private bool ValidateHeaderError()
         {
-            ValidateGridCell(ref dataGridView2);
-        }
-
-        private void getITAKUTemplateToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            IEnumerable<StoreInPlanDetail> ds = new List<StoreInPlanDetail>();
-            DisplayInExcel(ds);
-        }
-
-        private static void DisplayInExcel(IEnumerable<StoreInPlanDetail> model)
-        {
-            var excelApp = new Excel.Application();
-            // Make the object visible.
-            excelApp.Visible = true;
-
-            // Create a new, empty workbook and add it to the collection returned
-            // by property Workbooks. The new workbook becomes the active workbook.
-            // Add has an optional parameter for specifying a praticular template.
-            // Because no argument is sent in this example, Add creates a new workbook.
-            excelApp.Workbooks.Add();
-
-            // This example uses a single workSheet. The explicit type casting is
-            // removed in a later procedure.
-            Excel._Worksheet workSheet = (Excel.Worksheet)excelApp.ActiveSheet;
-
-            // Establish column headings in cells A1 and B1.
-            workSheet.Cells[1, "A"] = "Maker";
-            workSheet.Cells[1, "B"] = "Cust";
-            workSheet.Cells[1, "C"] = "Vessel";
-            workSheet.Cells[1, "D"] = "ETA";
-            workSheet.Cells[1, "E"] = "Commodity";
-            workSheet.Cells[1, "F"] = "Invoice";
-            workSheet.Cells[1, "G"] = "Spec";
-            workSheet.Cells[1, "H"] = "Thick";
-            workSheet.Cells[1, "I"] = "Width";
-            workSheet.Cells[1, "J"] = "Length";
-            workSheet.Cells[1, "K"] = "Qty";
-            workSheet.Cells[1, "L"] = "Weight";
-            workSheet.Cells[1, "M"] = "MakerNo";
-            workSheet.Cells[1, "N"] = "MPO";
-            workSheet.Cells[1, "O"] = "CC";
-            workSheet.Cells[1, "P"] = "Location";
-            workSheet.Cells[1, "Q"] = "GRADE";
-            workSheet.Cells[1, "R"] = "Remark";
-
-            //var row = 1;
-            //foreach (var acct in model)
-            //{
-            //    row++;
-            //    workSheet.Cells[row, "A"] = acct.LineID;
-            //    workSheet.Cells[row, "B"] = acct.ArticleNo;
-            //}
-            workSheet.Cells.Font.Size = 10;
-        }
-
-        private void butCustomer_Click(object sender, EventArgs e)
-        {
-            using (CustomerDailog frm = new CustomerDailog())
+            bool errorFlag = false;
+            errorProvider1.Clear();
+            if (txtInvoiceNum.Text == "")
             {
-                frm.ShowDialog();
-
-                HeadContent.CustID = frm.CustId;
-                HeadContent.CustomerName = frm.CustName;
+                errorProvider1.SetError(txtInvoiceNum, "Please fill the required field.");
+                errorFlag = true;
             }
-            SetHeaderContent(HeadContent);
-        }
-
-        private void mnuMappingItem_Click(object sender, EventArgs e)
-        {
-            using (MappingSpecDialog frm = new MappingSpecDialog(HeadContent.SupplierCode, HeadContent.SupplierName, this.SourceStr))
+            else if (_repo.CheckInvoiceExisting(txtInvoiceNum.Text.Trim()) && HeadContent.InsertState == true)
             {
-                frm.ShowDialog();
+                errorProvider1.SetError(txtInvoiceNum, "This invoice number is duplicate.");
+                errorFlag = true;
             }
-        }
 
-        private void txtMakerCode_MouseUp(object sender, MouseEventArgs e)
-        {
-            mnuContext.Items[0].Visible = false;
-            mnuContext.Items[1].Visible = false;
-            mnuContext.Items[2].Visible = false;
-            mnuContext.Items[3].Visible = false;
-            mnuContext.Items[4].Visible = false;
-            mnuContext.Items[5].Visible = false;
-            mnuContext.Items[6].Visible = false;
-            mnuContext.Items[7].Visible = false;
-            mnuContext.Items[8].Visible = false;
-            mnuContext.Items[9].Visible = true;
-            mnuContext.Items[10].Visible = false;
-            //mnuContext.Items[11].Visible = false;
-        }
-
-        private void txtCustID_MouseUp(object sender, MouseEventArgs e)
-        {
-            mnuContext.Items[0].Visible = false;
-            mnuContext.Items[1].Visible = false;
-            mnuContext.Items[2].Visible = false;
-            mnuContext.Items[3].Visible = false;
-            mnuContext.Items[4].Visible = false;
-            mnuContext.Items[5].Visible = false;
-            mnuContext.Items[6].Visible = false;
-            mnuContext.Items[7].Visible = false;
-            mnuContext.Items[8].Visible = true;
-            mnuContext.Items[9].Visible = false;
-            mnuContext.Items[10].Visible = false;
-            //mnuContext.Items[11].Visible = false;
-        }
-
-        private void addMappingDataForMakerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (MappingMakerDialog frm = new MappingMakerDialog(HeadContent.SupplierCode, HeadContent.SupplierName, txtMakerCode.Text.Trim()))
+            if (txtSupplierCode.Text == "")
             {
-                frm.ShowDialog();
+                errorProvider1.SetError(txtSupplierCode, "Please fill the required field.");
+                errorFlag = true;
             }
-        }
 
-        private void addMappingDataForCustomerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (MappingCustomerDialog frm = new MappingCustomerDialog(HeadContent.SupplierCode, HeadContent.SupplierName, txtCustID.Text.Trim()))
+            if (txtMakerCode.Text == "")
             {
-                frm.ShowDialog();
+                errorProvider1.SetError(txtMakerCode, "Please fill the required field.");
+                errorFlag = true;
             }
-        }
 
-        private void selectCoatingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (CoatingDialog frm = new CoatingDialog())
+            if (txtMillCode.Text == "")
             {
-                frm.ShowDialog();
-
-                dataGridView2.SelectedCells[0].Value = frm.Coating;
-                dataGridView2.Rows[dataGridView2.CurrentRow.Index].Cells["coatingname"].Value = frm.CoatingName;
-                //McssContent.Coating2 = frm.CoatingName;
-                //McssContent.CoatingWeight1 = frm.FrontPlate;
-                //McssContent.CoatingWeight2 = frm.BackPlate;
+                errorProvider1.SetError(txtMillCode, "Please fill the required field.");
+                errorFlag = true;
             }
-        }
 
-        private void cancelStoreInPlanToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_repo.CheckStoreInFlagExist(HeadContent.StoreInPlanId))
+            if (HeadContent.ImportFlag == 0)
             {
-                MessageBox.Show("ไม่สามารถยกเลิกรายการ Store In Plan นี้ได้ เนื่องจากยังมีรายการ Store In อยู่", "Warnning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
-            else
-            {
-                if (MessageBox.Show("Are you sure to Cancel.", "Question?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (txtVessel.Text == "")
                 {
-                    if (_repo.CloseStoreInPlan(HeadContent.StoreInPlanId))
-                    {
-                        MessageBox.Show("Close completed.", "Result");
-                        tlbClear_Click(sender, e);
-                    }
+                    errorProvider1.SetError(txtVessel, "Please fill the required field.");
+                    errorFlag = true;
+                }
+                if (cmbArivePort.Text == "")
+                {
+                    errorProvider1.SetError(cmbArivePort, "Please fill the required field.");
+                    errorFlag = true;
                 }
             }
+
+            return errorFlag;
+        }
+
+        private void dtpInvoiceDate_ValueChanged(object sender, EventArgs e)
+        {
+            HeadContent.InvoiceDate = dtpInvoiceDate.Value;
         }
     }
 }

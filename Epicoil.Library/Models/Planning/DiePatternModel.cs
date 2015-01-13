@@ -4,6 +4,8 @@ namespace Epicoil.Library.Models.Planning
 {
     public class DiePatternModel
     {
+        #region Properties
+
         public string PatternID { get; set; }
 
         public string StrokePerPcs { get; set; }
@@ -18,6 +20,10 @@ namespace Epicoil.Library.Models.Planning
 
         public string Remark { get; set; }
 
+        #endregion Properties
+
+        #region Methods
+
         public void DataBind(DataRow row)
         {
             this.PatternID = (string)row["Key1"].GetString();
@@ -28,5 +34,7 @@ namespace Epicoil.Library.Models.Planning
             this.Block = (string)row["ShortChar05"].GetString();
             this.Remark = (string)row["Character01"].GetString();
         }
+
+        #endregion Methods
     }
 }

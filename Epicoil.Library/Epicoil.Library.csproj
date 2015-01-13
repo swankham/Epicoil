@@ -36,78 +36,102 @@
   <ItemGroup>
     <Reference Include="Epicor.Mfg.BO.LotSelectUpdate">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.LotSelectUpdate.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.Part">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.Part.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.PO">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.PO.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.Receipt">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.Receipt.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.SysConfig, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.SysConfig.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD107">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD107.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD15">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD15.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD34">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD34.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD35">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.BO.UD35.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UD39">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UD39.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.BO.UserFile, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.BO.UserFile.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.Common.BOExceptions, Version=2.5.702.0, Culture=neutral, PublicKeyToken=5d3fa3c7105d7992, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Common.BOExceptions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.Core.BLConnectionPool">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.BLConnectionPool.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.Core.Session">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.Core.Session.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.ILotSelectUpdate">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.ILotSelectUpdate.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IPart">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IPart.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IPO">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IPO.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IReceipt">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IReceipt.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD107">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD107.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD15">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD15.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD34">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD34.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD35">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.IF.IUD35.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.IF.IUD39">
       <HintPath>..\..\Program Files\Epicor Software\Epicor905_11\Client\Epicor.Mfg.IF.IUD39.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Epicor.Mfg.UI.UD107Entry">
       <HintPath>C:\Program Files\Epicor Software\Epicor905\Client\Epicor.Mfg.UI.UD107Entry.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Office.interop.access.dao, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -130,6 +154,7 @@
     <Compile Include="Enums\MonthCode.cs" />
     <Compile Include="Enums\PlanningMaterialStatus.cs" />
     <Compile Include="Enums\Possession.cs" />
+    <Compile Include="Enums\EnumStoreInPlan.cs" />
     <Compile Include="Extentions\ObjectHelper.cs" />
     <Compile Include="Frameworks\ComboBox.cs">
       <SubType>Component</SubType>

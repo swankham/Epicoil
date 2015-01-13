@@ -571,10 +571,10 @@ namespace Epicoil.Appl.Presentations.Production
                     //When work order not complete.
                     if (HeaderContent.OperationState == 2)
                     {
-                        HeaderContent.ProcessLines = frm._selected.ResourceList.ToList();
+                        HeaderContent.ProcessLines = frm._selected.Resources.ToList();
                         HeaderContent.ProcessLineID = frm._selected.ProcessLineId;
                         HeaderContent.SerialLines = _repo.GetAllSerialByWorkOrder(HeaderContent.WorkOrderID).ToList();
-                        HeaderContent.Materials = frm._selected.Materails.ToList();
+                        HeaderContent.Materials = frm._selected.Materials.ToList();
                     }
                 }
             }
@@ -700,10 +700,10 @@ namespace Epicoil.Appl.Presentations.Production
                     HeaderContent.OperationState = frm._selected.OperationState;
                     HeaderContent.WorkOrderID = frm._selected.WorkOrderID;
                     HeaderContent.WorkOrderNum = frm._selected.WorkOrderNum;
-                    HeaderContent.ProcessLines = frm._selected.ResourceList.ToList();
+                    HeaderContent.ProcessLines = frm._selected.Resources.ToList();
                     HeaderContent.ProcessLineID = frm._selected.ProcessLineId;
                     HeaderContent.SerialLines = _repo.GetAllSerialByWorkOrder(HeaderContent.WorkOrderID).ToList();
-                    HeaderContent.Materials = frm._selected.Materails.ToList();
+                    HeaderContent.Materials = frm._selected.Materials.ToList();
                     HeaderContent.Reasons = _repo.GetAllReasonAll().ToList();
                     //Set content and list Material was add from dialog.
                     SetHeadContent(HeaderContent);

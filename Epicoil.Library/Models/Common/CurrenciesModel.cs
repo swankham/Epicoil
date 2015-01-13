@@ -2,7 +2,7 @@
 
 namespace Epicoil.Library.Models
 {
-    public class CurrenciesModel
+    public class CurrencyModel
     {
         public string CurrencyCode { get; set; }
 

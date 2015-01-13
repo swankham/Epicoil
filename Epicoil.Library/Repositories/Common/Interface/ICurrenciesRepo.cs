@@ -5,8 +5,8 @@ namespace Epicoil.Library.Repositories
 {
     public interface ICurrenciesRepo
     {
-        IEnumerable<CurrenciesModel> GetAll();
+        IEnumerable<CurrencyModel> GetAll();
 
-        CurrenciesModel GetByID(string code);
+        CurrencyModel GetByID(string code);
     }
 }

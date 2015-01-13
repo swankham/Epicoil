@@ -61,17 +61,37 @@
               <xs:element name="Seq" msprop:Generator_ColumnVarNameInTable="columnSeq" msprop:Generator_ColumnPropNameInRow="Seq" msprop:Generator_ColumnPropNameInTable="SeqColumn" msprop:Generator_UserColumnName="Seq" type="xs:int" minOccurs="0" />
               <xs:element name="SkidNumber" msprop:Generator_ColumnVarNameInTable="columnSkidNumber" msprop:Generator_ColumnPropNameInRow="SkidNumber" msprop:Generator_ColumnPropNameInTable="SkidNumberColumn" msprop:Generator_UserColumnName="SkidNumber" type="xs:string" minOccurs="0" />
               <xs:element name="Description" msprop:Generator_ColumnVarNameInTable="columnDescription" msprop:Generator_ColumnPropNameInRow="Description" msprop:Generator_ColumnPropNameInTable="DescriptionColumn" msprop:Generator_UserColumnName="Description" type="xs:string" minOccurs="0" />
+              <xs:element name="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:choice>
     </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:PackingOrderHead" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:unique name="PackStyleLines_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:PackStyleLines" />
+      <xs:field xpath="mstns:LineID" />
+    </xs:unique>
+    <xs:unique name="SkidPackingDesign_Constraint1" msdata:ConstraintName="Constraint1">
+      <xs:selector xpath=".//mstns:SkidPackingDesign" />
+      <xs:field xpath="mstns:PackStyleID" />
+      <xs:field xpath="mstns:ID" />
+    </xs:unique>
+    <xs:keyref name="PackStyleLines_SkidPackingDesign" refer="PackStyleLines_Constraint1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:SkidPackingDesign" />
+      <xs:field xpath="mstns:PackStyleID" />
+    </xs:keyref>
+    <xs:keyref name="FK_SkidPackingDesign_SerialsByPackingStyle" refer="SkidPackingDesign_Constraint1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:SerialsByPackingStyle" />
+      <xs:field xpath="mstns:PackStyleID" />
+      <xs:field xpath="mstns:PackingDesignId" />
+    </xs:keyref>
+    <xs:keyref name="PackingOrderHead_PackStyleLines" refer="Constraint1" msdata:ConstraintOnly="true">
+      <xs:selector xpath=".//mstns:PackStyleLines" />
+      <xs:field xpath="mstns:HeadID" />
+    </xs:keyref>
   </xs:element>
-  <xs:annotation>
-    <xs:appinfo>
-      <msdata:Relationship name="PackingOrderHead_PackStyleLines" msdata:parent="PackingOrderHead" msdata:child="PackStyleLines" msdata:parentkey="ID" msdata:childkey="HeadID" msprop:Generator_UserChildTable="PackStyleLines" msprop:Generator_ChildPropName="GetPackStyleLinesRows" msprop:Generator_UserRelationName="PackingOrderHead_PackStyleLines" msprop:Generator_ParentPropName="PackingOrderHeadRow" msprop:Generator_RelationVarName="relationPackingOrderHead_PackStyleLines" msprop:Generator_UserParentTable="PackingOrderHead" />
-      <msdata:Relationship name="PackStyleLines_SerialsByPackingStyle" msdata:parent="PackStyleLines" msdata:child="SerialsByPackingStyle" msdata:parentkey="LineID" msdata:childkey="PackStyleID" msprop:Generator_UserChildTable="SerialsByPackingStyle" msprop:Generator_ChildPropName="GetSerialsByPackingStyleRows" msprop:Generator_UserRelationName="PackStyleLines_SerialsByPackingStyle" msprop:Generator_ParentPropName="PackStyleLinesRow" msprop:Generator_RelationVarName="relationPackStyleLines_SerialsByPackingStyle" msprop:Generator_UserParentTable="PackStyleLines" />
-      <msdata:Relationship name="PackStyleLines_SkidPackingDesign" msdata:parent="PackStyleLines" msdata:child="SkidPackingDesign" msdata:parentkey="LineID" msdata:childkey="PackStyleID" msprop:Generator_UserChildTable="SkidPackingDesign" msprop:Generator_ChildPropName="GetSkidPackingDesignRows" msprop:Generator_UserRelationName="PackStyleLines_SkidPackingDesign" msprop:Generator_ParentPropName="PackStyleLinesRow" msprop:Generator_RelationVarName="relationPackStyleLines_SkidPackingDesign" msprop:Generator_UserParentTable="PackStyleLines" />
-    </xs:appinfo>
-  </xs:annotation>
 </xs:schema>

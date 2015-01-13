@@ -78,40 +78,40 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.dgvOption1 = new System.Windows.Forms.DataGridView();
+            this.idopt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.suggsww = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.actualww = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.remainww = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rdo1 = new System.Windows.Forms.RadioButton();
             this.txtQtyOpt1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dgvOption1Qty = new System.Windows.Forms.DataGridView();
-            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
-            this.dgvOption2 = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.rdo2 = new System.Windows.Forms.RadioButton();
-            this.txtQtyOpt2 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dgvOption2Qty = new System.Windows.Forms.DataGridView();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.tbutSave = new System.Windows.Forms.ToolStripButton();
-            this.tbutSimulate = new System.Windows.Forms.ToolStripButton();
-            this.tbutCalQty = new System.Windows.Forms.ToolStripButton();
-            this.idopt1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.suggsww = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.actualww = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remainww = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.idoption1qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.suggsll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.actualll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remainll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.opt1qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.dgvOption2 = new System.Windows.Forms.DataGridView();
             this.idopt2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.suggswl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.actualwl = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remainwl = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.rdo2 = new System.Windows.Forms.RadioButton();
+            this.txtQtyOpt2 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dgvOption2Qty = new System.Windows.Forms.DataGridView();
             this.idoption2qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.suggslw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.actuallw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remainlw = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.opt2qty = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.tbutSave = new System.Windows.Forms.ToolStripButton();
+            this.tbutSimulate = new System.Windows.Forms.ToolStripButton();
+            this.tbutCalQty = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -497,6 +497,44 @@
             this.dgvOption1.Size = new System.Drawing.Size(396, 205);
             this.dgvOption1.TabIndex = 20;
             // 
+            // idopt1
+            // 
+            this.idopt1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.idopt1.HeaderText = "ID";
+            this.idopt1.Name = "idopt1";
+            this.idopt1.ReadOnly = true;
+            this.idopt1.Visible = false;
+            this.idopt1.Width = 40;
+            // 
+            // suggsww
+            // 
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle8.Format = "N2";
+            dataGridViewCellStyle8.NullValue = "0";
+            this.suggsww.DefaultCellStyle = dataGridViewCellStyle8;
+            this.suggsww.HeaderText = "Suggest W/W";
+            this.suggsww.Name = "suggsww";
+            this.suggsww.ReadOnly = true;
+            // 
+            // actualww
+            // 
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle9.Format = "N2";
+            dataGridViewCellStyle9.NullValue = "0";
+            this.actualww.DefaultCellStyle = dataGridViewCellStyle9;
+            this.actualww.HeaderText = "Actual W/W";
+            this.actualww.Name = "actualww";
+            // 
+            // remainww
+            // 
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle10.Format = "N2";
+            dataGridViewCellStyle10.NullValue = "0";
+            this.remainww.DefaultCellStyle = dataGridViewCellStyle10;
+            this.remainww.HeaderText = "Remain W/W";
+            this.remainww.Name = "remainww";
+            this.remainww.ReadOnly = true;
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.rdo1);
@@ -567,6 +605,53 @@
             this.dgvOption1Qty.Size = new System.Drawing.Size(574, 205);
             this.dgvOption1Qty.TabIndex = 21;
             // 
+            // idoption1qty
+            // 
+            this.idoption1qty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.idoption1qty.HeaderText = "ID";
+            this.idoption1qty.Name = "idoption1qty";
+            this.idoption1qty.ReadOnly = true;
+            this.idoption1qty.Visible = false;
+            this.idoption1qty.Width = 40;
+            // 
+            // suggsll
+            // 
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle11.Format = "N2";
+            dataGridViewCellStyle11.NullValue = "0";
+            this.suggsll.DefaultCellStyle = dataGridViewCellStyle11;
+            this.suggsll.HeaderText = "Suggest L/L";
+            this.suggsll.Name = "suggsll";
+            this.suggsll.ReadOnly = true;
+            // 
+            // actualll
+            // 
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle12.Format = "N2";
+            dataGridViewCellStyle12.NullValue = "0";
+            this.actualll.DefaultCellStyle = dataGridViewCellStyle12;
+            this.actualll.HeaderText = "Actual L/L";
+            this.actualll.Name = "actualll";
+            // 
+            // remainll
+            // 
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle13.Format = "N2";
+            dataGridViewCellStyle13.NullValue = "0";
+            this.remainll.DefaultCellStyle = dataGridViewCellStyle13;
+            this.remainll.HeaderText = "Remain L/L";
+            this.remainll.Name = "remainll";
+            this.remainll.ReadOnly = true;
+            // 
+            // opt1qty
+            // 
+            dataGridViewCellStyle14.Format = "N2";
+            dataGridViewCellStyle14.NullValue = "0";
+            this.opt1qty.DefaultCellStyle = dataGridViewCellStyle14;
+            this.opt1qty.HeaderText = "Qty";
+            this.opt1qty.Name = "opt1qty";
+            this.opt1qty.ReadOnly = true;
+            // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -615,6 +700,44 @@
             this.dgvOption2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvOption2.Size = new System.Drawing.Size(396, 226);
             this.dgvOption2.TabIndex = 21;
+            // 
+            // idopt2
+            // 
+            this.idopt2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.idopt2.HeaderText = "ID";
+            this.idopt2.Name = "idopt2";
+            this.idopt2.ReadOnly = true;
+            this.idopt2.Visible = false;
+            this.idopt2.Width = 40;
+            // 
+            // suggswl
+            // 
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle15.Format = "N2";
+            dataGridViewCellStyle15.NullValue = "0";
+            this.suggswl.DefaultCellStyle = dataGridViewCellStyle15;
+            this.suggswl.HeaderText = "Suggest W/L";
+            this.suggswl.Name = "suggswl";
+            this.suggswl.ReadOnly = true;
+            // 
+            // actualwl
+            // 
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle16.Format = "N2";
+            dataGridViewCellStyle16.NullValue = "0";
+            this.actualwl.DefaultCellStyle = dataGridViewCellStyle16;
+            this.actualwl.HeaderText = "Actual W/L";
+            this.actualwl.Name = "actualwl";
+            // 
+            // remainwl
+            // 
+            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle17.Format = "N2";
+            dataGridViewCellStyle17.NullValue = "0";
+            this.remainwl.DefaultCellStyle = dataGridViewCellStyle17;
+            this.remainwl.HeaderText = "Remain W/L";
+            this.remainwl.Name = "remainwl";
+            this.remainwl.ReadOnly = true;
             // 
             // panel2
             // 
@@ -686,182 +809,6 @@
             this.dgvOption2Qty.Size = new System.Drawing.Size(574, 226);
             this.dgvOption2Qty.TabIndex = 22;
             // 
-            // toolStrip2
-            // 
-            this.toolStrip2.AutoSize = false;
-            this.toolStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(235)))), ((int)(((byte)(250)))));
-            this.toolStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(23, 20);
-            this.toolStrip2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tbutSave,
-            this.tbutSimulate,
-            this.tbutCalQty});
-            this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip2.Size = new System.Drawing.Size(1133, 39);
-            this.toolStrip2.TabIndex = 40;
-            this.toolStrip2.Text = "Tool Bar";
-            // 
-            // tbutSave
-            // 
-            this.tbutSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbutSave.Image = global::Epicoil.Appl.Properties.Resources.epicor_save;
-            this.tbutSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbutSave.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbutSave.Name = "tbutSave";
-            this.tbutSave.Size = new System.Drawing.Size(23, 32);
-            this.tbutSave.Text = "Confirm";
-            // 
-            // tbutSimulate
-            // 
-            this.tbutSimulate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbutSimulate.Image = global::Epicoil.Appl.Properties.Resources._1416189806_cal;
-            this.tbutSimulate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbutSimulate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbutSimulate.Name = "tbutSimulate";
-            this.tbutSimulate.Size = new System.Drawing.Size(23, 32);
-            this.tbutSimulate.Text = "Simulate";
-            this.tbutSimulate.Click += new System.EventHandler(this.tbutSimulate_Click);
-            // 
-            // tbutCalQty
-            // 
-            this.tbutCalQty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.tbutCalQty.Image = global::Epicoil.Appl.Properties.Resources._1416190065_quantity_capsule_3;
-            this.tbutCalQty.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.tbutCalQty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tbutCalQty.Name = "tbutCalQty";
-            this.tbutCalQty.Size = new System.Drawing.Size(23, 32);
-            this.tbutCalQty.Text = "Calculate Quantity";
-            // 
-            // idopt1
-            // 
-            this.idopt1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.idopt1.HeaderText = "ID";
-            this.idopt1.Name = "idopt1";
-            this.idopt1.ReadOnly = true;
-            this.idopt1.Visible = false;
-            this.idopt1.Width = 40;
-            // 
-            // suggsww
-            // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle8.Format = "N2";
-            dataGridViewCellStyle8.NullValue = "0";
-            this.suggsww.DefaultCellStyle = dataGridViewCellStyle8;
-            this.suggsww.HeaderText = "Suggest W/W";
-            this.suggsww.Name = "suggsww";
-            this.suggsww.ReadOnly = true;
-            // 
-            // actualww
-            // 
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle9.Format = "N2";
-            dataGridViewCellStyle9.NullValue = "0";
-            this.actualww.DefaultCellStyle = dataGridViewCellStyle9;
-            this.actualww.HeaderText = "Actual W/W";
-            this.actualww.Name = "actualww";
-            // 
-            // remainww
-            // 
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle10.Format = "N2";
-            dataGridViewCellStyle10.NullValue = "0";
-            this.remainww.DefaultCellStyle = dataGridViewCellStyle10;
-            this.remainww.HeaderText = "Remain W/W";
-            this.remainww.Name = "remainww";
-            this.remainww.ReadOnly = true;
-            // 
-            // idoption1qty
-            // 
-            this.idoption1qty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.idoption1qty.HeaderText = "ID";
-            this.idoption1qty.Name = "idoption1qty";
-            this.idoption1qty.ReadOnly = true;
-            this.idoption1qty.Visible = false;
-            this.idoption1qty.Width = 40;
-            // 
-            // suggsll
-            // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle11.Format = "N2";
-            dataGridViewCellStyle11.NullValue = "0";
-            this.suggsll.DefaultCellStyle = dataGridViewCellStyle11;
-            this.suggsll.HeaderText = "Suggest L/L";
-            this.suggsll.Name = "suggsll";
-            this.suggsll.ReadOnly = true;
-            // 
-            // actualll
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle12.Format = "N2";
-            dataGridViewCellStyle12.NullValue = "0";
-            this.actualll.DefaultCellStyle = dataGridViewCellStyle12;
-            this.actualll.HeaderText = "Actual L/L";
-            this.actualll.Name = "actualll";
-            // 
-            // remainll
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle13.Format = "N2";
-            dataGridViewCellStyle13.NullValue = "0";
-            this.remainll.DefaultCellStyle = dataGridViewCellStyle13;
-            this.remainll.HeaderText = "Remain L/L";
-            this.remainll.Name = "remainll";
-            this.remainll.ReadOnly = true;
-            // 
-            // opt1qty
-            // 
-            dataGridViewCellStyle14.Format = "N2";
-            dataGridViewCellStyle14.NullValue = "0";
-            this.opt1qty.DefaultCellStyle = dataGridViewCellStyle14;
-            this.opt1qty.HeaderText = "Qty";
-            this.opt1qty.Name = "opt1qty";
-            this.opt1qty.ReadOnly = true;
-            // 
-            // idopt2
-            // 
-            this.idopt2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.idopt2.HeaderText = "ID";
-            this.idopt2.Name = "idopt2";
-            this.idopt2.ReadOnly = true;
-            this.idopt2.Visible = false;
-            this.idopt2.Width = 40;
-            // 
-            // suggswl
-            // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle15.Format = "N2";
-            dataGridViewCellStyle15.NullValue = "0";
-            this.suggswl.DefaultCellStyle = dataGridViewCellStyle15;
-            this.suggswl.HeaderText = "Suggest W/L";
-            this.suggswl.Name = "suggswl";
-            this.suggswl.ReadOnly = true;
-            // 
-            // actualwl
-            // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle16.Format = "N2";
-            dataGridViewCellStyle16.NullValue = "0";
-            this.actualwl.DefaultCellStyle = dataGridViewCellStyle16;
-            this.actualwl.HeaderText = "Actual W/L";
-            this.actualwl.Name = "actualwl";
-            // 
-            // remainwl
-            // 
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle17.Format = "N2";
-            dataGridViewCellStyle17.NullValue = "0";
-            this.remainwl.DefaultCellStyle = dataGridViewCellStyle17;
-            this.remainwl.HeaderText = "Remain W/L";
-            this.remainwl.Name = "remainwl";
-            this.remainwl.ReadOnly = true;
-            // 
             // idoption2qty
             // 
             this.idoption2qty.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -908,6 +855,60 @@
             this.opt2qty.HeaderText = "Qty";
             this.opt2qty.Name = "opt2qty";
             this.opt2qty.ReadOnly = true;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.AutoSize = false;
+            this.toolStrip2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(222)))), ((int)(((byte)(235)))), ((int)(((byte)(250)))));
+            this.toolStrip2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.ImageScalingSize = new System.Drawing.Size(23, 20);
+            this.toolStrip2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tbutSave,
+            this.tbutSimulate,
+            this.tbutCalQty});
+            this.toolStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.toolStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStrip2.Size = new System.Drawing.Size(1133, 39);
+            this.toolStrip2.TabIndex = 40;
+            this.toolStrip2.Text = "Tool Bar";
+            // 
+            // tbutSave
+            // 
+            this.tbutSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbutSave.Image = global::Epicoil.Appl.Properties.Resources.epicor_save;
+            this.tbutSave.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbutSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbutSave.Name = "tbutSave";
+            this.tbutSave.Size = new System.Drawing.Size(23, 32);
+            this.tbutSave.Text = "Confirm";
+            // 
+            // tbutSimulate
+            // 
+            this.tbutSimulate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbutSimulate.Image = global::Epicoil.Appl.Properties.Resources._1416189806_cal;
+            this.tbutSimulate.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbutSimulate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbutSimulate.Name = "tbutSimulate";
+            this.tbutSimulate.Size = new System.Drawing.Size(23, 32);
+            this.tbutSimulate.Text = "Simulate";
+            this.tbutSimulate.Click += new System.EventHandler(this.tbutSimulate_Click);
+            // 
+            // tbutCalQty
+            // 
+            this.tbutCalQty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tbutCalQty.Enabled = false;
+            this.tbutCalQty.Image = global::Epicoil.Appl.Properties.Resources._1416190065_quantity_capsule_3;
+            this.tbutCalQty.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.tbutCalQty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tbutCalQty.Name = "tbutCalQty";
+            this.tbutCalQty.Size = new System.Drawing.Size(23, 32);
+            this.tbutCalQty.Text = "Calculate Quantity";
             // 
             // SimulateReShear
             // 

@@ -20,7 +20,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
     {
         private readonly IStoreInPlanRepo _repo;
 
-        public ImexConfirmCheckList(SessionInfo _session = null, StoreInPlanHead model = null)
+        public ImexConfirmCheckList(SessionInfo _session = null, StoreInPlanHeadModel model = null)
         {
             InitializeComponent();
             this._repo = new StoreInPlanRepo();

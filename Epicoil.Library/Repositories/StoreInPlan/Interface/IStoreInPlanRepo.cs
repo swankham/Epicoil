@@ -19,23 +19,23 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 
         IEnumerable<StoreInPlanDialogModel> GetByFilter(StoreInPlanDialogModel model, int FilterType);
 
-        StoreInPlanHead GetByID(string Id);
+        StoreInPlanHeadModel GetByID(string Id);
 
         int GenerateId();
 
-        bool GetPOByPONumber(string Plant, string PONumber, StoreInPlanHead model, out string msg, out int PONum);
+        bool GetPOByPONumber(string Plant, string PONumber, StoreInPlanHeadModel model, out string msg, out int PONum);
 
-        bool GetPOBySaleContract(string Plant, string SaleContract, StoreInPlanHead model, out string msg);
+        bool GetPOBySaleContract(string Plant, string SaleContract, StoreInPlanHeadModel model, out string msg);
 
-        bool GetPOLine(string PONumber, string SaleContract, StoreInPlanHead model, int POLine, out string msg);
+        bool GetPOLine(string PONumber, string SaleContract, StoreInPlanHeadModel model, int POLine, out string msg);
 
         decimal GetReceivedWeight(int PONum, int POLine);
 
-        StoreInPlanDetail GetPoLineDetail(string PONumber, int POLine);
+        StoreInPlanDetailModel GetPoLineDetail(string PONumber, int POLine);
 
-        StoreInPlanHead SaveHead(StoreInPlanHead model, SessionInfo _session);
+        StoreInPlanHeadModel SaveHead(StoreInPlanHeadModel model, SessionInfo _session);
 
-        void SaveArticle(StoreInPlanDetail model, SessionInfo _session);
+        void SaveArticle(StoreInPlanDetailModel model, SessionInfo _session);
 
         bool CheckInvoiceExisting(string Invoice);
 
@@ -43,15 +43,15 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 
         bool CheckArticleExisting(string Article, int LineID = 0);
 
-        IEnumerable<StoreInPlanDetail> GetDetail(int storeInPlantId);
+        IEnumerable<StoreInPlanDetailModel> GetDetail(int storeInPlantId);
 
-        IEnumerable<StoreInPlanDetail> GetDetailArticle(int storeInPlantId, int POLine);
+        IEnumerable<StoreInPlanDetailModel> GetDetailArticle(int storeInPlantId, int POLine);
 
-        IEnumerable<StoreInPlanDetail> GetDetailArticleITAKU(int storeInPlantId);
+        IEnumerable<StoreInPlanDetailModel> GetDetailArticleITAKU(int storeInPlantId);
 
         void DeleteLine(int LineId);
 
-        GetHeader GetHeaderByPONum(string PONum);
+        POHeaderModel GetHeaderByPONum(string PONum);
 
         int GetLastSeqId(int StoreInPlanId, int PONum, int POLine);
 

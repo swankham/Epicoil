@@ -173,6 +173,7 @@
             // 
             // trvMenu
             // 
+            this.trvMenu.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trvMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.trvMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.trvMenu.ImageIndex = 6;
@@ -186,6 +187,7 @@
             // 
             // listView
             // 
+            this.listView.Cursor = System.Windows.Forms.Cursors.Hand;
             this.listView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.listView.Items.AddRange(new System.Windows.Forms.ListViewItem[] {

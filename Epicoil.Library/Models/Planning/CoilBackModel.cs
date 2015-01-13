@@ -5,6 +5,8 @@ namespace Epicoil.Library.Models.Planning
 {
     public class CoilBackModel
     {
+        #region Properties
+
         public int LineID { get; set; }
 
         public int WorkOrderID { get; set; }
@@ -44,12 +46,6 @@ namespace Epicoil.Library.Models.Planning
         public decimal Qty { get; set; }
 
         public decimal LengthM { get; set; }
-        //{
-        //    get
-        //    {
-        //        return (Length == 0) ? CBLengthMeter(Weight, Width, Thick, Gravity, FrontPlate, BackPlate) : Math.Round((Length / 1000), 2);
-        //    }
-        //}
 
         public string MCSSNo { get; set; }
 
@@ -89,6 +85,10 @@ namespace Epicoil.Library.Models.Planning
 
         public string UpdatedBy { get; set; }
 
+        #endregion Properties
+
+        #region Methods
+
         public void DataBind(DataRow row)
         {
             this.LineID = (int)row["LineID"].GetInt();
@@ -116,11 +116,11 @@ namespace Epicoil.Library.Models.Planning
             this.BackStep = (int)row["BackStep"].GetInt();
             this.Status = (string)row["Status"].GetString();
             this.BussinessType = string.IsNullOrEmpty((string)row["BussinessType"].GetString()) ? "" : (string)row["BussinessType"].GetString();
-            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString(); 
+            this.BussinessTypeName = (string)row["BussinessTypeName"].GetString();
             this.Possession = (int)row["Possession"].GetInt();
             this.ProductStatus = (int)row["ProductStatus"].GetInt();
             this.Description = string.IsNullOrEmpty((string)row["Description"].GetString()) ? "" : (string)row["Description"].GetString();
-            this.Note = string.IsNullOrEmpty((string)row["Note"].GetString()) ? "" : (string)row["Note"].GetString(); 
+            this.Note = string.IsNullOrEmpty((string)row["Note"].GetString()) ? "" : (string)row["Note"].GetString();
             this.CoilBackState = (int)row["CoilBackState"].GetInt();
             this.CreationDate = (DateTime)row["CreationDate"].GetDate();
             this.LastUpdateDate = (DateTime)row["LastUpdateDate"].GetDate();
@@ -145,5 +145,7 @@ namespace Epicoil.Library.Models.Planning
             //Convert mm to M.
             return Math.Round(result / 1000, 2);
         }
+
+        #endregion Methods
     }
 }

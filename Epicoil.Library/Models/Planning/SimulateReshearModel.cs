@@ -5,6 +5,8 @@ namespace Epicoil.Library.Models.Planning
 {
     public class SimulateReshearModel
     {
+        #region Properties
+
         public int WorkOrderID { get; set; }
 
         public int LineID { get; set; }
@@ -49,6 +51,10 @@ namespace Epicoil.Library.Models.Planning
 
         public string UpdatedBy { get; set; }
 
+        #endregion Properties
+
+        #region Methods
+
         public void DataBind(DataRow row)
         {
             this.WorkOrderID = (int)row["WorkOrderID"].GetInt();
@@ -70,5 +76,7 @@ namespace Epicoil.Library.Models.Planning
             this.CreatedBy = (string)row["CreatedBy"].GetString();
             this.UpdatedBy = (string)row["UpdatedBy"].GetString();
         }
+
+        #endregion Methods
     }
 }

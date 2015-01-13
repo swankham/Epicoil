@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
-    public class StoreInPlanDialogModel : StoreInPlanHead
+    public class StoreInPlanDialogModel : StoreInPlanHeadModel
     {
         public int PONum { get; set; }
 

@@ -7,6 +7,8 @@ namespace Epicoil.Library.Models.Planning
 {
     public class MaterialModel : BaseSerial
     {
+        #region Properties
+
         public string MCSSNo { get; set; }
 
         public int TransactionLineID { get; set; }
@@ -66,7 +68,7 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal UsingQuantity { get; set; }
 
-        public decimal RemainQuantity 
+        public decimal RemainQuantity
         {
             get
             {
@@ -103,6 +105,10 @@ namespace Epicoil.Library.Models.Planning
         public string MillName { get; set; }
 
         public bool UsedFlag { get; set; }
+
+        #endregion Properties
+
+        #region Methods
 
         public override void DataBind(DataRow row)
         {
@@ -148,7 +154,7 @@ namespace Epicoil.Library.Models.Planning
             if (d2 == 0) d2 = 1;
             decimal result = d1 / d2;
 
-            //Convert mm to M.
+            //Convert Millimeter to M.
             return Math.Round(result / 1000, 2);
         }
 
@@ -203,5 +209,11 @@ namespace Epicoil.Library.Models.Planning
 
             return valid;
         }
+
+        public void ConvertUsingLengthToUsingWeight()
+        {
+            UsingWeight = Math.Round((Weight * UsingLengthM) / LengthM, 2);
+        }
+        #endregion Methods
     }
 }

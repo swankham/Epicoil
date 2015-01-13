@@ -42,6 +42,7 @@
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.storeinplanno = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.invoiceno = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.transtype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.supplier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.issuedate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -67,8 +68,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvList);
-            this.splitContainer1.Size = new System.Drawing.Size(581, 484);
-            this.splitContainer1.SplitterDistance = 87;
+            this.splitContainer1.Size = new System.Drawing.Size(678, 558);
+            this.splitContainer1.SplitterDistance = 100;
+            this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 4;
             // 
             // panel2
@@ -81,67 +83,67 @@
             this.panel2.Controls.Add(this.txtFilter1);
             this.panel2.Controls.Add(this.butSearch);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(169, 0);
+            this.panel2.Location = new System.Drawing.Point(197, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(412, 87);
+            this.panel2.Size = new System.Drawing.Size(481, 100);
             this.panel2.TabIndex = 0;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 63);
+            this.label3.Location = new System.Drawing.Point(47, 73);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 13);
+            this.label3.Size = new System.Drawing.Size(78, 15);
             this.label3.TabIndex = 6;
             this.label3.Text = "PO Number :";
             // 
             // txtFilter3
             // 
             this.txtFilter3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFilter3.Location = new System.Drawing.Point(110, 61);
+            this.txtFilter3.Location = new System.Drawing.Point(128, 70);
             this.txtFilter3.Name = "txtFilter3";
-            this.txtFilter3.Size = new System.Drawing.Size(195, 20);
+            this.txtFilter3.Size = new System.Drawing.Size(227, 21);
             this.txtFilter3.TabIndex = 5;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(40, 37);
+            this.label2.Location = new System.Drawing.Point(47, 43);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 13);
+            this.label2.Size = new System.Drawing.Size(73, 15);
             this.label2.TabIndex = 4;
             this.label2.Text = "Invoice No. :";
             // 
             // txtFilter2
             // 
             this.txtFilter2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFilter2.Location = new System.Drawing.Point(110, 35);
+            this.txtFilter2.Location = new System.Drawing.Point(128, 40);
             this.txtFilter2.Name = "txtFilter2";
-            this.txtFilter2.Size = new System.Drawing.Size(195, 20);
+            this.txtFilter2.Size = new System.Drawing.Size(227, 21);
             this.txtFilter2.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 12);
+            this.label1.Location = new System.Drawing.Point(16, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 13);
+            this.label1.Size = new System.Drawing.Size(105, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "Store In Plan No. :";
             // 
             // txtFilter1
             // 
             this.txtFilter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtFilter1.Location = new System.Drawing.Point(110, 9);
+            this.txtFilter1.Location = new System.Drawing.Point(128, 10);
             this.txtFilter1.Name = "txtFilter1";
-            this.txtFilter1.Size = new System.Drawing.Size(195, 20);
+            this.txtFilter1.Size = new System.Drawing.Size(227, 21);
             this.txtFilter1.TabIndex = 1;
             // 
             // butSearch
             // 
-            this.butSearch.Location = new System.Drawing.Point(311, 7);
+            this.butSearch.Location = new System.Drawing.Point(363, 8);
             this.butSearch.Name = "butSearch";
-            this.butSearch.Size = new System.Drawing.Size(91, 23);
+            this.butSearch.Size = new System.Drawing.Size(106, 27);
             this.butSearch.TabIndex = 0;
             this.butSearch.Text = "Search";
             this.butSearch.UseVisualStyleBackColor = true;
@@ -152,7 +154,7 @@
             this.dgvList.AllowUserToAddRows = false;
             this.dgvList.AllowUserToDeleteRows = false;
             this.dgvList.AllowUserToResizeRows = false;
-            this.dgvList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvList.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvList.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvList.BackgroundColor = System.Drawing.Color.White;
             this.dgvList.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -164,6 +166,7 @@
             this.id,
             this.storeinplanno,
             this.invoiceno,
+            this.transtype,
             this.supplier,
             this.issuedate,
             this.status1});
@@ -176,9 +179,8 @@
             this.dgvList.RowHeadersVisible = false;
             this.dgvList.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvList.Size = new System.Drawing.Size(581, 393);
+            this.dgvList.Size = new System.Drawing.Size(678, 453);
             this.dgvList.TabIndex = 15;
-            this.dgvList.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellContentClick);
             this.dgvList.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellDoubleClick);
             // 
             // id
@@ -186,6 +188,7 @@
             this.id.HeaderText = "storeinid";
             this.id.Name = "id";
             this.id.Visible = false;
+            this.id.Width = 78;
             // 
             // storeinplanno
             // 
@@ -193,7 +196,7 @@
             this.storeinplanno.HeaderText = "Store In Plant No.";
             this.storeinplanno.Name = "storeinplanno";
             this.storeinplanno.ReadOnly = true;
-            this.storeinplanno.Width = 115;
+            this.storeinplanno.Width = 126;
             // 
             // invoiceno
             // 
@@ -201,32 +204,42 @@
             this.invoiceno.HeaderText = "Invoice No.";
             this.invoiceno.Name = "invoiceno";
             this.invoiceno.ReadOnly = true;
-            this.invoiceno.Width = 86;
+            this.invoiceno.Width = 91;
+            // 
+            // transtype
+            // 
+            this.transtype.HeaderText = "Type";
+            this.transtype.Name = "transtype";
+            this.transtype.ReadOnly = true;
+            this.transtype.Width = 57;
             // 
             // supplier
             // 
             this.supplier.HeaderText = "Supplier";
             this.supplier.Name = "supplier";
             this.supplier.ReadOnly = true;
+            this.supplier.Width = 77;
             // 
             // issuedate
             // 
             this.issuedate.HeaderText = "Issue Date";
             this.issuedate.Name = "issuedate";
             this.issuedate.ReadOnly = true;
+            this.issuedate.Width = 89;
             // 
             // status1
             // 
             this.status1.HeaderText = "Status";
             this.status1.Name = "status1";
             this.status1.ReadOnly = true;
+            this.status1.Width = 65;
             // 
             // StoreInPlanDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(581, 484);
+            this.ClientSize = new System.Drawing.Size(678, 558);
             this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -257,13 +270,14 @@
         private System.Windows.Forms.DataGridView dgvList;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtFilter2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtFilter3;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn storeinplanno;
         private System.Windows.Forms.DataGridViewTextBoxColumn invoiceno;
+        private System.Windows.Forms.DataGridViewTextBoxColumn transtype;
         private System.Windows.Forms.DataGridViewTextBoxColumn supplier;
         private System.Windows.Forms.DataGridViewTextBoxColumn issuedate;
         private System.Windows.Forms.DataGridViewTextBoxColumn status1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtFilter3;
     }
 }

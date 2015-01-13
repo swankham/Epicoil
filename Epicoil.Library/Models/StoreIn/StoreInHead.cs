@@ -4,7 +4,7 @@ using Epicoil.Library.Models.StoreInPlan;
 
 namespace Epicoil.Library.Models.StoreIn
 {
-    public class StoreInHead : StoreInPlanHead
+    public class StoreInHead : StoreInPlanHeadModel
     {
         public decimal TransactionID { get; set; }
 

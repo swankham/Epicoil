@@ -6,6 +6,18 @@ namespace Epicoil.Library.Models.Planning
 {
     public class SimulateActionModel
     {
+        #region Constructors
+
+        public SimulateActionModel()
+        {
+            Materials = new List<MaterialModel>();
+            Cuttings = new List<SimulateModel>();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         public int WorkOrderID { get; set; }
 
         public string WorkOrderNum { get; set; }
@@ -34,20 +46,13 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal Expected { get; set; }
 
-        private IEnumerable<MaterialModel> MaterialLines = new List<MaterialModel>();
-        private IEnumerable<SimulateModel> CuttingLines = new List<SimulateModel>();
+        public IList<MaterialModel> Materials { get; set; }
 
-        public List<MaterialModel> Materials
-        {
-            get { return this.MaterialLines.ToList(); }
-            set { this.MaterialLines = value; }
-        }
+        public IList<SimulateModel> Cuttings { get; set; }
 
-        public List<SimulateModel> Cuttings
-        {
-            get { return this.CuttingLines.ToList(); }
-            set { this.CuttingLines = value; }
-        }
+        #endregion Properties
+
+        #region Methods
 
         public void CalculateRowForWeightOption(MaterialModel mat)
         {
@@ -132,7 +137,7 @@ namespace Epicoil.Library.Models.Planning
             decimal w1 = plnHead.CuttingDesign.Where(i => i.Status.Equals("S")).Sum(i => i.Width);
             decimal mw = Materials.Max(i => i.Width);
 
-            decimal result = (d1 / mw) * w1 ;
+            decimal result = (d1 / mw) * w1;
             TrimWeight = result;
         }
 
@@ -155,8 +160,8 @@ namespace Epicoil.Library.Models.Planning
 
         public bool CheckYeild(PlanningHeadModel head, decimal YeildValue)
         {
-            decimal YieldMin = head.ProcessLineDetail.YieldPercentMin;
-            decimal YieldMax = head.ProcessLineDetail.YieldPercentMax;
+            decimal YieldMin = head.ProcessLine.YieldPercentMin;
+            decimal YieldMax = head.ProcessLine.YieldPercentMax;
 
             bool FlagYield = true;
             if (YeildValue < YieldMin)
@@ -199,5 +204,7 @@ namespace Epicoil.Library.Models.Planning
 
             return valid;
         }
+
+        #endregion Methods
     }
 }

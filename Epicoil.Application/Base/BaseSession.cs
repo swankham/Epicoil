@@ -32,7 +32,7 @@ namespace Epicoil.Appl
                 //Get AppServer URL from App.config file.
                 AppServerURL = ConfigurationManager.ConnectionStrings["EpicorAppServer"].ConnectionString;
                 Epicor.Mfg.Core.Session curr = new Session(userName, userPassword, AppServerURL, Session.LicenseType.Default);
-
+                //curr.FormatCultureName
                 if (curr.IsValidSession(curr.SessionID, curr.UserID))
                 {
                     epiSession.AppServer = AppServerURL;

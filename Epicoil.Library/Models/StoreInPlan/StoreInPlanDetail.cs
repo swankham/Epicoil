@@ -3,7 +3,7 @@ using System.Data;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
-    public class StoreInPlanDetail
+    public class StoreInPlanDetailModel
     {
         public string PlantID { get; set; }
 

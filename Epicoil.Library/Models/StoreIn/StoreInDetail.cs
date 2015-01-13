@@ -3,7 +3,7 @@ using Epicoil.Library.Models.StoreInPlan;
 
 namespace Epicoil.Library.Models.StoreIn
 {
-    public class StoreInDetail : StoreInPlanDetail
+    public class StoreInDetail : StoreInPlanDetailModel
     {
         public int StoreInID { get; set; }
 

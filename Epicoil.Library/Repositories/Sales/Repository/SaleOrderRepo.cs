@@ -127,25 +127,25 @@ namespace Epicoil.Library.Repositories.Sales
                 if (!string.IsNullOrEmpty(model.BussinessType)) query = query.Where(p => p.BussinessType.GetString().Equals(model.BussinessType.GetString()));
                 if (!string.IsNullOrEmpty(model.Possession)) query = query.Where(p => p.Possession.GetString() == model.Possession);
 
-                if (model.Materails.ToList().Count > 0)
+                if (model.Materials.ToList().Count > 0)
                 {
-                    var mat = model.Materails.FirstOrDefault();
-                    if (Convert.ToBoolean(model.CurrentClass.CustomerReq)) query = query.Where(p => p.CustID.GetString().ToUpper().Equals(mat.CustID.GetString().ToUpper()));
-                    if (Convert.ToBoolean(model.CurrentClass.ComudityReq)) query = query.Where(p => p.CommodityCode.GetString().ToUpper().Equals(mat.CommodityCode.GetString().ToUpper()));
-                    if (Convert.ToBoolean(model.CurrentClass.SpecCodeReq)) query = query.Where(p => p.SpecCode.GetString().ToUpper().Equals(mat.SpecCode.GetString().ToUpper()));
-                    if (Convert.ToBoolean(model.CurrentClass.PlateCodeReq)) query = query.Where(p => (string.IsNullOrEmpty(p.CoatingCode) ? "" : p.CoatingCode.ToUpper()).Equals(string.IsNullOrEmpty(mat.CoatingCode) ? "" : mat.CoatingCode.ToUpper()));
+                    var mat = model.Materials.FirstOrDefault();
+                    if (Convert.ToBoolean(model.Class.CustomerReq)) query = query.Where(p => p.CustID.GetString().ToUpper().Equals(mat.CustID.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.ComudityReq)) query = query.Where(p => p.CommodityCode.GetString().ToUpper().Equals(mat.CommodityCode.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.SpecCodeReq)) query = query.Where(p => p.SpecCode.GetString().ToUpper().Equals(mat.SpecCode.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.PlateCodeReq)) query = query.Where(p => (string.IsNullOrEmpty(p.CoatingCode) ? "" : p.CoatingCode.ToUpper()).Equals(string.IsNullOrEmpty(mat.CoatingCode) ? "" : mat.CoatingCode.ToUpper()));
 
-                    if (Convert.ToBoolean(model.CurrentClass.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.GetString().ToUpper().Equals(mat.MakerCode.GetString().ToUpper()));
-                    if (Convert.ToBoolean(model.CurrentClass.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.GetString().ToUpper().Equals(mat.MillCode.GetString().ToUpper()));
-                    if (Convert.ToBoolean(model.CurrentClass.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.GetString().ToUpper().Equals(mat.SupplierCode.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.MakerCodeReq.GetInt())) query = query.Where(p => p.MakerCode.GetString().ToUpper().Equals(mat.MakerCode.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.MillCodeReq.GetInt())) query = query.Where(p => p.MillCode.GetString().ToUpper().Equals(mat.MillCode.GetString().ToUpper()));
+                    if (Convert.ToBoolean(model.Class.SupplierReq.GetInt())) query = query.Where(p => p.SupplierCode.GetString().ToUpper().Equals(mat.SupplierCode.GetString().ToUpper()));
 
                     query = query.Where(p => p.Thick.Equals(mat.Thick));
                     query = query.Where(p => p.Width <= mat.Width);
-                    if (Convert.ToBoolean(model.CurrentClass.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
+                    if (Convert.ToBoolean(model.Class.LengthReq.GetInt())) query = query.Where(p => p.Length.Equals(mat.Length));
                 }
 
-                query = query.Where(p => p.Thick >= model.ProcessLineDetail.ThickMin);
-                query = query.Where(p => p.Thick <= model.ProcessLineDetail.ThickMax);
+                query = query.Where(p => p.Thick >= model.ProcessLine.ThickMin);
+                query = query.Where(p => p.Thick <= model.ProcessLine.ThickMax);
 
                 return query;
             }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicoil.Application", "Epicoil.Application\Epicoil.Application.csproj", "{75D1BBAB-1BD1-414D-8444-4B37C5E6FE5F}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{3DE6A0
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicoil.Service", "Epicoil.Service\Epicoil.Service.csproj", "{4B287291-8321-4BA7-ADFB-F5D29C1483A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epicoil.Interface", "Epicoil.Interface\Epicoil.Interface.csproj", "{122FFEB8-F055-4E0C-8D06-6107BEB20943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +41,14 @@ Global
 		{1931E24B-1535-4F57-9604-A3E41FDCD2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1931E24B-1535-4F57-9604-A3E41FDCD2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1931E24B-1535-4F57-9604-A3E41FDCD2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B287291-8321-4BA7-ADFB-F5D29C1483A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B287291-8321-4BA7-ADFB-F5D29C1483A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B287291-8321-4BA7-ADFB-F5D29C1483A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B287291-8321-4BA7-ADFB-F5D29C1483A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{122FFEB8-F055-4E0C-8D06-6107BEB20943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{122FFEB8-F055-4E0C-8D06-6107BEB20943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{122FFEB8-F055-4E0C-8D06-6107BEB20943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{122FFEB8-F055-4E0C-8D06-6107BEB20943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -72,7 +72,7 @@ namespace Epicoil.Appl.Presentations.Planning
             model.PICName = epiSession.UserName;
 
             //ComboBox
-            cmbProcessLine.DataSource = model.ResourceList.ToList();
+            cmbProcessLine.DataSource = model.Resources.ToList();
             cmbProcessLine.DisplayMember = "ResourceDescription";
             cmbProcessLine.ValueMember = "ResourceID";
             cmbProcessLine.DataBindings.Add("SelectedValue", model, "ProcessLineId", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -80,7 +80,7 @@ namespace Epicoil.Appl.Presentations.Planning
             cmbOrderType.DisplayMember = "CodeDesc";
             cmbOrderType.ValueMember = "CodeID";
             cmbOrderType.DataBindings.Add("SelectedValue", model, "OrderType", false, DataSourceUpdateMode.OnPropertyChanged);
-            cmbPossession.DataSource = model.PossessionList.ToList();
+            cmbPossession.DataSource = model.Possessions.ToList();
             cmbPossession.DisplayMember = "CodeDesc";
             cmbPossession.ValueMember = "CodeID";
             cmbPossession.DataBindings.Add("SelectedValue", model, "Possession", false, DataSourceUpdateMode.OnPropertyChanged);
@@ -94,9 +94,9 @@ namespace Epicoil.Appl.Presentations.Planning
         private void WorkEntryDialog_Load(object sender, EventArgs e)
         {
             Header = new PlanningHeadModel();
-            Header.ResourceList = _repoRes.GetAll(epiSession.PlantID).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S"));
-            Header.OrderTypeList = _repoUcd.GetAll("OrderType");
-            Header.PossessionList = _repoUcd.GetAll("Pocessed");
+            Header.Resources = _repoRes.GetAll(epiSession.PlantID).Where(p => p.ResourceGrpID.Equals("L") || p.ResourceGrpID.Equals("R") || p.ResourceGrpID.Equals("S")).ToList();
+            Header.OrderTypeList = _repoUcd.GetAll("OrderType").ToList();
+            Header.Possessions = _repoUcd.GetAll("Pocessed").ToList();
 
             SetHeadContent(Header);
             //ClearHeaderContent();
@@ -115,7 +115,7 @@ namespace Epicoil.Appl.Presentations.Planning
             dgvWorkOrder.Rows.Clear();
             foreach (var p in data)
             {
-                dgvWorkOrder.Rows.Add(p.WorkOrderNum, p.ProcessStep, p.ProcessLineId, p.IssueDate, p.DueDate, p.PIC, p.OrderType, p.PossessionName, p.OperationStateName);
+                dgvWorkOrder.Rows.Add(p.WorkOrderID, p.WorkOrderNum, p.ProcessStep, p.ProcessLineId, p.IssueDate, p.DueDate, p.PIC, p.OrderType, p.PossessionName, p.OperationStateName);
             }
         }
 
@@ -146,15 +146,15 @@ namespace Epicoil.Appl.Presentations.Planning
             if (dgvWorkOrder.Rows.Count >= 1)
             {
                 int iRow = dgvWorkOrder.CurrentRow.Index;
-                string WrkNoPara = dgvWorkOrder.Rows[iRow].Cells["workordernumber"].Value.ToString();
+                string WrkNoPara = dgvWorkOrder.Rows[iRow].Cells["workorderid"].Value.ToString();
                 string ProcessStepPara = dgvWorkOrder.Rows[iRow].Cells["ProcessStep"].Value.ToString();
 
                 if (!string.IsNullOrEmpty(WrkNoPara))
                 {
-                    _selected = _repo.GetWorkById(WrkNoPara, Convert.ToInt32(ProcessStepPara), epiSession.PlantID);
-                    _selected.Materails = _repo.GetAllMaterial(epiSession.PlantID, _selected.WorkOrderID).ToList();
-                    _selected.CuttingLines = _repo.GetCuttingLines(_selected.WorkOrderID);
-                    _selected.ProcessLineDetail = _repoRes.GetByID(epiSession.PlantID, _selected.ProcessLineId);
+                    _selected = _repo.GetWorkById(Convert.ToInt32(WrkNoPara), Convert.ToInt32(ProcessStepPara), epiSession.PlantID);
+                    _selected.Materials = _repo.GetAllMaterial(epiSession.PlantID, _selected.WorkOrderID).ToList();
+                    _selected.CuttingDesign = _repo.GetCuttingLines(_selected.WorkOrderID).ToList();
+                    _selected.ProcessLine = _repoRes.GetByID(epiSession.PlantID, _selected.ProcessLineId);
                     this.Close();
                 }
             }

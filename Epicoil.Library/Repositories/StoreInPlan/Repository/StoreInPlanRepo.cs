@@ -30,14 +30,14 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 		                                        , stph.IMexItemNo, stph.InvoiceNum, stph.InvoiceDate, stph.PORate
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
 		                                        , stph.Vessel, stph.IMEXChecked, stph.StoreInFlag, stph.ImexConfirm, stph.ImexRemark
-                                                , 0 as PONum, '' as PONumber, stph.CustID, cust.Name as CustomerName
+                                                , 0 as PONum, '' as PONumber, stph.CustID, cust.Name as CustomerName, stph.OpenOrder
                                           FROM ucc_ic_StoreInPlanHead stph
 	                                            LEFT JOIN Vendor ven ON(stph.SupplierCode = ven.VendorID)
 	                                            LEFT JOIN UD19 maker ON(stph.MakerCode = maker.Key1)
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                            WHERE stph.OpenStatus = 1
+                                            WHERE stph.OpenOrder = 1
                                           ORDER BY stph.StoreInPlanId DESC");
 
             return Repository.Instance.GetMany<StoreInPlanDialogModel>(sql);
@@ -54,7 +54,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
 		                                        , stph.Vessel, stph.IMEXChecked, stph.StoreInFlag, stph.ImexConfirm, stph.ImexRemark
                                                 , stph.LastUpdateDate, stph.UpdatedBy, stph.UserGroup, stpd.PONum, ISNULL(stpd.PONumber,'') as PONumber
-                                                , stph.CustID, cust.Name as CustomerName
+                                                , stph.CustID, cust.Name as CustomerName, stph.OpenOrder
                                           FROM ucc_ic_StoreInPlanHead stph
 												LEFT JOIN ucc_ic_StoreInPlanDtl stpd ON(stph.StoreInPlanId = stpd.StoreInPlanId)
 	                                            LEFT JOIN Vendor ven ON(stph.SupplierCode = ven.VendorID)
@@ -62,11 +62,11 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInFlag = {0} AND stph.ImexConfirm = 1 AND stph.TransactionType = '2' AND stph.OpenStatus = 1
+                                          WHERE stph.StoreInFlag = {0} AND stph.OpenOrder = 1 --AND stph.ImexConfirm = 1 AND stph.TransactionType = '2' 
 										  GROUP BY stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType, busi.Character01
 		                                        , stph.SupplierCode, ven.Name, ISNULL(stph.CurrencyCode,'THB')
-		                                        , stph.MakerCode, maker.Character01
+		                                        , stph.MakerCode, maker.Character01, stph.OpenOrder
 		                                        , stph.MillCode, mill.Character01, stpd.PONum, ISNULL(stpd.PONumber,'')
 		                                        , stph.IMexItemNo, stph.InvoiceNum, stph.InvoiceDate, stph.PORate
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
@@ -88,7 +88,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
 		                                        , stph.Vessel, stph.IMEXChecked, stph.StoreInFlag, stph.ImexConfirm, stph.ImexRemark
                                                 , stph.LastUpdateDate, stph.UpdatedBy, stph.UserGroup, stpd.PONum, ISNULL(stpd.PONumber,'') as PONumber
-                                                , stph.CustID, cust.Name as CustomerName
+                                                , stph.CustID, cust.Name as CustomerName, stph.OpenOrder
                                           FROM ucc_ic_StoreInPlanHead stph
 												LEFT JOIN ucc_ic_StoreInPlanDtl stpd ON(stph.StoreInPlanId = stpd.StoreInPlanId)
 	                                            LEFT JOIN Vendor ven ON(stph.SupplierCode = ven.VendorID)
@@ -96,9 +96,9 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInFlag = 0 AND stph.ImexConfirm = 1 AND stph.TransactionType IN ('0','1') AND stph.OpenStatus = 1
+                                          WHERE stph.StoreInFlag = 0 AND stph.ImexConfirm = 1 AND stph.TransactionType IN ('0','1') AND stph.OpenOrder = 1
 										  GROUP BY stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
-		                                        , stph.BType, busi.Character01
+		                                        , stph.BType, busi.Character01, stph.OpenOrder
 		                                        , stph.SupplierCode, ven.Name, ISNULL(stph.CurrencyCode,'THB')
 		                                        , stph.MakerCode, maker.Character01
 		                                        , stph.MillCode, mill.Character01, stpd.PONum, ISNULL(stpd.PONumber,'')
@@ -117,7 +117,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 		                                        , stph.BType as BussinessType, busi.Character01 as BussinessTypeName
 		                                        , stph.SupplierCode, ven.Name as SupplierName, ISNULL(stph.CurrencyCode,'THB') as CurrencyCode
 		                                        , stph.MakerCode, maker.Character01 as MakerName
-		                                        , stph.MillCode, mill.Character01 as MillName
+		                                        , stph.MillCode, mill.Character01 as MillName, stph.OpenOrder
 		                                        , stph.IMexItemNo, stph.InvoiceNum, stph.InvoiceDate, stph.PORate
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
 		                                        , stph.Vessel, stph.IMEXChecked, stph.StoreInFlag, stph.ImexConfirm, stph.ImexRemark
@@ -128,7 +128,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-	                                      WHERE stph.TransactionType = 0 and stph.StoreInFlag = 0 AND stph.OpenStatus = 1
+	                                      WHERE stph.TransactionType = 0 and stph.StoreInFlag = 0 AND stph.OpenOrder = 1
                                           ORDER BY stph.StoreInPlanId, stph.LastUpdateDate DESC");
 
             return Repository.Instance.GetMany<ImexCheckModel>(sql);
@@ -147,9 +147,9 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return query.ToList();
         }
 
-        public StoreInPlanHead GetByID(string Id)
+        public StoreInPlanHeadModel GetByID(string Id)
         {
-            StoreInPlanHead result;
+            StoreInPlanHeadModel result;
             string sql = string.Format(@"SELECT stph.Plant, stph.StoreInPlanId, stph.StoreInPlanNum, stph.TransactionType
 		                                        , stph.BType as BussinessType, busi.Character01 as BussinessTypeName
 		                                        , stph.SupplierCode, ven.Name as SupplierName, ISNULL(stph.CurrencyCode,'THB') as CurrencyCode
@@ -158,21 +158,22 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 		                                        , stph.IMexItemNo, stph.InvoiceNum, stph.InvoiceDate, stph.PORate
 		                                        , stph.DutyRate, stph.TisiFlag, stph.LoadPort, stph.ArivePort, stph.ETDDate, stph.ETADate
 		                                        , stph.Vessel, stph.IMEXChecked, stph.StoreInFlag, stph.ImexConfirm, stph.ImexRemark
-                                                , stph.CustID, cust.Name as CustomerName
+                                                , stph.CustID, cust.Name as CustomerName, stph.OpenOrder
                                           FROM ucc_ic_StoreInPlanHead stph
 	                                            LEFT JOIN Vendor ven ON(stph.SupplierCode = ven.VendorID)
 	                                            LEFT JOIN UD19 maker ON(stph.MakerCode = maker.Key1)
 	                                            LEFT JOIN UD14 mill ON(stph.MakerCode = mill.Key1 and stph.MillCode = mill.Key2)
 	                                            LEFT JOIN UD25 busi ON(stph.BType = busi.Key1)
                                                 LEFT JOIN Customer cust ON(stph.CustID = cust.CustID)
-                                          WHERE stph.StoreInPlanNum = N'{0}' AND stph.OpenStatus = 1", Id);
+                                          WHERE stph.StoreInPlanNum = N'{0}' AND stph.OpenOrder = 1", Id);
 
-            result = Repository.Instance.GetOne<StoreInPlanHead>(sql);
+            result = Repository.Instance.GetOne<StoreInPlanHeadModel>(sql);
 
             if (result != null)
             {
-                result.CurrenciesList = this._repoCurr.GetAll();
-                result.PortList = this._repoPort.GetAll();
+                result.Currencies = this._repoCurr.GetAll().ToList();
+                result.ImportPorts = this._repoPort.GetAll().ToList();
+                result.ArivePorts = result.ImportPorts;
             }
 
             return result;
@@ -213,10 +214,10 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return Convert.ToInt32(id) + 1;
         }
 
-        public bool GetPOByPONumber(string Plant, string PONumber, StoreInPlanHead model, out string msg, out int PONum)
+        public bool GetPOByPONumber(string Plant, string PONumber, StoreInPlanHeadModel model, out string msg, out int PONum)
         {
             bool result = false;
-            string sql = string.Format(@"SELECT * FROM POHeader WHERE ShortChar10 = N'{0}' and ShortChar03 = N'{1}' and ShortChar04 = N'{2}' and Approve = 1"
+            string sql = string.Format(@"SELECT * FROM POHeader WHERE PONum = N'{0}' and ShortChar03 = N'{1}' and ShortChar04 = N'{2}' and Approve = 1"
                                         , PONumber, model.MakerCode, model.MillCode);
 
             msg = Repository.Instance.GetOne<string>(sql, "ShortChar02");
@@ -227,7 +228,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return result;
         }
 
-        public bool GetPOBySaleContract(string Plant, string SaleContract, StoreInPlanHead model, out string msg)
+        public bool GetPOBySaleContract(string Plant, string SaleContract, StoreInPlanHeadModel model, out string msg)
         {
             bool result = false;
             string sql = string.Format(@"SELECT * FROM POHeader WHERE ShortChar02 = N'{0}' and ShortChar03 = N'{1}' and ShortChar04 = N'{2}'  and Approve = 1"
@@ -239,7 +240,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return result;
         }
 
-        public bool GetPOLine(string PONumber, string SaleContract, StoreInPlanHead model, int POLine, out string msg)
+        public bool GetPOLine(string PONumber, string SaleContract, StoreInPlanHeadModel model, int POLine, out string msg)
         {
             bool result = false;
             string sql = string.Format(@"SELECT pod.* FROM PODetail pod
@@ -262,7 +263,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return Repository.Instance.GetOne<decimal>(sql, "Weight");
         }
 
-        public StoreInPlanDetail GetPoLineDetail(string PONumber, int POLine)
+        public StoreInPlanDetailModel GetPoLineDetail(string PONumber, int POLine)
         {
             string sql = string.Format(@"SELECT 0 as SeqId, poh.PONum, poh.ShortChar10 as PONumber, pod.POLine, poh.ShortChar02 as SaleContract
 	                                        , 0 as WeightBalnce, 0 as RemainingWeight, pod.ShortChar01 as CommodityCode, pod.ShortChar02 as SpecCode
@@ -285,10 +286,10 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                         WHERE poh.ShortChar10 = N'{0}' AND pod.POLine = {1}"
                                         , PONumber, POLine);
 
-            return Repository.Instance.GetOne<StoreInPlanDetail>(sql);
+            return Repository.Instance.GetOne<StoreInPlanDetailModel>(sql);
         }
 
-        public StoreInPlanHead SaveHead(StoreInPlanHead model, SessionInfo _session)
+        public StoreInPlanHeadModel SaveHead(StoreInPlanHeadModel model, SessionInfo _session)
         {
             ///TODO : not yet fix GETDATE()
             string sql = "";
@@ -339,7 +340,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                                    ,CurrencyCode
                                                    ,ImexConfirm
                                                    ,UserGroup
-                                                   ,CustID)
+                                                   ,CustID, OpenOrder)
                                              VALUES
                                                    (N'{0}'    --<Company, nvarchar(8),>
                                                    , N'{1}'   --<Plant, nvarchar(8),>
@@ -371,6 +372,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                                    , N'{15}'   --<IMEXChecked, nchar(10),>
                                                    , N'{22}'   --<IMEXChecked, nchar(10),>
                                                    , N'{23}'  --CustID
+                                                   , {24}  --OpenOrder
                                              )
 									END
                                     ELSE
@@ -407,6 +409,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                               ,ImexRemark = N'{21}'
                                               ,UserGroup = N'{22}'
                                               ,CustID = N'{23}' 
+                                              ,OpenOrder = {24} 
                                          WHERE StoreInPlanNum = N'{3}'
                                     END" + Environment.NewLine
                                      , _session.CompanyID
@@ -432,7 +435,8 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                      , model.CurrencyCode
                                      , model.ImexRemark
                                      , model.UserGroup
-                                     , model.CustID);
+                                     , model.CustID
+                                     , model.OpenOrder);
 
             Repository.Instance.ExecuteWithTransaction(sql, "Store In Plan Header");
             return GetByID(model.StoreInPlanNum);
@@ -462,7 +466,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             return result;
         }
 
-        public void SaveArticle(StoreInPlanDetail model, SessionInfo _session)
+        public void SaveArticle(StoreInPlanDetailModel model, SessionInfo _session)
         {
             ///TODO : not yet fix GETDATE()
             string sql = "";
@@ -571,7 +575,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             Repository.Instance.ExecuteWithTransaction(sql, "Store In Plan Detail");
         }
 
-        public IEnumerable<StoreInPlanDetail> GetDetail(int storeInPlantId)
+        public IEnumerable<StoreInPlanDetailModel> GetDetail(int storeInPlantId)
         {
             string sql = string.Format(@"SELECT  0 as SeqId, dtl.StoreInPlanId, max(dtl.LineId) as LineId, poh.PONum, poh.ShortChar10 as PONumber, pod.POLine, poh.ShortChar02 as SaleContract
 	                                        , 0 as WeightBalnce, 0 as RemainingWeight, pod.ShortChar01 as CommodityCode, pod.ShortChar02 as SpecCode
@@ -600,10 +604,10 @@ namespace Epicoil.Library.Repositories.StoreInPlan
                                             , pod.ShortChar04, busi.Character01, pod.PartNum
 	                                        , pod.Number05,pod.XOrderQty ", storeInPlantId);
 
-            return Repository.Instance.GetMany<StoreInPlanDetail>(sql);
+            return Repository.Instance.GetMany<StoreInPlanDetailModel>(sql);
         }
 
-        public IEnumerable<StoreInPlanDetail> GetDetailArticle(int storeInPlantId, int POLine)
+        public IEnumerable<StoreInPlanDetailModel> GetDetailArticle(int storeInPlantId, int POLine)
         {
             string sql = string.Format(@"SELECT dtl.SeqId, dtl.StoreInPlanId, dtl.LineId, poh.PONum, poh.ShortChar10 as PONumber, pod.POLine, poh.ShortChar02 as SaleContract
 	                                            , 0 as WeightBalnce, 0 as RemainingWeight, pod.ShortChar01 as CommodityCode, pod.ShortChar02 as SpecCode
@@ -626,10 +630,10 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                        LEFT JOIN UD31 coat ON(pod.ShortChar03 = coat.Key1)
                                             WHERE dtl.StoreInPlanId = {0} AND pod.POLine = {1} ORDER BY dtl.SeqId ASC", storeInPlantId, POLine);
 
-            return Repository.Instance.GetMany<StoreInPlanDetail>(sql);
+            return Repository.Instance.GetMany<StoreInPlanDetailModel>(sql);
         }
 
-        public IEnumerable<StoreInPlanDetail> GetDetailArticleITAKU(int storeInPlantId)
+        public IEnumerable<StoreInPlanDetailModel> GetDetailArticleITAKU(int storeInPlantId)
         {
             string sql = string.Format(@"SELECT dtl.SeqId, dtl.StoreInPlanId, dtl.LineId, ISNULL(poh.PONum, 0) as PONum, ISNULL(poh.ShortChar10,'N/A') as PONumber, ISNULL(pod.POLine, dtl.SeqId) as POLine, ISNULL(poh.ShortChar02, dtl.SContract) as SaleContract
 	                                            , 0 as WeightBalnce, 0 as RemainingWeight, ISNULL(pod.ShortChar01,dtl.CommodityCode) as CommodityCode, ISNULL(pod.ShortChar02,dtl.SpecCode) as SpecCode
@@ -652,7 +656,7 @@ namespace Epicoil.Library.Repositories.StoreInPlan
 	                                        LEFT JOIN UD31 coat ON(dtl.CoatingCode = coat.Key1)
                                             WHERE dtl.StoreInPlanId = {0} ORDER BY dtl.SeqId ASC", storeInPlantId);
 
-            return Repository.Instance.GetMany<StoreInPlanDetail>(sql);
+            return Repository.Instance.GetMany<StoreInPlanDetailModel>(sql);
         }
 
         public void DeleteLine(int LineId)
@@ -660,22 +664,22 @@ namespace Epicoil.Library.Repositories.StoreInPlan
             string sql = "";
             sql += string.Format(@"DELETE FROM ucc_ic_StoreInPlanDtl WHERE LineId = {0}" + Environment.NewLine, LineId);
 
-            Repository.Instance.ExecuteWithTransaction(sql, "Store In Plan Header");
+            Repository.Instance.ExecuteWithTransaction(sql, "Store In Plan");
         }
 
-        public GetHeader GetHeaderByPONum(string PONum)
+        public POHeaderModel GetHeaderByPONum(string PONum)
         {
             string sql = string.Format(@"select ven.VendorId as SupplierCode, ven.Name as SupplierName, maker.Key1 as MakerCode, maker.Character01 as MakerName
                                             , poh.ShortChar04 as MillCode, mill.Character01 as MillName, poh.CurrencyCode, poh.ExchangeRate
-                                            , poh.ShortChar01 as CustID, cust.Name as CustomerName
+                                            , poh.ShortChar01 as CustID, cust.Name as CustomerName, poh.OrderDate
                                             from POHeader poh
 	                                            LEFT JOIN Vendor ven ON(poh.VendorNum = ven.VendorNum)
 	                                            LEFT JOIN UD19 maker ON(poh.ShortChar03 = maker.Key1)
                                                 LEFT JOIN Customer cust ON(poh.ShortChar01 = cust.CustID)
 	                                            LEFT JOIN UD14 mill ON(poh.ShortChar03 = mill.Key1 and poh.ShortChar04 = mill.Key2)
-                                          WHERE poh.ShortChar10 = N'{0}'  and poh.Approve = 1 and poh.ApprovalStatus = 'A' and poh.ShortChar02 != ''", PONum);
+                                          WHERE poh.PONum = N'{0}'  and poh.Approve = 1 and poh.ApprovalStatus = 'A' and poh.ShortChar02 != ''", PONum);
 
-            return Repository.Instance.GetOne<GetHeader>(sql);
+            return Repository.Instance.GetOne<POHeaderModel>(sql);
         }
 
         public int GetLastSeqId(int StoreInPlanId, int PONum, int POLine)

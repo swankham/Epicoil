@@ -32,12 +32,6 @@ namespace Epicoil.Appl.Reports.Planning {
         
         private SkidPackingDesignDataTable tableSkidPackingDesign;
         
-        private global::System.Data.DataRelation relationPackingOrderHead_PackStyleLines;
-        
-        private global::System.Data.DataRelation relationPackStyleLines_SerialsByPackingStyle;
-        
-        private global::System.Data.DataRelation relationPackStyleLines_SkidPackingDesign;
-        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -272,9 +266,6 @@ namespace Epicoil.Appl.Reports.Planning {
                     this.tableSkidPackingDesign.InitVars();
                 }
             }
-            this.relationPackingOrderHead_PackStyleLines = this.Relations["PackingOrderHead_PackStyleLines"];
-            this.relationPackStyleLines_SerialsByPackingStyle = this.Relations["PackStyleLines_SerialsByPackingStyle"];
-            this.relationPackStyleLines_SkidPackingDesign = this.Relations["PackStyleLines_SkidPackingDesign"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -293,18 +284,30 @@ namespace Epicoil.Appl.Reports.Planning {
             base.Tables.Add(this.tableSerialsByPackingStyle);
             this.tableSkidPackingDesign = new SkidPackingDesignDataTable();
             base.Tables.Add(this.tableSkidPackingDesign);
-            this.relationPackingOrderHead_PackStyleLines = new global::System.Data.DataRelation("PackingOrderHead_PackStyleLines", new global::System.Data.DataColumn[] {
+            global::System.Data.ForeignKeyConstraint fkc;
+            fkc = new global::System.Data.ForeignKeyConstraint("PackingOrderHead_PackStyleLines", new global::System.Data.DataColumn[] {
                         this.tablePackingOrderHead.IDColumn}, new global::System.Data.DataColumn[] {
-                        this.tablePackStyleLines.HeadIDColumn}, false);
-            this.Relations.Add(this.relationPackingOrderHead_PackStyleLines);
-            this.relationPackStyleLines_SerialsByPackingStyle = new global::System.Data.DataRelation("PackStyleLines_SerialsByPackingStyle", new global::System.Data.DataColumn[] {
+                        this.tablePackStyleLines.HeadIDColumn});
+            this.tablePackStyleLines.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SkidPackingDesign_SerialsByPackingStyle", new global::System.Data.DataColumn[] {
+                        this.tableSkidPackingDesign.PackStyleIDColumn,
+                        this.tableSkidPackingDesign.IDColumn}, new global::System.Data.DataColumn[] {
+                        this.tableSerialsByPackingStyle.PackStyleIDColumn,
+                        this.tableSerialsByPackingStyle.PackingDesignIdColumn});
+            this.tableSerialsByPackingStyle.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
+            fkc = new global::System.Data.ForeignKeyConstraint("PackStyleLines_SkidPackingDesign", new global::System.Data.DataColumn[] {
                         this.tablePackStyleLines.LineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSerialsByPackingStyle.PackStyleIDColumn}, false);
-            this.Relations.Add(this.relationPackStyleLines_SerialsByPackingStyle);
-            this.relationPackStyleLines_SkidPackingDesign = new global::System.Data.DataRelation("PackStyleLines_SkidPackingDesign", new global::System.Data.DataColumn[] {
-                        this.tablePackStyleLines.LineIDColumn}, new global::System.Data.DataColumn[] {
-                        this.tableSkidPackingDesign.PackStyleIDColumn}, false);
-            this.Relations.Add(this.relationPackStyleLines_SkidPackingDesign);
+                        this.tableSkidPackingDesign.PackStyleIDColumn});
+            this.tableSkidPackingDesign.Constraints.Add(fkc);
+            fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
+            fkc.DeleteRule = global::System.Data.Rule.Cascade;
+            fkc.UpdateRule = global::System.Data.Rule.Cascade;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -617,6 +620,9 @@ namespace Epicoil.Appl.Reports.Planning {
                 base.Columns.Add(this.columnCompleteFlag);
                 this.columnRemark = new global::System.Data.DataColumn("Remark", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRemark);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnID}, false));
+                this.columnID.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -920,10 +926,10 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PackStyleLinesRow AddPackStyleLinesRow(PackingOrderHeadRow parentPackingOrderHeadRowByPackingOrderHead_PackStyleLines, int LineID, string CustId, string CustomerName, decimal ThickMin, decimal ThickMax, decimal WidthMin, decimal WidthMax, string StyleCode, string Remarks) {
+            public PackStyleLinesRow AddPackStyleLinesRow(int HeadID, int LineID, string CustId, string CustomerName, decimal ThickMin, decimal ThickMax, decimal WidthMin, decimal WidthMax, string StyleCode, string Remarks) {
                 PackStyleLinesRow rowPackStyleLinesRow = ((PackStyleLinesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
+                        HeadID,
                         LineID,
                         CustId,
                         CustomerName,
@@ -933,9 +939,6 @@ namespace Epicoil.Appl.Reports.Planning {
                         WidthMax,
                         StyleCode,
                         Remarks};
-                if ((parentPackingOrderHeadRowByPackingOrderHead_PackStyleLines != null)) {
-                    columnValuesArray[0] = parentPackingOrderHeadRowByPackingOrderHead_PackStyleLines[0];
-                }
                 rowPackStyleLinesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPackStyleLinesRow);
                 return rowPackStyleLinesRow;
@@ -993,6 +996,9 @@ namespace Epicoil.Appl.Reports.Planning {
                 base.Columns.Add(this.columnStyleCode);
                 this.columnRemarks = new global::System.Data.DataColumn("Remarks", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnRemarks);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnLineID}, false));
+                this.columnLineID.Unique = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1256,18 +1262,15 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SerialsByPackingStyleRow AddSerialsByPackingStyleRow(PackStyleLinesRow parentPackStyleLinesRowByPackStyleLines_SerialsByPackingStyle, string SerialNo, decimal Thick, decimal Width, decimal Length, int PackingDesignId) {
+            public SerialsByPackingStyleRow AddSerialsByPackingStyleRow(int PackStyleID, string SerialNo, decimal Thick, decimal Width, decimal Length, int PackingDesignId) {
                 SerialsByPackingStyleRow rowSerialsByPackingStyleRow = ((SerialsByPackingStyleRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
+                        PackStyleID,
                         SerialNo,
                         Thick,
                         Width,
                         Length,
                         PackingDesignId};
-                if ((parentPackStyleLinesRowByPackStyleLines_SerialsByPackingStyle != null)) {
-                    columnValuesArray[0] = parentPackStyleLinesRowByPackStyleLines_SerialsByPackingStyle[1];
-                }
                 rowSerialsByPackingStyleRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSerialsByPackingStyleRow);
                 return rowSerialsByPackingStyleRow;
@@ -1454,6 +1457,8 @@ namespace Epicoil.Appl.Reports.Planning {
             
             private global::System.Data.DataColumn columnDescription;
             
+            private global::System.Data.DataColumn columnID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public SkidPackingDesignDataTable() {
@@ -1521,6 +1526,14 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn IDColumn {
+                get {
+                    return this.columnID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1556,16 +1569,14 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SkidPackingDesignRow AddSkidPackingDesignRow(PackStyleLinesRow parentPackStyleLinesRowByPackStyleLines_SkidPackingDesign, int Seq, string SkidNumber, string Description) {
+            public SkidPackingDesignRow AddSkidPackingDesignRow(int PackStyleID, int Seq, string SkidNumber, string Description, int ID) {
                 SkidPackingDesignRow rowSkidPackingDesignRow = ((SkidPackingDesignRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        null,
+                        PackStyleID,
                         Seq,
                         SkidNumber,
-                        Description};
-                if ((parentPackStyleLinesRowByPackStyleLines_SkidPackingDesign != null)) {
-                    columnValuesArray[0] = parentPackStyleLinesRowByPackStyleLines_SkidPackingDesign[1];
-                }
+                        Description,
+                        ID};
                 rowSkidPackingDesignRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowSkidPackingDesignRow);
                 return rowSkidPackingDesignRow;
@@ -1592,6 +1603,7 @@ namespace Epicoil.Appl.Reports.Planning {
                 this.columnSeq = base.Columns["Seq"];
                 this.columnSkidNumber = base.Columns["SkidNumber"];
                 this.columnDescription = base.Columns["Description"];
+                this.columnID = base.Columns["ID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1605,6 +1617,11 @@ namespace Epicoil.Appl.Reports.Planning {
                 base.Columns.Add(this.columnSkidNumber);
                 this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDescription);
+                this.columnID = new global::System.Data.DataColumn("ID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnID);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnPackStyleID,
+                                this.columnID}, false));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1968,17 +1985,6 @@ namespace Epicoil.Appl.Reports.Planning {
             public void SetRemarkNull() {
                 this[this.tablePackingOrderHead.RemarkColumn] = global::System.Convert.DBNull;
             }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PackStyleLinesRow[] GetPackStyleLinesRows() {
-                if ((this.Table.ChildRelations["PackingOrderHead_PackStyleLines"] == null)) {
-                    return new PackStyleLinesRow[0];
-                }
-                else {
-                    return ((PackStyleLinesRow[])(base.GetChildRows(this.Table.ChildRelations["PackingOrderHead_PackStyleLines"])));
-                }
-            }
         }
         
         /// <summary>
@@ -2157,17 +2163,6 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PackingOrderHeadRow PackingOrderHeadRow {
-                get {
-                    return ((PackingOrderHeadRow)(this.GetParentRow(this.Table.ParentRelations["PackingOrderHead_PackStyleLines"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["PackingOrderHead_PackStyleLines"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHeadIDNull() {
                 return this.IsNull(this.tablePackStyleLines.HeadIDColumn);
             }
@@ -2285,28 +2280,6 @@ namespace Epicoil.Appl.Reports.Planning {
             public void SetRemarksNull() {
                 this[this.tablePackStyleLines.RemarksColumn] = global::System.Convert.DBNull;
             }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SerialsByPackingStyleRow[] GetSerialsByPackingStyleRows() {
-                if ((this.Table.ChildRelations["PackStyleLines_SerialsByPackingStyle"] == null)) {
-                    return new SerialsByPackingStyleRow[0];
-                }
-                else {
-                    return ((SerialsByPackingStyleRow[])(base.GetChildRows(this.Table.ChildRelations["PackStyleLines_SerialsByPackingStyle"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SkidPackingDesignRow[] GetSkidPackingDesignRows() {
-                if ((this.Table.ChildRelations["PackStyleLines_SkidPackingDesign"] == null)) {
-                    return new SkidPackingDesignRow[0];
-                }
-                else {
-                    return ((SkidPackingDesignRow[])(base.GetChildRows(this.Table.ChildRelations["PackStyleLines_SkidPackingDesign"])));
-                }
-            }
         }
         
         /// <summary>
@@ -2417,17 +2390,6 @@ namespace Epicoil.Appl.Reports.Planning {
                 }
                 set {
                     this[this.tableSerialsByPackingStyle.PackingDesignIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PackStyleLinesRow PackStyleLinesRow {
-                get {
-                    return ((PackStyleLinesRow)(this.GetParentRow(this.Table.ParentRelations["PackStyleLines_SerialsByPackingStyle"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["PackStyleLines_SerialsByPackingStyle"]);
                 }
             }
             
@@ -2584,12 +2546,17 @@ namespace Epicoil.Appl.Reports.Planning {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PackStyleLinesRow PackStyleLinesRow {
+            public int ID {
                 get {
-                    return ((PackStyleLinesRow)(this.GetParentRow(this.Table.ParentRelations["PackStyleLines_SkidPackingDesign"])));
+                    try {
+                        return ((int)(this[this.tableSkidPackingDesign.IDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ID\' in table \'SkidPackingDesign\' is DBNull.", e);
+                    }
                 }
                 set {
-                    this.SetParentRow(value, this.Table.ParentRelations["PackStyleLines_SkidPackingDesign"]);
+                    this[this.tableSkidPackingDesign.IDColumn] = value;
                 }
             }
             
@@ -2639,6 +2606,18 @@ namespace Epicoil.Appl.Reports.Planning {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDescriptionNull() {
                 this[this.tableSkidPackingDesign.DescriptionColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsIDNull() {
+                return this.IsNull(this.tableSkidPackingDesign.IDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetIDNull() {
+                this[this.tableSkidPackingDesign.IDColumn] = global::System.Convert.DBNull;
             }
         }
         

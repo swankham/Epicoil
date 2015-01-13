@@ -5,6 +5,19 @@ namespace Epicoil.Library.Models.Planning
 {
     public class SimulateReshearHeadModel
     {
+        #region Constructors
+
+        public SimulateReshearHeadModel()
+        {
+            Materials = new List<MaterialModel>();
+            Cuttings = new List<CutDesignModel>();
+            SimReshears = new List<SimulateReshearModel>();
+        }
+
+        #endregion Constructors
+
+        #region Properties
+
         public int WorkOrderID { get; set; }
 
         public string WorkOrderNum { get; set; }
@@ -17,34 +30,24 @@ namespace Epicoil.Library.Models.Planning
 
         public decimal RemainLengthOpt2 { get; set; }
 
-        private IEnumerable<MaterialModel> MaterialLines = new List<MaterialModel>();
-        private IEnumerable<CutDesignModel> CuttingLines = new List<CutDesignModel>();
-        private IEnumerable<SimulateReshearModel> SimReshearLines = new List<SimulateReshearModel>();
+        public IList<MaterialModel> Materials { get; set; }
 
-        public List<MaterialModel> Materials
-        {
-            get { return this.MaterialLines.ToList(); }
-            set { this.MaterialLines = value; }
-        }
+        public IList<CutDesignModel> Cuttings { get; set; }
 
-        public List<CutDesignModel> Cuttings
-        {
-            get { return this.CuttingLines.ToList(); }
-            set { this.CuttingLines = value; }
-        }
+        public IList<SimulateReshearModel> SimReshears { get; set; }
 
-        public List<SimulateReshearModel> SimReshears
-        {
-            get { return this.SimReshearLines.ToList(); }
-            set { this.SimReshearLines = value; }
-        }
+        #endregion Properties
 
-        public void SetMaterialRemain(MaterialModel mat) 
+        #region Methods
+
+        public void SetMaterialRemain(MaterialModel mat)
         {
             RemainWidthOpt1 = mat.Width - SimReshears.Where(i => i.OptionNum == 1 && i.MaterialTransLineID == mat.TransactionLineID).Sum(i => i.WidthActualRemain);
             RemainWidthOpt2 = mat.Width - SimReshears.Where(i => i.OptionNum == 2 && i.MaterialTransLineID == mat.TransactionLineID).Sum(i => i.WidthActualRemain);
             RemainLengthOpt1 = mat.Length - SimReshears.Where(i => i.OptionNum == 1 && i.MaterialTransLineID == mat.TransactionLineID).Sum(i => i.LengthActualRemain);
             RemainLengthOpt2 = mat.Length - SimReshears.Where(i => i.OptionNum == 2 && i.MaterialTransLineID == mat.TransactionLineID).Sum(i => i.LengthActualRemain);
         }
+
+        #endregion Methods
     }
 }

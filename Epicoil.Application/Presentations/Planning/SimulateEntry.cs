@@ -332,7 +332,7 @@ namespace Epicoil.Appl.Presentations.Planning
                         simModel.Cuttings.Where(i => i.WorkOrderID.Equals(HeadModel.WorkOrderID));
 
                         SimModel.Cuttings = _repo.InsertSimulate(epiSession, HeadModel, Convert.ToInt32(SimModel.Expected)).ToList();
-                        SimModel.Materials = HeadModel.Materails.ToList();
+                        SimModel.Materials = HeadModel.Materials.ToList();
                     }
                 }
 
@@ -384,10 +384,10 @@ namespace Epicoil.Appl.Presentations.Planning
             HeadModel.OutputWeight = SimModel.ProductWeight;
             HeadModel.Yield = SimModel.Yield;
             HeadModel.CuttingDesign = _repo.UpdateCuttingByWorkOrder(epiSession, SimModel.Cuttings, HeadModel.WorkOrderID).ToList();
-            HeadModel.Materails = _repo.UpdateMaterialByWorkOrder(epiSession, SimModel.Materials, HeadModel.WorkOrderID);
+            HeadModel.Materials = _repo.UpdateMaterialByWorkOrder(epiSession, SimModel.Materials, HeadModel.WorkOrderID).ToList();
 
             //Clear all coil-back.
-            foreach (var item in HeadModel.Materails)
+            foreach (var item in HeadModel.Materials)
             {
                 var rsult = _repo.DeleteCoilBack(epiSession, HeadModel.WorkOrderID, item.TransactionLineID);
             }

@@ -1,0 +1,8 @@
+D:\SourceControl\EPIC\Epicoil.Service\bin\Epicoil.Service.dll.config
+D:\SourceControl\EPIC\Epicoil.Service\bin\Epicoil.Service.dll
+D:\SourceControl\EPIC\Epicoil.Service\bin\Epicoil.Service.pdb
+D:\SourceControl\EPIC\Epicoil.Service\bin\Epicoil.Interface.dll
+D:\SourceControl\EPIC\Epicoil.Service\bin\Epicoil.Interface.pdb
+D:\SourceControl\EPIC\Epicoil.Service\obj\Release\Epicoil.Service.csprojResolveAssemblyReference.cache
+D:\SourceControl\EPIC\Epicoil.Service\obj\Release\Epicoil.Service.dll
+D:\SourceControl\EPIC\Epicoil.Service\obj\Release\Epicoil.Service.pdb

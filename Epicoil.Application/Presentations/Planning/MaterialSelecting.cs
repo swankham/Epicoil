@@ -54,26 +54,26 @@ namespace Epicoil.Appl.Presentations.Planning
 
         private void SetNumricText()
         {
-            numThickMin.Minimum = baseOrder.ProcessLineDetail.ThickMin;
-            numThickMin.Maximum = baseOrder.ProcessLineDetail.ThickMax;
-            numThickMin.Value = baseOrder.ProcessLineDetail.ThickMin;
-            numThickMax.Minimum = baseOrder.ProcessLineDetail.ThickMin;
-            numThickMax.Maximum = baseOrder.ProcessLineDetail.ThickMax;
-            numThickMax.Value = baseOrder.ProcessLineDetail.ThickMax;
+            numThickMin.Minimum = baseOrder.ProcessLine.ThickMin;
+            numThickMin.Maximum = baseOrder.ProcessLine.ThickMax;
+            numThickMin.Value = baseOrder.ProcessLine.ThickMin;
+            numThickMax.Minimum = baseOrder.ProcessLine.ThickMin;
+            numThickMax.Maximum = baseOrder.ProcessLine.ThickMax;
+            numThickMax.Value = baseOrder.ProcessLine.ThickMax;
 
-            numWidthMin.Minimum = baseOrder.ProcessLineDetail.WidthMin;
-            numWidthMin.Maximum = baseOrder.ProcessLineDetail.WidthMax;
-            numWidthMin.Value = baseOrder.ProcessLineDetail.WidthMin;
-            numWidthMax.Minimum = baseOrder.ProcessLineDetail.WidthMin;
-            numWidthMax.Maximum = baseOrder.ProcessLineDetail.WidthMax;
-            numWidthMax.Value = baseOrder.ProcessLineDetail.WidthMax;
+            numWidthMin.Minimum = baseOrder.ProcessLine.WidthMin;
+            numWidthMin.Maximum = baseOrder.ProcessLine.WidthMax;
+            numWidthMin.Value = baseOrder.ProcessLine.WidthMin;
+            numWidthMax.Minimum = baseOrder.ProcessLine.WidthMin;
+            numWidthMax.Maximum = baseOrder.ProcessLine.WidthMax;
+            numWidthMax.Value = baseOrder.ProcessLine.WidthMax;
 
-            numLengthMin.Minimum = baseOrder.ProcessLineDetail.LengthMin;
-            numLengthMin.Maximum = baseOrder.ProcessLineDetail.LengthMax;
-            numLengthMin.Value = baseOrder.ProcessLineDetail.LengthMin;
-            numLengthMax.Minimum = baseOrder.ProcessLineDetail.LengthMin;
-            numLengthMax.Maximum = baseOrder.ProcessLineDetail.LengthMax;
-            numLengthMax.Value = baseOrder.ProcessLineDetail.LengthMax;
+            numLengthMin.Minimum = baseOrder.ProcessLine.LengthMin;
+            numLengthMin.Maximum = baseOrder.ProcessLine.LengthMax;
+            numLengthMin.Value = baseOrder.ProcessLine.LengthMin;
+            numLengthMax.Minimum = baseOrder.ProcessLine.LengthMin;
+            numLengthMax.Maximum = baseOrder.ProcessLine.LengthMax;
+            numLengthMax.Value = baseOrder.ProcessLine.LengthMax;
         }
 
         private void butSearch_Click(object sender, EventArgs e)

@@ -7,44 +7,44 @@
 <DiagramLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ex:showrelationlabel="False" ViewPortX="0" ViewPortY="0" xmlns:ex="urn:schemas-microsoft-com:xml-msdatasource-layout-extended" xmlns="urn:schemas-microsoft-com:xml-msdatasource-layout">
   <Shapes>
     <Shape ID="DesignTable:PackingOrderHead" ZOrder="7" X="32" Y="31" Height="220" Width="175" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="44" SplitterPosition="216" />
-    <Shape ID="DesignTable:PackStyleLines" ZOrder="6" X="311" Y="47" Height="258" Width="151" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
-    <Shape ID="DesignTable:SerialsByPackingStyle" ZOrder="5" X="585" Y="48" Height="144" Width="192" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
-    <Shape ID="DesignTable:SkidPackingDesign" ZOrder="2" X="586" Y="198" Height="106" Width="176" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
+    <Shape ID="DesignTable:PackStyleLines" ZOrder="6" X="285" Y="47" Height="258" Width="151" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:SerialsByPackingStyle" ZOrder="5" X="739" Y="49" Height="144" Width="192" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="140" />
+    <Shape ID="DesignTable:SkidPackingDesign" ZOrder="4" X="499" Y="46" Height="163" Width="176" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="159" />
   </Shapes>
   <Connectors>
-    <Connector ID="DesignRelation:PackingOrderHead_PackStyleLines" ZOrder="4" LineWidth="11">
+    <Connector ID="DesignRelation:PackingOrderHead_PackStyleLines" ZOrder="3" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>207</X>
           <Y>149</Y>
         </Point>
         <Point>
-          <X>311</X>
+          <X>285</X>
           <Y>149</Y>
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:PackStyleLines_SerialsByPackingStyle" ZOrder="3" LineWidth="11">
+    <Connector ID="DesignRelation:PackStyleLines_SkidPackingDesign" ZOrder="2" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>462</X>
-          <Y>103</Y>
+          <X>436</X>
+          <Y>99</Y>
         </Point>
         <Point>
-          <X>585</X>
-          <Y>103</Y>
+          <X>499</X>
+          <Y>99</Y>
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:PackStyleLines_SkidPackingDesign" ZOrder="1" LineWidth="11">
+    <Connector ID="DesignRelation:FK_SkidPackingDesign_SerialsByPackingStyle" ZOrder="1" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>462</X>
-          <Y>237</Y>
+          <X>675</X>
+          <Y>121</Y>
         </Point>
         <Point>
-          <X>586</X>
-          <Y>237</Y>
+          <X>739</X>
+          <Y>121</Y>
         </Point>
       </RoutePoints>
     </Connector>
