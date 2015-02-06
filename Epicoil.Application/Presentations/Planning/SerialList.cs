@@ -107,6 +107,7 @@ namespace Epicoil.Appl.Presentations.Planning
                     newWork.WorkOrderNum = workParent.WorkOrderNum;
                     newWork.IssueDate = DateTime.Now;
                     newWork.DueDate = DateTime.Now;
+                    newWork.OpenFlag = 1;
                     newWork = _repo.Save(epiSession, newWork);
 
                     mat.WorkOrderID = newWork.WorkOrderID;

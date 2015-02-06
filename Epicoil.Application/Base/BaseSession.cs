@@ -2,7 +2,9 @@
 using Epicor.Mfg.Core;
 using System;
 using System.Configuration;
+using System.Globalization;
 using System.Reflection;
+using System.Resources;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -12,6 +14,8 @@ namespace Epicoil.Appl
     {
         public static SessionInfo epiSession;
         public string AppServerURL;
+        public ResourceManager res_man;    // declare Resource manager to access to specific cultureinfo
+        public CultureInfo cul;            //declare culture info
 
         public BaseSession()
         {
@@ -19,13 +23,15 @@ namespace Epicoil.Appl
             {
                 Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             }
+
+            res_man = new ResourceManager("Epicoil.Appl.Resources.Res", typeof(BaseSession).Assembly);
             epiSession = new SessionInfo();
 
             //Set default theme.
             initail.UseTheme(this);
         }
 
-        public SessionInfo SessionIdentify(string userName, string userPassword)
+        public SessionInfo SessionIdentify(string userName, string userPassword, string culture = "en")
         {
             try
             {
@@ -46,6 +52,7 @@ namespace Epicoil.Appl
                     epiSession.UserEmail = curr.UserEmail;
                     epiSession.Client = curr.Client.ToString();
                     epiSession.UserPassword = userPassword;
+                    epiSession.Culture = culture;
 
                     curr.Dispose();
                     return epiSession;

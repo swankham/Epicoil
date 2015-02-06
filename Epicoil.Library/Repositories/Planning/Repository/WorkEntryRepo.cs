@@ -14,14 +14,17 @@ namespace Epicoil.Library.Repositories.Planning
     public class WorkEntryRepo : IWorkEntryRepo
     {
         #region Fields
+
         private readonly IClassMasterRepo _repoCls;
         private readonly IStoreInRepo _repoIn;
         private readonly IResourceRepo _repoResrc;
         private readonly ICoilBackRuleRepo _repoRule;
         private readonly IUserCodeRepo _repoUcode;
-        #endregion
+
+        #endregion Fields
 
         #region Constructors
+
         public WorkEntryRepo()
         {
             this._repoUcode = new UserCodeRepo();
@@ -30,7 +33,9 @@ namespace Epicoil.Library.Repositories.Planning
             this._repoRule = new CoilBackRuleRepo();
             this._repoIn = new StoreInRepo();
         }
-        #endregion
+
+        #endregion Constructors
+
         public decimal CalUnitWgt(decimal T, decimal W, decimal L, decimal Gravity, decimal FrontCoat, decimal BackCoat)
         {//If Coil length must be LengthM*1000
             decimal Ma = 0.0M;

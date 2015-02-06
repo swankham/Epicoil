@@ -32,6 +32,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cboLang = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
@@ -68,6 +69,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(208)))), ((int)(((byte)(232)))));
+            this.panel1.Controls.Add(this.cboLang);
             this.panel1.Controls.Add(this.panel3);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.label2);
@@ -79,6 +81,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 188);
             this.panel1.TabIndex = 5;
+            // 
+            // cboLang
+            // 
+            this.cboLang.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLang.FormattingEnabled = true;
+            this.cboLang.Items.AddRange(new object[] {
+            "EN",
+            "TH"});
+            this.cboLang.Location = new System.Drawing.Point(183, 155);
+            this.cboLang.Name = "cboLang";
+            this.cboLang.Size = new System.Drawing.Size(63, 23);
+            this.cboLang.TabIndex = 10;
             // 
             // panel3
             // 
@@ -123,7 +137,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(163, 132);
+            this.label2.Location = new System.Drawing.Point(179, 132);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 5;
@@ -132,7 +146,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(161, 102);
+            this.label1.Location = new System.Drawing.Point(175, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(71, 15);
             this.label1.TabIndex = 4;
@@ -176,6 +190,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
+            this.Load += new System.EventHandler(this.Login_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -198,5 +213,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.ComboBox cboLang;
     }
 }

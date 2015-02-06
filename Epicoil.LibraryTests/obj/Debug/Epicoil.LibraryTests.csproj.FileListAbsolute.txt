@@ -241,3 +241,5 @@ D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\Library.pdb
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.csprojResolveAssemblyReference.cache
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.dll
 D:\SourceControl\EPIC\Epicoil.LibraryTests\obj\Debug\Epicoil.LibraryTests.pdb
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\CustomAnnotations.dll
+D:\SourceControl\EPIC\Epicoil.LibraryTests\bin\Debug\CustomAnnotations.pdb

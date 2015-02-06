@@ -2,8 +2,11 @@
 using Epicoil.Library.Repositories.StoreInPlan;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Resources;
+
 using System.Data;
-using System.Linq;
 
 namespace Epicoil.Library.Models.StoreInPlan
 {
@@ -25,7 +28,7 @@ namespace Epicoil.Library.Models.StoreInPlan
             ImportPorts = new List<PortModel>();
             ArivePorts = new List<PortModel>();
             StoreInPlanDetails = new List<StoreInPlanDetailModel>();
-            StoreInPlanFileDetails = new List<ExternalFileModel>();            
+            StoreInPlanFileDetails = new List<ExternalFileModel>();
         }
 
         #endregion Constructors
@@ -41,13 +44,15 @@ namespace Epicoil.Library.Models.StoreInPlan
         }
 
         public bool InsertState { get; set; }
-
+        
         public string PlantID { get; set; }
 
+        [Display(Name = "Plant", ResourceType = typeof(ResourceLang))]
         public string PlantName { get; set; }
 
         public int StoreInPlanId { get; set; }
 
+        [Display(Name = "StoreInPlanNum", ResourceType = typeof(ResourceLang))]
         public string StoreInPlanNum { get; set; }
 
         public string TransactionType { get; set; }
@@ -56,22 +61,28 @@ namespace Epicoil.Library.Models.StoreInPlan
 
         public string BussinessTypeName { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please fill the Suplier.")]
         public string SupplierCode { get; set; }
 
         public string SupplierName { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please fill the Customer.")]
         public string CustID { get; set; }
 
         public string CustomerName { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
         public string MakerCode { get; set; }
 
         public string MakerName { get; set; }
-
+        
+        [Required(AllowEmptyStrings = false)]
+        //[RequiredIf("MyProperty2 == null && MyProperty3 == false")]
         public string MillCode { get; set; }
 
         public string MillName { get; set; }
 
+        [Required(AllowEmptyStrings = false)]
         public string CurrencyCode { get; set; }
 
         public string IMexItemNo { get; set; }
@@ -92,6 +103,7 @@ namespace Epicoil.Library.Models.StoreInPlan
 
         public DateTime ETADate { get; set; }
 
+        [StringLength(5)]
         public string Vessel { get; set; }
 
         public string ImexConfirm { get; set; }
@@ -196,7 +208,6 @@ namespace Epicoil.Library.Models.StoreInPlan
             }
             else if (_repoMaster.CheckInvoiceExisting(InvoiceNum) && InsertState == true)
             {
-                
                 message = "This invoice number is duplicate.";
                 result = false;
             }

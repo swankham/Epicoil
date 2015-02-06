@@ -6,6 +6,7 @@ using Epicoil.Library.Repositories.StoreIn;
 using Epicoil.Library.Repositories.StoreInPlan;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -109,7 +110,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 
             cmdCurrencyCode.DataSource = model.Currencies;
             cmdCurrencyCode.DisplayMember = "CurrencyCode";
-            cmdCurrencyCode.DataBindings.Add("Text", model, "CurrencyCode");
+            cmdCurrencyCode.DataBindings.Add("Text", model, "ExchangeRate");
 
             cmbLoadPort.DataSource = model.ImportPorts;
             cmbLoadPort.DisplayMember = "PortCode";
@@ -223,8 +224,8 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                 }
                 else
                 {
-                    result = _repo.GetDetail(HeadContent.StoreInPlanId);
-                    SetDetail(result);
+                    model.StoreInPlanDetails = _repo.GetDetail(HeadContent.StoreInPlanId).ToList();
+                    SetDetail(model.StoreInPlanDetails);
                     if (dgvPOLine.Rows.Count >= 1)
                     {
                         IEnumerable<StoreInPlanDetailModel> resultArtcle = this._repo.GetDetailArticle(this.HeadContent.StoreInPlanId, Convert.ToInt32(this.dgvPOLine.Rows[0].Cells[2].Value.ToString()));
@@ -367,6 +368,7 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 
         private void SetDetail(IEnumerable<StoreInPlanDetailModel> item)
         {
+            if (item.ToList().Count == 0) return;
             //GetDetail
             dgvPOLine.Rows.Clear();
             int i = 0;
@@ -776,8 +778,8 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 
         private void cmdCurrencyCode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var result = _repoCurr.GetByID(cmdCurrencyCode.Text.Trim());
-            HeadContent.ExchangeRate = 0.0M;// result.ExchangeRate;
+            //var result = _repoCurr.GetByID(cmdCurrencyCode.Text.Trim());
+            //HeadContent.ExchangeRate = Convert.ToDecimal(cmdCurrencyCode.SelectedValue);
         }
 
         private void CopyData(ref DataGridView dgv)
@@ -1089,14 +1091,16 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
 
         private void tlbSave_Click(object sender, EventArgs e)
         {
+            #region Store In has not done.
+
             bool error = false;
             string AttErr = string.Empty;
             string MessegeErr = string.Empty;
 
-            //ถ้ายังไม่ทำรายการ Store In
             if (HeadContent.StoreInFlag == "0")
             {
-                //ITAKU
+                #region ITAKU
+
                 if (HeadContent.ImportFlag == 2)
                 {
                     if (!ValidateGridCell(ref dataGridView2))
@@ -1108,7 +1112,11 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                         error = true;
                     }
                 }
-                //Import & Domestic
+
+                #endregion ITAKU
+
+                #region Import & Domestic
+
                 else
                 {
                     if (HeadContent.ValidHeader(epiSession, out AttErr, out MessegeErr))
@@ -1117,7 +1125,9 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                         {
                             HeadContent.ImexConfirm = "0";
                         }
-                        //ถ้าเป็นการ Review ของ IMEX
+
+                        #region ถ้าเป็นการ Review ของ IMEX
+
                         if (IMEXReviewFlag)
                         {
                             if (HeadContent.ImexConfirm == "0" || HeadContent.ImexConfirm == "3")
@@ -1140,10 +1150,15 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                             }
                             HeadContent.UserGroup = "IMEX";
                         }
-                        //ไม่ใช่การ Review ของ IMEX หมายถึงผู้ทำรายการเป็นแผนกอื่นที่ไม่ใช่ IMEX
+
+                        #endregion ถ้าเป็นการ Review ของ IMEX
+
+                        #region ไม่ใช่การ Review ของ IMEX หมายถึงผู้ทำรายการเป็นแผนกอื่นที่ไม่ใช่ IMEX
+
                         else
                         {
-                            //ถ้าสถานะ IMEX = Reject
+                            #region ถ้าสถานะ IMEX = Reject
+
                             if (HeadContent.ImexConfirm == "2")
                             {
                                 if (MessageBox.Show("Are you sure to reply to IMEX.", "Question?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -1153,14 +1168,22 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                                     HeadContent.ImexRemark = txtIMEXRemark.Text + Environment.NewLine + "Sale Reply on Date: " + DateTime.Now.ToLongDateString() + " Time: " + DateTime.Now.ToLongTimeString();
                                 }
                             }
+
+                            #endregion ถ้าสถานะ IMEX = Reject
+
                             HeadContent.UserGroup = "Sale";
                         }
+
+                        #endregion ไม่ใช่การ Review ของ IMEX หมายถึงผู้ทำรายการเป็นแผนกอื่นที่ไม่ใช่ IMEX
                     }
                     else
                     {
                         error = true;
                     }
                 }
+
+                #endregion Import & Domestic
+
                 if (!error)
                 {
                     HeadContent.CurrencyCode = cmdCurrencyCode.Text.Trim();
@@ -1169,6 +1192,8 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
                     SetHeaderContent(HeadContent);
                 }
             }
+
+            #endregion Store In has not done.
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -1877,6 +1902,20 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
         {
             bool errorFlag = false;
             errorProvider1.Clear();
+            ValidationContext context = new ValidationContext(HeadContent, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(HeadContent, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                    MessageBox.Show(result.ErrorMessage);
+                errorFlag = true;
+            }
+            else
+            {
+                errorFlag = true;
+            }
+
             if (txtInvoiceNum.Text == "")
             {
                 errorProvider1.SetError(txtInvoiceNum, "Please fill the required field.");
@@ -1926,6 +1965,18 @@ namespace Epicoil.Appl.Presentations.StoreInPlan
         private void dtpInvoiceDate_ValueChanged(object sender, EventArgs e)
         {
             HeadContent.InvoiceDate = dtpInvoiceDate.Value;
+        }
+
+        private void tlbInactive_Click(object sender, EventArgs e)
+        {
+            ValidationContext context = new ValidationContext(HeadContent, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(HeadContent, context, errors, true))
+            {
+                foreach (ValidationResult result in errors)
+                    MessageBox.Show(result.ErrorMessage);
+            }
         }
     }
 }

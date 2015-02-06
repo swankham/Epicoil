@@ -29,7 +29,7 @@ namespace Epicoil.Appl
             string strUser = txtUsername.Text.ToString();
             string strPass = txtPassword.Text.ToString();
 
-            var uccUserInfo = this.SessionIdentify(strUser, strPass);
+            var uccUserInfo = this.SessionIdentify(strUser, strPass, cboLang.Text.Trim());
 
             if (uccUserInfo != null)
             {
@@ -52,6 +52,11 @@ namespace Epicoil.Appl
                 txtPassword.Focus();
                 txtPassword.SelectAll();
             }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+            cboLang.SelectedIndex = 0;
         }
     }
 }

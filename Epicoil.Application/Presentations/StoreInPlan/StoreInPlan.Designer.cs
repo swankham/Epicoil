@@ -359,7 +359,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(1190, 688);
+            this.splitContainer1.Size = new System.Drawing.Size(1190, 679);
             this.splitContainer1.SplitterDistance = 188;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 38;
@@ -524,6 +524,7 @@
             this.button1.Size = new System.Drawing.Size(107, 27);
             this.button1.TabIndex = 23;
             this.button1.Text = "Store In Plan";
+            this.button1.UseCompatibleTextRendering = true;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -686,7 +687,7 @@
             this.txtVessel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.txtVessel.Location = new System.Drawing.Point(118, 120);
             this.txtVessel.Name = "txtVessel";
-            this.txtVessel.Size = new System.Drawing.Size(334, 23);
+            this.txtVessel.Size = new System.Drawing.Size(138, 23);
             this.txtVessel.TabIndex = 41;
             // 
             // label9
@@ -704,7 +705,7 @@
             this.txtBussinessTypeName.Location = new System.Drawing.Point(184, 153);
             this.txtBussinessTypeName.Name = "txtBussinessTypeName";
             this.txtBussinessTypeName.ReadOnly = true;
-            this.txtBussinessTypeName.Size = new System.Drawing.Size(268, 23);
+            this.txtBussinessTypeName.Size = new System.Drawing.Size(72, 23);
             this.txtBussinessTypeName.TabIndex = 39;
             this.txtBussinessTypeName.Visible = false;
             // 
@@ -845,7 +846,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1190, 473);
+            this.tabControl1.Size = new System.Drawing.Size(1190, 464);
             this.tabControl1.TabIndex = 16;
             // 
             // tabPage1
@@ -856,7 +857,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1182, 445);
+            this.tabPage1.Size = new System.Drawing.Size(1182, 436);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Import";
             // 
@@ -873,7 +874,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer2.Size = new System.Drawing.Size(1176, 395);
+            this.splitContainer2.Size = new System.Drawing.Size(1176, 386);
             this.splitContainer2.SplitterDistance = 522;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 1;
@@ -927,7 +928,7 @@
             this.dgvPOLine.RowHeadersVisible = false;
             this.dgvPOLine.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             this.dgvPOLine.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPOLine.Size = new System.Drawing.Size(522, 395);
+            this.dgvPOLine.Size = new System.Drawing.Size(522, 386);
             this.dgvPOLine.TabIndex = 16;
             this.dgvPOLine.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvList_CellClick);
             // 
@@ -1065,7 +1066,7 @@
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle11;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(649, 395);
+            this.dataGridView1.Size = new System.Drawing.Size(649, 386);
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
@@ -1290,10 +1291,10 @@
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Controls.Add(this.panel6);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1182, 447);
+            this.tabPage2.Size = new System.Drawing.Size(1182, 445);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Itaku";
             // 
@@ -1347,7 +1348,7 @@
             dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             this.dataGridView2.RowsDefaultCellStyle = dataGridViewCellStyle28;
             this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(1176, 378);
+            this.dataGridView2.Size = new System.Drawing.Size(1176, 376);
             this.dataGridView2.TabIndex = 17;
             this.dataGridView2.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView2_CellMouseClick);
             // 
@@ -1593,7 +1594,7 @@
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 473);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 464);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
             this.statusStrip1.Size = new System.Drawing.Size(1190, 22);
@@ -1692,6 +1693,7 @@
             this.tlbInactive.Name = "tlbInactive";
             this.tlbInactive.Size = new System.Drawing.Size(23, 32);
             this.tlbInactive.Text = "Refresh";
+            this.tlbInactive.Click += new System.EventHandler(this.tlbInactive_Click);
             // 
             // tlbClear
             // 
@@ -1906,7 +1908,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(220)))), ((int)(((byte)(238)))));
-            this.ClientSize = new System.Drawing.Size(1190, 750);
+            this.ClientSize = new System.Drawing.Size(1190, 741);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.menuStrip1);
@@ -1991,7 +1993,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtInvoiceNum;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtpETDDate;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
@@ -2116,5 +2117,6 @@
         private System.Windows.Forms.TextBox txtFilePath;
         private System.Windows.Forms.Button butChooseFile;
         private System.Windows.Forms.Button butValidate;
+        public System.Windows.Forms.Label label2;
     }
 }

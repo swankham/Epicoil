@@ -1,5 +1,6 @@
 ﻿using Epicoil.Repositories;
 using System;
+using System.Globalization;
 using System.Windows.Forms;
 
 namespace Epicoil.Appl
@@ -58,6 +59,7 @@ namespace Epicoil.Appl
                     nodeChild.Nodes.Add(nodeChild2);
                 }
             }
+            SetLanguage();
         }
 
         private void ributLogOff_Click(object sender, EventArgs e)
@@ -127,6 +129,20 @@ namespace Epicoil.Appl
         private void rbnbutTile_Click(object sender, EventArgs e)
         {
             listView.View = View.Tile;
+        }
+
+        private void SetLanguage()
+        {
+            cul = CultureInfo.CreateSpecificCulture(epiSession.Culture);
+            ribbonTab1.Text = res_man.GetString("main_mnuFile", cul);
+            ribbonTab2.Text = res_man.GetString("main_mnuView", cul);
+            ribbonTab3.Text = res_man.GetString("main_mnuHelp", cul);
+            ributLogOff.Text = res_man.GetString("main_mnuLogOff", cul);
+            rbnbutLargeIcon.Text = res_man.GetString("main_mnuView_Large", cul);
+            rbnbutSmallIcon.Text = res_man.GetString("main_mnuView_Small", cul);
+            rbnbutList.Text = res_man.GetString("main_mnuView_List", cul);
+            rbnbutTile.Text = res_man.GetString("main_mnuView_Tile", cul);
+            about.Text = res_man.GetString("main_mnuAbout", cul);
         }
     }
 }

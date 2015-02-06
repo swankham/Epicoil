@@ -145,5 +145,7 @@
                 this._AppServer = value;
             }
         }
+
+        public string Culture { get; set; }
     }
 }

@@ -140,6 +140,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -205,8 +206,10 @@
     <Compile Include="Models\Production\LineStopModel.cs" />
     <Compile Include="Models\Production\MaterialFindingModel.cs" />
     <Compile Include="Models\Production\ProductionHeadModel.cs" />
+    <Compile Include="Models\Production\ProductionPlanModel.cs" />
     <Compile Include="Models\Production\ReasonModel.cs" />
     <Compile Include="Models\Production\SerialCuttingModel.cs" />
+    <Compile Include="Models\Purchase\POHeaderModel.cs" />
     <Compile Include="Models\Sales\OrderDetailModel.cs" />
     <Compile Include="Models\Sales\OrderHeadModel.cs" />
     <Compile Include="Models\StoreInPlan\ExternalFileModel.cs" />
@@ -271,8 +274,10 @@
     <Compile Include="Repositories\Planning\Repository\PackingOrderRepo.cs" />
     <Compile Include="Repositories\Planning\Repository\WorkEntryRepo.cs" />
     <Compile Include="Repositories\Production\Interface\IMaterialFindingRepo.cs" />
+    <Compile Include="Repositories\Production\Interface\IProductionPlanRepo.cs" />
     <Compile Include="Repositories\Production\Interface\IProductionRepo.cs" />
     <Compile Include="Repositories\Production\Repository\MaterialFindingRepo.cs" />
+    <Compile Include="Repositories\Production\Repository\ProductionPlanRepo.cs" />
     <Compile Include="Repositories\Production\Repository\ProductionRepo.cs" />
     <Compile Include="Repositories\Sales\Interface\ISaleOrderRepo.cs" />
     <Compile Include="Repositories\Sales\Repository\SaleOrderRepo.cs" />
@@ -286,11 +291,25 @@
     <Compile Include="Repositories\TQA\Interface\IProductMasterRepo.cs" />
     <Compile Include="Repositories\TQA\Repository\McssRepo.cs" />
     <Compile Include="Repositories\TQA\Repository\ProductMasterRepo.cs" />
+    <Compile Include="ResourceLang.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResourceLang.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CustomAnnotations\CustomAnnotations.csproj">
+      <Project>{8c3e5b36-0237-4d74-82c6-b22af3fb9b72}</Project>
+      <Name>CustomAnnotations</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Frameworks\ComboBox.resx">
       <DependentUpon>ComboBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ResourceLang.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceLang.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

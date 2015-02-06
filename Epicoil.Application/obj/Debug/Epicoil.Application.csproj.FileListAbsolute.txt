@@ -1,4 +1,4 @@
-D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csprojResolveAssemblyReference.cache
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csproj.ResolveComReference.cache
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.MainMPI.resources
@@ -45,7 +45,6 @@ D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.T
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.TQA.McssMaster.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Properties.Resources.resources
 D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.csproj.GenerateResource.Cache
-D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.pdb
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicoil.Application.exe.config
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicoil.Application.exe
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicoil.Application.pdb
@@ -91,3 +90,13 @@ D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.Lib.ISessionMod.x
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.BO.SysConfig.xml
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.Lib.IBOReader.xml
 D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\Epicor.Mfg.IF.ISysConfig.xml
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Application.exe
+D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\en\Epicoil.Application.resources.dll
+D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\th\Epicoil.Application.resources.dll
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Resources.Res.en.resources
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Resources.Res.th.resources
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\en\Epicoil.Application.resources.dll
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\th\Epicoil.Application.resources.dll
+D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\CustomAnnotations.dll
+D:\SourceControl\EPIC\Epicoil.Application\bin\Debug\CustomAnnotations.pdb
+D:\SourceControl\EPIC\Epicoil.Application\obj\Debug\Epicoil.Appl.Presentations.Production.ProductionPlan.resources

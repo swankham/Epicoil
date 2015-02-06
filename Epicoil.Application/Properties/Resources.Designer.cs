@@ -22,7 +22,7 @@ namespace Epicoil.Appl.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Epicoil.Appl.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Epicoil.Appl.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Epicoil.Appl.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1398331890_14_Delete_32x32 {
+        public static System.Drawing.Bitmap _1398331890_14_Delete_32x32 {
             get {
                 object obj = ResourceManager.GetObject("_1398331890_14_Delete_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1400687324_folder_open {
+        public static System.Drawing.Bitmap _1400687324_folder_open {
             get {
                 object obj = ResourceManager.GetObject("_1400687324_folder_open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1400687589_stock_save {
+        public static System.Drawing.Bitmap _1400687589_stock_save {
             get {
                 object obj = ResourceManager.GetObject("_1400687589_stock_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401523489_database_add {
+        public static System.Drawing.Bitmap _1401523489_database_add {
             get {
                 object obj = ResourceManager.GetObject("_1401523489_database_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +103,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401523553_Streamline_22 {
+        public static System.Drawing.Bitmap _1401523553_Streamline_22 {
             get {
                 object obj = ResourceManager.GetObject("_1401523553_Streamline_22", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +113,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401523629_approve3 {
+        public static System.Drawing.Bitmap _1401523629_approve3 {
             get {
                 object obj = ResourceManager.GetObject("_1401523629_approve3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +123,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401623840_Cancel {
+        public static System.Drawing.Bitmap _1401623840_Cancel {
             get {
                 object obj = ResourceManager.GetObject("_1401623840_Cancel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +133,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401623892_alarm_approve {
+        public static System.Drawing.Bitmap _1401623892_alarm_approve {
             get {
                 object obj = ResourceManager.GetObject("_1401623892_alarm_approve", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +143,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401659288_gnome_app_install {
+        public static System.Drawing.Bitmap _1401659288_gnome_app_install {
             get {
                 object obj = ResourceManager.GetObject("_1401659288_gnome_app_install", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +153,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401659288_gnome_app_install1 {
+        public static System.Drawing.Bitmap _1401659288_gnome_app_install1 {
             get {
                 object obj = ResourceManager.GetObject("_1401659288_gnome_app_install1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +163,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401659309_f_cross_256 {
+        public static System.Drawing.Bitmap _1401659309_f_cross_256 {
             get {
                 object obj = ResourceManager.GetObject("_1401659309_f_cross_256", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +173,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1401659309_f_cross_2561 {
+        public static System.Drawing.Bitmap _1401659309_f_cross_2561 {
             get {
                 object obj = ResourceManager.GetObject("_1401659309_f_cross_2561", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,7 +183,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1405694842_page_excel {
+        public static System.Drawing.Bitmap _1405694842_page_excel {
             get {
                 object obj = ResourceManager.GetObject("1405694842_page_excel", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -193,7 +193,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1410297591_text_list_bullets {
+        public static System.Drawing.Bitmap _1410297591_text_list_bullets {
             get {
                 object obj = ResourceManager.GetObject("1410297591_text_list_bullets", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -203,7 +203,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1410298041_Logout {
+        public static System.Drawing.Bitmap _1410298041_Logout {
             get {
                 object obj = ResourceManager.GetObject("1410298041_Logout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +213,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416189806_cal {
+        public static System.Drawing.Bitmap _1416189806_cal {
             get {
                 object obj = ResourceManager.GetObject("1416189806_cal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,7 +223,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416190065_quantity_capsule_3 {
+        public static System.Drawing.Bitmap _1416190065_quantity_capsule_3 {
             get {
                 object obj = ResourceManager.GetObject("1416190065_quantity_capsule_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -233,7 +233,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416384822_stop_red {
+        public static System.Drawing.Bitmap _1416384822_stop_red {
             get {
                 object obj = ResourceManager.GetObject("1416384822_stop-red", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -243,7 +243,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416384873_add {
+        public static System.Drawing.Bitmap _1416384873_add {
             get {
                 object obj = ResourceManager.GetObject("1416384873_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -253,7 +253,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416384943_minus {
+        public static System.Drawing.Bitmap _1416384943_minus {
             get {
                 object obj = ResourceManager.GetObject("1416384943_minus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -263,7 +263,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416385063_No {
+        public static System.Drawing.Bitmap _1416385063_No {
             get {
                 object obj = ResourceManager.GetObject("1416385063_No", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -273,7 +273,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416387138_Save {
+        public static System.Drawing.Bitmap _1416387138_Save {
             get {
                 object obj = ResourceManager.GetObject("1416387138_Save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -283,7 +283,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416387642_eraser {
+        public static System.Drawing.Bitmap _1416387642_eraser {
             get {
                 object obj = ResourceManager.GetObject("1416387642_eraser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -293,7 +293,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _1416388107_gtk_media_stop {
+        public static System.Drawing.Bitmap _1416388107_gtk_media_stop {
             get {
                 object obj = ResourceManager.GetObject("1416388107_gtk-media-stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -303,7 +303,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _find {
+        public static System.Drawing.Bitmap _find {
             get {
                 object obj = ResourceManager.GetObject("_find", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -313,7 +313,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _find1 {
+        public static System.Drawing.Bitmap _find1 {
             get {
                 object obj = ResourceManager.GetObject("_find1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -323,7 +323,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _new {
+        public static System.Drawing.Bitmap _new {
             get {
                 object obj = ResourceManager.GetObject("_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -333,7 +333,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap action_approve {
+        public static System.Drawing.Bitmap action_approve {
             get {
                 object obj = ResourceManager.GetObject("action_approve", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -343,7 +343,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap add {
+        public static System.Drawing.Bitmap add {
             get {
                 object obj = ResourceManager.GetObject("add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -353,7 +353,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap addons32 {
+        public static System.Drawing.Bitmap addons32 {
             get {
                 object obj = ResourceManager.GetObject("addons32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -363,7 +363,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap article_search {
+        public static System.Drawing.Bitmap article_search {
             get {
                 object obj = ResourceManager.GetObject("article_search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -373,7 +373,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap auto {
+        public static System.Drawing.Bitmap auto {
             get {
                 object obj = ResourceManager.GetObject("auto", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -383,7 +383,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap billing {
+        public static System.Drawing.Bitmap billing {
             get {
                 object obj = ResourceManager.GetObject("billing", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -393,7 +393,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cal {
+        public static System.Drawing.Bitmap cal {
             get {
                 object obj = ResourceManager.GetObject("cal", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -403,7 +403,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap cal1 {
+        public static System.Drawing.Bitmap cal1 {
             get {
                 object obj = ResourceManager.GetObject("cal1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -413,7 +413,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap close {
+        public static System.Drawing.Bitmap close {
             get {
                 object obj = ResourceManager.GetObject("close", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -423,7 +423,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap currentbookmark_16x16 {
+        public static System.Drawing.Bitmap currentbookmark_16x16 {
             get {
                 object obj = ResourceManager.GetObject("currentbookmark_16x16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -433,7 +433,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap DeleteRed {
+        public static System.Drawing.Bitmap DeleteRed {
             get {
                 object obj = ResourceManager.GetObject("DeleteRed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -443,7 +443,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap diff {
+        public static System.Drawing.Bitmap diff {
             get {
                 object obj = ResourceManager.GetObject("diff", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -453,7 +453,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap document_new {
+        public static System.Drawing.Bitmap document_new {
             get {
                 object obj = ResourceManager.GetObject("document_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -463,7 +463,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap document_new1 {
+        public static System.Drawing.Bitmap document_new1 {
             get {
                 object obj = ResourceManager.GetObject("document_new1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -473,7 +473,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap document_new2 {
+        public static System.Drawing.Bitmap document_new2 {
             get {
                 object obj = ResourceManager.GetObject("document-new2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -483,7 +483,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_clear {
+        public static System.Drawing.Bitmap edit_clear {
             get {
                 object obj = ResourceManager.GetObject("edit_clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -493,7 +493,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_clear1 {
+        public static System.Drawing.Bitmap edit_clear1 {
             get {
                 object obj = ResourceManager.GetObject("edit_clear1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -503,7 +503,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_clear11 {
+        public static System.Drawing.Bitmap edit_clear11 {
             get {
                 object obj = ResourceManager.GetObject("edit_clear11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -513,7 +513,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_clear2 {
+        public static System.Drawing.Bitmap edit_clear2 {
             get {
                 object obj = ResourceManager.GetObject("edit_clear2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -523,7 +523,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_refresh {
+        public static System.Drawing.Bitmap edit_refresh {
             get {
                 object obj = ResourceManager.GetObject("edit_refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -533,7 +533,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_refresh1 {
+        public static System.Drawing.Bitmap edit_refresh1 {
             get {
                 object obj = ResourceManager.GetObject("edit_refresh1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -543,7 +543,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap EPICOIL {
+        public static System.Drawing.Bitmap EPICOIL {
             get {
                 object obj = ResourceManager.GetObject("EPICOIL", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -553,7 +553,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor {
+        public static System.Drawing.Bitmap epicor {
             get {
                 object obj = ResourceManager.GetObject("epicor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -563,7 +563,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_banner_zift {
+        public static System.Drawing.Bitmap epicor_banner_zift {
             get {
                 object obj = ResourceManager.GetObject("epicor_banner_zift", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -573,7 +573,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_banner_zift1 {
+        public static System.Drawing.Bitmap epicor_banner_zift1 {
             get {
                 object obj = ResourceManager.GetObject("epicor_banner_zift1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -583,7 +583,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_banner_zift2 {
+        public static System.Drawing.Bitmap epicor_banner_zift2 {
             get {
                 object obj = ResourceManager.GetObject("epicor_banner_zift2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -593,7 +593,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_clear {
+        public static System.Drawing.Bitmap epicor_clear {
             get {
                 object obj = ResourceManager.GetObject("epicor_clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -603,7 +603,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_delete {
+        public static System.Drawing.Bitmap epicor_delete {
             get {
                 object obj = ResourceManager.GetObject("epicor_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -613,7 +613,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_new {
+        public static System.Drawing.Bitmap epicor_new {
             get {
                 object obj = ResourceManager.GetObject("epicor_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -623,7 +623,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_open {
+        public static System.Drawing.Bitmap epicor_open {
             get {
                 object obj = ResourceManager.GetObject("epicor_open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -633,7 +633,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_refresh {
+        public static System.Drawing.Bitmap epicor_refresh {
             get {
                 object obj = ResourceManager.GetObject("epicor_refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -643,7 +643,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_save {
+        public static System.Drawing.Bitmap epicor_save {
             get {
                 object obj = ResourceManager.GetObject("epicor_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -653,7 +653,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap epicor_warnning {
+        public static System.Drawing.Bitmap epicor_warnning {
             get {
                 object obj = ResourceManager.GetObject("epicor_warnning", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -663,7 +663,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap eraser {
+        public static System.Drawing.Bitmap eraser {
             get {
                 object obj = ResourceManager.GetObject("eraser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -673,7 +673,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap exit {
+        public static System.Drawing.Bitmap exit {
             get {
                 object obj = ResourceManager.GetObject("exit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -683,7 +683,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_delete {
+        public static System.Drawing.Bitmap file_delete {
             get {
                 object obj = ResourceManager.GetObject("file_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -693,7 +693,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_delete1 {
+        public static System.Drawing.Bitmap file_delete1 {
             get {
                 object obj = ResourceManager.GetObject("file_delete1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -703,7 +703,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_edit {
+        public static System.Drawing.Bitmap file_edit {
             get {
                 object obj = ResourceManager.GetObject("file_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -713,7 +713,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_edit1 {
+        public static System.Drawing.Bitmap file_edit1 {
             get {
                 object obj = ResourceManager.GetObject("file_edit1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -723,7 +723,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_exit {
+        public static System.Drawing.Bitmap file_exit {
             get {
                 object obj = ResourceManager.GetObject("file_exit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -733,7 +733,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_new {
+        public static System.Drawing.Bitmap file_new {
             get {
                 object obj = ResourceManager.GetObject("file_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -743,7 +743,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_new1 {
+        public static System.Drawing.Bitmap file_new1 {
             get {
                 object obj = ResourceManager.GetObject("file_new1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -753,7 +753,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_save {
+        public static System.Drawing.Bitmap file_save {
             get {
                 object obj = ResourceManager.GetObject("file_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -763,7 +763,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap file_save1 {
+        public static System.Drawing.Bitmap file_save1 {
             get {
                 object obj = ResourceManager.GetObject("file_save1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -773,7 +773,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap filter {
+        public static System.Drawing.Bitmap filter {
             get {
                 object obj = ResourceManager.GetObject("filter", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -783,7 +783,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap filter1 {
+        public static System.Drawing.Bitmap filter1 {
             get {
                 object obj = ResourceManager.GetObject("filter1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -793,7 +793,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap find {
+        public static System.Drawing.Bitmap find {
             get {
                 object obj = ResourceManager.GetObject("find", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -803,7 +803,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap find1 {
+        public static System.Drawing.Bitmap find1 {
             get {
                 object obj = ResourceManager.GetObject("find1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -813,7 +813,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap floppy {
+        public static System.Drawing.Bitmap floppy {
             get {
                 object obj = ResourceManager.GetObject("floppy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -823,7 +823,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap floppy1 {
+        public static System.Drawing.Bitmap floppy1 {
             get {
                 object obj = ResourceManager.GetObject("floppy1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -831,9 +831,18 @@ namespace Epicoil.Appl.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Welcom.
+        /// </summary>
+        public static string Heading {
+            get {
+                return ResourceManager.GetString("Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap leftArrow {
+        public static System.Drawing.Bitmap leftArrow {
             get {
                 object obj = ResourceManager.GetObject("leftArrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -843,7 +852,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo {
+        public static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -853,7 +862,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo1 {
+        public static System.Drawing.Bitmap logo1 {
             get {
                 object obj = ResourceManager.GetObject("logo1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -863,7 +872,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo11 {
+        public static System.Drawing.Bitmap logo11 {
             get {
                 object obj = ResourceManager.GetObject("logo11", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -873,7 +882,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logo2 {
+        public static System.Drawing.Bitmap logo2 {
             get {
                 object obj = ResourceManager.GetObject("logo2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -883,7 +892,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap OK {
+        public static System.Drawing.Bitmap OK {
             get {
                 object obj = ResourceManager.GetObject("OK", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -893,7 +902,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap print {
+        public static System.Drawing.Bitmap print {
             get {
                 object obj = ResourceManager.GetObject("print", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -903,7 +912,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap print_preview {
+        public static System.Drawing.Bitmap print_preview {
             get {
                 object obj = ResourceManager.GetObject("print_preview", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -913,7 +922,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap print_preview1 {
+        public static System.Drawing.Bitmap print_preview1 {
             get {
                 object obj = ResourceManager.GetObject("print_preview1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -923,7 +932,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Pro1 {
+        public static System.Drawing.Bitmap Pro1 {
             get {
                 object obj = ResourceManager.GetObject("Pro1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -933,7 +942,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap refresh {
+        public static System.Drawing.Bitmap refresh {
             get {
                 object obj = ResourceManager.GetObject("refresh", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -943,7 +952,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rightArrow {
+        public static System.Drawing.Bitmap rightArrow {
             get {
                 object obj = ResourceManager.GetObject("rightArrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -953,7 +962,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save {
+        public static System.Drawing.Bitmap save {
             get {
                 object obj = ResourceManager.GetObject("save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -963,7 +972,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save1 {
+        public static System.Drawing.Bitmap save1 {
             get {
                 object obj = ResourceManager.GetObject("save1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -973,7 +982,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap session_logout {
+        public static System.Drawing.Bitmap session_logout {
             get {
                 object obj = ResourceManager.GetObject("session-logout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -983,7 +992,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Start {
+        public static System.Drawing.Bitmap Start {
             get {
                 object obj = ResourceManager.GetObject("Start", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -993,7 +1002,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Stop {
+        public static System.Drawing.Bitmap Stop {
             get {
                 object obj = ResourceManager.GetObject("Stop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1003,7 +1012,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_detailed {
+        public static System.Drawing.Bitmap view_detailed {
             get {
                 object obj = ResourceManager.GetObject("view_detailed", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1013,7 +1022,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_details {
+        public static System.Drawing.Bitmap view_details {
             get {
                 object obj = ResourceManager.GetObject("view_details", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1023,7 +1032,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_large {
+        public static System.Drawing.Bitmap view_large {
             get {
                 object obj = ResourceManager.GetObject("view_large", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1033,7 +1042,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_list {
+        public static System.Drawing.Bitmap view_list {
             get {
                 object obj = ResourceManager.GetObject("view_list", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1043,7 +1052,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_list1 {
+        public static System.Drawing.Bitmap view_list1 {
             get {
                 object obj = ResourceManager.GetObject("view_list1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -1053,7 +1062,7 @@ namespace Epicoil.Appl.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap view_small {
+        public static System.Drawing.Bitmap view_small {
             get {
                 object obj = ResourceManager.GetObject("view_small", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

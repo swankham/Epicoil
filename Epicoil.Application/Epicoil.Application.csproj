@@ -66,6 +66,9 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.Composition.Registration" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -248,6 +251,12 @@
     <Compile Include="Presentations\Production\ProdDialog.Designer.cs">
       <DependentUpon>ProdDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Presentations\Production\ProductionPlan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Presentations\Production\ProductionPlan.Designer.cs">
+      <DependentUpon>ProductionPlan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Presentations\Production\ProductionSheet.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -370,6 +379,11 @@
       <DependentUpon>ProductionLabel1.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Resources\Res.en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Res.en.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainMPI.resx">
       <DependentUpon>MainMPI.cs</DependentUpon>
     </EmbeddedResource>
@@ -448,6 +462,9 @@
     <EmbeddedResource Include="Presentations\Production\ProdDialog.resx">
       <DependentUpon>ProdDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Presentations\Production\ProductionPlan.resx">
+      <DependentUpon>ProductionPlan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Presentations\Production\ProductionSheet.resx">
       <DependentUpon>ProductionSheet.cs</DependentUpon>
     </EmbeddedResource>
@@ -497,7 +514,7 @@
       <DependentUpon>McssMaster.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -514,6 +531,11 @@
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>ProductionLabel11.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Res.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Res.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Res.th.resx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -542,9 +564,6 @@
     <None Include="Reports\Planning\dsPlanning.xss">
       <DependentUpon>dsPlanning.xsd</DependentUpon>
     </None>
-    <None Include="Resources\leftArrow.png" />
-    <None Include="Resources\rightArrow.png" />
-    <None Include="Resources\_find.png" />
     <None Include="Reports\Production\dsProduction.xsc">
       <DependentUpon>dsProduction.xsd</DependentUpon>
     </None>
@@ -556,25 +575,6 @@
     <None Include="Reports\Production\dsProduction.xss">
       <DependentUpon>dsProduction.xsd</DependentUpon>
     </None>
-    <None Include="Resources\1416388107_gtk-media-stop.png" />
-    <None Include="Resources\1416387642_eraser.png" />
-    <None Include="Resources\1416387138_Save.png" />
-    <None Include="Resources\document-new2.png" />
-    <None Include="Resources\1416385063_No.png" />
-    <None Include="Resources\1416384943_minus.png" />
-    <None Include="Resources\1416384873_add.png" />
-    <None Include="Resources\1416384822_stop-red.png" />
-    <None Include="Resources\print.png" />
-    <None Include="Resources\OK.png" />
-    <None Include="Resources\Start.png" />
-    <None Include="Resources\Stop.png" />
-    <None Include="Resources\1416190065_quantity_capsule_3.png" />
-    <None Include="Resources\1416189806_cal.png" />
-    <None Include="Resources\cal1.png" />
-    <None Include="Resources\cal.png" />
-    <None Include="Resources\logo.png" />
-    <None Include="Resources\billing.png" />
-    <None Include="Resources\EPICOIL.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epicoil.Library\Epicoil.Library.csproj">

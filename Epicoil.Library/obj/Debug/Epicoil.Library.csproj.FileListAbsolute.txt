@@ -5,3 +5,6 @@ D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.Frameworks.Custo
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.csproj.GenerateResource.Cache
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.dll
 D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Library.pdb
+D:\SourceControl\EPIC\Epicoil.Library\obj\Debug\Epicoil.Library.ResourceLang.resources
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\CustomAnnotations.dll
+D:\SourceControl\EPIC\Epicoil.Library\bin\Debug\CustomAnnotations.pdb

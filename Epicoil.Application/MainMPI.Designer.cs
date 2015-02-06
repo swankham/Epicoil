@@ -104,6 +104,7 @@
             // 
             // rbnbutLargeIcon
             // 
+            this.rbnbutLargeIcon.DropDownResizable = true;
             this.rbnbutLargeIcon.Image = global::Epicoil.Appl.Properties.Resources.view_large;
             this.rbnbutLargeIcon.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutLargeIcon.SmallImage")));
             this.rbnbutLargeIcon.Text = "LargeIcon";
@@ -111,6 +112,7 @@
             // 
             // rbnbutSmallIcon
             // 
+            this.rbnbutSmallIcon.DropDownResizable = true;
             this.rbnbutSmallIcon.Image = global::Epicoil.Appl.Properties.Resources.view_small;
             this.rbnbutSmallIcon.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutSmallIcon.SmallImage")));
             this.rbnbutSmallIcon.Text = "SmallIcon";
@@ -118,6 +120,7 @@
             // 
             // rbnbutList
             // 
+            this.rbnbutList.DropDownResizable = true;
             this.rbnbutList.Image = global::Epicoil.Appl.Properties.Resources._1410297591_text_list_bullets;
             this.rbnbutList.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutList.SmallImage")));
             this.rbnbutList.Text = "List";
@@ -125,6 +128,7 @@
             // 
             // rbnbutTile
             // 
+            this.rbnbutTile.DropDownResizable = true;
             this.rbnbutTile.Image = global::Epicoil.Appl.Properties.Resources.view_detailed;
             this.rbnbutTile.SmallImage = ((System.Drawing.Image)(resources.GetObject("rbnbutTile.SmallImage")));
             this.rbnbutTile.Text = "Tile";
